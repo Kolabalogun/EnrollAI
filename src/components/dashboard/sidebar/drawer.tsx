@@ -69,7 +69,7 @@ const SidebarDrawer = () => {
                 <p className="text-dark-200 inter font-semibold">
                   {user?.fullName ?? "John Doe"}
                 </p>
-                <p className="text-xs font-light text-text-primary">
+                <p className="text-xs font-light text-fade">
                   {user?.email ?? "johndoe@gmail.com"}
                 </p>
               </div>
@@ -86,17 +86,13 @@ const SidebarDrawer = () => {
                 <div className="flex flex-col">
                   <p className="text-xs inter font-medium">2450</p>
 
-                  <p className="text-xs font-light text-text-primary">
-                    Click reviews
-                  </p>
+                  <p className="text-xs font-light text-fade">Click reviews</p>
                 </div>
                 <div className="h-full w-[1px] bg-fade"></div>
                 <div className="flex flex-col">
                   <p className="text-xs inter font-medium">13,405</p>
 
-                  <p className="text-xs font-light text-text-primary">
-                    Monthly clicks
-                  </p>
+                  <p className="text-xs font-light text-fade">Monthly clicks</p>
                 </div>
               </div>
             </div>

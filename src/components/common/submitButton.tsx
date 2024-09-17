@@ -7,6 +7,7 @@ interface ButtonProps {
   className?: string;
   children: React.ReactNode;
   handleSubmit?: any;
+  type?: "submit" | "reset" | "button";
 }
 
 const SubmitButton = ({
@@ -14,13 +15,15 @@ const SubmitButton = ({
   className,
   children,
   handleSubmit,
+  type,
 }: ButtonProps) => {
   return (
     <Button
-      type="submit"
+      type={type ?? "submit"}
       disabled={isLoading}
       onClick={handleSubmit}
-      className={className ?? "shad-primary-btn w-full"}
+      className={`         
+        bg-secondary hover:text-secondary border-[##b076e7] border-2  py-6 rounded-xl  raleway text-[13px] font-semibold text-white w-full  ${className}`}
     >
       {isLoading ? (
         <div className="flex items-center gap-2">

@@ -12,8 +12,10 @@ import {
   VerifyEmail,
   ChooseTypeOfRegisteration,
   Register,
+  GetStated,
 } from "../pages";
-import { UnAuthenticated } from "@/components/auth";
+import { Protected, UnAuthenticated } from "@/components/auth";
+import { HealthProviderKeyFeatures } from "@/pages/healthProvider";
 
 // Lazy-loading components
 const Home = lazy(() => import("../pages/home"));
@@ -100,6 +102,23 @@ const router = createBrowserRouter([
       <UnAuthenticated>
         <CreateNewPassword />
       </UnAuthenticated>
+    ),
+  },
+
+  {
+    path: "/getstated",
+    element: (
+      <Protected>
+        <GetStated />
+      </Protected>
+    ),
+  },
+  {
+    path: "/healthcare-provider-keyfeatures",
+    element: (
+      <Protected>
+        <HealthProviderKeyFeatures />
+      </Protected>
     ),
   },
   {

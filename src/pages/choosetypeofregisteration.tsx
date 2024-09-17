@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Logo } from "@/assets/img";
-import { SubmitButton } from "@/components/common";
 
-import { LOGIN_ROUTE } from "@/router/routes";
+import { SubmitButton } from "@/components/common";
+import LogoBar from "@/components/common/logoBar";
+
+import { HEALTHCARE_KEY_FEATURES, LOGIN_ROUTE } from "@/router/routes";
 import { Briefcase, SquarePen } from "lucide-react";
 import { useState } from "react";
 
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ChooseTypeOfRegisteration = () => {
   const navigate = useNavigate();
@@ -20,19 +21,14 @@ const ChooseTypeOfRegisteration = () => {
   };
   return (
     <main className="min-h-screen bg-primary   px-5   py-5">
-      <div className="bg-white py-5 px-4 rounded-md shadow-sm">
-        <Link to={"/"} className="flex items-center gap-1 ">
-          <img src={Logo} alt="" className="h-10" />
-          <p className=" font-medium text-base   text-secondary">Enroll Hub</p>
-        </Link>
-      </div>
+      <LogoBar />
 
       <div className="h-[85vh] flex items-center  flex-col w-full  justify-center ">
         <div className="flex   items-center flex-col  ">
           <section className="mb-8 w-96  text-center raleway space-y-4">
             <h1 className="header text-center w-full  ">Create an Account</h1>
             <p
-              className="text-text-primary text-center text-sm"
+              className="text-fade text-center text-sm"
               dangerouslySetInnerHTML={{
                 __html:
                   "Lorem Ipsum Set dolor is a dummy text for place holders",
@@ -116,12 +112,9 @@ const ChooseTypeOfRegisteration = () => {
               </div>
             </div>
 
-            <SubmitButton
-              className="bg-secondary hover:text-secondary border-[##b076e7] border-2 py-6 rounded-xl raleway text-[13px] font-semibold text-white w-full "
-              isLoading={isLoading}
-            >
-              Continue
-            </SubmitButton>
+            <div onClick={() => navigate(HEALTHCARE_KEY_FEATURES)}>
+              <SubmitButton isLoading={isLoading}>Continue</SubmitButton>
+            </div>
 
             <div className="flex text-center w-full items-center">
               <p className="text-sm text-center w-full plus-jakarta my-1">

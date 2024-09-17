@@ -21,7 +21,7 @@ export default {
         secondary: "#b076e7",
         tertiary: "#101828",
         teal: "#1e9191",
-        fade: "#d9d9d9",
+        fade: "#98a2b3",
 
         red: {
           500: "#FB0000",

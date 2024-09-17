@@ -64,7 +64,7 @@ const Sidebar = () => {
           <p className="text-dark-200 inter font-semibold  ">
             {user?.fullName ?? "John Doe"}
           </p>
-          <p className="text-xs font-light text-text-primary ">
+          <p className="text-xs font-light text-fade ">
             {user?.email ?? "johndoe@gmail.com"}
           </p>
         </div>
@@ -85,9 +85,9 @@ const Sidebar = () => {
               {allDomains?.length || 0}
             </p>
 
-            <p className="text-xs font-light text-text-primary ">Websites</p>
+            <p className="text-xs font-light text-fade ">Websites</p>
 
-            {/* <p className="text-xs font-light text-text-primary ">
+            {/* <p className="text-xs font-light text-fade ">
               Click reviews
             </p> */}
           </div>
@@ -95,9 +95,7 @@ const Sidebar = () => {
           <div className="flex flex-col">
             <p className="text-xs inter font-medium">13,405</p>
 
-            <p className="text-xs font-light text-text-primary ">
-              Monthly clicks
-            </p>
+            <p className="text-xs font-light text-fade ">Monthly clicks</p>
           </div>
         </div>
       </div>

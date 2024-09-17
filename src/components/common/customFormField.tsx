@@ -132,7 +132,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
             >
               {props.label}{" "}
               {props.name === "termsAndConditions" && (
-                <a href="#" className="underline text-text-primary">
+                <a href="#" className="underline text-fade">
                   Terms of Service and Privacy Policy
                 </a>
               )}
@@ -146,7 +146,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
         <FormControl>
           <Select onValueChange={field.onChange} defaultValue={field.value}>
             <FormControl>
-              <SelectTrigger className="shad-select-trigger text-text-primary">
+              <SelectTrigger className="shad-select-trigger text-fade">
                 <SelectValue placeholder={props.placeholder} />
               </SelectTrigger>
             </FormControl>

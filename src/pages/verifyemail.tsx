@@ -1,22 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
-
-import { CustomFormField } from "@/components/common";
-import { FormFieldType } from "@/components/common/customFormField";
 
 import { ForgetPasswordCodeFormValidation } from "@/lib/validation";
 import { AuthLayout } from "@/layout";
 import { useLocation, useNavigate } from "react-router-dom";
 import { LOGIN_ROUTE } from "@/router/routes";
 // import { useVerifyOtpMutation, useResendOtpMutation } from "@/services/auth";
-import { useToast } from "@chakra-ui/react";
+import {
+  PinInput,
+  PinInputField,
+  useDisclosure,
+  useToast,
+} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import showToast from "@/components/common/showtoast";
+import SuccessModal from "@/components/modal/success";
 
 const VerifyEmail = () => {
   const navigate = useNavigate();
+
+  const { onOpen, onClose, isOpen } = useDisclosure();
 
   // const [verifyOtp, { isLoading }] = useVerifyOtpMutation();
 
@@ -79,8 +84,8 @@ const VerifyEmail = () => {
       // console.log(res);
 
       // showToast(toast, "Crawler", "success", `${res.msg}`);
-
-      navigate(LOGIN_ROUTE);
+      onOpen();
+      // navigate(LOGIN_ROUTE);
     } catch (error: any) {
       console.log(error);
       showToast(
@@ -111,10 +116,19 @@ const VerifyEmail = () => {
     }
   };
 
+  const { code } = form.getValues();
+
+  const { setValue } = form;
+
+  useWatch({
+    control: form.control,
+    name: "code",
+  });
+
   return (
     <AuthLayout
       title="Verify your email"
-      desc={`We've just sent a six-digit verification code to your email address at <strong>${email}</strong>. Kindly input the code below to verify your email.`}
+      desc={`Please enter the 6-digit code we sent to <br/> <strong>${email}</strong>.    `}
       form={form}
       onSubmit={onSubmit}
       isLoading={isLoading || resendLoading}
@@ -123,14 +137,31 @@ const VerifyEmail = () => {
       timeLeft={timeLeft}
       resendEmailFunction={resendCodeToEmail}
     >
-      <CustomFormField
-        control={form.control}
-        fieldType={FormFieldType.INPUT}
-        name="code"
-        label={"Enter 6-digits code"}
-        placeholder={"Enter 6-digits code"}
-        iconAlt="text"
+      {/* Confirmation Modal  */}
+
+      <SuccessModal
+        onClose={onClose}
+        isOpen={isOpen}
+        title="Verification Successful"
+        desc="Click Continue to setup-up your profile."
+        handleClick={() => navigate(LOGIN_ROUTE)}
       />
+      <div className="flex my-10 items-center justify-center gap-3">
+        <PinInput
+          value={code}
+          onChange={(e) => setValue("code", e)}
+          focusBorderColor="#b076e7"
+          mask
+          otp
+        >
+          <PinInputField />
+          <PinInputField />
+          <PinInputField />
+          <PinInputField />
+          <PinInputField />
+          <PinInputField />
+        </PinInput>
+      </div>
     </AuthLayout>
   );
 };
