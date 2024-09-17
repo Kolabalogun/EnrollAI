@@ -2,7 +2,8 @@ import { SubmitButton } from "@/components/common";
 import ExploreKeyFeatures from "@/components/pages/getstarted/keyfeatures";
 import LoginCAHQModal from "@/components/pages/getstarted/keyfeatures/LoginCAHQModal";
 import { GetStartedLayout } from "@/layout";
-import { DASHBOARD_ROUTE } from "@/router/routes";
+import { HEALTH_DASHBOARD_ROUTE } from "@/router/routes";
+
 import {
   Step,
   StepDescription,
@@ -51,7 +52,7 @@ const Keyfeatures = () => {
 
   const handleNextStep = () => {
     if (tab === 3) {
-      navigate(DASHBOARD_ROUTE);
+      navigate(HEALTH_DASHBOARD_ROUTE);
     }
     if (tab === 2) {
       onOpen();

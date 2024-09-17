@@ -2,9 +2,12 @@
 
 export const REGISTER_ROUTE = "/register";
 export const LOGIN_ROUTE = "/login";
-export const DASHBOARD_ROUTE = "/dashboard";
+export const HEALTH_DASHBOARD_ROUTE = "/health-provider-dashboard";
 export const VERIFY_EMAIL_ROUTE = "/verifyemail";
 export const FORGET_PASSWORD_ROUTE = "/forgot-password";
 export const CREATE_NEW_PASSWORD_ROUTE = "/create-new-password";
 export const TYPE_OF_REG = "/choose-type-of-reg";
 export const HEALTHCARE_KEY_FEATURES = "/healthcare-provider-keyfeatures";
+
+export const HEALTHCARE_APPLICATION_FORM =
+  "/health-provider-dashboard/application-form";

@@ -7,7 +7,7 @@ import { CustomFormField } from "@/components/common";
 import { FormFieldType } from "@/components/common/customFormField";
 import { AuthLayout } from "@/layout";
 import { useNavigate } from "react-router-dom";
-import { DASHBOARD_ROUTE, VERIFY_EMAIL_ROUTE } from "@/router/routes";
+import { HEALTH_DASHBOARD_ROUTE, VERIFY_EMAIL_ROUTE } from "@/router/routes";
 // import { useLoginMutation } from "@/services/auth";
 
 import { useToast } from "@chakra-ui/react";
@@ -49,7 +49,7 @@ const Login = () => {
 
       // showToast(toast, "Crawler", "success", "You've successfully signed in");
 
-      navigate(DASHBOARD_ROUTE);
+      navigate(HEALTH_DASHBOARD_ROUTE);
     } catch (error: any) {
       console.log(error);
 

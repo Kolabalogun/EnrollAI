@@ -1,64 +1,61 @@
-/**
- * Navigation Links Configuration
- *
- * The usersLinks array contains the configuration for navigation links in the application.
- * Each link object includes a label, an icon component from the Tabler Icons library, and
- * a corresponding route (buttonLink).
- *
- * @constant
- * @type {Array}
- */
-
 import {
-  Analysis,
-  AnalysisWhite,
-  Home,
-  HomeWhite,
-  Insight,
-  InsightWhite,
-  LoginIcon,
-  LoginIconWhite,
-  Setting,
-  SettingWhite,
-  Support,
-  SupportWhite,
-} from "@/assets/icon";
+  LayoutDashboard,
+  Send,
+  User,
+  Bell,
+  Settings,
+  CircleHelp,
+  LogOut,
+} from "lucide-react";
 
 export const usersLinks = [
   {
-    label: "Overview",
-    icon: Home,
-    iconWhite: HomeWhite,
-    buttonLink: "/dashboard",
+    label: "Dashboard",
+    icon: <LayoutDashboard size={20} className="text-secondary" />,
+    iconWhite: <LayoutDashboard size={20} className="text-[#667085]" />,
+    title: "Menu",
+    buttonLink: "/health-provider-dashboard",
   },
   {
-    label: "Website Analysis",
-    icon: Analysis,
-    iconWhite: AnalysisWhite,
-    buttonLink: "/dashboard/website-analysis",
+    label: "Application",
+    icon: <Send size={20} className="text-secondary" />,
+    iconWhite: <Send size={20} className="text-[#667085]" />,
+    title: "Menu",
+    buttonLink: "/health-provider-dashboard/application",
   },
   {
-    label: "AI Insights",
-    icon: Insight,
-    iconWhite: InsightWhite,
-    buttonLink: "/dashboard/ai-insights",
+    label: "Profile",
+    icon: <User size={20} className="text-secondary" />,
+    iconWhite: <User size={20} className="text-[#667085]" />,
+    title: "Menu",
+    buttonLink: "/health-provider-dashboard/profile",
+  },
+  {
+    label: "Notification",
+    icon: <Bell size={20} className="text-secondary" />,
+    iconWhite: <Bell size={20} className="text-[#667085]" />,
+    title: "Menu",
+    buttonLink: "/health-provider-dashboard/notifications",
   },
   {
     label: "Settings",
-    icon: Setting,
-    iconWhite: SettingWhite,
-    buttonLink: "/dashboard/settings",
+    icon: <Settings size={20} className="text-secondary" />,
+    iconWhite: <Settings size={20} className="text-[#667085]" />,
+    title: "Settings & Support",
+    buttonLink: "/dashboard/support",
   },
   {
-    label: "Support",
-    icon: Support,
-    iconWhite: SupportWhite,
+    label: "Help Center",
+    icon: <CircleHelp size={20} className="text-secondary" />,
+    iconWhite: <CircleHelp size={20} className="text-[#667085]" />,
+    title: "Settings & Support",
     buttonLink: "/dashboard/support",
   },
   {
     label: "Logout",
-    icon: LoginIcon,
-    iconWhite: LoginIconWhite,
+    icon: <LogOut size={20} className="text-secondary rotate-180" />,
+    iconWhite: <LogOut size={20} className="text-[#667085] rotate-180" />,
+    title: "Settings & Support",
     buttonLink: "/dashboard/logout",
   },
 ];

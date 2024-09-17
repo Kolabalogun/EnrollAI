@@ -15,3 +15,4 @@ export { default as Frame3 } from "./frame3.png";
 export { default as Frame4 } from "./frame4.png";
 export { default as Frame6 } from "./frame6.png";
 export { default as Frame5 } from "./frame5.png";
+export { default as EmptyImg } from "./empty.png";

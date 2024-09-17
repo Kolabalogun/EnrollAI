@@ -78,22 +78,22 @@ export function LinksGroup({
 
   // Handle button click and update the selected menu item in local storage
 
-  // const handleButtonClick = () => {
-  //   if (buttonLink) {
-  //     if (buttonLink === "/dashboard/logout") {
-  //       onClose();
-  //       if (drawer) {
-  //         logoutHandler();
-  //       } else {
-  //         setDialogOpen(true);
-  //       }
-  //     } else {
-  //       localStorage.setItem("selectedMenuItem", buttonLink);
-  //       navigate(buttonLink);
-  //       onClose();
-  //     }
-  //   }
-  // };
+  const handleButtonClick = () => {
+    if (buttonLink) {
+      if (buttonLink === "/dashboard/logout") {
+        // onClose();
+        if (drawer) {
+          logoutHandler();
+        } else {
+          setDialogOpen(true);
+        }
+      } else {
+        localStorage.setItem("selectedMenuItem", buttonLink);
+        navigate(buttonLink);
+        // onClose();
+      }
+    }
+  };
 
   // Retrieve the selected menu item from local storage
   const selectedMenuItem = localStorage.getItem("selectedMenuItem");
@@ -111,17 +111,19 @@ export function LinksGroup({
       /> */}
 
       <button
-        // onClick={handleButtonClick}
-        className={`flex gap-3 text-white py-3 rounded-md px-4 hover:font-medium text-xs   items-center ${
+        onClick={handleButtonClick}
+        className={`flex gap-3   py-3 rounded-md px-4 raleway font-semibold  items-center ${
           // Apply a background gradient style if the button link matches the selected menu item
-          buttonLink === selectedMenuItem ? "bg-blue " : ""
+          buttonLink === selectedMenuItem ? "bg-[#f7f2f6] " : ""
         }`}
       >
-        <img src={buttonLink === selectedMenuItem ? iconWhite : icon} alt="" />
+        {buttonLink === selectedMenuItem ? icon : iconWhite}
         <div
-          className={
-            buttonLink === selectedMenuItem ? "text-white" : "text-dark-200 "
-          }
+          className={`  text-[13px]  ${
+            buttonLink === selectedMenuItem
+              ? "text-secondary"
+              : "text-dark-200 "
+          }`}
         >
           {label}
         </div>

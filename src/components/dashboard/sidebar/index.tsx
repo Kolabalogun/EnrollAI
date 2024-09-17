@@ -1,23 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import { Avatar } from "@/assets/img";
-
+import { Logo } from "@/assets/img";
 import { close, open } from "@/redux/features/toggleSidebarSlice";
-
-import ProgressBar from "@/components/common/progressBar";
-import { useGlobalContext } from "@/context/useGlobalContext";
+import { usersLinks } from "./navigationLinks";
+import { LinksGroup } from "./linksGroup";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
-  const { links } = useGlobalContext();
-  const allDomains = useSelector((state: any) => state.addDomains.domains);
-
-  // Retrieve user details from Redux state
-  const user = useSelector((state: any) => state.auth.user);
-  console.log(user);
 
   // Close sidebar on window resize for smaller screens
   useEffect(() => {
@@ -37,67 +28,49 @@ const Sidebar = () => {
     };
   }, [dispatch]);
 
+  const getLinks = () => {
+    const groupedUserLinks: Record<string, any[]> = {};
+
+    // Group admin links by their titles
+    usersLinks.forEach((link: any) => {
+      if (link.title) {
+        if (!groupedUserLinks[link.title]) {
+          groupedUserLinks[link.title] = [];
+        }
+        groupedUserLinks[link.title].push(link);
+      }
+    });
+
+    // Generate JSX elements for each title group
+    return Object.keys(groupedUserLinks).map((title) => (
+      <div key={title} className="flex raleway flex-col gap-3 mb-8">
+        <p className=" text-[#4b4b4b] font-semibold text-xs ">{title}</p>
+        {groupedUserLinks[title].map((item) => (
+          <LinksGroup {...item} key={item.label} />
+        ))}
+      </div>
+    ));
+  };
+
+  const links = getLinks();
+
   return (
     <div
-      className={`  border-r-fade border-r-[2px] rounded-lg pb-5 p-6  h-screen overflow-y-auto z-50 scrollbar-y transition lg:flex flex-col justify-between ease-in-out w-[230px]   hidden `}
+      className={`  border-r-fade bg-primary border-r-[2px] pb-5 p-6  h-screen overflow-y-auto z-50 scrollbar-y remove-scrollbar transition lg:flex flex-col justify-between ease-in-out w-[250px]   hidden `}
     >
       <div className="flex flex-col">
         {/* Logo */}
-        <div className="mb-6">
-          <Link to={"/"}>
-            <div className=" ">
-              <h1 className="dashboard-logo  ">Crawler</h1>
-            </div>
+        <div className="mb-14">
+          <Link to={"/"} className="flex items-center gap-1 ">
+            <img src={Logo} alt="" className="h-10" />
+            <p className=" font-medium text-base   text-secondary">
+              Enroll Hub
+            </p>
           </Link>
         </div>
 
         {/* Menu links */}
         {links}
-      </div>
-
-      {/* Logout button */}
-
-      <div className="flex flex-col space-y-6 mb-5">
-        <div className=" mb-3 text-center flex flex-col items-center gap-1">
-          <img src={Avatar} alt="avatar" className="rounded-full h-12 w-12  " />
-
-          <p className="text-dark-200 inter font-semibold  ">
-            {user?.fullName ?? "John Doe"}
-          </p>
-          <p className="text-xs font-light text-fade ">
-            {user?.email ?? "johndoe@gmail.com"}
-          </p>
-        </div>
-
-        <div className="flex flex-col  ">
-          <p className="inter mb-1 font-medium text-[13px] ">
-            Free <span className="font-normal">Plan</span>
-          </p>
-
-          <ProgressBar value={66} className="sidebar bg-[#ebffee] " />
-        </div>
-
-        <div className="flex gap-2  justify-between items-center">
-          <div className="flex text-center flex-col">
-            {/* <p className="text-xs inter font-medium">2450</p> */}
-
-            <p className="text-xs inter font-medium">
-              {allDomains?.length || 0}
-            </p>
-
-            <p className="text-xs font-light text-fade ">Websites</p>
-
-            {/* <p className="text-xs font-light text-fade ">
-              Click reviews
-            </p> */}
-          </div>
-          <div className="h-full w-[1px] bg-fade"></div>
-          <div className="flex flex-col">
-            <p className="text-xs inter font-medium">13,405</p>
-
-            <p className="text-xs font-light text-fade ">Monthly clicks</p>
-          </div>
-        </div>
       </div>
     </div>
   );

@@ -15,11 +15,18 @@ import {
   GetStated,
 } from "../pages";
 import { Protected, UnAuthenticated } from "@/components/auth";
-import { HealthProviderKeyFeatures } from "@/pages/healthProvider";
+import {
+  HealthProviderApplicationForm,
+  HealthProviderKeyFeatures,
+} from "@/pages/healthProvider";
 
 // Lazy-loading components
 const Home = lazy(() => import("../pages/home"));
-const Dashboard = lazy(() => import("../pages/dashboard"));
+// const Dashboard = lazy(() => import("../pages/dashboard"));
+
+const HealthProviderDashboard = lazy(
+  () => import("../pages/healthProvider/dashboard")
+);
 
 const router = createBrowserRouter([
   {
@@ -32,20 +39,24 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "/dashboard",
+    path: "/health-provider-dashboard",
     element: (
       // Protected route for authenticated users
       <Suspense fallback={<Loader />}>
-        {/* <Protected> */}
-        <Root />
-        {/* </Protected> */}
+        <Protected>
+          <Root />
+        </Protected>
       </Suspense>
     ),
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/dashboard",
-        element: <Dashboard />,
+        path: "/health-provider-dashboard",
+        element: <HealthProviderDashboard />,
+      },
+      {
+        path: "/health-provider-dashboard/application-form",
+        element: <HealthProviderApplicationForm />,
       },
     ],
   },
