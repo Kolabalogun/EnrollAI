@@ -1,0 +1,13 @@
+export { default as AuthBg } from "./auth-bg.png";
+export { default as HelpCircle } from "./help.png";
+export { default as CheckCircle } from "./check.png";
+export { default as NoResultImg } from "./noResult.svg";
+export { default as Avatar } from "./avatar.png";
+export { default as Wave } from "./wave.png";
+export { default as CaroselmageI } from "./caroselImage.png";
+export { default as Visual } from "./Visual.png";
+export { default as VisualI } from "./VisualI.png";
+export { default as Frame } from "./Frame.png";
+export { default as Line } from "./lin.svg";
+export { default as Bell } from "./Bell.png";
+export { default as Logo } from "./Logo.png";

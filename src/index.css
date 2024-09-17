@@ -1,0 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #f9fafb !important;
+  font-family: "Raleway", sans-serif;
+}
+
+p {
+  font-size: 14px;
+}
+
+.raleway {
+  font-family: "Raleway", sans-serif;
+}
+
+.plus-jakarta {
+  font-family: "Plus Jakarta Sans", system-ui;
+}
+
+.header {
+  @apply text-3xl text-dark-200 font-semibold md:text-[32px] md:font-semibold;
+}
