@@ -8,7 +8,7 @@ import { useDisclosure } from "@chakra-ui/react";
 
 import { Pen, PlusIcon } from "lucide-react";
 
-const Dashboard = () => {
+const Appications = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   return (
@@ -54,7 +54,7 @@ const Dashboard = () => {
           </div>
 
           <div className="bg-white rounded-lg flex-1 h-full w-full flex flex-col p-5 space-y-8">
-            <p className="font-semibold text-[13px]">Tasks and Activities</p>
+            <p className="font-semibold text-[13px]">Active Applications</p>
 
             <EmptyCarts />
           </div>
@@ -101,4 +101,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Appications;

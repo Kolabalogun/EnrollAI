@@ -1,4 +1,4 @@
-export const formatDateTime = (date: string): string => {
+export const formatDateTime = (date: string, noTime?: boolean): string => {
   // Convert the string timestamp to a Date object
   const parsedDate = new Date(date);
 
@@ -17,5 +17,5 @@ export const formatDateTime = (date: string): string => {
     hour12: false,
   });
 
-  return `${formattedDate}, ${formattedTime}`;
+  return `${formattedDate} ${noTime ? formattedTime : ""}`;
 };
