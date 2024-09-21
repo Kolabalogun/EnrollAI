@@ -5,7 +5,8 @@ import { combineReducers } from "redux";
 import toggleSidebarReducer from "./features/toggleSidebarSlice";
 import authReducer from "./features/authSlice";
 import addDomainsReducer from "./features/domainSlice";
-import applicationFormReducer from "./features/applicationForm/applicationFormSlice";
+import applicationFormReducer from "./features/applicationFormSlice";
+import cahqProfileReducer from "./features/caqhProfileFormSlice";
 import { apiSlice } from "./features/apiSlice";
 
 // Combine reducers into a root reducer
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   auth: authReducer, // Manages state related to authentication
   addDomains: addDomainsReducer, // Adds
   applicationForm: applicationFormReducer,
+  cahqProfile: cahqProfileReducer,
 });
 
 // Export the root reducer for use in the Redux store

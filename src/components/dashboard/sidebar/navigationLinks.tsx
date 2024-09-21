@@ -17,11 +17,11 @@ export const usersLinks = [
     buttonLink: "/health-provider-dashboard",
   },
   {
-    label: "Application",
+    label: "Applications",
     icon: <Send size={20} className="text-secondary" />,
     iconWhite: <Send size={20} className="text-[#667085]" />,
     title: "Menu",
-    buttonLink: "/health-provider-dashboard/application",
+    buttonLink: "/health-provider-dashboard/applications",
   },
   {
     label: "Profile",

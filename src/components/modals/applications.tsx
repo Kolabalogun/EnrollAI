@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Modal, ModalOverlay, ModalContent, ModalBody } from "@chakra-ui/react";
 import { Search } from "lucide-react";
-import { ApplicationsData } from "@/constant/data/applicationsdata";
+
 import { useNavigate } from "react-router-dom";
 import { HEALTHCARE_APPLICATION_FORM } from "@/router/routes";
+import { ApplicationsData } from "@/constant/data/applicationsdata";
 
 const ApplicationsModal = ({
   onClose,

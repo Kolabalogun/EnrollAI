@@ -10,6 +10,7 @@ export type ApplicationProps = {
   handleDateChange?: any;
   handleCheckBoxChange?: any;
   handlePhoneChange?: any;
+  disableForm?: boolean;
   handleChange?: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;

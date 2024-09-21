@@ -18,6 +18,12 @@ import { Protected, UnAuthenticated } from "@/components/auth";
 import {
   HealthProviderApplicationForm,
   HealthProviderKeyFeatures,
+  HealthProviderApplications,
+  HealthProviderApplicationsFullList,
+  HealthProviderApplicationsDetails,
+  HealthProviderProfile,
+  HealthProviderCAHQProfile,
+  HealthProviderNotifications,
 } from "@/pages/healthProvider";
 
 // Lazy-loading components
@@ -57,6 +63,30 @@ const router = createBrowserRouter([
       {
         path: "/health-provider-dashboard/application-form",
         element: <HealthProviderApplicationForm />,
+      },
+      {
+        path: "/health-provider-dashboard/applications",
+        element: <HealthProviderApplications />,
+      },
+      {
+        path: "/health-provider-dashboard/applications/full-list",
+        element: <HealthProviderApplicationsFullList />,
+      },
+      {
+        path: "/health-provider-dashboard/applications/details/:id",
+        element: <HealthProviderApplicationsDetails />,
+      },
+      {
+        path: "/health-provider-dashboard/profile",
+        element: <HealthProviderProfile />,
+      },
+      {
+        path: "/health-provider-dashboard/profile/cahq",
+        element: <HealthProviderCAHQProfile />,
+      },
+      {
+        path: "/health-provider-dashboard/notifications",
+        element: <HealthProviderNotifications />,
       },
     ],
   },

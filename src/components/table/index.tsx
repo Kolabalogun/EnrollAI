@@ -44,7 +44,7 @@ export function TableComponent<T>({
   };
 
   return (
-    <div className="mt-3 flex-1">
+    <div className="mt-3 flex-1 ">
       <Table>
         <TableCaption>
           <p
@@ -54,7 +54,7 @@ export function TableComponent<T>({
             {footerTxt}
           </p>
         </TableCaption>
-        <TableHeader className="[&_tr]:border-0">
+        <TableHeader className="[&_tr]:border-0 bg-[#f2f4f7]">
           <TableRow>
             {columns.map((col, idx) => (
               <TableHead
@@ -67,7 +67,7 @@ export function TableComponent<T>({
             ))}
           </TableRow>
         </TableHeader>
-        <TableBody className="[&_tr:last-child]:border-b-[1px]">
+        <TableBody className="[&_tr:last-child]:border-b-[1px] mb-10 remove-scrollbar">
           {data.length === 0 ? (
             <TableRow>
               <TableCell

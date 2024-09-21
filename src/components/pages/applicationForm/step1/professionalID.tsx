@@ -1,6 +1,10 @@
 import { ApplicationProps } from ".";
 
-const ProfessionalID = ({ form, handleChange }: ApplicationProps) => {
+const ProfessionalID = ({
+  form,
+  handleChange,
+  disableForm,
+}: ApplicationProps) => {
   const { npi, tin, deacn, medicalCareId } = form;
 
   return (
@@ -19,6 +23,7 @@ const ProfessionalID = ({ form, handleChange }: ApplicationProps) => {
               type="number"
               placeholder="National Provider Identifier (NPI)"
               value={npi}
+              disabled={disableForm}
               onChange={handleChange}
               className="border rounded-md p-2 outline-[0.5px] outline-secondary"
             />
@@ -32,6 +37,7 @@ const ProfessionalID = ({ form, handleChange }: ApplicationProps) => {
               type="text"
               placeholder="123-xxx-876"
               value={tin}
+              disabled={disableForm}
               onChange={handleChange}
               className="border rounded-md p-2 outline-[0.5px] outline-secondary"
             />
@@ -45,6 +51,7 @@ const ProfessionalID = ({ form, handleChange }: ApplicationProps) => {
               type="text"
               placeholder="ABC12563"
               value={medicalCareId}
+              disabled={disableForm}
               onChange={handleChange}
               className="border rounded-md p-2 outline-[0.5px] outline-secondary"
             />
@@ -57,6 +64,7 @@ const ProfessionalID = ({ form, handleChange }: ApplicationProps) => {
               type="text"
               placeholder="AJ1234567"
               value={deacn}
+              disabled={disableForm}
               onChange={handleChange}
               className="border rounded-md p-2 outline-[0.5px] outline-secondary"
             />

@@ -12,14 +12,15 @@ import Step3 from "@/components/pages/applicationForm/step3";
 import Review1 from "@/components/pages/applicationForm/reviews/review1";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  resetForm,
   setApplicationList,
   updateForm,
-} from "@/redux/features/applicationForm/applicationFormSlice";
+} from "@/redux/features/applicationFormSlice";
 import Review2 from "@/components/pages/applicationForm/reviews/review2";
-import ApplicationSuccessModal from "@/components/modal/applicationSuccess";
+import ApplicationSuccessModal from "@/components/modals/applicationSuccess";
 import { useDisclosure } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { HEALTH_DASHBOARD_ROUTE } from "@/router/routes";
+import { HEALTHCARE_APPLICATIONS } from "@/router/routes";
 
 const ApplicationForm = () => {
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -28,6 +29,7 @@ const ApplicationForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  console.log(lists);
   console.log(form);
 
   const handleChange = (
@@ -53,12 +55,13 @@ const ApplicationForm = () => {
 
     try {
       setLoading(true);
-      console.log(form);
 
       if (form.pageNo === 5) {
         if (isOpen) {
-          dispatch(setApplicationList([...lists, form]));
-          navigate(HEALTH_DASHBOARD_ROUTE);
+          dispatch(setApplicationList([...(lists || []), form]));
+          // dispatch(resetLists());
+          dispatch(resetForm());
+          navigate(HEALTHCARE_APPLICATIONS);
         } else {
           onOpen();
         }
@@ -86,13 +89,8 @@ const ApplicationForm = () => {
       </div>
 
       <form onSubmit={handleSubmit}>
-        {form.pageNo === 1 ? (
-          <Step1
-            form={form}
-            handleChange={handleChange}
-            handlePhoneChange={handlePhoneChange}
-            handleDateChange={handleDateChange}
-          />
+        {form.pageNo === 5 ? (
+          <Review2 form={form} handleCheckBoxChange={handleCheckBoxChange} />
         ) : form.pageNo === 2 ? (
           <Step2
             form={form}
@@ -106,10 +104,15 @@ const ApplicationForm = () => {
             handleChange={handleChange}
             handleDateChange={handleDateChange}
           />
-        ) : form.pageNo === 3 ? (
+        ) : form.pageNo === 4 ? (
           <Review1 form={form} />
         ) : (
-          <Review2 form={form} handleCheckBoxChange={handleCheckBoxChange} />
+          <Step1
+            form={form}
+            handleChange={handleChange}
+            handlePhoneChange={handlePhoneChange}
+            handleDateChange={handleDateChange}
+          />
         )}
 
         <div className="flex justify-end gap-5 my-10 items-center">

@@ -11,3 +11,21 @@ export const HEALTHCARE_KEY_FEATURES = "/healthcare-provider-keyfeatures";
 
 export const HEALTHCARE_APPLICATION_FORM =
   "/health-provider-dashboard/application-form";
+
+export const HEALTHCARE_APPLICATIONS =
+  "/health-provider-dashboard/applications";
+
+export const HEALTHCARE_APPLICATIONS_FULL_LIST =
+  "/health-provider-dashboard/applications/full-list";
+
+export const HEALTHCARE_APPLICATIONS_DETALIS =
+  "/health-provider-dashboard/applications/details";
+
+export const HEALTHCARE_APPLICATIONS_PROFILE =
+  "/health-provider-dashboard/profile";
+
+export const HEALTHCARE_APPLICATIONS_CAHQPROFILE =
+  "/health-provider-dashboard/profile/cahq";
+
+export const HEALTHCARE_NOTIFICATIONS =
+  "/health-provider-dashboard/notifications";

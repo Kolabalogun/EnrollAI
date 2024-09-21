@@ -1,11 +1,12 @@
 export const ApplicationFormInitialState = {
+  id: new Date(Date.now()).toISOString(),
   pageNo: 1,
   // Step 1
 
   // Personal Information
   fullName: "",
   sex: "male",
-  dob: new Date(),
+  dob: new Date(Date.now()),
   ssn: "",
   language: "",
   phoneNumber: "",
@@ -69,8 +70,8 @@ export const ApplicationFormInitialState = {
   // Licensing
   stateMedicalicense: "",
   stateMedicalicenseNumber: "",
-  stateMedicalicenseExpirationDate: new Date(),
-  pcslicenseExpirationDate: new Date(),
+  stateMedicalicenseExpirationDate: new Date(Date.now()),
+  pcslicenseExpirationDate: new Date(Date.now()),
   pcslicense: "",
   pcslicenseNumber: "",
 
@@ -78,11 +79,11 @@ export const ApplicationFormInitialState = {
 
   // Work History
   currentEmploymentPosition: "",
-  currentEmploymentStartDate: new Date(),
-  currentEmploymentEndDate: new Date(),
+  currentEmploymentStartDate: new Date(Date.now()),
+  currentEmploymentEndDate: new Date(Date.now()),
   previousEmploymentPosition: "",
-  previousEmploymentStartDate: new Date(),
-  previousEmploymentEndDate: new Date(),
+  previousEmploymentStartDate: new Date(Date.now()),
+  previousEmploymentEndDate: new Date(Date.now()),
   previousEmploymentGAP: "",
   previousEmploymentMilitaryService: "",
 
@@ -101,13 +102,18 @@ export const ApplicationFormInitialState = {
   additionalDocumentstateMedicalicenseNumber: "",
   additionalDocumentPcslicense: "",
   additionalDocumentPcslicenseNumber: "",
-  additionalDocumentstateMedicalicenseExpirationDate: new Date(),
-  additionalDocumentPcslicenseExpirationDate: new Date(),
+  additionalDocumentstateMedicalicenseExpirationDate: new Date(Date.now()),
+  additionalDocumentPcslicenseExpirationDate: new Date(Date.now()),
 
   // Terms and Conditions
 
   termsAndConditionsOne: true,
   termsAndConditionsTwo: false,
+
+  //Submission
+
+  status: "Under review",
+  date: new Date(Date.now()),
 };
 
 export const ApplicationsData = [

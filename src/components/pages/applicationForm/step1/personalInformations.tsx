@@ -10,6 +10,7 @@ const PersonalInformations = ({
   handleDateChange,
   handlePhoneChange,
   handleChange,
+  disableForm,
 }: ApplicationProps) => {
   const { fullName, sex, dob, ssn, language, phoneNumber, email, address } =
     form;
@@ -30,6 +31,7 @@ const PersonalInformations = ({
               type="text"
               placeholder="Full Name"
               value={fullName}
+              disabled={disableForm}
               onChange={handleChange}
               className="border rounded-md p-2 outline-[0.5px] outline-secondary"
             />
@@ -42,6 +44,7 @@ const PersonalInformations = ({
               name="sex"
               id="sex"
               value={sex}
+              disabled={disableForm}
               onChange={handleChange}
             >
               <option value="male">Male</option>
@@ -62,6 +65,7 @@ const PersonalInformations = ({
 
               <ReactDatePicker
                 selected={dob}
+                disabled={disableForm}
                 onChange={(date) => handleDateChange("dob", date)}
                 dateFormat={"dd/MM/yyyy"}
                 wrapperClassName="date-picker"
@@ -77,6 +81,7 @@ const PersonalInformations = ({
               type="text"
               placeholder="xxx-xxx-876"
               value={ssn}
+              disabled={disableForm}
               onChange={handleChange}
               className="border rounded-md p-2 outline-[0.5px] outline-secondary"
             />
@@ -90,6 +95,7 @@ const PersonalInformations = ({
               type="text"
               placeholder="English, Spanish..."
               value={language}
+              disabled={disableForm}
               onChange={handleChange}
               className="border rounded-md p-2 outline-[0.5px] outline-secondary"
             />
@@ -105,6 +111,7 @@ const PersonalInformations = ({
               country="ng"
               placeholder={"(000) - 123 - 4567"}
               value={phoneNumber as E164Number | undefined}
+              disabled={disableForm}
               onChange={(phone) => handlePhoneChange("phoneNumber", phone)}
               buttonStyle={{
                 borderColor: "#e2e8f0",
@@ -129,6 +136,7 @@ const PersonalInformations = ({
               type="email"
               placeholder="Email Address"
               value={email}
+              disabled={disableForm}
               onChange={handleChange}
               className="border rounded-md p-2 outline-[0.5px] outline-secondary"
             />
@@ -145,6 +153,7 @@ const PersonalInformations = ({
               type="text"
               placeholder="Address"
               value={address}
+              disabled={disableForm}
               onChange={handleChange}
               className="border rounded-md p-2 outline-[0.5px] outline-secondary"
             />

@@ -1,15 +1,30 @@
 import { SubmitButton } from "@/components/common";
-import ApplicationsModal from "@/components/modal/applications";
+import ApplicationsModal from "@/components/modals/applications";
 import EmptyCarts from "@/components/pages/dashboard/emptyCarts";
 import Notifications from "@/components/pages/dashboard/notifications";
 import StatBar from "@/components/pages/dashboard/statbar";
 import { Progress } from "@/components/ui/progress";
+import { notificationsData } from "@/constant/data/noticationdata";
 import { useDisclosure } from "@chakra-ui/react";
 
 import { Pen, PlusIcon } from "lucide-react";
 
 const Dashboard = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
+
+  const notifications = notificationsData.map((activity) => (
+    <div className="border-y   flex items-center justify-between py-4">
+      <div className="bg-secondary rounded-full p-1 " />
+
+      <p className="font-semibold text-[12px]">{activity.title}</p>
+
+      <p className="p-1 bg-[#ccf0eb] text-green font-semibold text-[10px] ">
+        Approved
+      </p>
+
+      <p className="font-semibold text-fade text-xs">8:38 AM</p>
+    </div>
+  ));
 
   return (
     <section className="flex space-y-6 mb-20 flex-col">
@@ -54,7 +69,7 @@ const Dashboard = () => {
           </div>
 
           <div className="bg-white rounded-lg flex-1 h-full w-full flex flex-col p-5 space-y-8">
-            <p className="font-semibold text-[13px]">Tasks and Activities</p>
+            <p className="font-semibold text-base">Tasks and Activities</p>
 
             <EmptyCarts />
           </div>
@@ -93,7 +108,7 @@ const Dashboard = () => {
           </div>
 
           <div className="">
-            <Notifications />
+            <Notifications title="Notifications" data={notifications} />
           </div>
         </div>
       </div>

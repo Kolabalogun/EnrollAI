@@ -32,6 +32,8 @@ const StatCard = ({ title, value, status }: Props) => {
                   ? "bg-secondary"
                   : status === "Active"
                   ? "bg-green "
+                  : status === "Completed"
+                  ? "#32ADe6"
                   : "bg-[#f79000] "
               }`}
             />

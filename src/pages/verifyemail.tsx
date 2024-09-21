@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import showToast from "@/components/common/showtoast";
-import SuccessModal from "@/components/modal/success";
+import SuccessModal from "@/components/modals/success";
 
 const VerifyEmail = () => {
   const navigate = useNavigate();
