@@ -24,6 +24,7 @@ import {
   HealthProviderProfile,
   HealthProviderCAHQProfile,
   HealthProviderNotifications,
+  HealthProviderHelpCenter,
 } from "@/pages/healthProvider";
 
 // Lazy-loading components
@@ -87,6 +88,10 @@ const router = createBrowserRouter([
       {
         path: "/health-provider-dashboard/notifications",
         element: <HealthProviderNotifications />,
+      },
+      {
+        path: "/health-provider-dashboard/helpcenter",
+        element: <HealthProviderHelpCenter />,
       },
     ],
   },

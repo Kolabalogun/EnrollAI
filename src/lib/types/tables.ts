@@ -6,3 +6,12 @@ export type ApplicationFormType = {
   status: string;
   dob: string;
 };
+
+export type NotificationType = {
+  id: number;
+  title: string;
+  status: string;
+  date: string;
+  read: boolean;
+  desc: string;
+};

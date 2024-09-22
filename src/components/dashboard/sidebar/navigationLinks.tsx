@@ -42,21 +42,21 @@ export const usersLinks = [
     icon: <Settings size={20} className="text-secondary" />,
     iconWhite: <Settings size={20} className="text-[#667085]" />,
     title: "Settings & Support",
-    buttonLink: "/dashboard/support",
+    buttonLink: "/health-provider-dashboard/support",
   },
   {
     label: "Help Center",
     icon: <CircleHelp size={20} className="text-secondary" />,
     iconWhite: <CircleHelp size={20} className="text-[#667085]" />,
     title: "Settings & Support",
-    buttonLink: "/dashboard/support",
+    buttonLink: "/health-provider-dashboard/helpcenter",
   },
   {
     label: "Logout",
     icon: <LogOut size={20} className="text-secondary rotate-180" />,
     iconWhite: <LogOut size={20} className="text-[#667085] rotate-180" />,
     title: "Settings & Support",
-    buttonLink: "/dashboard/logout",
+    buttonLink: "/health-provider-dashboard/logout",
   },
 ];
 

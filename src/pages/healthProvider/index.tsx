@@ -13,3 +13,5 @@ export { default as HealthProviderProfile } from "./profile";
 export { default as HealthProviderCAHQProfile } from "./cahqprofile";
 
 export { default as HealthProviderNotifications } from "./notifications";
+
+export { default as HealthProviderHelpCenter } from "./helpcenter";

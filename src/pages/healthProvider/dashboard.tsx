@@ -42,8 +42,9 @@ const Dashboard = () => {
           style={{ flex: 2 }}
           className="flex flex-col w-full flex-1 space-y-9 "
         >
-          <StatBar />
-
+          <div className="">
+            <StatBar />
+          </div>
           <div className="flex gap-8">
             <div onClick={() => onOpen()}>
               <SubmitButton
