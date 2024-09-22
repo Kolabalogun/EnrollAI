@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react";
 import { EllipsisVertical } from "lucide-react";
 import { BillingTransactionsType } from "@/lib/types/tables";
 import { TableColumn } from "@/components/table";
-import { formatDateTime } from "@/utils/formatDateTime";
 import { HEALTHCARE_APPLICATIONS_DETALIS } from "@/router/routes";
 import { useNavigate } from "react-router-dom";
 
