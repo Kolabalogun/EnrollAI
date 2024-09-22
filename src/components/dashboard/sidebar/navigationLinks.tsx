@@ -42,7 +42,7 @@ export const usersLinks = [
     icon: <Settings size={20} className="text-secondary" />,
     iconWhite: <Settings size={20} className="text-[#667085]" />,
     title: "Settings & Support",
-    buttonLink: "/health-provider-dashboard/support",
+    buttonLink: "/health-provider-dashboard/settings",
   },
   {
     label: "Help Center",

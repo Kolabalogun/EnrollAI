@@ -25,3 +25,7 @@ export { default as AdsIcon } from "./ads.svg";
 export { default as HelpIcon } from "./help.svg";
 
 export { default as GoogleIcon } from "./google.svg";
+
+export { default as CashIcon } from "./cash.svg";
+
+export { default as StripeIcon } from "./stripe.svg";

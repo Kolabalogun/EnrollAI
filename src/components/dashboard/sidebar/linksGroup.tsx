@@ -6,8 +6,7 @@ import { useDispatch } from "react-redux";
 
 import { useToast } from "@chakra-ui/react";
 import { logout } from "@/redux/features/authSlice";
-import { resetDomainForm } from "@/redux/features/domainSlice";
-import { useGlobalContext } from "@/context/useGlobalContext";
+
 import showToast from "@/components/common/showtoast";
 
 type LinksGroupType = {
@@ -63,7 +62,6 @@ export function LinksGroup({
     try {
       dispatch(logout());
       localStorage.removeItem("enrollai-user");
-      dispatch(resetDomainForm());
 
       showToast(toast, "Crawler", "error", "You've successfully logged out");
       navigate("/login");

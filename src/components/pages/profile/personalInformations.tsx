@@ -45,12 +45,9 @@ const PersonalInformations = ({
         value: state.isoCode,
       }))
     : [];
-  // console.log(states);
 
   const handleCountryChange = (option: any) => {
     setSelectedCountry(option);
-
-    console.log(option);
 
     handlePhoneChange("citizenship", option);
   };

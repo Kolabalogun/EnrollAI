@@ -29,3 +29,8 @@ export const HEALTHCARE_APPLICATIONS_CAHQPROFILE =
 
 export const HEALTHCARE_NOTIFICATIONS =
   "/health-provider-dashboard/notifications";
+
+export const HEALTHCARE_SETTINGS = "/health-provider-dashboard/settings";
+
+export const HEALTHCARE_BILLING_ADD =
+  "/health-provider-dashboard/settings/billing-add-payment";

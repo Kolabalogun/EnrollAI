@@ -15,6 +15,7 @@ interface ConfirmationModalProps {
   onConfirm: any;
   onClose: () => void;
   isLoading?: boolean;
+  buttonText?: string;
 }
 
 const ConfirmationModal = ({
@@ -24,6 +25,7 @@ const ConfirmationModal = ({
   onConfirm,
   onClose,
   isLoading,
+  buttonText = "Confirm",
 }: ConfirmationModalProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -35,10 +37,14 @@ const ConfirmationModal = ({
         <DialogFooter>
           <Button
             disabled={isLoading}
-            className="bg-secondary hover:text-secondary  text-white"
+            className={`${
+              buttonText === "Delete"
+                ? "bg-red-500 hover:text-red-500 "
+                : "bg-secondary hover:text-secondary "
+            } text-white`}
             onClick={onConfirm}
           >
-            {isLoading ? "Loading..." : "Confirm"}
+            {isLoading ? "Loading..." : buttonText}
           </Button>
           <Button className="text-black" variant="outline" onClick={onClose}>
             Cancel

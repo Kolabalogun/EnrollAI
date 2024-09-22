@@ -25,6 +25,8 @@ import {
   HealthProviderCAHQProfile,
   HealthProviderNotifications,
   HealthProviderHelpCenter,
+  HealthProviderSettings,
+  HealthProviderAddBillingPayment,
 } from "@/pages/healthProvider";
 
 // Lazy-loading components
@@ -92,6 +94,14 @@ const router = createBrowserRouter([
       {
         path: "/health-provider-dashboard/helpcenter",
         element: <HealthProviderHelpCenter />,
+      },
+      {
+        path: "/health-provider-dashboard/settings",
+        element: <HealthProviderSettings />,
+      },
+      {
+        path: "/health-provider-dashboard/settings/billing-add-payment",
+        element: <HealthProviderAddBillingPayment />,
       },
     ],
   },

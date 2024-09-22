@@ -15,3 +15,11 @@ export type NotificationType = {
   read: boolean;
   desc: string;
 };
+
+export type BillingTransactionsType = {
+  id: string;
+  invoice: string;
+  date: string;
+  amount: string;
+  status: string;
+};
