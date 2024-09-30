@@ -2,7 +2,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import { Loader } from "../components/common";
-import ErrorPage from "../pages/error";
+
 import {
   CreateNewPassword,
   ForgetPassword,
@@ -13,6 +13,9 @@ import {
   ChooseTypeOfRegisteration,
   GetStated,
   KeyFeatures,
+  ErrorPage,
+  Notifications,
+  HelpCenter,
 } from "../pages";
 import { Protected, UnAuthenticated } from "@/components/auth";
 import {
@@ -22,8 +25,6 @@ import {
   HealthProviderApplicationsDetails,
   HealthProviderProfile,
   HealthProviderCAHQProfile,
-  HealthProviderNotifications,
-  HealthProviderHelpCenter,
   HealthProviderSettings,
   HealthProviderAddBillingPayment,
   HealthProviderRegister,
@@ -34,6 +35,7 @@ import {
   CreateApplicationForm,
   IncomingApplications,
   OrganizationRegister,
+  Providers,
 } from "@/pages/organizationflow";
 
 // Lazy-loading components
@@ -92,11 +94,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/health-provider/notifications",
-        element: <HealthProviderNotifications />,
+        element: <Notifications />,
       },
       {
         path: "/dashboard/health-provider/helpcenter",
-        element: <HealthProviderHelpCenter />,
+        element: <HelpCenter />,
       },
       {
         path: "/dashboard/health-provider/settings",
@@ -140,6 +142,18 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/credentializing-organization/approved-applications",
         element: <ApprovedApplications />,
+      },
+      {
+        path: "/dashboard/credentializing-organization/providers",
+        element: <Providers />,
+      },
+      {
+        path: "/dashboard/credentializing-organization/notifications",
+        element: <Notifications />,
+      },
+      {
+        path: "/dashboard/credentializing-organization/help-center",
+        element: <HelpCenter />,
       },
     ],
   },

@@ -1,7 +1,5 @@
 import SecondaryButton from "@/components/common/buttons/secondaryButton";
-import { ReusableTable } from "@/components/table/selectTable";
-import { notificationsData } from "@/constant/data/noticationdata";
-import { notificationColumns } from "@/constant/table/notificationHeads";
+import OrganizationApplicationLists from "@/components/pages/applications/organization";
 import { Search } from "lucide-react";
 
 const IncomingApplications = () => {
@@ -39,10 +37,7 @@ const IncomingApplications = () => {
         </div>
 
         <div className="">
-          <ReusableTable
-            data={notificationsData}
-            columns={notificationColumns}
-          />
+          <OrganizationApplicationLists />
         </div>
       </div>
     </section>

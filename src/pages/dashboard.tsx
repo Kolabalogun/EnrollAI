@@ -3,14 +3,12 @@ import { SubmitButton } from "@/components/common";
 import ApplicationsModal from "@/components/modals/applications";
 import ApplicationLists from "@/components/pages/applications";
 import OrganizationApplicationLists from "@/components/pages/applications/organization";
-
 import Notifications from "@/components/pages/dashboard/notifications";
 import OrganizationStatBar from "@/components/pages/dashboard/organization/statbar";
 import StatBar from "@/components/pages/dashboard/statbar";
 import { Progress } from "@/components/ui/progress";
 import { notificationsData } from "@/constant/data/noticationdata";
 import { useDisclosure } from "@chakra-ui/react";
-
 import { Pen, PlusIcon } from "lucide-react";
 import { useSelector } from "react-redux";
 

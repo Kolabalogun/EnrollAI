@@ -2,14 +2,14 @@ export const formatDateTime = (date: string, noTime?: boolean): string => {
   // Convert the string timestamp to a Date object
   const parsedDate = new Date(date);
 
-  // Format the date as MM/DD/YYYY
+  // Format the date as "Month day, year" (e.g., July 7, 2024)
   const formattedDate = parsedDate.toLocaleDateString("en-US", {
-    month: "2-digit",
-    day: "2-digit",
-    year: "numeric",
+    month: "long",  // Full month name
+    day: "numeric", // Day as a number
+    year: "numeric" // Full year
   });
 
-  // Format the time as HH:MM:SS
+  // Format the time as HH:MM:SS (optional)
   const formattedTime = parsedDate.toLocaleTimeString("en-US", {
     hour: "2-digit",
     minute: "2-digit",
@@ -17,5 +17,5 @@ export const formatDateTime = (date: string, noTime?: boolean): string => {
     hour12: false,
   });
 
-  return `${formattedDate} ${noTime ? formattedTime : ""}`;
+  return `${formattedDate}${!noTime ? ` ${formattedTime}` : ""}`;
 };

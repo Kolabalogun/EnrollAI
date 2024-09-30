@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -9,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Button } from "../ui/button";
 
 export interface TableColumn<T> {
   header: string;
@@ -22,17 +23,29 @@ interface TableComponentProps<T> {
   footerTxt: string;
   columns: TableColumn<T>[];
   data: T[];
-  footerOnSumbit?: () => void;
-  emptyMessage?: string; // Add a prop for the empty message
+  footerOnSubmit?: () => void;
+  emptyMessage?: string;
+  rowsPerPage?: number; // Option to set rows per page for pagination
 }
 
 export function TableComponent<T>({
   footerTxt,
   columns,
   data,
-  footerOnSumbit,
-  emptyMessage = "No data available", // Default empty message
+  footerOnSubmit,
+  emptyMessage = "No data available",
+  rowsPerPage = 10, // Default rows per page
 }: TableComponentProps<T>) {
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(0);
+  const totalPages = Math.ceil(data.length / rowsPerPage);
+
+  // Get paginated data
+  const paginatedData = data.slice(
+    currentPage * rowsPerPage,
+    (currentPage + 1) * rowsPerPage
+  );
+
   // Type guard to ensure the value is a valid ReactNode
   const isReactNode = (value: any): value is React.ReactNode => {
     return (
@@ -43,12 +56,18 @@ export function TableComponent<T>({
     );
   };
 
+  // Handle page navigation
+  const goToPreviousPage = () =>
+    setCurrentPage((prev) => Math.max(prev - 1, 0));
+  const goToNextPage = () =>
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1));
+
   return (
-    <div className="mt-3 flex-1 ">
+    <div className="mt-3 flex-1">
       <Table>
         <TableCaption>
           <p
-            onClick={footerOnSumbit}
+            onClick={footerOnSubmit}
             className="text-right text-blue text-xs font-medium cursor-pointer"
           >
             {footerTxt}
@@ -68,7 +87,7 @@ export function TableComponent<T>({
           </TableRow>
         </TableHeader>
         <TableBody className="[&_tr:last-child]:border-b-[1px] mb-10 remove-scrollbar">
-          {data.length === 0 ? (
+          {paginatedData.length === 0 ? (
             <TableRow>
               <TableCell
                 colSpan={columns.length}
@@ -78,7 +97,7 @@ export function TableComponent<T>({
               </TableCell>
             </TableRow>
           ) : (
-            data.map((row, rowIndex) => {
+            paginatedData.map((row, rowIndex) => {
               // Ensure row is correctly typed as T
               const typedRow = row as T & { level?: string };
 
@@ -115,6 +134,28 @@ export function TableComponent<T>({
           )}
         </TableBody>
       </Table>
+
+      {/* Pagination Controls */}
+      <div className="flex justify-end items-center mt-4">
+        <div className="space-x-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={goToPreviousPage}
+            disabled={currentPage === 0}
+          >
+            Previous
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={goToNextPage}
+            disabled={currentPage === totalPages - 1}
+          >
+            Next
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }

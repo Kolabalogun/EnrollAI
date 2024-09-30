@@ -1,5 +1,5 @@
 import { CircleAlert, Headset, Search } from "lucide-react";
-import { accordionDummyData, helps } from "../../constant/data/helpdata.ts";
+import { accordionDummyData, helps } from "../constant/data/helpdata.ts";
 import CustomAccordion from "@/components/pages/helpcenter/accordion.tsx";
 import { SubmitButton } from "@/components/common/index.tsx";
 

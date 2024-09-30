@@ -217,17 +217,17 @@ export const OrganizationApplicationFormTableHeads = (
     accessor: (row) => (
       <div className="space-y-1">
         <p className="font-semibold py-4  text-xs">
-          {formatDateTime(row.date)}
+          {formatDateTime(row.date, true)}
         </p>
       </div>
     ),
-    className: "text-center font-medium",
-    headClassName: "text-center     font-medium",
+    className: " font-medium",
+    headClassName: "     font-medium",
   },
   {
     header: "Status",
     accessor: (row) => (
-      <div className="self-center text-xs  text-center items-center justify-center flex gap-2 font-medium p-0.5 rounded-full  w-32 border-[#21A0A0] text-[#21A0A0] border bg-[#d3ecec] ">
+      <div className="self-center text-xs   items-center justify-center flex gap-2 font-medium p-0.5 rounded-full  w-32 border-[#21A0A0] text-[#21A0A0] border bg-[#d3ecec] ">
         {row.status}
       </div>
     ),

@@ -2,17 +2,17 @@ import SecondaryButton from "@/components/common/buttons/secondaryButton";
 import OrganizationApplicationLists from "@/components/pages/applications/organization";
 import { Search } from "lucide-react";
 
-const AllApplications = () => {
+const Providers = () => {
   return (
     <section className="flex space-y-6 mb-20 flex-col">
       <div className="flex flex-col gap-1">
-        <p className="font-semibold text-3xl">All Applications</p>
+        <p className="font-semibold text-3xl">Providers</p>
       </div>
 
       <div className="bg-white rounded-lg flex-1 h-full w-full flex flex-col p-5 space-y-6">
         <div className="w-full flex gap-5 justify-between items-center">
           <div className="flex-1">
-            <p className="font-semibold text-base">All Applications</p>
+            <p className="font-semibold text-base">Providers</p>
           </div>
 
           <div className="">
@@ -44,4 +44,4 @@ const AllApplications = () => {
   );
 };
 
-export default AllApplications;
+export default Providers;
