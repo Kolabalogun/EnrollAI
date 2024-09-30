@@ -126,21 +126,51 @@ export const ProfileFormValidation = z.object({
   language: z.string().optional(),
 });
 
-export const SupportFormValidation = z.object({
-  firstName: z
-    .string()
-    .min(2, "First Name must be at least 2 characters")
-    .max(50, "First Name must be at most 50 characters"),
-  lastName: z
-    .string()
-    .min(2, "Last Name must be at least 2 characters")
-    .max(50, "Last Name must be at most 50 characters"),
-  email: z.string().email("Invalid email address"),
-  phone: z
-    .string()
-    .refine((phone) => /^\d{10,14}$/.test(phone), "Invalid phone number"),
-  message: z
-    .string()
-    .min(2, "Message must be at least 2 characters")
-    .max(50, "Message must be at most 50 characters"),
-});
+export const OrganizationRegisterFormValidation = z
+  .object({
+    organizationName: z
+      .string()
+      .min(2, "Organization Name must be at least 2 characters")
+      .max(50, "Organization Name must be at most 50 characters"),
+    adminFullName: z
+      .string()
+      .min(2, "Admin Name must be at least 2 characters")
+      .max(50, "Admin Name must be at most 50 characters"),
+    email: z.string().email("Invalid email address"),
+    password: z
+      .string()
+      .min(8, "Password must be at least 8 characters long") // Minimum length
+      .max(32, "Password must be at most 32 characters long") // Maximum length
+      .refine(
+        (password) => /[a-z]/.test(password),
+        "Password must contain at least one lowercase letter"
+      ) // Lowercase letter
+      .refine(
+        (password) => /[A-Z]/.test(password),
+        "Password must contain at least one uppercase letter"
+      ) // Uppercase letter
+      .refine(
+        (password) => /[0-9]/.test(password),
+        "Password must contain at least one number"
+      ) // Number
+      .refine(
+        (password) => /[@$!%*?&]/.test(password),
+        "Password must contain at least one special character"
+      ), // Special character
+
+    confirmPassword: z
+      .string()
+      .min(8, "Confirm Password must be at least 8 characters long"),
+
+    termsAndConditions: z
+      .boolean()
+      .default(false)
+      .refine((value) => value === true, {
+        message: "You must accept our terms and conditions in order to proceed",
+      }),
+  })
+
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+  });

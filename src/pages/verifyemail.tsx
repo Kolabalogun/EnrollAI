@@ -2,11 +2,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
-
 import { ForgetPasswordCodeFormValidation } from "@/lib/validation";
 import { AuthLayout } from "@/layout";
 import { useLocation, useNavigate } from "react-router-dom";
-import { LOGIN_ROUTE } from "@/router/routes";
+import { GET_STARTED_ROUTE } from "@/router/routes";
 // import { useVerifyOtpMutation, useResendOtpMutation } from "@/services/auth";
 import {
   PinInput,
@@ -83,14 +82,14 @@ const VerifyEmail = () => {
 
       // console.log(res);
 
-      // showToast(toast, "Crawler", "success", `${res.msg}`);
+      // showToast(toast, "Enroll AI", "success", `${res.msg}`);
       onOpen();
       // navigate(LOGIN_ROUTE);
     } catch (error: any) {
       console.log(error);
       showToast(
         toast,
-        "Crawler",
+        "Enroll AI",
         "error",
         "An error has occurred. Please try again"
       );
@@ -104,12 +103,12 @@ const VerifyEmail = () => {
       // };
       // const res = await resendOtp(payload).unwrap();
       // console.log(res);
-      // showToast(toast, "Crawler", "success", `${res.msg}`);
+      // showToast(toast, "Enroll AI", "success", `${res.msg}`);
     } catch (error: any) {
       console.log(error);
       showToast(
         toast,
-        "Crawler",
+        "Enroll AI",
         "error",
         "An error has occurred. Please try again"
       );
@@ -128,7 +127,7 @@ const VerifyEmail = () => {
   return (
     <AuthLayout
       title="Verify your email"
-      desc={`Please enter the 6-digit code we sent to <br/> <strong>${email}</strong>.    `}
+      desc={`Please enter the 6-digit code we sent to <br/> <strong>${email.toLowerCase()}</strong>.    `}
       form={form}
       onSubmit={onSubmit}
       isLoading={isLoading || resendLoading}
@@ -144,7 +143,7 @@ const VerifyEmail = () => {
         isOpen={isOpen}
         title="Verification Successful"
         desc="Click Continue to setup-up your profile."
-        handleClick={() => navigate(LOGIN_ROUTE)}
+        handleClick={() => navigate(GET_STARTED_ROUTE)}
       />
       <div className="flex my-10 items-center justify-center gap-3">
         <PinInput

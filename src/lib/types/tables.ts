@@ -1,5 +1,6 @@
 export type ApplicationFormType = {
   id: string;
+  fullName: string;
   application: string;
   description: string;
   date: string;

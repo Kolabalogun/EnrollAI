@@ -2,7 +2,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { RegisterFormValidation } from "@/lib/validation";
+import { OrganizationRegisterFormValidation } from "@/lib/validation";
 import { CustomFormField } from "@/components/common";
 import { FormFieldType } from "@/components/common/customFormField";
 import { AuthLayout } from "@/layout";
@@ -20,17 +20,20 @@ const Register = () => {
 
   const isLoading = false;
 
-  const form = useForm<z.infer<typeof RegisterFormValidation>>({
-    resolver: zodResolver(RegisterFormValidation),
+  const form = useForm<z.infer<typeof OrganizationRegisterFormValidation>>({
+    resolver: zodResolver(OrganizationRegisterFormValidation),
     defaultValues: {
-      name: "",
+      organizationName: "",
+      adminFullName: "",
       email: "",
       password: "",
       confirmPassword: "",
     },
   });
 
-  async function onSubmit(values: z.infer<typeof RegisterFormValidation>) {
+  async function onSubmit(
+    values: z.infer<typeof OrganizationRegisterFormValidation>
+  ) {
     console.log(values);
 
     // const payload = {
@@ -44,7 +47,7 @@ const Register = () => {
       //   const res = await register(payload).unwrap();
 
       //   console.log(res);
-      //   showToast(toast, "Crawler", "success", `${res.msg}`);
+      //   showToast(toast, "Enroll AI", "success", `${res.msg}`);
 
       setTimeout(() => {
         navigate(VERIFY_EMAIL_ROUTE, { state: { email: values.email } });
@@ -53,7 +56,7 @@ const Register = () => {
       console.log(error);
       showToast(
         toast,
-        "Crawler",
+        "Enroll AI",
         "error",
         "An error has occurred. Please try again"
       );
@@ -71,24 +74,24 @@ const Register = () => {
       <CustomFormField
         fieldType={FormFieldType.INPUT}
         control={form.control}
-        name="name"
-        label="Full name"
-        placeholder="Enter your name"
+        name="organizationName"
+        label="Organization Name"
+        placeholder="Enter your organization name"
       />
 
       <CustomFormField
         fieldType={FormFieldType.INPUT}
         control={form.control}
-        name="name"
-        label="Professional (Optional)"
-        placeholder="Example (Dr.)"
+        name="adminFullName"
+        label="Administrator Full Name"
+        placeholder="Example (Dr. Robert)"
       />
 
       <CustomFormField
         control={form.control}
         fieldType={FormFieldType.INPUT}
         name="email"
-        label="Email"
+        label="Work Email"
         placeholder="Enter your email address"
         iconSrc="/assets/img/email.svg"
         iconAlt="email"

@@ -1,10 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Modal, ModalOverlay, ModalContent, ModalBody } from "@chakra-ui/react";
 import { Search } from "lucide-react";
 
 import { useNavigate } from "react-router-dom";
-import { HEALTHCARE_APPLICATION_FORM } from "@/router/routes";
+import {
+  HEALTHCARE_APPLICATION_FORM,
+  ORGANIZATION_CREATE_APPLICATION_FORM,
+} from "@/router/routes";
 import { ApplicationsData } from "@/constant/data/applicationsdata";
+import { useSelector } from "react-redux";
 
 const ApplicationsModal = ({
   onClose,
@@ -16,6 +21,7 @@ const ApplicationsModal = ({
   const navigate = useNavigate();
   // State to track the search input
   const [searchQuery, setSearchQuery] = useState("");
+  const { accountType } = useSelector((state: any) => state.auth);
 
   // Filter applications based on search input
   const filteredApplications = ApplicationsData.filter((app) =>
@@ -58,7 +64,11 @@ const ApplicationsModal = ({
                 filteredApplications.map((app, idx) => (
                   <div
                     key={idx}
-                    onClick={() => navigate(HEALTHCARE_APPLICATION_FORM)}
+                    onClick={
+                      accountType === "Organization"
+                        ? () => navigate(ORGANIZATION_CREATE_APPLICATION_FORM)
+                        : () => navigate(HEALTHCARE_APPLICATION_FORM)
+                    }
                     className="flex flex-col cursor-pointer gap-2 hover:bg-primary p-2"
                   >
                     <p className="font-semibold">{app.title}</p>

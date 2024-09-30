@@ -15,6 +15,7 @@ export type User = {
 export interface AuthState {
   user: User | null;
   isAuthenticated: boolean | null;
+  accountType: string;
 }
 
 // Function to safely parse the local storage item or default to false
@@ -32,6 +33,7 @@ const initialState: AuthState = {
   user: null, // User object
   // isAuthenticated: getIsAuthenticatedFromLocalStorage(), // Authentication status
   isAuthenticated: false,
+  accountType: "Provider",
 };
 
 // Create the auth slice using createSlice
@@ -52,7 +54,9 @@ const authSlice = createSlice({
       //   JSON.stringify(state.isAuthenticated)
       // );
     },
-
+    setAccountType: (state, action) => {
+      state.accountType = action.payload;
+    },
     // Reducer to log out user and update authentication status in localStorage
     logout: (state) => {
       state.user = null;
@@ -66,7 +70,8 @@ const authSlice = createSlice({
 });
 
 // Export action creators for the setCredentials, setIsAuthenticated, and logout reducers
-export const { setCredentials, setIsAuthenticated, logout } = authSlice.actions;
+export const { setCredentials, setIsAuthenticated, logout, setAccountType } =
+  authSlice.actions;
 
 // Export the reducer for use in the Redux store
 export default authSlice.reducer;

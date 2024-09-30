@@ -1,5 +1,3 @@
-export { default as HealthProviderKeyFeatures } from "./keyfeatures";
-
 export { default as HealthProviderApplicationForm } from "./applicationform";
 
 export { default as HealthProviderApplications } from "./applications";
@@ -19,3 +17,5 @@ export { default as HealthProviderHelpCenter } from "./helpcenter";
 export { default as HealthProviderSettings } from "./settings";
 
 export { default as HealthProviderAddBillingPayment } from "./addbillingpayment";
+
+export { default as HealthProviderRegister } from "./register";

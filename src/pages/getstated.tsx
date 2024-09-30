@@ -1,7 +1,7 @@
 import { Frame1, Frame2, GetStartedImg, Frame3, Frame4 } from "@/assets/img";
 import { SubmitButton } from "@/components/common";
 import { GetStartedLayout } from "@/layout";
-import { HEALTHCARE_KEY_FEATURES } from "@/router/routes";
+import { KEY_FEATURES } from "@/router/routes";
 import { useNavigate } from "react-router-dom";
 
 const GetStated = () => {
@@ -43,7 +43,7 @@ const GetStated = () => {
           <p className="raleway font-semibold">
             Let’s get started with a few easy steps:
           </p>
-          <div className="" onClick={() => navigate(HEALTHCARE_KEY_FEATURES)}>
+          <div className="" onClick={() => navigate(KEY_FEATURES)}>
             <SubmitButton
               type="button"
               className=" py-5 px-10 rounded-lg w-auto "

@@ -34,7 +34,7 @@ export const notificationColumns: ColumnDef<NotificationType>[] = [
             : row.getValue("status") === "Update"
             ? "text-[#d456fd] bg-[#f6ddff]"
             : "text-[#5a8cff] bg-[#dee8ff]"
-        } font-semibold text-[12px] text-center rounded-md w-20 `}
+        } font-semibold text-[11px] text-center rounded-md w-20 `}
       >
         {row.getValue("status")}
       </p>

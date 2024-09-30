@@ -13,7 +13,7 @@ import { Avatar } from "@/assets/img";
 import ProgressBar from "@/components/common/progressBar";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { usersLinks } from "./navigationLinks";
+import { healthProviderLinks } from "./navigationLinks";
 import { LinksGroup } from "./linksGroup";
 
 const SidebarDrawer = () => {
@@ -22,16 +22,16 @@ const SidebarDrawer = () => {
   // Mobile Nav Draawer
   const { onClose, isOpen } = useGlobalContext();
 
-  const getUsersLinks = () => (
+  const gethealthProviderLinks = () => (
     <div className="flex flex-col gap-3 mb-8">
       <p className="text-white font-medium">Menu</p>
-      {usersLinks.map((item) => (
+      {healthProviderLinks.map((item) => (
         <LinksGroup drawer {...item} key={item.label} />
       ))}
     </div>
   );
 
-  const links = user?.role === "admin" ? [] : getUsersLinks();
+  const links = user?.role === "admin" ? [] : gethealthProviderLinks();
 
   return (
     <Drawer
@@ -45,7 +45,7 @@ const SidebarDrawer = () => {
       <DrawerContent>
         <DrawerHeader>
           <Link to={"/"} onClick={onClose}>
-            <h1 className="dashboard-logo">Crawler</h1>
+            <h1 className="dashboard-logo">Enroll AI</h1>
           </Link>
         </DrawerHeader>
 

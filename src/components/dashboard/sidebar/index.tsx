@@ -1,14 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { Logo } from "@/assets/img";
 import { close, open } from "@/redux/features/toggleSidebarSlice";
-import { usersLinks } from "./navigationLinks";
+import { healthProviderLinks, organizationLinks } from "./navigationLinks";
 import { LinksGroup } from "./linksGroup";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
+
+  const { accountType } = useSelector((state: any) => state.auth);
 
   // Close sidebar on window resize for smaller screens
   useEffect(() => {
@@ -28,11 +30,32 @@ const Sidebar = () => {
     };
   }, [dispatch]);
 
-  const getLinks = () => {
+  const getOrganizationLinks = () => {
     const groupedUserLinks: Record<string, any[]> = {};
 
-    // Group admin links by their titles
-    usersLinks.forEach((link: any) => {
+    organizationLinks.forEach((link: any) => {
+      if (link.title) {
+        if (!groupedUserLinks[link.title]) {
+          groupedUserLinks[link.title] = [];
+        }
+        groupedUserLinks[link.title].push(link);
+      }
+    });
+
+    return Object.keys(groupedUserLinks).map((title) => (
+      <div key={title} className="flex raleway flex-col gap-3 mb-8">
+        <p className="text-[#4b4b4b] font-semibold text-xs">{title}</p>
+        {groupedUserLinks[title].map((item) => (
+          <LinksGroup {...item} key={item.label} />
+        ))}
+      </div>
+    ));
+  };
+
+  const getProviderLinks = () => {
+    const groupedUserLinks: Record<string, any[]> = {};
+
+    healthProviderLinks.forEach((link: any) => {
       if (link.title) {
         if (!groupedUserLinks[link.title]) {
           groupedUserLinks[link.title] = [];
@@ -52,11 +75,14 @@ const Sidebar = () => {
     ));
   };
 
-  const links = getLinks();
+  const links =
+    accountType === "Organization"
+      ? getOrganizationLinks()
+      : getProviderLinks();
 
   return (
     <div
-      className={`  border-r-fade bg-primary border-r-[2px] pb-5 p-6  h-screen overflow-y-auto z-50 scrollbar-y remove-scrollbar transition lg:flex flex-col justify-between ease-in-out w-[250px]   hidden `}
+      className={`  border-r-fade bg-primary border-r-[2px] pb-5 p-6  h-screen overflow-y-auto z-50 scrollbar-y remove-scrollbar transition lg:flex flex-col justify-between ease-in-out w-[300px]   hidden `}
     >
       <div className="flex flex-col">
         {/* Logo */}

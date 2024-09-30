@@ -11,13 +11,12 @@ import {
   Root,
   VerifyEmail,
   ChooseTypeOfRegisteration,
-  Register,
   GetStated,
+  KeyFeatures,
 } from "../pages";
 import { Protected, UnAuthenticated } from "@/components/auth";
 import {
   HealthProviderApplicationForm,
-  HealthProviderKeyFeatures,
   HealthProviderApplications,
   HealthProviderApplicationsFullList,
   HealthProviderApplicationsDetails,
@@ -27,15 +26,19 @@ import {
   HealthProviderHelpCenter,
   HealthProviderSettings,
   HealthProviderAddBillingPayment,
+  HealthProviderRegister,
 } from "@/pages/healthProvider";
+import {
+  AllApplications,
+  ApprovedApplications,
+  CreateApplicationForm,
+  IncomingApplications,
+  OrganizationRegister,
+} from "@/pages/organizationflow";
 
 // Lazy-loading components
 const Home = lazy(() => import("../pages/home"));
-// const Dashboard = lazy(() => import("../pages/dashboard"));
-
-const HealthProviderDashboard = lazy(
-  () => import("../pages/healthProvider/dashboard")
-);
+const Dashboard = lazy(() => import("../pages/dashboard"));
 
 const router = createBrowserRouter([
   {
@@ -48,7 +51,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "/health-provider-dashboard",
+    path: "/dashboard",
     element: (
       // Protected route for authenticated users
       <Suspense fallback={<Loader />}>
@@ -60,57 +63,102 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/health-provider-dashboard",
-        element: <HealthProviderDashboard />,
+        path: "/dashboard",
+        element: <Dashboard />,
       },
       {
-        path: "/health-provider-dashboard/application-form",
+        path: "/dashboard/health-provider/application-form",
         element: <HealthProviderApplicationForm />,
       },
       {
-        path: "/health-provider-dashboard/applications",
+        path: "/dashboard/health-provider/applications",
         element: <HealthProviderApplications />,
       },
       {
-        path: "/health-provider-dashboard/applications/full-list",
+        path: "/dashboard/health-provider/applications/full-list",
         element: <HealthProviderApplicationsFullList />,
       },
       {
-        path: "/health-provider-dashboard/applications/details/:id",
+        path: "/dashboard/health-provider/applications/details/:id",
         element: <HealthProviderApplicationsDetails />,
       },
       {
-        path: "/health-provider-dashboard/profile",
+        path: "/dashboard/health-provider/profile",
         element: <HealthProviderProfile />,
       },
       {
-        path: "/health-provider-dashboard/profile/cahq",
+        path: "/dashboard/health-provider/profile/cahq",
         element: <HealthProviderCAHQProfile />,
       },
       {
-        path: "/health-provider-dashboard/notifications",
+        path: "/dashboard/health-provider/notifications",
         element: <HealthProviderNotifications />,
       },
       {
-        path: "/health-provider-dashboard/helpcenter",
+        path: "/dashboard/health-provider/helpcenter",
         element: <HealthProviderHelpCenter />,
       },
       {
-        path: "/health-provider-dashboard/settings",
+        path: "/dashboard/health-provider/settings",
         element: <HealthProviderSettings />,
       },
       {
-        path: "/health-provider-dashboard/settings/billing-add-payment",
+        path: "/dashboard/health-provider/settings/billing-add-payment",
         element: <HealthProviderAddBillingPayment />,
       },
     ],
   },
   {
-    path: "/register",
+    path: "/dashboard",
+    element: (
+      // Protected route for authenticated users
+      <Suspense fallback={<Loader />}>
+        <Protected>
+          <Root />
+        </Protected>
+      </Suspense>
+    ),
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
+      },
+
+      {
+        path: "/dashboard/credentializing-organization/create-application-form",
+        element: <CreateApplicationForm />,
+      },
+      {
+        path: "/dashboard/credentializing-organization/incoming-applications",
+        element: <IncomingApplications />,
+      },
+      {
+        path: "/dashboard/credentializing-organization/all-applications",
+        element: <AllApplications />,
+      },
+      {
+        path: "/dashboard/credentializing-organization/approved-applications",
+        element: <ApprovedApplications />,
+      },
+    ],
+  },
+  {
+    path: "/health-provider-register",
     element: (
       // Unauthenticated route for users who are not logged in
       <UnAuthenticated>
-        <Register />
+        <HealthProviderRegister />
+      </UnAuthenticated>
+    ),
+  },
+
+  {
+    path: "/credentializing-organization-register",
+    element: (
+      // Unauthenticated route for users who are not logged in
+      <UnAuthenticated>
+        <OrganizationRegister />
       </UnAuthenticated>
     ),
   },
@@ -162,7 +210,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/getstated",
+    path: "/getstarted",
     element: (
       <Protected>
         <GetStated />
@@ -170,10 +218,10 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/healthcare-provider-keyfeatures",
+    path: "/keyfeatures",
     element: (
       <Protected>
-        <HealthProviderKeyFeatures />
+        <KeyFeatures />
       </Protected>
     ),
   },

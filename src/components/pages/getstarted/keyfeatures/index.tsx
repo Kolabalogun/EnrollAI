@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import PointChecks from "../checks";
+import { useSelector } from "react-redux";
 
 const ExploreKeyFeatures = ({ tab }: { tab: number }) => {
+  const { accountType } = useSelector((state: any) => state.auth);
   return (
     <section className="flex flex-col w-[600px] gap-10">
       {tab ? (
@@ -22,6 +25,8 @@ const ExploreKeyFeatures = ({ tab }: { tab: number }) => {
             ? "Login to CAQH ProView:"
             : tab === 3
             ? "Start a New Application:"
+            : tab === 0 && accountType === "Organization"
+            ? "Automating data retrieval from CAQH ProView:"
             : "Pre-Filled Applications:"
         }
         desc={
@@ -42,6 +47,8 @@ const ExploreKeyFeatures = ({ tab }: { tab: number }) => {
             ? "Authorize Access:"
             : tab === 3
             ? "Review and Edit:"
+            : tab === 0 && accountType === "Organization"
+            ? "Simplifying application management:"
             : "Real-Time Tracking:"
         }
         desc={
@@ -62,6 +69,8 @@ const ExploreKeyFeatures = ({ tab }: { tab: number }) => {
             ? "Link Accounts:"
             : tab === 3
             ? "Submit with Confidence:"
+            : tab === 0 && accountType === "Organization"
+            ? "Customized Credentialing Templates:"
             : "Secure Data Handling:"
         }
         desc={
@@ -74,6 +83,15 @@ const ExploreKeyFeatures = ({ tab }: { tab: number }) => {
             : "We prioritize your privacy. Your data is handled securely and purged after use."
         }
       />
+
+      {tab === 0 && accountType === "Organization" && (
+        <PointChecks
+          title={"Bulk application processing:"}
+          desc={
+            "Perform Bulk application processing seamlessly with our bulk application feature."
+          }
+        />
+      )}
     </section>
   );
 };

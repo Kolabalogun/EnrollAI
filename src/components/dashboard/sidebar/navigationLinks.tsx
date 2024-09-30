@@ -6,57 +6,149 @@ import {
   Settings,
   CircleHelp,
   LogOut,
+  UserRoundCheck,
+  SquareKanban,
+  Triangle,
+  Square,
+  Hexagon,
 } from "lucide-react";
 
-export const usersLinks = [
+export const healthProviderLinks = [
   {
     label: "Dashboard",
     icon: <LayoutDashboard size={20} className="text-secondary" />,
     iconWhite: <LayoutDashboard size={20} className="text-[#667085]" />,
     title: "Menu",
-    buttonLink: "/health-provider-dashboard",
+    buttonLink: "/dashboard/health-provider",
   },
   {
     label: "Applications",
-    icon: <Send size={20} className="text-secondary" />,
+    icon: <Send size={20} className="text-secondary bg-se " />,
     iconWhite: <Send size={20} className="text-[#667085]" />,
     title: "Menu",
-    buttonLink: "/health-provider-dashboard/applications",
+    buttonLink: "/dashboard/health-provider/applications",
   },
   {
     label: "Profile",
     icon: <User size={20} className="text-secondary" />,
     iconWhite: <User size={20} className="text-[#667085]" />,
     title: "Menu",
-    buttonLink: "/health-provider-dashboard/profile",
+    buttonLink: "/dashboard/health-provider/profile",
   },
   {
     label: "Notification",
     icon: <Bell size={20} className="text-secondary" />,
     iconWhite: <Bell size={20} className="text-[#667085]" />,
     title: "Menu",
-    buttonLink: "/health-provider-dashboard/notifications",
+    buttonLink: "/dashboard/health-provider/notifications",
   },
   {
     label: "Settings",
     icon: <Settings size={20} className="text-secondary" />,
     iconWhite: <Settings size={20} className="text-[#667085]" />,
     title: "Settings & Support",
-    buttonLink: "/health-provider-dashboard/settings",
+    buttonLink: "/dashboard/health-provider/settings",
   },
   {
     label: "Help Center",
     icon: <CircleHelp size={20} className="text-secondary" />,
     iconWhite: <CircleHelp size={20} className="text-[#667085]" />,
     title: "Settings & Support",
-    buttonLink: "/health-provider-dashboard/helpcenter",
+    buttonLink: "/dashboard/health-provider/helpcenter",
   },
   {
     label: "Logout",
     icon: <LogOut size={20} className="text-secondary rotate-180" />,
     iconWhite: <LogOut size={20} className="text-[#667085] rotate-180" />,
     title: "Settings & Support",
-    buttonLink: "/health-provider-dashboard/logout",
+    buttonLink: "/dashboard/health-provider/logout",
+  },
+];
+
+export const organizationLinks = [
+  {
+    label: "Dashboard",
+    icon: <LayoutDashboard size={20} className="text-secondary" />,
+    iconWhite: <LayoutDashboard size={20} className="text-[#667085]" />,
+    title: "Menu",
+    buttonLink: "/dashboard",
+  },
+  {
+    label: "Applications",
+    icon: <Send size={20} className="text-secondary" />,
+    iconWhite: <Send size={20} className="text-[#667085]" />,
+    title: "Menu",
+    buttonLink: "/dashboard/credentializing-organization/incoming-applications",
+
+    subLinks: [
+      {
+        label: "Incoming Applications",
+        icon: <Triangle size={16} className="text-secondary" />,
+        iconWhite: <Triangle size={16} className="text-[#667085]" />,
+        title: "Menu",
+        buttonLink:
+          "/dashboard/credentializing-organization/incoming-applications",
+      },
+      {
+        label: "All Applications",
+        icon: <Square size={16} className="rotate-45 text-secondary" />,
+        iconWhite: <Square size={16} className="rotate-45 text-[#667085]" />,
+        title: "Menu",
+        buttonLink: "/dashboard/credentializing-organization/all-applications",
+      },
+      {
+        label: "Approved",
+        icon: <Hexagon size={18} className=" text-secondary" />,
+        iconWhite: <Hexagon size={18} className=" text-[#667085]" />,
+        title: "Menu",
+        buttonLink:
+          "/dashboard/credentializing-organization/approved-applications",
+      },
+    ],
+  },
+  {
+    label: "Provider Management",
+    icon: <UserRoundCheck size={20} className="text-secondary " />,
+    iconWhite: <UserRoundCheck size={20} className="text-[#667085] " />,
+    title: "Menu",
+    buttonLink: "/dashboard/health-provider/provider-management",
+  },
+  {
+    label: "Report & Analytics",
+    icon: <SquareKanban size={20} className="text-secondary rotate-180 " />,
+    iconWhite: (
+      <SquareKanban size={20} className="text-[#667085] rotate-180 " />
+    ),
+    title: "Menu",
+    buttonLink: "/dashboard/health-provider/report-analytics",
+  },
+  {
+    label: "Notification",
+    icon: <Bell size={20} className="text-secondary" />,
+    iconWhite: <Bell size={20} className="text-[#667085]" />,
+    title: "Menu",
+    buttonLink: "/dashboard/health-provider/notifications",
+  },
+  {
+    label: "Settings",
+    icon: <Settings size={20} className="text-secondary" />,
+    iconWhite: <Settings size={20} className="text-[#667085]" />,
+    title: "Settings & Support",
+    buttonLink: "/dashboard/health-provider/settings",
+  },
+  {
+    label: "Help Center",
+    icon: <CircleHelp size={20} className="text-secondary" />,
+    iconWhite: <CircleHelp size={20} className="text-[#667085]" />,
+    title: "Settings & Support",
+    buttonLink: "/dashboard/health-provider/helpcenter",
+  },
+  {
+    label: "Logout",
+    icon: <LogOut size={20} className="text-secondary rotate-180" />,
+    iconWhite: <LogOut size={20} className="text-[#667085] rotate-180" />,
+    title: "Settings & Support",
+    buttonLink: "/dashboard/health-provider/logout",
   },
 ];
 

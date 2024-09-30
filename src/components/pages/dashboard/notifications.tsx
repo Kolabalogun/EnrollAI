@@ -17,7 +17,7 @@ const Notifications = ({
         </div>
       </div>
 
-      <div className="space-y-5">{data}</div>
+      <div className=" ">{data}</div>
     </div>
   );
 };

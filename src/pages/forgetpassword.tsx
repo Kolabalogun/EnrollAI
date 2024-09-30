@@ -82,7 +82,7 @@ const ForgetPassword = () => {
 
       //   console.log(res);
 
-      //   showToast(toast, "Crawler", "success", res.msg);
+      //   showToast(toast, "Enroll AI", "success", res.msg);
 
       //   setEmailIsPresent(values.email);
       //   form.reset();
@@ -98,7 +98,7 @@ const ForgetPassword = () => {
 
       //   console.log(res);
 
-      //   showToast(toast, "Crawler", "success", res.msg);
+      //   showToast(toast, "Enroll AI", "success", res.msg);
 
       //   setEmailIsPresent("");
 
@@ -111,7 +111,7 @@ const ForgetPassword = () => {
       console.log(error);
       showToast(
         toast,
-        "Crawler",
+        "Enroll AI",
         "error",
         "An error occurred. Please try again later."
       );
@@ -122,13 +122,13 @@ const ForgetPassword = () => {
     try {
       if (emailIsPresent) {
         // const res = await resendOtp({ email: emailIsPresent }).unwrap();
-        // showToast(toast, "Crawler", "success", res.msg);
+        // showToast(toast, "Enroll AI", "success", res.msg);
       }
     } catch (error: any) {
       console.log(error);
       showToast(
         toast,
-        "Crawler",
+        "Enroll AI",
         "error",
         "An error occurred. Please try again later."
       );

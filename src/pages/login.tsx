@@ -7,7 +7,7 @@ import { CustomFormField } from "@/components/common";
 import { FormFieldType } from "@/components/common/customFormField";
 import { AuthLayout } from "@/layout";
 import { useNavigate } from "react-router-dom";
-import { HEALTH_DASHBOARD_ROUTE, VERIFY_EMAIL_ROUTE } from "@/router/routes";
+import { DASHBOARD_ROUTE, VERIFY_EMAIL_ROUTE } from "@/router/routes";
 // import { useLoginMutation } from "@/services/auth";
 
 import { useToast } from "@chakra-ui/react";
@@ -47,16 +47,16 @@ const Login = () => {
       // localStorage.setItem("enrollai-user", res.token);
       // dispatch(setIsAuthenticated(true));
 
-      // showToast(toast, "Crawler", "success", "You've successfully signed in");
+      // showToast(toast, "Enroll AI", "success", "You've successfully signed in");
 
-      navigate(HEALTH_DASHBOARD_ROUTE);
+      navigate(DASHBOARD_ROUTE);
     } catch (error: any) {
       console.log(error);
 
       if (error.status === 400 && error.data.msg === "Account not verified") {
         showToast(
           toast,
-          "Crawler",
+          "Enroll AI",
           "error",
           "Please verify your email to continue"
         );
@@ -65,11 +65,11 @@ const Login = () => {
           navigate(VERIFY_EMAIL_ROUTE, { state: { email: values.email } });
         }, 2000);
       } else if (error.status === "FETCH_ERROR") {
-        showToast(toast, "Crawler", "error", `${error.error} `);
+        showToast(toast, "Enroll AI", "error", `${error.error} `);
       } else {
         showToast(
           toast,
-          "Crawler",
+          "Enroll AI",
           "error",
           `${error.data.msg || "An error has occurred. Please try again"} `
         );
