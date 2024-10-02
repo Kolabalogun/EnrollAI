@@ -6,7 +6,7 @@ export { default as Avatar } from "./avatar.png";
 export { default as Frame1 } from "./frame1.png";
 export { default as Line } from "./lin.svg";
 export { default as Bell } from "./Bell.png";
-export { default as Logo } from "./Logo.png";
+export { default as Logo } from "./logo.png";
 export { default as Check } from "./check.png";
 
 export { default as GetStartedImg } from "./getstarted.png";
