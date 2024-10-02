@@ -51,7 +51,7 @@ const AuthLayout = <T extends z.ZodType<any, any>>({
             <section className="mb-8 w-96 text-center raleway space-y-4">
               <h1 className="header  ">{title}</h1>
               <p
-                className="text-fade text-sm"
+                className="text-fade font-medium text-sm"
                 dangerouslySetInnerHTML={{ __html: desc }}
               ></p>
             </section>
