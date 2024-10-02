@@ -6,15 +6,18 @@ import { OrganizationApplicationFormTableHeads } from "@/constant/table/tableHea
 import { ApplicationFormType } from "@/lib/types/tables";
 import { useState } from "react";
 import EmptyCarts from "../../dashboard/emptyCarts";
+import { useNavigate } from "react-router-dom";
 
 const OrganizationApplicationLists = ({ full }: { full?: boolean }) => {
   const { lists } = useSelector((state: any) => state.applicationForm);
   const [activeMenu, setActiveMenu] = useState<string | number | null>(null);
+  const navigate = useNavigate();
 
   console.log(lists);
 
   const handleViewDetails = (row: ApplicationFormType) => {
     console.log(row);
+    navigate("/dashboard/health-provider/applications/details/id");
   };
 
   const toggleMenu = (id: string | number | null) => {

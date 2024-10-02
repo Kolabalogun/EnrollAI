@@ -1,10 +1,9 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { HEALTHCARE_APPLICATIONS } from "@/router/routes";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
 import PersonalInformations from "@/components/pages/applicationForm/step1/personalInformations";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ApplicationFormType } from "@/lib/types/tables";
 import { ApplicationFormInitialState } from "@/constant/data/applicationsdata";
@@ -19,18 +18,20 @@ import SecondaryButton from "@/components/common/buttons/secondaryButton";
 const ApplicationsDetails = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { id } = useParams();
+  // const { id } = useParams();
   const { lists } = useSelector((state: any) => state.applicationForm);
   const [form, setForm] = useState(ApplicationFormInitialState);
   const [disableForm, setDisableForm] = useState(true);
 
-  useEffect(() => {
-    const filteredForm = lists.find(
-      (list: ApplicationFormType) => list.id === id
-    );
+  console.log(setForm);
 
-    setForm(filteredForm);
-  }, [id]);
+  // useEffect(() => {
+  //   const filteredForm = lists.find(
+  //     (list: ApplicationFormType) => list.id === id
+  //   );
+
+  //   setForm(filteredForm);
+  // }, [id]);
 
   const deleleForm = (id: string) => {
     const filteredForm = lists.filter(
@@ -116,7 +117,7 @@ const ApplicationsDetails = () => {
                 Application Status:
               </p>
               <div className="text-xs   items-center justify-center flex gap-2 font-medium p-0.5 rounded-full  w-32 border-[#21A0A0] text-[#21A0A0] border bg-[#d3ecec]">
-                {form.status}
+                {form?.status || "Under Review"}
               </div>
             </div>
           </div>
