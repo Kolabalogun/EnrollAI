@@ -7,8 +7,9 @@ import {
   DrawerContent,
   DrawerCloseButton,
   DrawerHeader,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { useGlobalContext } from "@/context/useGlobalContext";
+
 import { Avatar } from "@/assets/img";
 import ProgressBar from "@/components/common/progressBar";
 import { Link } from "react-router-dom";
@@ -20,7 +21,8 @@ const SidebarDrawer = () => {
   const { user } = useSelector((state: any) => state.auth);
 
   // Mobile Nav Draawer
-  const { onClose, isOpen } = useGlobalContext();
+
+  const { onClose, isOpen } = useDisclosure();
 
   const gethealthProviderLinks = () => (
     <div className="flex flex-col gap-3 mb-8">

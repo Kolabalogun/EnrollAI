@@ -18,10 +18,12 @@ import { useSelector } from "react-redux";
 export const ActionCell = ({
   row,
   handleEdit,
+  handleViewDetails,
   handleDelete,
   isMenuVisible,
   toggleMenu,
 }: {
+  handleViewDetails: (row: ApplicationFormType) => void;
   row: ApplicationFormType;
   handleEdit: (row: ApplicationFormType) => void;
   handleDelete: (row: ApplicationFormType) => void;
@@ -63,7 +65,7 @@ export const ActionCell = ({
         <div className="absolute right-10 -bottom-16   z-[1001] mt-2 w-52 bg-white border rounded shadow-lg  ">
           <ul className="text-left">
             <li
-              onClick={() => handleEdit(row)}
+              onClick={() => handleViewDetails(row)}
               className="cursor-pointer raleway text-xs font-semibold  px-4 py-4 flex items-center gap-3 hover:bg-gray-200"
             >
               <Eye color="blue" size={15} />
@@ -176,6 +178,7 @@ export const ApplicationFormTableHeads = (
       <ActionCell
         row={row}
         handleEdit={handleEdit}
+        handleViewDetails={handleViewDetails}
         handleDelete={handleDelete}
         isMenuVisible={activeMenu === row.id}
         toggleMenu={toggleMenu}
@@ -241,6 +244,7 @@ export const OrganizationApplicationFormTableHeads = (
       <ActionCell
         row={row}
         handleEdit={handleEdit}
+        handleViewDetails={handleViewDetails}
         handleDelete={handleDelete}
         isMenuVisible={activeMenu === row.id}
         toggleMenu={toggleMenu}

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -32,6 +31,8 @@ const ForgetPassword = () => {
   const [timeLeft, setTimeLeft] = useState(10);
   const [isResendEnabled, setIsResendEnabled] = useState(false);
   // const [resendOtp, { isLoading: resendLoading }] = useResendOtpMutation();
+
+  console.log(navigate, setEmailIsPresent);
 
   const isLoading = false;
   const verifyOtpLoading = false;

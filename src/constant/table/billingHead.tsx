@@ -6,6 +6,7 @@ import { HEALTHCARE_APPLICATIONS_DETALIS } from "@/router/routes";
 import { useNavigate } from "react-router-dom";
 
 export const ActionCell = ({
+  handleViewDetails,
   row,
   handleEdit,
   handleDelete,
@@ -13,6 +14,7 @@ export const ActionCell = ({
   toggleMenu,
 }: {
   row: BillingTransactionsType;
+  handleViewDetails: (row: BillingTransactionsType) => void;
   handleEdit: (row: BillingTransactionsType) => void;
   handleDelete: (row: BillingTransactionsType) => void;
   isMenuVisible: boolean;
@@ -51,7 +53,7 @@ export const ActionCell = ({
         <div className="absolute right-10 bottom-3   z-[1001] mt-2 w-32 bg-white border rounded shadow-lg  ">
           <ul className="text-left">
             <li
-              onClick={() => handleEdit(row)}
+              onClick={() => handleViewDetails(row)}
               className="cursor-pointer raleway text-xs font-semibold  px-4 py-2 hover:bg-gray-200"
             >
               View Details
@@ -144,6 +146,7 @@ export const BillingTableHeads = (
     accessor: (row) => (
       <ActionCell
         row={row}
+        handleViewDetails={handleViewDetails}
         handleEdit={handleEdit}
         handleDelete={handleDelete}
         isMenuVisible={activeMenu === row.id}

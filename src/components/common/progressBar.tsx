@@ -7,7 +7,7 @@ type Props = {
   indicatorClassName?: string;
 };
 
-function ProgressBar({ value, className, indicatorClassName }: Props) {
+function ProgressBar({ value, className }: Props) {
   const [progress, setProgress] = useState(1);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ function ProgressBar({ value, className, indicatorClassName }: Props) {
   return (
     <Progress
       value={progress}
-      indicatorClassName={indicatorClassName ?? ""}
+      // indicatorClassName={indicatorClassName ?? ""}
       className={`h-1.5 rounded-full ${className}`}
     />
   );
