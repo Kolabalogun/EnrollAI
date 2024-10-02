@@ -1,6 +1,9 @@
 export { default as HealthProviderApplicationForm } from "./applicationform";
 
 export { default as HealthProviderApplications } from "./applications";
+export { default as HealthProviderActiveApplications } from "./activeapplications";
+export { default as HealthProviderDraftApplications } from "./draftapplications";
+export { default as HealthProviderCompletedApplications } from "./completedapplications";
 
 export { default as HealthProviderApplicationsFullList } from "../../components/pages/applications/fullList";
 

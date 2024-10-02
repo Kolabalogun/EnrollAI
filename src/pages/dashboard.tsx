@@ -11,9 +11,11 @@ import { notificationsData } from "@/constant/data/noticationdata";
 import { useDisclosure } from "@chakra-ui/react";
 import { Pen, PlusIcon } from "lucide-react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
+  const navigate = useNavigate();
   const { accountType } = useSelector((state: any) => state.auth);
 
   const notifications = notificationsData.map((activity) => (
@@ -47,7 +49,7 @@ const Dashboard = () => {
       <div className="flex gap-10">
         <div
           style={{ flex: 2.25 }}
-          className="flex flex-col w-full flex-1 space-y-9 "
+          className="flex flex-col justify-between w-full flex-1 space-y-9 "
         >
           <div className="">
             {accountType === "Organization" ? (
@@ -74,7 +76,12 @@ const Dashboard = () => {
               </SubmitButton>
             </div>
 
-            <div className="border-secondary text-secondary bg-transparent border-2 hover:bg-secondary transition duration-500 hover:text-white py-2 gap-3 px-10 cursor-pointer flex items-center justify-center rounded-lg">
+            <div
+              onClick={() =>
+                navigate("/dashboard/health-provider/draft-applications")
+              }
+              className="border-secondary text-secondary bg-transparent border-2 hover:bg-secondary transition duration-500 hover:text-white py-2 gap-3 px-10 cursor-pointer flex items-center justify-center rounded-lg"
+            >
               <p className="text-xs font-semibold">Review Draft </p>
               <Pen size={14} />
             </div>

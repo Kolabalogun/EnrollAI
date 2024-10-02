@@ -27,6 +27,30 @@ export const healthProviderLinks = [
     iconWhite: <Send size={20} className="text-[#667085]" />,
     title: "Menu",
     buttonLink: "/dashboard/health-provider/applications",
+
+    subLinks: [
+      {
+        label: "Active",
+        icon: <Triangle size={16} className="text-secondary" />,
+        iconWhite: <Triangle size={16} className="text-[#667085]" />,
+        title: "Menu",
+        buttonLink: "/dashboard/health-provider/active-applications",
+      },
+      {
+        label: "Draft",
+        icon: <Square size={16} className="rotate-45 text-secondary" />,
+        iconWhite: <Square size={16} className="rotate-45 text-[#667085]" />,
+        title: "Menu",
+        buttonLink: "/dashboard/health-provider/draft-applications",
+      },
+      {
+        label: "Completed",
+        icon: <Hexagon size={18} className=" text-secondary" />,
+        iconWhite: <Hexagon size={18} className=" text-[#667085]" />,
+        title: "Menu",
+        buttonLink: "/dashboard/health-provider/completed-applications",
+      },
+    ],
   },
   {
     label: "Profile",

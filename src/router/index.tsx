@@ -29,6 +29,9 @@ import {
   HealthProviderSettings,
   HealthProviderAddBillingPayment,
   HealthProviderRegister,
+  HealthProviderActiveApplications,
+  HealthProviderDraftApplications,
+  HealthProviderCompletedApplications,
 } from "@/pages/healthProvider";
 import {
   AllApplications,
@@ -78,6 +81,20 @@ const router = createBrowserRouter([
         path: "/dashboard/health-provider/applications",
         element: <HealthProviderApplications />,
       },
+      {
+        path: "/dashboard/health-provider/active-applications",
+        element: <HealthProviderActiveApplications />,
+      },
+      {
+        path: "/dashboard/health-provider/draft-applications",
+        element: <HealthProviderDraftApplications />,
+      },
+
+      {
+        path: "/dashboard/health-provider/completed-applications",
+        element: <HealthProviderCompletedApplications />,
+      },
+
       {
         path: "/dashboard/health-provider/applications/full-list",
         element: <HealthProviderApplicationsFullList />,
