@@ -19,7 +19,7 @@ export const healthProviderLinks = [
     icon: <LayoutDashboard size={20} className="text-secondary" />,
     iconWhite: <LayoutDashboard size={20} className="text-[#667085]" />,
     title: "Menu",
-    buttonLink: "/dashboard/health-provider",
+    buttonLink: "/dashboard",
   },
   {
     label: "Applications",

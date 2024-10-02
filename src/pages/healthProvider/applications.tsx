@@ -19,7 +19,7 @@ const Appications = () => {
 
   const recentActivities = recentActivitiesData.map((activity) => (
     <div className="flex justify-between cursor-pointer items-center">
-      <div className="space-y-1">
+      <div className="space-y-3">
         <p className="font-semibold text-[13px] ">{activity.title}</p>
         <p className="text-[12px] font-medium text-[#667085]">
           {activity.description}
