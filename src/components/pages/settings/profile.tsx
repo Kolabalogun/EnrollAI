@@ -5,9 +5,29 @@ import ConfirmationModal from "@/components/modals/confirmationModal";
 import { useDisclosure } from "@chakra-ui/react";
 import { useState } from "react";
 import PasswordModal from "./passwordModal";
+import { useSelector } from "react-redux";
+
+type FormType = {
+  fullName: string;
+  email: string;
+  password: string;
+  companyName?: string;
+};
+
+const providerInitialState = {
+  fullName: "",
+  email: "",
+  password: "",
+};
+const organizationInitialState = {
+  ...providerInitialState,
+  companyName: "",
+};
 
 const Profile = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
+
+  const { accountType } = useSelector((state: any) => state.auth);
 
   const {
     isOpen: saveIsOpen,
@@ -17,11 +37,11 @@ const Profile = () => {
 
   const [passwordDialogOpen, setPasswordDialogOpen] = useState(false);
 
-  const [form, setForm] = useState({
-    fullName: "",
-    email: "",
-    password: "",
-  });
+  const [form, setForm] = useState<FormType>(
+    accountType === "Organization"
+      ? organizationInitialState
+      : providerInitialState
+  );
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -39,7 +59,7 @@ const Profile = () => {
     saveOnOpen();
   };
 
-  const { fullName, email, password } = form;
+  const { fullName, email, password, companyName } = form;
   return (
     <form onSubmit={handleSubmit} className="space-y-9">
       <ConfirmationModal
@@ -119,7 +139,24 @@ const Profile = () => {
               />
             </div>
           </div>
+
           <div className="flex flex-row justify-between gap-8">
+            {accountType === "Organization" && (
+              <div className="raleway text-xs flex w-full flex-1 flex-col gap-1 font-medium">
+                <label className="font-semibold" htmlFor="companyName">
+                  Company Name
+                </label>
+                <input
+                  id="companyName"
+                  name="companyName"
+                  type="text"
+                  placeholder="Your Company Name"
+                  value={companyName}
+                  onChange={handleChange}
+                  className="border rounded-md px-3 py-4 outline-[0.5px] outline-secondary"
+                />
+              </div>
+            )}
             <div className="raleway text-xs flex w-full flex-1 flex-col gap-1 font-medium">
               <label className="font-semibold" htmlFor="password">
                 Password
@@ -134,7 +171,7 @@ const Profile = () => {
                 className="border rounded-md px-3 py-4 outline-[0.5px] outline-secondary"
               />
             </div>
-            <div className="flex-1"></div>
+            {accountType !== "Organization" && <div className="flex-1"></div>}
           </div>
         </div>
       </section>

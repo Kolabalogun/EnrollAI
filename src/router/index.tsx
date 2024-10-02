@@ -16,6 +16,7 @@ import {
   ErrorPage,
   Notifications,
   HelpCenter,
+  Articles,
 } from "../pages";
 import { Protected, UnAuthenticated } from "@/components/auth";
 import {
@@ -36,6 +37,7 @@ import {
   IncomingApplications,
   OrganizationRegister,
   Providers,
+  ReportAndAnalytics,
 } from "@/pages/organizationflow";
 
 // Lazy-loading components
@@ -154,6 +156,18 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/credentializing-organization/help-center",
         element: <HelpCenter />,
+      },
+      {
+        path: "/dashboard/articles",
+        element: <Articles />,
+      },
+      {
+        path: "/dashboard/credentializing-organization/settings",
+        element: <HealthProviderSettings />,
+      },
+      {
+        path: "/dashboard/credentializing-organization/report-analytics",
+        element: <ReportAndAnalytics />,
       },
     ],
   },

@@ -110,8 +110,16 @@ const AuthLayout = <T extends z.ZodType<any, any>>({
                   : "Continue"}
               </SubmitButton>
 
-              {(title === "Create your account" ||
-                title === "Welcome Back!") && (
+              {title === "Welcome Back!" && (
+                <div className="flex items-center border border-fade2 rounded-lg p-3 justify-center gap-3">
+                  <img src={GoogleIcon} className="h-4" alt="" />
+                  <p className="raleway font-bold plus-jakarta">
+                    Sign In with Google
+                  </p>
+                </div>
+              )}
+
+              {title === "Create your account" && (
                 <div className="flex items-center border border-fade2 rounded-lg p-3 justify-center gap-3">
                   <img src={GoogleIcon} className="h-4" alt="" />
                   <p className="raleway font-bold plus-jakarta">

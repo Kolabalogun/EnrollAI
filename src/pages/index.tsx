@@ -15,3 +15,5 @@ export { default as ChooseTypeOfRegisteration } from "./choosetypeofregisteratio
 export { default as KeyFeatures } from "./keyfeatures";
 export { default as Notifications } from "./notifications";
 export { default as HelpCenter } from "./helpcenter";
+
+export { default as Articles } from "./articles";

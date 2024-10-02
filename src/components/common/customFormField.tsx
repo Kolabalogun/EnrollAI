@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-refresh/only-export-components */
-import React from "react";
+import React, { useState } from "react";
 import {
   FormControl,
   FormField,
@@ -23,13 +23,12 @@ import {
 } from "../ui/select";
 import { Textarea } from "../ui/textarea";
 import { Checkbox } from "../ui/checkbox";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 export enum FormFieldType {
   INPUT = "input",
   TEXTAREA = "textarea",
-
   CHECKBOX = "checkbox",
-
   SELECT = "select",
   PHONE_INPUT = "phoneInput",
 }
@@ -48,8 +47,45 @@ interface CustomProps {
 }
 
 const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   switch (props.fieldType) {
     case FormFieldType.INPUT:
+      return (
+        <div className="flex items-center rounded-md relative">
+          <FormControl>
+            <Input
+              placeholder={props.placeholder}
+              type={
+                (props.name === "password" ||
+                  props.name === "confirmPassword") &&
+                !showPassword
+                  ? "password"
+                  : "text"
+              }
+              {...field}
+              className="py-6 text-[13px]   rounded-lg plus-jakarta placeholder:text-[13px] border border-[#d9d9d9]"
+            />
+          </FormControl>
+          {(props.name === "password" || props.name === "confirmPassword") && (
+            <button
+              type="button"
+              onClick={togglePasswordVisibility}
+              className="absolute right-4 top-1/2 transform -translate-y-1/2"
+            >
+              {showPassword ? (
+                <EyeOffIcon className="w-5 h-5 text-gray-500" />
+              ) : (
+                <EyeIcon className="w-5 h-5 text-gray-500" />
+              )}
+            </button>
+          )}
+        </div>
+      );
       return (
         <div className="flex rounded-md  ">
           {/* {props.iconSrc && (
@@ -176,7 +212,7 @@ const CustomFormField = (props: CustomProps) => {
           )}
 
           <RenderField field={field} props={props} />
-          <FormMessage className="shad-error text-xs" />
+          <FormMessage className="shad-error text-red-500 font-medium text-xs" />
         </FormItem>
       )}
     />

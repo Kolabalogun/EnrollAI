@@ -2,6 +2,8 @@ import { CircleAlert, Headset, Search } from "lucide-react";
 import { accordionDummyData, helps } from "../constant/data/helpdata.ts";
 import CustomAccordion from "@/components/pages/helpcenter/accordion.tsx";
 import { SubmitButton } from "@/components/common/index.tsx";
+import { Link } from "react-router-dom";
+import { ARTICLES_ROUTE } from "@/router/routes.tsx";
 
 const HelpCenter = () => {
   return (
@@ -28,7 +30,10 @@ const HelpCenter = () => {
 
       <div className="bg-[#f7f2f7]  px-9 py-16 rounded-xl grid place-content-between gap-10 grid-cols-3">
         {helps.map((help) => (
-          <div className="py-8 px-5 bg-white rounded-xl flex items-start flex-col space-y-6">
+          <Link
+            to={ARTICLES_ROUTE}
+            className="py-8 px-5 bg-white rounded-xl flex items-start flex-col space-y-6"
+          >
             <div className="bg-[#e9d2f4]  rounded-full p-2">
               <CircleAlert color="#a26ad7" size={18} />
             </div>
@@ -44,7 +49,7 @@ const HelpCenter = () => {
             >
               See details
             </button>
-          </div>
+          </Link>
         ))}
       </div>
 

@@ -24,12 +24,13 @@ export function LinksGroup({
   buttonLink,
   iconWhite,
   subLinks,
-  drawer,
-}: LinksGroupType) {
+}: // drawer,
+LinksGroupType) {
   const navigate = useNavigate();
   const location = useLocation();
   const toast = useToast();
 
+  const [dialogModal, setDialogModal] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -65,12 +66,10 @@ export function LinksGroup({
 
   const handleButtonClick = () => {
     if (buttonLink) {
-      if (buttonLink === "/health-provider-dashboard/logout") {
-        if (drawer) {
-          logoutHandler();
-        } else {
-          setIsDropdownOpen(false);
-        }
+      if (buttonLink === "/dashboard/logout") {
+        setDialogModal(true);
+
+        setIsDropdownOpen(false);
       } else {
         // Toggle dropdown only for items with subLinks (like Applications)
         if (subLinks) {
@@ -85,10 +84,8 @@ export function LinksGroup({
   return (
     <>
       <ConfirmationModal
-        isOpen={
-          isDropdownOpen && buttonLink === "/health-provider-dashboard/logout"
-        }
-        onClose={() => setIsDropdownOpen(false)}
+        isOpen={dialogModal && buttonLink === "/dashboard/logout"}
+        onClose={() => setDialogModal(false)}
         title="Logout"
         message="Are you sure you want to log out?"
         buttonText="Logout"
