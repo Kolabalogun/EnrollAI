@@ -1,144 +1,77 @@
-import { Calendar } from "lucide-react";
-import { ApplicationProps } from "../step1";
+import { Calendar, Trash2 } from "lucide-react";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { ApplicationProps } from "../../applicationForm/step1";
 
-const Licensing = ({
-  form,
-  handleChange,
-  handleDateChange,
-}: ApplicationProps) => {
-  const {
-    stateMedicalicense,
-    stateMedicalicenseNumber,
-    stateMedicalicenseExpirationDate,
-    pcslicenseExpirationDate,
-    pcslicense,
-    pcslicenseNumber,
-  } = form;
-
+const Licensing = ({ form, removeField, removeSection }: ApplicationProps) => {
   return (
     <div className="border rounded-lg pt-5 px-5 pb-10 space-y-5">
       <p className="font-semibold text-base">Licenses</p>
-      <div className="space-y-10 ">
-        <div className="flex flex-1 gap-24">
-          <div className="flex flex-col flex-1 gap-3">
-            <p className="font-semibold  ">State Medical License</p>
-            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
-              <label className="w-28" htmlFor="stateMedicalicense">
-                License
-              </label>
-              <input
-                id="stateMedicalicense"
-                name="stateMedicalicense"
-                type="text"
-                placeholder="New York State medical License"
-                value={stateMedicalicense}
-                onChange={handleChange}
-                className="border rounded-md p-2 outline-[0.5px] outline-secondary flex-1"
-              />
-            </div>
+      <div className="grid xl:grid-cols-2 gap-x-10 gap-y-5">
+        {Object.keys(form.licensing).map((field) => {
+          const fieldValue = form.licensing[field];
 
-            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
-              <label className="w-28" htmlFor="stateMedicalicenseNumber">
-                License Number
-              </label>
-              <input
-                id="stateMedicalicenseNumber"
-                name="stateMedicalicenseNumber"
-                type="number"
-                placeholder="9876543210"
-                value={stateMedicalicenseNumber}
-                onChange={handleChange}
-                className="border rounded-md p-2 outline-[0.5px] outline-secondary flex-1"
-              />
-            </div>
-
-            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
-              <label className="w-[140px]" htmlFor="licenseNumber">
-                Expiration Date
-              </label>
-
-              <div
-                id="dob"
-                className="border flex items-center gap-3 rounded-md p-2 outline-[0.5px] outline-secondary w-full"
-              >
-                <div className="ml-2">
-                  <Calendar size={15} />
-                </div>
-
-                <ReactDatePicker
-                  selected={stateMedicalicenseExpirationDate}
-                  onChange={(date) =>
-                    handleDateChange("stateMedicalicenseExpirationDate", date)
-                  }
-                  dateFormat={"dd/MM/yyyy"}
-                  wrapperClassName="date-picker"
-                />
+          return (
+            <div className="space-y-2  " key={field}>
+              <div className="flex flex-row justify-between itc gap-3">
+                {field === "stateMedicalicenseExpirationDate" ||
+                field === "pcslicenseExpirationDate" ? (
+                  <div className="raleway text-xs flex w-full flex-1 flex-col gap-1 font-medium relative">
+                    <label htmlFor={field} className="capitalize">
+                      {field.replace(/([A-Z])/g, " $1").trim()}
+                    </label>
+                    <div className="border flex items-center gap-3 rounded-md p-2 outline-[0.5px] outline-secondary w-full">
+                      <div className="ml-2">
+                        <Calendar size={15} />
+                      </div>
+                      <ReactDatePicker
+                        selected={fieldValue}
+                        disabled
+                        dateFormat={"dd/MM/yyyy"}
+                        wrapperClassName="date-picker"
+                      />
+                    </div>
+                    <Trash2
+                      className="absolute right-0 top-8 cursor-pointer"
+                      size={18}
+                      onClick={() => removeField("personalInformation", field)}
+                    />
+                  </div>
+                ) : (
+                  <div className="raleway text-xs flex w-full flex-1 flex-col gap-1 font-medium relative">
+                    <label className="capitalize" htmlFor={field}>
+                      {field.replace(/([A-Z])/g, " $1").trim()}
+                    </label>
+                    <div className="flex items-center ">
+                      <input
+                        id={field}
+                        name={field}
+                        type={"text"}
+                        placeholder={field}
+                        value={fieldValue}
+                        readOnly
+                        className="border rounded-md p-2 placeholder:capitalize outline-[0.5px] flex-1 outline-secondary"
+                      />
+                      <Trash2
+                        className=" -ml-7 cursor-pointer"
+                        size={18}
+                        onClick={() => removeField("licensing", field)}
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
-          </div>
-
-          <div className="flex flex-col flex-1 gap-3">
-            <p className="font-semibold  ">
-              Professional and controlled substance License
-            </p>
-            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
-              <label className="w-28" htmlFor="pcslicense">
-                License
-              </label>
-              <input
-                id="pcslicense"
-                name="pcslicense"
-                type="text"
-                placeholder="New York State medical License"
-                value={pcslicense}
-                onChange={handleChange}
-                className="border rounded-md p-2 outline-[0.5px] outline-secondary flex-1"
-              />
-            </div>
-
-            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
-              <label className="w-28" htmlFor="pcslicenseNumber">
-                License Number
-              </label>
-              <input
-                id="pcslicenseNumber"
-                name="pcslicenseNumber"
-                type="number"
-                placeholder="9876543210"
-                value={pcslicenseNumber}
-                onChange={handleChange}
-                className="border rounded-md p-2 outline-[0.5px] outline-secondary flex-1"
-              />
-            </div>
-
-            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
-              <label className="w-[140px]" htmlFor="licenseNumber">
-                Expiration Date
-              </label>
-
-              <div
-                id="dob"
-                className="border flex  items-center gap-3 rounded-md p-2 outline-[0.5px] outline-secondary w-full"
-              >
-                <div className="ml-2">
-                  <Calendar size={15} />
-                </div>
-
-                <ReactDatePicker
-                  selected={pcslicenseExpirationDate}
-                  onChange={(date) =>
-                    handleDateChange("pcslicenseExpirationDate", date)
-                  }
-                  dateFormat={"dd/MM/yyyy"}
-                  wrapperClassName="date-picker"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+          );
+        })}
       </div>
+      <button
+        type="button"
+        className="bg-red-500 text-xs raleway font-semibold text-white rounded px-4 py-2"
+        onClick={() => removeSection("licensing")}
+      >
+        Delete Section
+      </button>
     </div>
   );
 };

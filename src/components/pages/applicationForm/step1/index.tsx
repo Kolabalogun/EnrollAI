@@ -16,6 +16,7 @@ export type ApplicationProps = {
   ) => void;
   removeField?: any;
   removeSection?: any;
+  removeSubField?: any;
 };
 
 const Step1 = ({

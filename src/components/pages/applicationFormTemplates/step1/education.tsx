@@ -1,13 +1,17 @@
-import { Trash2 } from "lucide-react"; // Import Trash2 icon
+import { Trash2 } from "lucide-react";
 import { ApplicationProps } from "../../applicationForm/step1";
 
-const Education = ({ form, removeSection, removeField }: ApplicationProps) => {
-  const educationCategories = Object.keys(form.educationInformation); // Get keys of educationInformation
+const Education = ({
+  form,
+  removeSection,
+  removeSubField,
+}: ApplicationProps) => {
+  const educationCategories = Object.keys(form.educationInformation);
 
   return (
     <div className="border rounded-lg pt-5 px-5 pb-10 space-y-5">
       <p className="font-semibold text-base">Education</p>
-      <div className="space-y-10">
+      <div className="grid lg:grid-cols-2  xl:grid-cols-3 gap-16">
         {educationCategories.map((category) => {
           const categoryFields = form.educationInformation[category];
 
@@ -21,27 +25,33 @@ const Education = ({ form, removeSection, removeField }: ApplicationProps) => {
                   return (
                     <div
                       key={field}
-                      className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium"
+                      className="raleway text-xs flex w-full flex-1 flex-col gap-1 font-medium"
                     >
-                      <label className="w-16 capitalize" htmlFor={field}>
+                      <label className=" capitalize" htmlFor={field}>
                         {field.replace(/([A-Z])/g, " $1").trim()}
                       </label>
-                      <input
-                        id={field}
-                        name={field}
-                        type={field.includes("YOG") ? "number" : "text"}
-                        placeholder={field.replace(/([A-Z])/g, " ").trim()}
-                        value={fieldValue}
-                        readOnly
-                        className="border rounded-md p-2 outline-[0.5px] outline-secondary flex-1"
-                      />
-                      <Trash2
-                        className="ml-2 cursor-pointer"
-                        size={18}
-                        onClick={() =>
-                          removeField("educationInformation", field)
-                        }
-                      />
+                      <div className="flex items-center ">
+                        <input
+                          id={field}
+                          name={field}
+                          type={field.includes("YOG") ? "number" : "text"}
+                          placeholder={field.replace(/([A-Z])/g, " ").trim()}
+                          value={fieldValue}
+                          readOnly
+                          className="border placeholder:capitalize rounded-md p-2 outline-[0.5px] outline-secondary flex-1"
+                        />
+                        <Trash2
+                          className="-ml-7 cursor-pointer"
+                          size={18}
+                          onClick={() =>
+                            removeSubField(
+                              "educationInformation",
+                              category,
+                              field
+                            )
+                          }
+                        />
+                      </div>
                     </div>
                   );
                 })}

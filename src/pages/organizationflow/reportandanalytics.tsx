@@ -35,7 +35,7 @@ const ReportAndAnalytics = () => {
 
   return (
     <section className="flex space-y-9 mb-20 flex-col">
-      <div className="flex justify-between items-center gap-1">
+      <div className="flex lg:flex-row flex-col justify-between xl:items-center gap-4">
         <p className="font-semibold text-3xl">Report And Analytics</p>
 
         <div className="flex items-center gap-4">
@@ -79,7 +79,7 @@ const ReportAndAnalytics = () => {
         </div>
       </div>
 
-      <div className="flex   gap-8">
+      <div className="flex lg:flex-row flex-col   gap-8">
         <div
           style={{ flex: 2 }}
           className="flex flex-col rounded-xl gap-5 p-5 bg-white shadow-md "
@@ -113,7 +113,7 @@ const ReportAndAnalytics = () => {
             </div>
           </div>
 
-          <div className=" px-20">
+          <div className=" lg:px-20">
             <ApplicationTrendsChart />
           </div>
         </div>

@@ -6,13 +6,15 @@ const Articles = () => {
           Articles
         </p>
 
-        <h1 className="text-5xl ">Link Your CAQH Profile</h1>
+        <h1 className=" text-2xl font-semibold text-center lg:text-5xl ">
+          Link Your CAQH Profile
+        </h1>
 
-        <p className="text-fade plus-jakarta">
+        <p className="text-fade plus-jakarta text-center">
           Guidelines on how to link your CAQH Profile to Enroll AI
         </p>
       </div>
-      <div className="text-fade plus-jakarta space-y-10 px-10">
+      <div className="text-fade plus-jakarta space-y-10 lg:px-10">
         <p className="text-xs font-medium">
           In today's fast-paced healthcare environment, efficiency is key. For
           healthcare providers and organizations alike, managing credentialing
@@ -75,7 +77,7 @@ const Articles = () => {
                 follow these steps:
               </p>
               <br /> <br />
-              <ul className="list-disc px-20 text-xs font-medium space-y-2">
+              <ul className="list-disc px-5 xl:px-20 text-xs font-medium space-y-2">
                 <li>
                   Sign Up: Enter your basic details, such as your name, email
                   address, and password. You may also need to provide some
@@ -99,7 +101,7 @@ const Articles = () => {
                 "Link CAQH ProView Account" or something similar.
               </p>
               <br /> <br />
-              <ul className="list-disc px-20 text-xs font-medium space-y-2">
+              <ul className="list-disc px-5 xl:px-20 text-xs font-medium space-y-2">
                 <li>
                   Tip: If you’re unsure where to find this option, look for a
                   dedicated "Integrations" section in the sidebar or main menu.
@@ -117,7 +119,7 @@ const Articles = () => {
                 following steps:
               </p>
               <br /> <br />
-              <ul className="list-disc px-20 text-xs font-medium space-y-2">
+              <ul className="list-disc px-5 xl:px-20 text-xs font-medium space-y-2">
                 <li>
                   Enter CAQH ProView Credentials: You will be redirected to the
                   CAQH ProView login page, where you’ll need to enter your
@@ -145,7 +147,7 @@ const Articles = () => {
                 successfully linked.
               </p>
               <br /> <br />
-              <ul className="list-disc px-20 text-xs font-medium space-y-2">
+              <ul className="list-disc px-5 xl:px-20 text-xs font-medium space-y-2">
                 <li>
                   Verification: The platform may display a summary of the linked
                   data, allowing you to verify that the correct information has
@@ -163,7 +165,7 @@ const Articles = () => {
                 customize how data is retrieved from CAQH ProView:
               </p>
               <br /> <br />
-              <ul className="list-disc px-20 text-xs font-medium space-y-2">
+              <ul className="list-disc px-5 xl:px-20 text-xs font-medium space-y-2">
                 <li>
                   Select Data Fields: Choose which fields from your CAQH ProView
                   profile you want to import into the application forms.
@@ -186,7 +188,7 @@ const Articles = () => {
                 applications:
               </p>
               <br /> <br />
-              <ul className="list-disc px-20 text-xs font-medium space-y-2">
+              <ul className="list-disc px-5 xl:px-20 text-xs font-medium space-y-2">
                 <li>
                   Pre-Filled Forms: When you start a new application, you’ll
                   notice that many fields are already filled in with data from

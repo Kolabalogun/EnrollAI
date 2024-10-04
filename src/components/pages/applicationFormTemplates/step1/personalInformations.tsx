@@ -11,10 +11,10 @@ const PersonalInformationsTemplate = ({
   removeSection,
 }: ApplicationProps) => {
   return (
-    <div className="border rounded-lg pt-5 px-5 pb-10 space-y-5">
+    <div className="border rounded-lg pt-5 px-4 xl:px-5 pb-10 space-y-5">
       <p className="font-semibold text-base">Personal Information</p>
 
-      <div className="grid grid-cols-3 gap-x-10 gap-y-5">
+      <div className="grid xl:grid-cols-3 gap-x-10 gap-y-5">
         {Object.keys(form.personalInformation).map((field) => {
           const fieldValue = form.personalInformation[field];
 

@@ -122,7 +122,7 @@ const ApplicationsDetails = () => {
             </div>
           </div>
 
-          <div className="flex gap-5 items-center py-10">
+          <div className="flex flex-col lg:flex-row gap-5 lg:items-center py-10">
             <SecondaryButton
               title={"Edit Application"}
               handleClick={() => {

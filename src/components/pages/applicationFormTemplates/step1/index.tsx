@@ -5,9 +5,14 @@ import PersonalInformationsTemplate from "./personalInformations";
 import { ApplicationProps } from "../../applicationForm/step1";
 import ProfessionalIDTemplate from "./professionalID";
 
-const Step1 = ({ form, removeField, removeSection }: ApplicationProps) => {
+const Step1 = ({
+  form,
+  removeField,
+  removeSection,
+  removeSubField,
+}: ApplicationProps) => {
   return (
-    <div className="bg-white rounded-lg p-5 space-y-4">
+    <div className="bg-white rounded-lg p-3 lg:p-5 space-y-4">
       <div className="space-y-1">
         <p className="font-semibold text-base ">Health Plan</p>
         <p className="text-[12px] font-medium text-[#667085]">
@@ -44,6 +49,7 @@ const Step1 = ({ form, removeField, removeSection }: ApplicationProps) => {
           form={form}
           removeField={removeField}
           removeSection={removeSection}
+          removeSubField={removeSubField}
         />
       )}
     </div>

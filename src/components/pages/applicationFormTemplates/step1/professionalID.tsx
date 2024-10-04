@@ -7,10 +7,10 @@ const ProfessionalIDTemplate = ({
   removeField,
 }: ApplicationProps) => {
   return (
-    <div className="border rounded-lg pt-5 px-5 pb-10 space-y-5">
+    <div className="border rounded-lg pt-5 px-4 xl:px-5 pb-10 space-y-5">
       <p className="font-semibold text-base">Professional IDs</p>
       <div className="space-y-2">
-        <div className="flex flex-row justify-between gap-3">
+        <div className="flex xl:flex-row flex-col justify-between gap-3">
           {Object.keys(form.professionID).map((field) => {
             const fieldValue = form.professionID[field];
 

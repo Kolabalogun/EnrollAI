@@ -9,11 +9,12 @@ import { SubmitButton } from "@/components/common";
 import ApplicationSuccessModal from "@/components/modals/applicationSuccess";
 import { useDisclosure } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { HEALTHCARE_APPLICATIONS } from "@/router/routes";
+
 import Step1 from "@/components/pages/applicationFormTemplates/step1";
 import Step2 from "@/components/pages/applicationFormTemplates/step2";
 import Step3 from "@/components/pages/applicationFormTemplates/step3";
 import { CreateApplicationFormTemplateInitialState } from "@/constant/data/applicationsdata";
+import { HEALTHCARE_APPLICATIONS } from "@/router/routes";
 
 const CreateApplicationForm = () => {
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -39,6 +40,34 @@ const CreateApplicationForm = () => {
     });
   };
 
+  // Remove a field from a subsection
+  const removeSubField = (section, subsection, field) => {
+    setForm((prevForm) => {
+      // Copy the section object
+      const updatedSection = { ...prevForm[section] };
+
+      // Copy the subsection object
+      const updatedSubsection = { ...updatedSection[subsection] };
+
+      // Delete the field from the subsection
+      delete updatedSubsection[field];
+
+      // If the subsection is now empty, delete the entire subsection
+      if (Object.keys(updatedSubsection).length === 0) {
+        delete updatedSection[subsection];
+      } else {
+        // Otherwise, update the section with the modified subsection
+        updatedSection[subsection] = updatedSubsection;
+      }
+
+      // Return the updated form with the modified section
+      return {
+        ...prevForm,
+        [section]: updatedSection,
+      };
+    });
+  };
+
   // Remove the entire section
   const removeSection = (section) => {
     const updatedform = { ...form };
@@ -51,9 +80,11 @@ const CreateApplicationForm = () => {
 
     try {
       setLoading(true);
+      setPageNo(pageNo + 1);
 
-      onOpen();
-      navigate(HEALTHCARE_APPLICATIONS);
+      if (pageNo === 3) {
+        onOpen();
+      }
     } catch (error) {
       console.log(error);
     } finally {
@@ -66,7 +97,7 @@ const CreateApplicationForm = () => {
       <ApplicationSuccessModal
         onClose={onClose}
         isOpen={isOpen}
-        handleClick={handleSubmit}
+        handleClick={() => navigate("/dashboard")}
       />
       <div className="flex items-center gap-1">
         <p className="text-[11px] font-semibold text-fade">Dashboard</p>
@@ -76,14 +107,25 @@ const CreateApplicationForm = () => {
 
       <form onSubmit={handleSubmit}>
         {pageNo === 2 ? (
-          <Step2 form={form} />
+          <Step2
+            form={form}
+            removeField={removeField}
+            removeSection={removeSection}
+            removeSubField={removeSubField}
+          />
         ) : pageNo === 3 ? (
-          <Step3 form={form} />
+          <Step3
+            form={form}
+            removeField={removeField}
+            removeSection={removeSection}
+            removeSubField={removeSubField}
+          />
         ) : (
           <Step1
             form={form}
             removeField={removeField}
             removeSection={removeSection}
+            removeSubField={removeSubField}
           />
         )}
 
@@ -105,7 +147,7 @@ const CreateApplicationForm = () => {
             className="py-2 flex gap-2  w-auto px-8 border rounded-md font-semibold text-xs"
           >
             <p className="font-bold text-xs">
-              {pageNo === 5 ? "Submit" : "Next"}
+              {pageNo === 3 ? "Submit" : "Next"}
             </p>
 
             {pageNo !== 3 && <ChevronRightIcon size={15} />}

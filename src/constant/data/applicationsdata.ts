@@ -202,24 +202,26 @@ export const CreateApplicationFormTemplateInitialState = {
   },
 
   // Step 2
-  practiceLocationI: {
-    // Practice Location I
-    primarypracticelocationName: "",
-    primarypracticelocationOfficeAddress: "",
-    primarypracticelocationContact: "",
-    primarypracticelocationEmail: "",
-    primarypracticelocationOfficeHours: "",
-    primarypracticelocationFax: "",
-  },
+  practiceLocation: {
+    practiceLocationI: {
+      // Practice Location I
+      primarypracticelocationName: "",
+      primarypracticelocationOfficeAddress: "",
+      primarypracticelocationContact: "",
+      primarypracticelocationEmail: "",
+      primarypracticelocationOfficeHours: "",
+      primarypracticelocationFax: "",
+    },
 
-  practiceLocationII: {
-    // Practice Location II
-    primarypracticelocation2Name: "",
-    primarypracticelocation2OfficeAddress: "",
-    primarypracticelocation2Contact: "",
-    primarypracticelocation2Email: "",
-    primarypracticelocation2OfficeHours: "",
-    primarypracticelocation2Fax: "",
+    practiceLocationII: {
+      // Practice Location II
+      primarypracticelocation2Name: "",
+      primarypracticelocation2OfficeAddress: "",
+      primarypracticelocation2Contact: "",
+      primarypracticelocation2Email: "",
+      primarypracticelocation2OfficeHours: "",
+      primarypracticelocation2Fax: "",
+    },
   },
 
   hospitalAffiliation: {
@@ -230,7 +232,7 @@ export const CreateApplicationFormTemplateInitialState = {
     previousHospitalAffliationPrivileges: "",
   },
 
-  Licensing: {
+  licensing: {
     // Licensing
     stateMedicalicense: "",
     stateMedicalicenseNumber: "",
@@ -256,14 +258,20 @@ export const CreateApplicationFormTemplateInitialState = {
 
   malpracticeInformation: {
     // Malpractice Information
-    malpracticeInsuranceCurrentCarrier: "",
-    malpracticeInsurancePolicyNumber: "",
-    malpracticeInsuranceCoverageLimit: "",
-    malpracticeInsuranceEffectiveDate: "",
-    liabilityClaimsHistoryMalpracticeClaims: "",
-    liabilityClaimsHistoryPendingLitigation: "",
-    liabilityClaimsHistorySettlement: "",
-    liabilityClaimsHistoryDisciplinaryAction: "",
+
+    malpracticeInsurance: {
+      malpracticeInsuranceCurrentCarrier: "",
+      malpracticeInsurancePolicyNumber: "",
+      malpracticeInsuranceCoverageLimit: "",
+      malpracticeInsuranceEffectiveDate: "",
+    },
+
+    liabilityClaims: {
+      liabilityClaimsHistoryMalpracticeClaims: "",
+      liabilityClaimsHistoryPendingLitigation: "",
+      liabilityClaimsHistorySettlement: "",
+      liabilityClaimsHistoryDisciplinaryAction: "",
+    },
   },
 
   additionalDocuments: [],

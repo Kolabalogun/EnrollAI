@@ -1,10 +1,14 @@
 import { Progress } from "@chakra-ui/react";
-import { ApplicationProps } from "../step1";
 import WorkHistory from "./workhistory";
 import MalpracticeInsurance from "./malpracticeInsurance";
-import AdditionalDocument from "./additionalDocument";
+import { ApplicationProps } from "../../applicationForm/step1";
 
-const Step3 = ({ form, handleDateChange, handleChange }: ApplicationProps) => {
+const Step3 = ({
+  form,
+  removeField,
+  removeSection,
+  removeSubField,
+}: ApplicationProps) => {
   return (
     <div className="bg-white rounded-lg p-5 space-y-4">
       <div className="space-y-1">
@@ -23,15 +27,21 @@ const Step3 = ({ form, handleDateChange, handleChange }: ApplicationProps) => {
         />
       </div>
 
-      <WorkHistory
-        form={form}
-        handleChange={handleChange}
-        handleDateChange={handleDateChange}
-      />
+      {form.workHistory && (
+        <WorkHistory
+          form={form}
+          removeField={removeField}
+          removeSection={removeSection}
+        />
+      )}
 
-      <MalpracticeInsurance form={form} handleChange={handleChange} />
-
-      <AdditionalDocument form={form} handleChange={handleChange} />
+      {form.malpracticeInformation && (
+        <MalpracticeInsurance
+          form={form}
+          removeSubField={removeSubField}
+          removeSection={removeSection}
+        />
+      )}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import { Avatar } from "@/assets/img";
-import { Bell, Hexagon, Menu, MenuSquare } from "lucide-react";
+import { Bell, Hexagon, Menu } from "lucide-react";
 import SidebarDrawer from "./sidebar/drawer";
 import { useDisclosure } from "@chakra-ui/react";
 

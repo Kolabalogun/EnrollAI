@@ -3,7 +3,7 @@ import { Kanban } from "lucide-react";
 
 const ReportStatBar = () => {
   return (
-    <div className="flex w-full flex-1 gap-5">
+    <div className="flex w-full flex-1 lg:flex-row flex-col gap-5">
       <ReportStatCard
         title="Total Applications Processed"
         value={0}
