@@ -3,58 +3,64 @@ import { ApplicationProps } from "../step1";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const Licensing = ({
+const AdditionalDocument = ({
   form,
   handleChange,
   handleDateChange,
 }: ApplicationProps) => {
   const {
-    stateMedicalicense,
-    stateMedicalicenseNumber,
-    stateMedicalicenseExpirationDate,
-    pcslicenseExpirationDate,
-    pcslicense,
-    pcslicenseNumber,
+    additionalDocumentstateMedicalicense,
+    additionalDocumentstateMedicalicenseNumber,
+    additionalDocumentstateMedicalicenseExpirationDate,
+    additionalDocumentPcslicenseExpirationDate,
+    additionalDocumentPcslicense,
+    additionalDocumentPcslicenseNumber,
   } = form;
 
   return (
-    <div className="border rounded-lg pt-5 px-3 xl:px-5 pb-10 space-y-5">
-      <p className="font-semibold text-base">Licenses</p>
+    <div className="border rounded-lg pt-5 px-5 pb-10 space-y-5">
+      <p className="font-semibold text-base">Additional Documents</p>
       <div className="space-y-10 ">
-        <div className="flex flex-1 xl:flex-row flex-col gap-12 xl:gap-24">
+        <div className="flex flex-1 gap-24">
           <div className="flex flex-col flex-1 gap-3">
             <p className="font-semibold  ">State Medical License</p>
-            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
-              <label className="w-28" htmlFor="stateMedicalicense">
+            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
+              <label
+                className="w-28"
+                htmlFor="additionalDocumentstateMedicalicense"
+              >
                 License
               </label>
               <input
-                id="stateMedicalicense"
-                name="stateMedicalicense"
+                id="additionalDocumentstateMedicalicense"
+                name="additionalDocumentstateMedicalicense"
                 type="text"
                 placeholder="New York State medical License"
-                value={stateMedicalicense}
+                value={additionalDocumentstateMedicalicense}
                 onChange={handleChange}
                 className="border rounded-md p-2 outline-[0.5px] outline-secondary flex-1"
               />
             </div>
 
-            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
-              <label className="w-28" htmlFor="stateMedicalicenseNumber">
+            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
+              <label
+                className="w-28"
+                htmlFor="additionalDocumentstateMedicalicenseNumber"
+              >
                 License Number
               </label>
               <input
-                id="stateMedicalicenseNumber"
-                name="stateMedicalicenseNumber"
-                type="number"
+                id="additionalDocumentstateMedicalicenseNumber"
+                name="additionalDocumentstateMedicalicenseNumber"
+                type="text"
                 placeholder="9876543210"
-                value={stateMedicalicenseNumber}
+                value={additionalDocumentstateMedicalicenseNumber}
                 onChange={handleChange}
                 className="border rounded-md p-2 outline-[0.5px] outline-secondary flex-1"
               />
             </div>
 
-            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
               <label className="w-[140px]" htmlFor="licenseNumber">
                 Expiration Date
               </label>
@@ -68,9 +74,12 @@ const Licensing = ({
                 </div>
 
                 <ReactDatePicker
-                  selected={stateMedicalicenseExpirationDate}
+                  selected={additionalDocumentstateMedicalicenseExpirationDate}
                   onChange={(date) =>
-                    handleDateChange("stateMedicalicenseExpirationDate", date)
+                    handleDateChange(
+                      "additionalDocumentstateMedicalicenseExpirationDate",
+                      date
+                    )
                   }
                   dateFormat={"dd/MM/yyyy"}
                   wrapperClassName="date-picker"
@@ -83,37 +92,40 @@ const Licensing = ({
             <p className="font-semibold  ">
               Professional and controlled substance License
             </p>
-            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
-              <label className="w-28" htmlFor="pcslicense">
+            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
+              <label className="w-28" htmlFor="additionalDocumentPcslicense">
                 License
               </label>
               <input
-                id="pcslicense"
-                name="pcslicense"
+                id="additionalDocumentPcslicense"
+                name="additionalDocumentPcslicense"
                 type="text"
                 placeholder="New York State medical License"
-                value={pcslicense}
+                value={additionalDocumentPcslicense}
                 onChange={handleChange}
                 className="border rounded-md p-2 outline-[0.5px] outline-secondary flex-1"
               />
             </div>
 
-            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
-              <label className="w-28" htmlFor="pcslicenseNumber">
+            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
+              <label
+                className="w-28"
+                htmlFor="additionalDocumentPcslicenseNumber"
+              >
                 License Number
               </label>
               <input
-                id="pcslicenseNumber"
-                name="pcslicenseNumber"
-                type="number"
+                id="additionalDocumentPcslicenseNumber"
+                name="additionalDocumentPcslicenseNumber"
+                type="text"
                 placeholder="9876543210"
-                value={pcslicenseNumber}
+                value={additionalDocumentPcslicenseNumber}
                 onChange={handleChange}
                 className="border rounded-md p-2 outline-[0.5px] outline-secondary flex-1"
               />
             </div>
 
-            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
               <label className="w-[140px]" htmlFor="licenseNumber">
                 Expiration Date
               </label>
@@ -127,9 +139,12 @@ const Licensing = ({
                 </div>
 
                 <ReactDatePicker
-                  selected={pcslicenseExpirationDate}
+                  selected={additionalDocumentPcslicenseExpirationDate}
                   onChange={(date) =>
-                    handleDateChange("pcslicenseExpirationDate", date)
+                    handleDateChange(
+                      "additionalDocumentPcslicenseExpirationDate",
+                      date
+                    )
                   }
                   dateFormat={"dd/MM/yyyy"}
                   wrapperClassName="date-picker"
@@ -143,4 +158,4 @@ const Licensing = ({
   );
 };
 
-export default Licensing;
+export default AdditionalDocument;

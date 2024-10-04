@@ -138,3 +138,133 @@ export const ApplicationsData = [
     desc: "lorem ipsum dolor sit amet",
   },
 ];
+
+export const CreateApplicationFormTemplateInitialState = {
+  // Step 1
+
+  personalInformation: {
+    // Personal Information
+    fullName: "",
+    sex: "male",
+    dob: new Date(Date.now()),
+    ssn: "",
+    language: "",
+    phoneNumber: "",
+    email: "",
+    address: "",
+  },
+
+  professionID: {
+    // Profession ID
+    npi: "",
+    tin: "",
+    deacn: "",
+    medicalCareId: "",
+  },
+
+  educationInformation: {
+    // Education Information
+
+    undergraduate: {
+      undergraduateInstitution: "",
+      undergraduateDegree: "",
+      undergraduateYOG: "",
+    },
+
+    graduate: {
+      graduateInstitution: "",
+      graduateDegree: "",
+      graduateYOG: "",
+    },
+
+    internship: {
+      internshipInstitution: "",
+      internshipDegree: "",
+      internshipYOG: "",
+    },
+
+    residency: {
+      residencyInstitution: "",
+      residencyDegree: "",
+      residencyYOG: "",
+    },
+
+    fellowship: {
+      fellowshipInstitution: "",
+      fellowshipDegree: "",
+      fellowshipYOG: "",
+    },
+    cme: {
+      cmeInstitution: "",
+      cmeDegree: "",
+      cmeYOG: "",
+    },
+  },
+
+  // Step 2
+  practiceLocationI: {
+    // Practice Location I
+    primarypracticelocationName: "",
+    primarypracticelocationOfficeAddress: "",
+    primarypracticelocationContact: "",
+    primarypracticelocationEmail: "",
+    primarypracticelocationOfficeHours: "",
+    primarypracticelocationFax: "",
+  },
+
+  practiceLocationII: {
+    // Practice Location II
+    primarypracticelocation2Name: "",
+    primarypracticelocation2OfficeAddress: "",
+    primarypracticelocation2Contact: "",
+    primarypracticelocation2Email: "",
+    primarypracticelocation2OfficeHours: "",
+    primarypracticelocation2Fax: "",
+  },
+
+  hospitalAffiliation: {
+    // Hospital Affiliation
+    currentHospitalAffliationHospital: "",
+    currentHospitalAffliationPrivileges: "",
+    previousHospitalAffliationHospital: "",
+    previousHospitalAffliationPrivileges: "",
+  },
+
+  Licensing: {
+    // Licensing
+    stateMedicalicense: "",
+    stateMedicalicenseNumber: "",
+    stateMedicalicenseExpirationDate: new Date(Date.now()),
+    pcslicenseExpirationDate: new Date(Date.now()),
+    pcslicense: "",
+    pcslicenseNumber: "",
+  },
+
+  // Step 3
+
+  workHistory: {
+    // Work History
+    currentEmploymentPosition: "",
+    currentEmploymentStartDate: new Date(Date.now()),
+    currentEmploymentEndDate: new Date(Date.now()),
+    previousEmploymentPosition: "",
+    previousEmploymentStartDate: new Date(Date.now()),
+    previousEmploymentEndDate: new Date(Date.now()),
+    previousEmploymentGAP: "",
+    previousEmploymentMilitaryService: "",
+  },
+
+  malpracticeInformation: {
+    // Malpractice Information
+    malpracticeInsuranceCurrentCarrier: "",
+    malpracticeInsurancePolicyNumber: "",
+    malpracticeInsuranceCoverageLimit: "",
+    malpracticeInsuranceEffectiveDate: "",
+    liabilityClaimsHistoryMalpracticeClaims: "",
+    liabilityClaimsHistoryPendingLitigation: "",
+    liabilityClaimsHistorySettlement: "",
+    liabilityClaimsHistoryDisciplinaryAction: "",
+  },
+
+  additionalDocuments: [],
+};

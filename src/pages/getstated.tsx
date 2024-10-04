@@ -20,21 +20,21 @@ const GetStated = () => {
       </section>
 
       <section className="relative">
-        <div className="relative w-[800px]">
+        <div className="relative xl:w-[800px]">
           <img src={GetStartedImg} alt="" className="w-full h-full" />
 
-          <div className="absolute -top-14 -right-32 h-52 ">
+          <div className="hidden  xl:absolute  -top-14 -right-32 h-52 ">
             <img src={Frame1} alt="" className="h-full w-full" />
           </div>
 
-          <div className="absolute -bottom-32 -right-32 h-52 ">
+          <div className="hidden  xl:absolute -bottom-32 -right-32 h-52 ">
             <img src={Frame2} alt="" className="h-full w-full" />
           </div>
 
-          <div className="absolute top-32 -left-56 h-52 ">
+          <div className="hidden  xl:absolute top-32 -left-56 h-52 ">
             <img src={Frame4} alt="" className="h-full w-full" />
           </div>
-          <div className="absolute -bottom-32 -left-56 h-52 ">
+          <div className="hidden  xl:absolute -bottom-32 -left-56 h-52 ">
             <img src={Frame3} alt="" className="h-full w-full" />
           </div>
         </div>

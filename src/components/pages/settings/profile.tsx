@@ -80,7 +80,7 @@ const Profile = () => {
         setDialogOpen={setPasswordDialogOpen}
       />
       <section className="bg-white rounded-lg shadow flex-1 h-full w-full flex flex-col px-5 py-5 pb-20 space-y-12">
-        <div className="flex items-center justify-between">
+        <div className="flex xl:flex-row flex-col gap-4 xl:items-center justify-between">
           <div className="flex gap-5 items-center">
             <img
               src={Avatar}
@@ -108,7 +108,7 @@ const Profile = () => {
         </div>
 
         <div className="space-y-4">
-          <div className="flex flex-row justify-between gap-8">
+          <div className="flex xl:flex-row flex-col justify-between gap-8">
             <div className="raleway text-xs flex w-full flex-1 flex-col gap-1 font-medium">
               <label className="font-semibold" htmlFor="fullName">
                 Full Name
@@ -140,7 +140,7 @@ const Profile = () => {
             </div>
           </div>
 
-          <div className="flex flex-row justify-between gap-8">
+          <div className="flex xl:flex-row flex-col justify-between gap-8">
             {accountType === "Organization" && (
               <div className="raleway text-xs flex w-full flex-1 flex-col gap-1 font-medium">
                 <label className="font-semibold" htmlFor="companyName">

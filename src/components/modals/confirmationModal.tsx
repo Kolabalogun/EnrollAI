@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -31,10 +30,13 @@ const ConfirmationModal = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="bg-gray-200 ">
         <DialogHeader>
-          <DialogTitle className="text-black">{title}</DialogTitle>
+          <DialogTitle style={{ textAlign: "left" }} className="text-black">
+            {title}
+          </DialogTitle>
         </DialogHeader>
+
         <p className="text-black font-medium">{message}</p>
-        <DialogFooter>
+        <div className="flex justify-end">
           <Button
             disabled={isLoading}
             className={`${
@@ -49,7 +51,7 @@ const ConfirmationModal = ({
           <Button className="text-black" variant="outline" onClick={onClose}>
             Cancel
           </Button>
-        </DialogFooter>
+        </div>
       </DialogContent>
     </Dialog>
   );

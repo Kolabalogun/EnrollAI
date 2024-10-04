@@ -13,7 +13,7 @@ const AnalysisTab = ({ title, selectedTab, setSelectedTab, idx }: Props) => {
         selectedTab === idx ? "text-dark-200 bg-fade" : "text-[#5a5a5a] "
       } font-semibold inter text-sm  items-center  xl:justify-center p-3 rounded-md  `}
     >
-      <p className="hidden sm:block text-[13px] ">{title}</p>
+      <p className="  text-[13px] ">{title}</p>
     </div>
   );
 };

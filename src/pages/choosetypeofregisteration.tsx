@@ -32,12 +32,12 @@ const ChooseTypeOfRegisteration = () => {
     }
   };
   return (
-    <main className="min-h-screen bg-primary   px-5   py-5">
+    <main className="min-h-screen bg-primary   px-3 lg:px-5   py-5">
       <LogoBar />
 
-      <div className="h-[85vh] flex items-center  flex-col w-full  justify-center ">
+      <div className="min-h-[85vh] my-20 lg:my-0 flex items-center  flex-col w-full  justify-center ">
         <div className="flex   items-center flex-col  ">
-          <section className="mb-8 w-96  text-center raleway space-y-4">
+          <section className="mb-8 lg:w-96  text-center raleway space-y-4">
             <h1 className="header text-center w-full  ">Create an Account</h1>
             <p
               className="text-fade text-center text-sm"

@@ -16,6 +16,7 @@ type LinksGroupType = {
   buttonLink: string;
   drawer?: boolean;
   subLinks?: LinksGroupType[];
+  onClose?: any;
 };
 
 export function LinksGroup({
@@ -24,8 +25,9 @@ export function LinksGroup({
   buttonLink,
   iconWhite,
   subLinks,
-}: // drawer,
-LinksGroupType) {
+  drawer,
+  onClose,
+}: LinksGroupType) {
   const navigate = useNavigate();
   const location = useLocation();
   const toast = useToast();
@@ -71,6 +73,9 @@ LinksGroupType) {
 
         setIsDropdownOpen(false);
       } else {
+        if (drawer) {
+          onClose();
+        }
         // Toggle dropdown only for items with subLinks (like Applications)
         if (subLinks) {
           setIsDropdownOpen(!isDropdownOpen);

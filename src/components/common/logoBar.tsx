@@ -9,7 +9,7 @@ const LogoBar = () => {
         <p className=" font-medium text-base   text-secondary">Enroll Hub</p>
       </Link>
 
-      <p className="raleway font-semibold cursor-pointer">Logout</p>
+      {/* <p className="raleway font-semibold cursor-pointer">Logout</p> */}
     </div>
   );
 };

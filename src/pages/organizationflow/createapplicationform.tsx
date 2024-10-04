@@ -3,69 +3,57 @@
 import { ChevronRight, ChevronRightIcon } from "lucide-react";
 import "react-phone-input-2/lib/style.css";
 import { useState } from "react";
-import Step1 from "@/components/pages/applicationForm/step1";
+
 import { SubmitButton } from "@/components/common";
-import Step2 from "@/components/pages/applicationForm/step2";
-import Step3 from "@/components/pages/applicationForm/step3";
-import Review1 from "@/components/pages/applicationForm/reviews/review1";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  resetForm,
-  setApplicationList,
-  updateForm,
-} from "@/redux/features/applicationFormSlice";
-import Review2 from "@/components/pages/applicationForm/reviews/review2";
+
 import ApplicationSuccessModal from "@/components/modals/applicationSuccess";
 import { useDisclosure } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { HEALTHCARE_APPLICATIONS } from "@/router/routes";
+import Step1 from "@/components/pages/applicationFormTemplates/step1";
+import Step2 from "@/components/pages/applicationFormTemplates/step2";
+import Step3 from "@/components/pages/applicationFormTemplates/step3";
+import { CreateApplicationFormTemplateInitialState } from "@/constant/data/applicationsdata";
 
 const CreateApplicationForm = () => {
   const [isLoading, setLoading] = useState<boolean>(false);
   const { isOpen, onClose, onOpen } = useDisclosure();
-  const { form, lists } = useSelector((state: any) => state.applicationForm);
-  const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
-  console.log(lists);
+  const [form, setForm] = useState(CreateApplicationFormTemplateInitialState);
+  const [pageNo, setPageNo] = useState(1);
+
   console.log(form);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    dispatch(updateForm({ [name]: value }));
+  // Remove a field from a section
+  const removeField = (section, field) => {
+    setForm((prevForm) => {
+      const updatedSection = { ...prevForm[section] };
+      delete updatedSection[field];
+
+      return {
+        ...prevForm,
+        [section]: updatedSection,
+      };
+    });
   };
 
-  const handleDateChange = (fieldName: string, date: Date | null) => {
-    dispatch(updateForm({ [fieldName]: date }));
+  // Remove the entire section
+  const removeSection = (section) => {
+    const updatedform = { ...form };
+    delete updatedform[section];
+    setForm(updatedform);
   };
 
-  const handlePhoneChange = (fieldName: string, phone: string) => {
-    dispatch(updateForm({ [fieldName]: phone }));
-  };
-
-  const handleCheckBoxChange = (fieldName: string, value: any) => {
-    dispatch(updateForm({ [fieldName]: value }));
-  };
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     try {
       setLoading(true);
 
-      if (form.pageNo === 5) {
-        if (isOpen) {
-          dispatch(setApplicationList([...(lists || []), form]));
-          // dispatch(resetLists());
-          dispatch(resetForm());
-          navigate(HEALTHCARE_APPLICATIONS);
-        } else {
-          onOpen();
-        }
-      } else {
-        dispatch(updateForm({ pageNo: form.pageNo + 1 }));
-      }
+      onOpen();
+      navigate(HEALTHCARE_APPLICATIONS);
     } catch (error) {
       console.log(error);
     } finally {
@@ -87,29 +75,15 @@ const CreateApplicationForm = () => {
       </div>
 
       <form onSubmit={handleSubmit}>
-        {form.pageNo === 5 ? (
-          <Review2 form={form} handleCheckBoxChange={handleCheckBoxChange} />
-        ) : form.pageNo === 2 ? (
-          <Step2
-            form={form}
-            handleChange={handleChange}
-            handlePhoneChange={handlePhoneChange}
-            handleDateChange={handleDateChange}
-          />
-        ) : form.pageNo === 3 ? (
-          <Step3
-            form={form}
-            handleChange={handleChange}
-            handleDateChange={handleDateChange}
-          />
-        ) : form.pageNo === 4 ? (
-          <Review1 form={form} />
+        {pageNo === 2 ? (
+          <Step2 form={form} />
+        ) : pageNo === 3 ? (
+          <Step3 form={form} />
         ) : (
           <Step1
             form={form}
-            handleChange={handleChange}
-            handlePhoneChange={handlePhoneChange}
-            handleDateChange={handleDateChange}
+            removeField={removeField}
+            removeSection={removeSection}
           />
         )}
 
@@ -117,13 +91,13 @@ const CreateApplicationForm = () => {
           <button
             type="button"
             onClick={() => {
-              if (form.pageNo > 1) {
-                dispatch(updateForm({ pageNo: form.pageNo - 1 }));
+              if (pageNo > 1) {
+                setPageNo(pageNo - 1);
               }
             }}
             className="py-2 raleway px-8 border rounded-md font-semibold text-xs"
           >
-            {form.pageNo === 1 ? "Cancel" : form.pageNo === 4 ? "Edit" : "Back"}
+            {pageNo === 1 ? "Cancel" : "Back"}
           </button>
 
           <SubmitButton
@@ -131,14 +105,10 @@ const CreateApplicationForm = () => {
             className="py-2 flex gap-2  w-auto px-8 border rounded-md font-semibold text-xs"
           >
             <p className="font-bold text-xs">
-              {form.pageNo === 3
-                ? "Review"
-                : form.pageNo === 5
-                ? "Submit"
-                : "Next"}
+              {pageNo === 5 ? "Submit" : "Next"}
             </p>
 
-            {form.pageNo !== 5 && <ChevronRightIcon size={15} />}
+            {pageNo !== 3 && <ChevronRightIcon size={15} />}
           </SubmitButton>
         </div>
       </form>

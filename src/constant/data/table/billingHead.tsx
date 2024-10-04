@@ -101,7 +101,9 @@ export const BillingTableHeads = (
     header: "Invoice",
     accessor: (row) => (
       <div className="space-y-1">
-        <p className="text-dark-200 font-medium text-sm">{row.invoice}</p>
+        <p className="text-dark-200 font-medium w-44 xl:w-full text-sm">
+          {row.invoice}
+        </p>
       </div>
     ),
     flex: 2,
@@ -110,7 +112,7 @@ export const BillingTableHeads = (
     header: "Date",
     accessor: (row) => (
       <div className="space-y-1">
-        <p className="font-semibold py-4  text-sm">{row.date}</p>
+        <p className="font-semibold py-4 w-32 xl:w-full text-sm">{row.date}</p>
       </div>
     ),
     className: "text-center font-medium",
@@ -120,7 +122,7 @@ export const BillingTableHeads = (
     header: "Amount",
     accessor: (row) => (
       <div className="space-y-1">
-        <p className="  font-semibold text-sm">{row.amount}</p>
+        <p className="  font-semibold w-32 xl:w-full text-sm">{row.amount}</p>
       </div>
     ),
     flex: 2,

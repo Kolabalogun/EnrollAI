@@ -46,7 +46,7 @@ const Dashboard = () => {
         </p>
       </div>
 
-      <div className="flex gap-10">
+      <div className="flex xl:flex-row flex-col gap-10">
         <div
           style={{ flex: 2.25 }}
           className="flex flex-col justify-between w-full flex-1 space-y-9 "
@@ -58,7 +58,7 @@ const Dashboard = () => {
               <StatBar />
             )}
           </div>
-          <div className="flex gap-8">
+          <div className="flex xl:flex-row flex-col gap-5 xl:gap-8">
             <div onClick={() => onOpen()}>
               <SubmitButton
                 type="button"
@@ -122,10 +122,10 @@ const Dashboard = () => {
         )}
       </div>
 
-      <div className="flex gap-10">
+      <div className="flex xl:flex-row flex-col gap-10">
         <div
           style={{ flex: 2 }}
-          className="bg-white rounded-lg flex-1 h-full w-full flex flex-col p-5 space-y-8"
+          className="bg-white rounded-lg flex-1 h-full w-full flex  flex-col p-5 space-y-8"
         >
           <p className="font-semibold text-base">
             {accountType === "Organization"

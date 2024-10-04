@@ -14,6 +14,8 @@ export type ApplicationProps = {
   handleChange?: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
+  removeField?: any;
+  removeSection?: any;
 };
 
 const Step1 = ({
@@ -23,7 +25,7 @@ const Step1 = ({
   handleChange,
 }: ApplicationProps) => {
   return (
-    <div className="bg-white rounded-lg p-5 space-y-4">
+    <div className="bg-white rounded-lg px-3 py-5 xl:p-5 space-y-4">
       <div className="space-y-1">
         <p className="font-semibold text-base ">Health Plan</p>
         <p className="text-[12px] font-medium text-[#667085]">

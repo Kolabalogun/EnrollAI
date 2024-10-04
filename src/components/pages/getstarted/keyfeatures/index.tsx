@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 const ExploreKeyFeatures = ({ tab }: { tab: number }) => {
   const { accountType } = useSelector((state: any) => state.auth);
   return (
-    <section className="flex flex-col w-[600px] gap-10">
+    <section className="flex flex-col xl:w-[600px] gap-10">
       {tab ? (
         <p className="text-base text-[#475467] raleway font-semibold">
           {tab === 1

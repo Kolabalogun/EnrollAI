@@ -23,8 +23,9 @@ const Reference = ({
 
   return (
     <div className="  pb-10 space-y-5">
+      <p className="font-semibold ">References</p>
       <div className="space-y-10 ">
-        <div className="flex flex-1 gap-10">
+        <div className="flex flex-1 gap-10 xl:flex-row flex-col">
           <div className="flex flex-col flex-1 gap-6">
             <p className="font-semibold  ">Reference 1</p>
             <div className="raleway text-xs flex w-full flex-1 flex-col gap-2  font-medium">

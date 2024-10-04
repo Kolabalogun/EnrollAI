@@ -1,7 +1,7 @@
 import SecondaryButton from "@/components/common/buttons/secondaryButton";
 import { ReusableTable } from "@/components/table/selectTable";
 import { notificationsData } from "@/constant/data/noticationdata";
-import { notificationColumns } from "@/constant/table/notificationHeads";
+import { notificationColumns } from "@/constant/data/table/notificationHeads";
 import { OctagonAlert, Search, Trash2Icon } from "lucide-react";
 
 const Notifications = () => {
@@ -11,11 +11,11 @@ const Notifications = () => {
         <p className="font-semibold text-3xl">Notifications</p>
       </div>
 
-      <div className="flex gap-4 ">
-        <div className="bg-white rounded-lg flex-1 h-full w-full flex flex-col p-5 space-y-10">
-          <div className="w-full flex justify-between items-center">
+      <div className="flex  gap-4 ">
+        <div className="bg-white rounded-lg flex-1 h-full w-full flex flex-col p-3 xl:p-5 space-y-10">
+          <div className="w-full flex xl:flex-row gap-3 flex-col-reverse justify-between xl:items-center">
             <div className="flex-1">
-              <div className="bg-[#f9fafb] border-fade border items-center flex rounded-full w-96 py-2 px-4">
+              <div className="bg-[#f9fafb] border-fade border items-center flex rounded-full xl:w-96 py-2 px-4">
                 <Search className="text-fade" size={14} />
                 <input
                   type="text"
@@ -25,7 +25,7 @@ const Notifications = () => {
               </div>
             </div>
 
-            <div className="flex gap-6 items-center">
+            <div className="flex gap-6 justify-between items-center">
               <div className="flex ">
                 <div className="bg-[#fafbfd] flex justify-between cursor-pointer  ">
                   <div className="p-3 rounded-l-xl border">

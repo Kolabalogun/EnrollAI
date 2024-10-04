@@ -7,7 +7,7 @@ interface GetStartedLayoutProps {
 
 const GetStartedLayout = ({ children, others }: GetStartedLayoutProps) => {
   return (
-    <main className="min-h-screen bg-primary   px-5   py-5">
+    <main className="min-h-screen bg-primary   px-3 lg:px-5   py-5">
       <LogoBar />
 
       <div

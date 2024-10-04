@@ -6,7 +6,7 @@ import AdditionalDocument from "./additionalDocument";
 
 const Step3 = ({ form, handleDateChange, handleChange }: ApplicationProps) => {
   return (
-    <div className="bg-white rounded-lg px-3 py-5 xl:p-5 space-y-4">
+    <div className="bg-white rounded-lg p-5 space-y-4">
       <div className="space-y-1">
         <p className="font-semibold text-base ">Health Plan</p>
         <p className="text-[12px] font-medium text-[#667085]">

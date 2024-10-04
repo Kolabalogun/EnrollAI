@@ -8,7 +8,7 @@ import { ARTICLES_ROUTE } from "@/router/routes.tsx";
 const HelpCenter = () => {
   return (
     <section className="flex space-y-6   mb-20 relative flex-col">
-      <div className="p-8 flex items-center flex-col space-y-2 justify-center">
+      <div className=" py-5 lg:p-8 flex items-center flex-col space-y-2 justify-center">
         <h1 className="raleway font-bold text-4xl ">
           Hi, how can we <span className="text-secondary">help?</span>
         </h1>
@@ -18,7 +18,7 @@ const HelpCenter = () => {
       </div>
 
       <div className="flex justify-center items-center">
-        <div className="bg-[#f5f6fa] border-fade border-2 items-center flex rounded-xl w-96 py-2 px-4">
+        <div className="bg-[#f5f6fa] border-fade border-2 items-center flex rounded-xl lg:w-96 w-full py-2 px-4">
           <Search className="text-fade" size={14} />
           <input
             type="text"
@@ -28,7 +28,7 @@ const HelpCenter = () => {
         </div>
       </div>
 
-      <div className="bg-[#f7f2f7]  px-9 py-16 rounded-xl grid place-content-between gap-10 grid-cols-3">
+      <div className="bg-[#f7f2f7] px-3 xl:px-9 py-8 xl:py-16 rounded-xl grid place-content-between gap-10 lg:grid-cols-2 xl:grid-cols-3">
         {helps.map((help) => (
           <Link
             to={ARTICLES_ROUTE}
@@ -54,8 +54,8 @@ const HelpCenter = () => {
       </div>
 
       <div className="space-y-6 py-10">
-        <div className="p-8 flex items-center flex-col space-y-2 justify-center">
-          <h1 className="raleway font-bold text-4xl ">
+        <div className="lg:p-8 flex xl:items-center flex-col space-y-2 justify-center">
+          <h1 className="raleway font-bold text-2xl lg:text-4xl ">
             Frequently asked questions
           </h1>
           <p className="font-medium text-sm text-fade ">
@@ -64,7 +64,7 @@ const HelpCenter = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-5">
+        <div className="grid lg:grid-cols-2 gap-5">
           {accordionDummyData.map((accordion) => (
             <CustomAccordion data={accordion} />
           ))}

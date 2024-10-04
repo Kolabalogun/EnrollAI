@@ -117,7 +117,7 @@ export const DetailsCell = ({ row }: { row: ApplicationFormType }) => {
   return (
     <div
       onClick={() => navigate(`${HEALTHCARE_APPLICATIONS_DETALIS}/${row.id}`)}
-      className="  text-xs  text-center items-center justify-center flex gap-2 font-medium text-[#667085]  cursor-pointer  "
+      className="  text-xs w-32 xl:w-full text-center items-center justify-center flex gap-2 font-medium text-[#667085]  cursor-pointer  "
     >
       View Details
     </div>
@@ -135,7 +135,7 @@ export const ApplicationFormTableHeads = (
   {
     header: "Application",
     accessor: (row) => (
-      <div className="space-y-1">
+      <div className="space-y-1 w-32 xl:w-full ">
         <p className="font-semibold text-xs">Credentialing Request</p>
         <p className="text-fade font-medium text-xs">
           lorem ipsum organization {row.application}{" "}
@@ -147,7 +147,7 @@ export const ApplicationFormTableHeads = (
   {
     header: "Date",
     accessor: (row) => (
-      <div className="space-y-1">
+      <div className="space-y-1 w-32 xl:w-full">
         <p className="font-semibold py-4  text-xs">
           {formatDateTime(row.date)}
         </p>
@@ -169,8 +169,8 @@ export const ApplicationFormTableHeads = (
   {
     header: "Details",
     accessor: (row) => <DetailsCell row={row} />,
-    className: "text-center",
-    headClassName: "text-center",
+    className: "text-center w-32 xl:w-full",
+    headClassName: "text-center w-32 xl:w-full",
   },
   {
     header: "Actions",
@@ -200,7 +200,7 @@ export const OrganizationApplicationFormTableHeads = (
   {
     header: "Provider Name",
     accessor: (row) => (
-      <div className="space-y-1">
+      <div className="space-y-1 w-32 xl:w-full">
         <p className="font-semibold text-xs">{row.fullName}</p>
       </div>
     ),
@@ -209,7 +209,7 @@ export const OrganizationApplicationFormTableHeads = (
   {
     header: "Application Type",
     accessor: () => (
-      <div className="space-y-1">
+      <div className="space-y-1 w-32 xl:w-full">
         <p className="font-semibold text-xs">Credentialing Request</p>
       </div>
     ),
@@ -218,7 +218,7 @@ export const OrganizationApplicationFormTableHeads = (
   {
     header: "Date",
     accessor: (row) => (
-      <div className="space-y-1">
+      <div className="space-y-1 w-32 xl:w-full">
         <p className="font-semibold py-4  text-xs">
           {formatDateTime(row.date, true)}
         </p>

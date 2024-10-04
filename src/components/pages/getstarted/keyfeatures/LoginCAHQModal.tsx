@@ -42,7 +42,7 @@ const LoginCAHQModal = ({
         <ModalBody padding={0}>
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col">
-              <div className="bg-[#ececec] p-10 flex items-center justify-center gap-5">
+              <div className="bg-[#ececec] pt-12 px-6 pb-6 lg:p-10 flex flex-col xl:flex-row items-center justify-center gap-5">
                 <div className="">
                   <img src={Frame5} alt="" className="h-32 w-full" />
                 </div>
@@ -58,11 +58,11 @@ const LoginCAHQModal = ({
                   <img src={Check} alt="" className="h-16" />
                 </div>
                 <div className="space-y-4">
-                  <p className=" raleway font-semibold text-4xl text-center  ">
+                  <p className=" raleway font-semibold  text-4xl text-center  ">
                     Account Linked Successfully
                   </p>
 
-                  <p className="font-semibold text-sm text-center raleway  ">
+                  <p className="font-semibold text-sm px-5 lg:px-1 text-center raleway  ">
                     Your CAQH ProView account is now linked and ready to use.
                   </p>
                 </div>
@@ -80,7 +80,7 @@ const LoginCAHQModal = ({
                 </div>
               </div>
             ) : (
-              <div className="bg-white space-y-10 p-20">
+              <div className="bg-white space-y-10 p-6 lg:p-10 xl:p-20">
                 <div className="">
                   <p className="font-semibold  raleway">
                     Welcome! Enroll Hub has teamed up with trusted healthcare

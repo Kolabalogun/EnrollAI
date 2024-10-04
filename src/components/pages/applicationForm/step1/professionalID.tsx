@@ -8,10 +8,10 @@ const ProfessionalID = ({
   const { npi, tin, deacn, medicalCareId } = form;
 
   return (
-    <div className="border rounded-lg pt-5 px-5 pb-10 space-y-5">
+    <div className="border rounded-lg pt-5 px-3 xl:px-5 pb-10 space-y-5">
       <p className="font-semibold text-base">Professional IDs</p>
       <div className="space-y-2">
-        <div className="flex flex-row justify-between gap-3">
+        <div className="flex xl:flex-row flex-col justify-between gap-3">
           <div
             style={{ flex: 2 }}
             className="raleway text-xs flex w-full flex-1 flex-col gap-1 font-medium"

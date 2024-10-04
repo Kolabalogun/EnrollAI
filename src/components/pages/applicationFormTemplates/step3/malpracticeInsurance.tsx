@@ -13,13 +13,13 @@ const MalpracticeInsurance = ({ form, handleChange }: ApplicationProps) => {
   } = form;
 
   return (
-    <div className="border rounded-lg pt-5 px-3 xl:px-5 pb-10 space-y-5">
+    <div className="border rounded-lg pt-5 px-5 pb-10 space-y-5">
       <div className="space-y-10 ">
-        <div className="flex flex-1 xl:flex-row flex-col gap-10 xl:gap-24">
+        <div className="flex flex-1 gap-24">
           <div className="flex flex-col flex-1 gap-3">
             <p className="font-semibold  ">Malpractice Insurance</p>
 
-            <div className="raleway text-xs  flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
               <label
                 className="w-28"
                 htmlFor="malpracticeInsuranceCurrentCarrier"
@@ -37,7 +37,7 @@ const MalpracticeInsurance = ({ form, handleChange }: ApplicationProps) => {
               />
             </div>
 
-            <div className="raleway text-xs  flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
               <label
                 className="w-28"
                 htmlFor="malpracticeInsurancePolicyNumber"
@@ -55,7 +55,7 @@ const MalpracticeInsurance = ({ form, handleChange }: ApplicationProps) => {
               />
             </div>
 
-            <div className="raleway text-xs  flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
               <label
                 className="w-28"
                 htmlFor="malpracticeInsuranceCoverageLimit"
@@ -73,7 +73,7 @@ const MalpracticeInsurance = ({ form, handleChange }: ApplicationProps) => {
               />
             </div>
 
-            <div className="raleway text-xs  flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
               <label
                 className="w-28"
                 htmlFor="malpracticeInsuranceEffectiveDate"
@@ -95,7 +95,7 @@ const MalpracticeInsurance = ({ form, handleChange }: ApplicationProps) => {
           <div className="flex flex-col flex-1 gap-3">
             <p className="font-semibold  ">Liability Claims History</p>
 
-            <div className="raleway text-xs  flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
               <label
                 className="w-28"
                 htmlFor="liabilityClaimsHistoryMalpracticeClaims"
@@ -113,7 +113,7 @@ const MalpracticeInsurance = ({ form, handleChange }: ApplicationProps) => {
               />
             </div>
 
-            <div className="raleway text-xs  flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
               <label
                 className="w-28"
                 htmlFor="liabilityClaimsHistoryPendingLitigation"
@@ -131,7 +131,7 @@ const MalpracticeInsurance = ({ form, handleChange }: ApplicationProps) => {
               />
             </div>
 
-            <div className="raleway text-xs  flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
               <label
                 className="w-28"
                 htmlFor="liabilityClaimsHistorySettlement"
@@ -149,7 +149,7 @@ const MalpracticeInsurance = ({ form, handleChange }: ApplicationProps) => {
               />
             </div>
 
-            <div className="raleway text-xs  flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
               <label
                 className="w-28"
                 htmlFor="liabilityClaimsHistoryDisciplinaryAction"

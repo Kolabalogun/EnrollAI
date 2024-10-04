@@ -73,26 +73,26 @@ const Review1 = ({ form }: ApplicationProps) => {
           </p>
         </div>
 
-        <div className="flex justify-between gap-20 border-b-2 pb-10">
+        <div className="flex xl:flex-row flex-col  justify-between xl:gap-20 gap-8 border-b-2 pb-10">
           <div className="    flex w-full flex-1 flex-col gap-5    ">
             <p className="font-semibold text-xl">Personal Information</p>
 
             <div className="space-y-3">
-              <div className="flex space-x-2 items-center">
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                 <p className="font-semibold text-xs text-black">Full Name:</p>
                 <p className="text-xs text-[#667085] font-medium capitalize ">
                   {fullName}
                 </p>
               </div>
 
-              <div className="flex space-x-2 items-center">
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                 <p className="font-semibold text-xs text-black">Sex:</p>
                 <p className="text-xs text-[#667085] font-medium capitalize ">
                   {sex}
                 </p>
               </div>
 
-              <div className="flex space-x-2 items-center">
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                 <p className="font-semibold text-xs text-black">
                   Date of Birth:
                 </p>
@@ -101,7 +101,7 @@ const Review1 = ({ form }: ApplicationProps) => {
                 </p>
               </div>
 
-              <div className="flex space-x-2 items-center">
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                 <p className="font-semibold text-xs text-black">
                   Social Security Number:
                 </p>
@@ -110,7 +110,7 @@ const Review1 = ({ form }: ApplicationProps) => {
                 </p>
               </div>
 
-              <div className="flex space-x-2 items-center">
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                 <p className="font-semibold text-xs text-black">
                   Language Spoken:
                 </p>
@@ -125,7 +125,7 @@ const Review1 = ({ form }: ApplicationProps) => {
             <p className="font-semibold text-xl">Contact Information</p>
 
             <div className="space-y-3">
-              <div className="flex space-x-2 items-center">
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                 <p className="font-semibold text-xs text-black">
                   Phone Number:
                 </p>
@@ -134,7 +134,7 @@ const Review1 = ({ form }: ApplicationProps) => {
                 </p>
               </div>
 
-              <div className="flex space-x-2 items-center">
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                 <p className="font-semibold text-xs text-black">
                   Email Address:
                 </p>
@@ -143,7 +143,7 @@ const Review1 = ({ form }: ApplicationProps) => {
                 </p>
               </div>
 
-              <div className="flex space-x-2 items-center">
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                 <p className="font-semibold text-xs text-black">Address:</p>
                 <p className="text-xs text-[#667085] font-medium capitalize ">
                   {address}
@@ -156,20 +156,20 @@ const Review1 = ({ form }: ApplicationProps) => {
             <p className="font-semibold text-xl">Professional IDs</p>
 
             <div className="space-y-3">
-              <div className="flex space-x-2 items-center">
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                 <p className="font-semibold text-xs text-black">
                   National Provider Identifier (NPI):
                 </p>
                 <p className="text-xs text-[#667085] font-medium   ">{npi}</p>
               </div>
-              <div className="flex space-x-2 items-center">
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                 <p className="font-semibold text-xs text-black">
                   Tax Identification Number (TIN):
                 </p>
                 <p className="text-xs text-[#667085] font-medium   ">{tin}</p>
               </div>
 
-              <div className="flex space-x-2 items-center">
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                 <p className="font-semibold text-xs text-black">
                   Medical Care ID:
                 </p>
@@ -178,7 +178,7 @@ const Review1 = ({ form }: ApplicationProps) => {
                 </p>
               </div>
 
-              <div className="flex space-x-2 items-center">
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                 <p className="font-semibold text-xs text-black">
                   DEA Certificate Number:
                 </p>
@@ -189,18 +189,18 @@ const Review1 = ({ form }: ApplicationProps) => {
         </div>
 
         <div className="space-y-16 border-b-2 pb-10">
-          <div className="flex justify-between gap-20  ">
+          <div className="flex xl:flex-row flex-col  justify-between xl:gap-20 gap-8  ">
             <div className="    flex w-full flex-1 flex-col gap-5    ">
               <p className="font-semibold text-xl">Education</p>
 
               <div className="space-y-3">
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Undergraduate
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Institution:
                   </p>
@@ -209,14 +209,14 @@ const Review1 = ({ form }: ApplicationProps) => {
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">Degree:</p>
                   <p className="text-xs text-[#667085] font-medium capitalize ">
                     {undergraduateDegree}
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Year of Graduation:
                   </p>
@@ -233,13 +233,13 @@ const Review1 = ({ form }: ApplicationProps) => {
               </p>
 
               <div className="space-y-3">
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Graduate/Medical School Education
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Institution:
                   </p>
@@ -248,14 +248,14 @@ const Review1 = ({ form }: ApplicationProps) => {
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">Degree:</p>
                   <p className="text-xs text-[#667085] font-medium capitalize ">
                     {graduateDegree}
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Year of Graduation:
                   </p>
@@ -272,11 +272,11 @@ const Review1 = ({ form }: ApplicationProps) => {
               </p>
 
               <div className="space-y-3">
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">Internship</p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Institution:
                   </p>
@@ -285,14 +285,14 @@ const Review1 = ({ form }: ApplicationProps) => {
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">Degree:</p>
                   <p className="text-xs text-[#667085] font-medium capitalize ">
                     {internshipDegree}
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Year of Graduation:
                   </p>
@@ -303,14 +303,14 @@ const Review1 = ({ form }: ApplicationProps) => {
               </div>
             </div>
           </div>
-          <div className="flex justify-between gap-20  ">
+          <div className="flex xl:flex-row flex-col  justify-between xl:gap-20 gap-8   ">
             <div className="    flex w-full flex-1 flex-col gap-5    ">
               <div className="space-y-3">
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">Residency</p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Institution:
                   </p>
@@ -319,14 +319,14 @@ const Review1 = ({ form }: ApplicationProps) => {
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">Degree:</p>
                   <p className="text-xs text-[#667085] font-medium capitalize ">
                     {residencyDegree}
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Year of Graduation:
                   </p>
@@ -339,11 +339,11 @@ const Review1 = ({ form }: ApplicationProps) => {
 
             <div className="    flex w-full flex-1 flex-col gap-5    ">
               <div className="space-y-3">
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">Fellowship</p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Institution:
                   </p>
@@ -352,14 +352,14 @@ const Review1 = ({ form }: ApplicationProps) => {
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">Degree:</p>
                   <p className="text-xs text-[#667085] font-medium capitalize ">
                     {fellowshipDegree}
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Year of Graduation:
                   </p>
@@ -372,13 +372,13 @@ const Review1 = ({ form }: ApplicationProps) => {
 
             <div className="    flex w-full flex-1 flex-col gap-5    ">
               <div className="space-y-3">
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Continuing Medical Education (CME)
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Institution:
                   </p>
@@ -387,14 +387,14 @@ const Review1 = ({ form }: ApplicationProps) => {
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">Degree:</p>
                   <p className="text-xs text-[#667085] font-medium capitalize ">
                     {cmeDegree}
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Year of Graduation:
                   </p>
@@ -407,26 +407,26 @@ const Review1 = ({ form }: ApplicationProps) => {
           </div>
         </div>
 
-        <div className="flex justify-between gap-20 border-b-2 pb-10  ">
+        <div className="flex xl:flex-row flex-col  justify-between xl:gap-20 gap-8   border-b-2 pb-10  ">
           <div className="    flex w-full flex-1 flex-col gap-5    ">
             <p className="font-semibold text-xl">Practice Locations</p>
 
-            <div className="flex justify-between gap-20">
+            <div className="flex xl:flex-row flex-col  justify-between xl:gap-20 gap-8  ">
               <div className="space-y-3 flex-1">
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Primary Practice Location
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">Name:</p>
                   <p className="text-xs text-[#667085] font-medium capitalize ">
                     {primarypracticelocationName}
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Office Address:
                   </p>
@@ -435,13 +435,13 @@ const Review1 = ({ form }: ApplicationProps) => {
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">Contact:</p>
                   <p className="text-xs text-[#667085] font-medium capitalize ">
                     {primarypracticelocationContact}
                   </p>
                 </div>
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Email Address:
                   </p>
@@ -449,7 +449,7 @@ const Review1 = ({ form }: ApplicationProps) => {
                     {primarypracticelocationEmail}
                   </p>
                 </div>
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Office Hours:
                   </p>
@@ -458,7 +458,7 @@ const Review1 = ({ form }: ApplicationProps) => {
                     {primarypracticelocationOfficeHours}
                   </p>
                 </div>
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">Fax:</p>
 
                   <p className="text-xs text-[#667085] font-medium capitalize ">
@@ -467,20 +467,20 @@ const Review1 = ({ form }: ApplicationProps) => {
                 </div>
               </div>
               <div className="space-y-3 flex-1">
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Additional Practice Location
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">Name:</p>
                   <p className="text-xs text-[#667085] font-medium capitalize ">
                     {primarypracticelocation2Name}
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Office Address:
                   </p>
@@ -489,13 +489,13 @@ const Review1 = ({ form }: ApplicationProps) => {
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">Contact:</p>
                   <p className="text-xs text-[#667085] font-medium capitalize ">
                     {primarypracticelocation2Contact}
                   </p>
                 </div>
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Email Address:
                   </p>
@@ -503,7 +503,7 @@ const Review1 = ({ form }: ApplicationProps) => {
                     {primarypracticelocation2Email}
                   </p>
                 </div>
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Office Hours:
                   </p>
@@ -512,7 +512,7 @@ const Review1 = ({ form }: ApplicationProps) => {
                     {primarypracticelocation2OfficeHours}
                   </p>
                 </div>
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">Fax:</p>
 
                   <p className="text-xs text-[#667085] font-medium capitalize ">

@@ -115,7 +115,7 @@ const CAHQProfile = () => {
         <div className="">
           <img
             src={Avatar}
-            className="h-32 w-32 rounded-full"
+            className="h-20 lg:h-32 w-20 lg:w-32 rounded-full"
             alt="profile picture"
           />
         </div>
@@ -142,14 +142,10 @@ const CAHQProfile = () => {
                   </StepIndicator>
 
                   <Box>
-                    <StepTitle
-                      style={{
-                        fontWeight: 600,
-                        fontSize: 13,
-                        fontFamily: "raleway",
-                      }}
-                    >
-                      {step.title}
+                    <StepTitle>
+                      <p className="font-semibold text-[13px] lg:block hidden ">
+                        {step.title}
+                      </p>
                     </StepTitle>
                   </Box>
 

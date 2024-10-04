@@ -24,13 +24,13 @@ const PracticeLocation = ({
   } = form;
 
   return (
-    <div className="border rounded-lg pt-5 px-3 xl:px-5 pb-10 space-y-5">
+    <div className="border rounded-lg pt-5 px-5 pb-10 space-y-5">
       <p className="font-semibold text-base">Practice Location</p>
       <div className="space-y-10 ">
-        <div className="flex flex-1 xl:flex-row flex-col gap-16 xl:gap-24">
+        <div className="flex flex-1 gap-24">
           <div className="flex flex-col flex-1 gap-3">
-            <p className="font-semibold ">Primary Practice Location</p>
-            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+            <p className="font-semibold  ">Primary Practice Location</p>
+            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
               <label className="w-28" htmlFor="primarypracticelocationName">
                 Name
               </label>
@@ -45,7 +45,7 @@ const PracticeLocation = ({
               />
             </div>
 
-            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
               <label
                 className="w-28"
                 htmlFor="primarypracticelocationOfficeAddress"
@@ -63,7 +63,7 @@ const PracticeLocation = ({
               />
             </div>
 
-            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
               <label className="w-36" htmlFor="primarypracticelocationContact">
                 Contact
               </label>
@@ -91,7 +91,7 @@ const PracticeLocation = ({
               />
             </div>
 
-            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
               <label className="w-36" htmlFor="primarypracticelocationContact">
                 Fax
               </label>
@@ -119,7 +119,7 @@ const PracticeLocation = ({
               />
             </div>
 
-            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
               <label className="w-28" htmlFor="primarypracticelocationEmail">
                 Email
               </label>
@@ -134,7 +134,7 @@ const PracticeLocation = ({
               />
             </div>
 
-            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
               <label
                 className="w-28"
                 htmlFor="primarypracticelocationOfficeHours"
@@ -155,7 +155,7 @@ const PracticeLocation = ({
 
           <div className="flex flex-col flex-1 gap-3">
             <p className="font-semibold  ">Primary Practice Location II</p>
-            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
               <label className="w-28" htmlFor="primarypracticelocation2Name">
                 Name
               </label>
@@ -170,7 +170,7 @@ const PracticeLocation = ({
               />
             </div>
 
-            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
               <label
                 className="w-28"
                 htmlFor="primarypracticelocation2OfficeAddress"
@@ -188,7 +188,7 @@ const PracticeLocation = ({
               />
             </div>
 
-            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
               <label className="w-36" htmlFor="primarypracticelocation2Contact">
                 Contact
               </label>
@@ -218,7 +218,7 @@ const PracticeLocation = ({
               />
             </div>
 
-            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
               <label className="w-36" htmlFor="primarypracticelocation2Fax">
                 Fax
               </label>
@@ -246,7 +246,7 @@ const PracticeLocation = ({
               />
             </div>
 
-            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
               <label className="w-28" htmlFor="primarypracticelocation2Email">
                 Email
               </label>
@@ -261,7 +261,7 @@ const PracticeLocation = ({
               />
             </div>
 
-            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
               <label
                 className="w-28"
                 htmlFor="primarypracticelocation2OfficeHours"

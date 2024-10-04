@@ -3,7 +3,7 @@ import { AlertCircle, Send, User } from "lucide-react";
 
 const OrganizationStatBar = () => {
   return (
-    <div className="flex w-full flex-1 gap-5">
+    <div className="flex xl:flex-row flex-col  w-full flex-1 gap-5">
       <OrganizationStatCard
         title="Total Applications"
         value={0}

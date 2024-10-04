@@ -62,25 +62,25 @@ const Review2 = ({ form, handleCheckBoxChange }: ApplicationProps) => {
           </p>
         </div>
         <div className="border-b-2 pb-10 space-y-20">
-          <div className="flex justify-between gap-20 ">
+          <div className="flex xl:flex-row flex-col  justify-between xl:gap-20 gap-8   ">
             <div className="    flex w-full flex-1 flex-col gap-5    ">
               <p className="font-semibold text-xl">Hospital Affiliations</p>
 
               <div className="space-y-3">
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Current Hospital Affiliation
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">Hospital:</p>
                   <p className="text-xs text-[#667085] font-medium capitalize ">
                     {currentHospitalAffliationHospital}
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Privileges:
                   </p>
@@ -95,20 +95,20 @@ const Review2 = ({ form, handleCheckBoxChange }: ApplicationProps) => {
               <p className="font-semibold text-xl">Licenses</p>
 
               <div className="space-y-3">
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     State Medical License
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">License:</p>
                   <p className="text-xs text-[#667085] font-medium  ">
                     {stateMedicalicense}
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     License Number:
                   </p>
@@ -117,7 +117,7 @@ const Review2 = ({ form, handleCheckBoxChange }: ApplicationProps) => {
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Expiration Date:
                   </p>
@@ -132,19 +132,19 @@ const Review2 = ({ form, handleCheckBoxChange }: ApplicationProps) => {
               <p className="font-semibold text-xl">Work History</p>
 
               <div className="space-y-3">
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Current Employment:
                   </p>
                 </div>
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">Position:</p>
                   <p className="text-xs text-[#667085] font-medium   ">
                     {currentEmploymentPosition}
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Start Date:
                   </p>
@@ -153,7 +153,7 @@ const Review2 = ({ form, handleCheckBoxChange }: ApplicationProps) => {
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">End Date:</p>
                   <p className="text-xs text-[#667085] font-medium   ">
                     {formatDateTime(currentEmploymentEndDate)}
@@ -162,23 +162,23 @@ const Review2 = ({ form, handleCheckBoxChange }: ApplicationProps) => {
               </div>
             </div>
           </div>
-          <div className="flex justify-between gap-20 ">
+          <div className="flex xl:flex-row flex-col  justify-between xl:gap-20 gap-8   ">
             <div className="    flex w-full flex-1 flex-col gap-5    ">
               <div className="space-y-3">
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Previous Hospital Affiliation
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">Hospital:</p>
                   <p className="text-xs text-[#667085] font-medium capitalize ">
                     {previousHospitalAffliationHospital}
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Privileges:
                   </p>
@@ -191,20 +191,20 @@ const Review2 = ({ form, handleCheckBoxChange }: ApplicationProps) => {
 
             <div className="    flex w-full flex-1 flex-col gap-5    ">
               <div className="space-y-3">
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Professional and controlled substance License
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">License:</p>
                   <p className="text-xs text-[#667085] font-medium  ">
                     {pcslicense}
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     License Number:
                   </p>
@@ -213,7 +213,7 @@ const Review2 = ({ form, handleCheckBoxChange }: ApplicationProps) => {
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Expiration Date:
                   </p>
@@ -226,33 +226,33 @@ const Review2 = ({ form, handleCheckBoxChange }: ApplicationProps) => {
 
             <div className="    flex w-full flex-1 flex-col gap-5    ">
               <div className="space-y-3">
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Previous Employment
                   </p>
                 </div>
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">Position:</p>
                   <p className="text-xs text-[#667085] font-medium   ">
                     {previousEmploymentPosition}
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">Start Date</p>
                   <p className="text-xs text-[#667085] font-medium  ">
                     {formatDateTime(previousEmploymentStartDate)}
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">End Date</p>
                   <p className="text-xs text-[#667085] font-medium   ">
                     {formatDateTime(previousEmploymentEndDate)}
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Gaps in work
                   </p>
@@ -261,7 +261,7 @@ const Review2 = ({ form, handleCheckBoxChange }: ApplicationProps) => {
                   </p>
                 </div>
 
-                <div className="flex space-x-2 items-center">
+                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                   <p className="font-semibold text-xs text-black">
                     Military Service
                   </p>
@@ -274,12 +274,12 @@ const Review2 = ({ form, handleCheckBoxChange }: ApplicationProps) => {
           </div>
         </div>
 
-        <div className="flex border-b-2 pb-10 justify-between gap-20 ">
+        <div className="flex border-b-2 pb-10 xl:flex-row flex-col  justify-between xl:gap-20 gap-8   ">
           <div className="    flex w-full flex-1 flex-col gap-5    ">
             <p className="font-semibold text-xl">Malpractice Insurance</p>
 
             <div className="space-y-3">
-              <div className="flex space-x-2 items-center">
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                 <p className="font-semibold text-xs text-black">
                   Current Carrier:
                 </p>
@@ -288,7 +288,7 @@ const Review2 = ({ form, handleCheckBoxChange }: ApplicationProps) => {
                 </p>
               </div>
 
-              <div className="flex space-x-2 items-center">
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                 <p className="font-semibold text-xs text-black">
                   Policy Number:
                 </p>
@@ -296,7 +296,7 @@ const Review2 = ({ form, handleCheckBoxChange }: ApplicationProps) => {
                   {malpracticeInsurancePolicyNumber}
                 </p>
               </div>
-              <div className="flex space-x-2 items-center">
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                 <p className="font-semibold text-xs text-black">
                   Coverage Limit:
                 </p>
@@ -304,7 +304,7 @@ const Review2 = ({ form, handleCheckBoxChange }: ApplicationProps) => {
                   {malpracticeInsuranceCoverageLimit}
                 </p>
               </div>
-              <div className="flex space-x-2 items-center">
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                 <p className="font-semibold text-xs text-black">
                   Effective Dates:
                 </p>
@@ -319,7 +319,7 @@ const Review2 = ({ form, handleCheckBoxChange }: ApplicationProps) => {
             <p className="font-semibold text-xl">Liability Claims History</p>
 
             <div className="space-y-3">
-              <div className="flex space-x-2 items-center">
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                 <p className="font-semibold text-xs text-black">
                   Malpractice Claims:
                 </p>
@@ -328,7 +328,7 @@ const Review2 = ({ form, handleCheckBoxChange }: ApplicationProps) => {
                 </p>
               </div>
 
-              <div className="flex space-x-2 items-center">
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                 <p className="font-semibold text-xs text-black">
                   Pending Litigation:
                 </p>
@@ -337,14 +337,14 @@ const Review2 = ({ form, handleCheckBoxChange }: ApplicationProps) => {
                 </p>
               </div>
 
-              <div className="flex space-x-2 items-center">
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                 <p className="font-semibold text-xs text-black">Settlement:</p>
                 <p className="text-xs text-[#667085] font-medium capitalize ">
                   {liabilityClaimsHistorySettlement || "None"}
                 </p>
               </div>
 
-              <div className="flex space-x-2 items-center">
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                 <p className="font-semibold text-xs text-black">
                   Disciplinary Action:
                 </p>
@@ -359,14 +359,14 @@ const Review2 = ({ form, handleCheckBoxChange }: ApplicationProps) => {
             <p className="font-semibold text-xl">Additional Document</p>
 
             <div className="space-y-3">
-              <div className="flex space-x-2 items-center">
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                 <p className="font-semibold text-xs text-black">CV/Resume:</p>
                 <p className="text-xs text-[#667085] font-medium   ">
                   {"Alex_Johnson_CV.pdf"}
                 </p>
               </div>
 
-              <div className="flex space-x-2 items-center">
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                 <p className="font-semibold text-xs text-black">
                   Upload Photo:
                 </p>
@@ -375,7 +375,7 @@ const Review2 = ({ form, handleCheckBoxChange }: ApplicationProps) => {
                 </p>
               </div>
 
-              <div className="flex space-x-2 items-center">
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                 <p className="font-semibold text-xs text-black">
                   Other certification:
                 </p>

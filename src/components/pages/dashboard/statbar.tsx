@@ -2,7 +2,7 @@ import StatCard from "./statcard";
 
 const StatBar = ({ applications }: { applications?: boolean }) => {
   return (
-    <div className="flex w-full flex-1 gap-5">
+    <div className="flex w-full xl:flex-row flex-col flex-1 gap-5">
       <StatCard title="Total Applications" value={0} status={"All"} />
       <StatCard title="Active Applications" value={0} status={"Active"} />
       <StatCard

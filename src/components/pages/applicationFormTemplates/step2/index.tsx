@@ -4,14 +4,9 @@ import { ApplicationProps } from "../step1";
 import HospitalAffiliations from "./hospitalaffiliations";
 import Licensing from "./licensing";
 
-const Step2 = ({
-  form,
-  handleDateChange,
-  handlePhoneChange,
-  handleChange,
-}: ApplicationProps) => {
+const Step2 = ({ form }: ApplicationProps) => {
   return (
-    <div className="bg-white rounded-lg px-3 py-5 xl:p-5 space-y-4">
+    <div className="bg-white rounded-lg p-5 space-y-4">
       <div className="space-y-1">
         <p className="font-semibold text-base ">Health Plan</p>
         <p className="text-[12px] font-medium text-[#667085]">
@@ -28,20 +23,11 @@ const Step2 = ({
         />
       </div>
 
-      <PracticeLocation
-        form={form}
-        handleChange={handleChange}
-        handlePhoneChange={handlePhoneChange}
-        handleDateChange={handleDateChange}
-      />
+      <PracticeLocation form={form} />
 
-      <HospitalAffiliations form={form} handleChange={handleChange} />
+      <HospitalAffiliations form={form} />
 
-      <Licensing
-        form={form}
-        handleChange={handleChange}
-        handleDateChange={handleDateChange}
-      />
+      <Licensing form={form} />
     </div>
   );
 };

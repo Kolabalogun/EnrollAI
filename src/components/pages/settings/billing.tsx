@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { SubmitButton } from "@/components/common";
 import { TableComponent } from "@/components/table";
 import { BillingTransactions } from "@/constant/data/billingdata";
-import { BillingTableHeads } from "@/constant/table/billingHead";
+import { BillingTableHeads } from "@/constant/data/table/billingHead";
 import { BillingTransactionsType } from "@/lib/types/tables";
 import { HEALTHCARE_BILLING_ADD } from "@/router/routes";
 import { DownloadIcon } from "lucide-react";
@@ -44,8 +43,8 @@ const Billing = () => {
   );
 
   return (
-    <section className="  flex-1 h-full w-full flex flex-col px-5 py-5 pb-10 space-y-12">
-      <section className="bg-white rounded-lg shadow flex-1 h-full w-full flex  justify-between px-5 py-5  ">
+    <section className="  flex-1 h-full w-full flex flex-col xl:px-5 py-5 pb-10 space-y-12">
+      <section className="bg-white rounded-lg shadow flex-1 h-full w-full flex xl:flex-row flex-col  justify-between px-5 py-5  ">
         <div className="flex flex-col justify-between gap-10">
           <div className="space-y-3">
             <p className="text-dark-200 font-semibold  ">Subscription</p>
@@ -65,7 +64,7 @@ const Billing = () => {
           <SubmitButton type="button">Renew Subscription</SubmitButton>
         </div>
       </section>
-      <section className="bg-white rounded-lg shadow flex-1 h-full w-full flex items-center justify-between px-5 py-5  ">
+      <section className="bg-white rounded-lg shadow flex-1 h-full w-full flex xl:flex-row flex-col gap-4 xl:items-center justify-between px-5 py-5  ">
         <div className="flex flex-col justify-between gap-10">
           <div className="space-y-3">
             <p className="text-dark-200 font-semibold  ">Payment Method</p>
@@ -88,19 +87,22 @@ const Billing = () => {
 
       <section className="  space-y-3   py-5  ">
         <div className="flex items-center justify-between gap-10">
-          <p className="text-dark-200 font-semibold text-2xl  ">
+          <p className="text-dark-200 font-semibold text-xl  xl:text-2xl  ">
             Latest Transaction
           </p>
 
           <div className="">
             <button className="flex gap-2 text-fade p-3 border-2 rounded-lg raleway font-semibold text-[13px]">
-              <DownloadIcon size={18} /> Download CSV{" "}
+              <div className="hidden xl:flex">
+                <DownloadIcon size={18} />
+              </div>
+              Download CSV{" "}
             </button>
           </div>
         </div>
 
         <div className="flex gap-5 items-center">
-          <div className="flex-1 bg-white rounded-lg p-5 w-full md:w-auto">
+          <div className="flex-1 bg-white rounded-lg p-3 xl:p-5 w-full md:w-auto">
             {/* Table */}
             <TableComponent
               footerTxt={""}

@@ -26,7 +26,7 @@ const CustomAccordion = ({
                   <Icon as={CirclePlus} boxSize={4} />
                 )}
                 <Box flex="1" marginLeft={5} textAlign="left">
-                  {data.title}
+                  <p>{data.title}</p>
                 </Box>
               </AccordionButton>
             </h2>

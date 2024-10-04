@@ -58,8 +58,9 @@ const PersonalInformations = ({
 
   return (
     <div className="       pb-10 space-y-5">
+      <p className="font-semibold ">Personal Informations</p>
       <div className="space-y-2">
-        <div className="flex flex-row justify-between gap-8">
+        <div className="flex xl:flex-row flex-col justify-between  gap-5 lg:gap-8">
           <div
             style={{ flex: 2 }}
             className="raleway text-xs flex w-full flex-1 flex-col gap-1 font-medium"
@@ -94,7 +95,7 @@ const PersonalInformations = ({
       </div>
 
       <div className="space-y-2">
-        <div className="flex flex-row justify-between gap-8">
+        <div className="flex xl:flex-row flex-col justify-between gap-3">
           <div className="raleway text-xs flex w-full flex-1 flex-col gap-1 font-medium">
             <label htmlFor="gender">Gender</label>
             <select
@@ -153,7 +154,7 @@ const PersonalInformations = ({
 
       {/* Citizenship and Place of Birth (Country, State) */}
       <div className="space-y-2">
-        <div className="flex flex-row items-center justify-between gap-8">
+        <div className="flex  xl:flex-row flex-col justify-between  gap-5 lg:gap-8">
           <div className="raleway text-xs flex w-full flex-1 flex-col gap-1 font-medium">
             <label htmlFor="citizenship">Citizenship</label>
             <select
@@ -214,7 +215,7 @@ const PersonalInformations = ({
       </div>
 
       <div className="space-y-2">
-        <div className="flex flex-row items-center justify-between gap-8">
+        <div className="flex  xl:flex-row flex-col justify-between  gap-5 lg:gap-8">
           <div className="raleway text-xs flex w-full flex-1 flex-col gap-1 font-medium">
             <label htmlFor="address">Present Position</label>
             <input
@@ -259,7 +260,7 @@ const PersonalInformations = ({
       </div>
 
       <div className="space-y-2">
-        <div className="flex flex-row items-center justify-between gap-8">
+        <div className="flex  xl:flex-row flex-col justify-between  gap-5 lg:gap-8">
           <div className="raleway text-xs flex w-full flex-1 flex-col gap-1 font-medium">
             <label htmlFor="upin">UPIN</label>
             <input

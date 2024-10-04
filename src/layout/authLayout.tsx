@@ -42,13 +42,13 @@ const AuthLayout = <T extends z.ZodType<any, any>>({
 }: AuthLayoutProps<T>) => {
   const navigate = useNavigate();
   return (
-    <main className="min-h-screen bg-primary   px-5   py-5">
+    <main className="min-h-screen bg-primary  px-3 lg:px-5   py-5">
       <LogoBar />
 
-      <div className="min-h-[80vh] my-10 flex items-center  flex-col w-full  justify-center ">
-        <div className="flex flex-col  ">
+      <div className="min-h-[80vh] my-10 flex items-center    flex-col w-full  justify-center ">
+        <div className="flex flex-col   ">
           <Form {...form}>
-            <section className="mb-8 w-96 text-center raleway space-y-4">
+            <section className="mb-8 lg:w-96 text-center raleway space-y-4">
               <h1 className="header  ">{title}</h1>
               <p
                 className="text-fade font-medium text-sm"

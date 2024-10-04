@@ -7,7 +7,7 @@ export const notificationColumns: ColumnDef<NotificationType>[] = [
     header: () => <div>Read</div>,
     cell: ({ row }) => (
       <div
-        className={`w-3 h-3 rounded-full ${
+        className={`w-3 h-3 mx-4 rounded-full ${
           row.getValue("read") ? "bg-secondary" : "bg-fade"
         } `}
       />
@@ -18,7 +18,9 @@ export const notificationColumns: ColumnDef<NotificationType>[] = [
     accessorKey: "title",
     header: () => <div>Title</div>,
     cell: ({ row }) => (
-      <p className="font-semibold text-sm">{row.getValue("title")}</p>
+      <p className="font-semibold w-32 xl:w-full text-sm">
+        {row.getValue("title")}
+      </p>
     ),
   },
   {
@@ -45,14 +47,18 @@ export const notificationColumns: ColumnDef<NotificationType>[] = [
     accessorKey: "desc",
     header: () => <div>Description</div>,
     cell: ({ row }) => (
-      <p className="font-semibold text-xs">{row.getValue("desc")}</p>
+      <p className="font-semibold w-48 xl:w-full text-xs">
+        {row.getValue("desc")}
+      </p>
     ),
   },
   {
     accessorKey: "date",
     header: () => <div>Date</div>,
     cell: ({ row }) => (
-      <p className="font-semibold text-xs">{row.getValue("date")}</p>
+      <p className="font-semibold w-32 xl:w-full text-xs">
+        {row.getValue("date")}
+      </p>
     ),
   },
 ];

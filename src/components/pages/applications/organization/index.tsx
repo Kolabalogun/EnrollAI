@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useSelector } from "react-redux";
-
 import { TableComponent } from "@/components/table";
-import { OrganizationApplicationFormTableHeads } from "@/constant/table/tableHeads";
+import { OrganizationApplicationFormTableHeads } from "@/constant/data/table/tableHeads";
 import { ApplicationFormType } from "@/lib/types/tables";
 import { useState } from "react";
 import EmptyCarts from "../../dashboard/emptyCarts";

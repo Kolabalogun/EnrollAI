@@ -129,7 +129,7 @@ const Keyfeatures = () => {
             )}
           </section>
         </div>
-        <section className="w-80 p-8 raleway bg-white min-h-[80vh]">
+        <section className="w-80 hidden xl:block p-8 raleway bg-white min-h-[80vh]">
           <div className="mb-24">
             <Stepper
               index={activeStep}

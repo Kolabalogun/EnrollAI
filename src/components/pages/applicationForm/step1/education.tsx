@@ -23,10 +23,10 @@ const Education = ({ form, handleChange }: ApplicationProps) => {
   } = form;
 
   return (
-    <div className="border rounded-lg pt-5 px-5 pb-10 space-y-5">
+    <div className="border rounded-lg pt-5 px-3 xl:px-5 pb-10 space-y-5">
       <p className="font-semibold text-base">Education</p>
       <div className="space-y-10 ">
-        <div className="flex flex-1 gap-10">
+        <div className="flex flex-1 xl:flex-row flex-col gap-10">
           <div className="flex flex-col flex-1 gap-3">
             <p className="font-semibold  ">Undergraduate</p>
             <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
@@ -170,7 +170,7 @@ const Education = ({ form, handleChange }: ApplicationProps) => {
           </div>
         </div>
 
-        <div className="flex flex-1 gap-10">
+        <div className="flex flex-1 xl:flex-row flex-col gap-10">
           <div className="flex flex-col flex-1 gap-3">
             <p className="font-semibold  ">Residency</p>
             <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">

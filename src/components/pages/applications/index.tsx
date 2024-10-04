@@ -2,7 +2,7 @@
 import { useSelector } from "react-redux";
 import EmptyCarts from "../dashboard/emptyCarts";
 import { TableComponent } from "@/components/table";
-import { ApplicationFormTableHeads } from "@/constant/table/tableHeads";
+import { ApplicationFormTableHeads } from "@/constant/data/table/tableHeads";
 import { ApplicationFormType } from "@/lib/types/tables";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";

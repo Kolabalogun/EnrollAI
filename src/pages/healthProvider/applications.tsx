@@ -43,7 +43,7 @@ const Appications = () => {
       >
         <StatBar applications />
 
-        <div className="flex gap-8">
+        <div className="flex xl:flex-row flex-col gap-5 xl:gap-8">
           <div onClick={() => onOpen()}>
             <SubmitButton
               type="button"
@@ -65,7 +65,7 @@ const Appications = () => {
           </div>
         </div>
 
-        <div className="flex gap-10">
+        <div className="flex xl:flex-row flex-col gap-10">
           <div
             style={{ flex: 2 }}
             className="bg-white rounded-lg flex-1 h-full w-full flex flex-col p-5 space-y-3"
