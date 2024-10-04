@@ -1,7 +1,8 @@
 import { Calendar } from "lucide-react";
-import { ApplicationProps } from "../step1";
+
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { ApplicationProps } from "../../applicationForm/step1";
 
 const AdditionalDocument = ({
   form,

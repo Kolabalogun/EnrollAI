@@ -14,7 +14,6 @@ import Step1 from "@/components/pages/applicationFormTemplates/step1";
 import Step2 from "@/components/pages/applicationFormTemplates/step2";
 import Step3 from "@/components/pages/applicationFormTemplates/step3";
 import { CreateApplicationFormTemplateInitialState } from "@/constant/data/applicationsdata";
-import { HEALTHCARE_APPLICATIONS } from "@/router/routes";
 
 const CreateApplicationForm = () => {
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -22,14 +21,17 @@ const CreateApplicationForm = () => {
 
   const navigate = useNavigate();
 
-  const [form, setForm] = useState(CreateApplicationFormTemplateInitialState);
+  // Use the correct type for form state
+  const [form, setForm] = useState<any>(
+    CreateApplicationFormTemplateInitialState
+  );
   const [pageNo, setPageNo] = useState(1);
 
   console.log(form);
 
   // Remove a field from a section
-  const removeField = (section, field) => {
-    setForm((prevForm) => {
+  const removeField = (section: keyof any, field: string) => {
+    setForm((prevForm: any) => {
       const updatedSection = { ...prevForm[section] };
       delete updatedSection[field];
 
@@ -41,8 +43,12 @@ const CreateApplicationForm = () => {
   };
 
   // Remove a field from a subsection
-  const removeSubField = (section, subsection, field) => {
-    setForm((prevForm) => {
+  const removeSubField = (
+    section: keyof any,
+    subsection: string,
+    field: string
+  ) => {
+    setForm((prevForm: any) => {
       // Copy the section object
       const updatedSection = { ...prevForm[section] };
 
@@ -69,18 +75,20 @@ const CreateApplicationForm = () => {
   };
 
   // Remove the entire section
-  const removeSection = (section) => {
-    const updatedform = { ...form };
-    delete updatedform[section];
-    setForm(updatedform);
+  const removeSection = (section: keyof any) => {
+    setForm((prevForm: any) => {
+      const updatedForm = { ...prevForm };
+      delete updatedForm[section];
+      return updatedForm;
+    });
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
       setLoading(true);
-      setPageNo(pageNo + 1);
+      setPageNo((prevPageNo) => prevPageNo + 1);
 
       if (pageNo === 3) {
         onOpen();
