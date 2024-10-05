@@ -8,22 +8,19 @@ import { FormFieldType } from "@/components/common/customFormField";
 import { AuthLayout } from "@/layout";
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-// import { useRegisterMutation } from "@/services/auth";
 import { VERIFY_EMAIL_ROUTE } from "@/router/routes";
 import showToast from "@/components/common/showtoast";
+import { registerProvider } from "@/services/register";
 
 const Register = () => {
   const navigate = useNavigate();
   const toast = useToast();
-  // Registration mutation hook
-  //   const [register, { isLoading }] = useRegisterMutation();
-
-  const isLoading = false;
 
   const form = useForm<z.infer<typeof RegisterFormValidation>>({
     resolver: zodResolver(RegisterFormValidation),
     defaultValues: {
       name: "",
+      professionalTitle: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -33,22 +30,39 @@ const Register = () => {
   async function onSubmit(values: z.infer<typeof RegisterFormValidation>) {
     console.log(values);
 
-    // const payload = {
-    //   fullName: values.name,
-    //   email: values.email,
-    //   password: values.password,
-    //   confirmPassword: values.confirmPassword,
-    // };
+    const payload = {
+      fullName: values.name,
+      email: values.email,
+      password: values.password,
+      confirmPassword: values.confirmPassword,
+      accountType: "provider",
+      professionalTitle: values.professionalTitle,
+    };
 
     try {
-      //   const res = await register(payload).unwrap();
+      const res = await registerProvider(payload);
 
-      //   console.log(res);
-      //   showToast(toast, "Enroll AI", "success", `${res.msg}`);
+      if (res.success) {
+        console.log(res);
+        showToast(
+          toast,
+          "Registration successful!",
+          "success",
+          `${res.data.msg}`
+        );
+        setTimeout(() => {
+          navigate(VERIFY_EMAIL_ROUTE, { state: { email: values.email } });
+        }, 2000);
+      } else {
+        showToast(
+          toast,
+          "Enroll AI",
+          "error",
+          `${res.message || "An error occurred."} `
+        );
+      }
 
-      setTimeout(() => {
-        navigate(VERIFY_EMAIL_ROUTE, { state: { email: values.email } });
-      }, 2000);
+      console.log(res);
     } catch (error: any) {
       console.log(error);
       showToast(
@@ -60,13 +74,15 @@ const Register = () => {
     }
   }
 
+  const { isSubmitting } = form.formState;
+
   return (
     <AuthLayout
       title="Create your account"
       desc="Lorem Ipsum Set dolor is a dummy text for place holders"
       form={form}
       onSubmit={onSubmit}
-      isLoading={isLoading}
+      isLoading={isSubmitting}
     >
       <CustomFormField
         fieldType={FormFieldType.INPUT}
@@ -79,8 +95,8 @@ const Register = () => {
       <CustomFormField
         fieldType={FormFieldType.INPUT}
         control={form.control}
-        name="name"
-        label="Professional (Optional)"
+        name="professionalTitle "
+        label="Professional Title (Optional)"
         placeholder="Example (Dr.)"
       />
 

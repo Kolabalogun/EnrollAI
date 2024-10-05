@@ -8,18 +8,19 @@ import { FormFieldType } from "@/components/common/customFormField";
 import { AuthLayout } from "@/layout";
 import { useNavigate } from "react-router-dom";
 import { DASHBOARD_ROUTE, VERIFY_EMAIL_ROUTE } from "@/router/routes";
-// import { useLoginMutation } from "@/services/auth";
-
 import { useToast } from "@chakra-ui/react";
-
-// import { useDispatch } from "react-redux";
-// import { setCredentials, setIsAuthenticated } from "@/redux/features/authSlice";
-
+import { useDispatch } from "react-redux";
 import showToast from "@/components/common/showtoast";
+import { loginUser } from "@/services/login";
+import {
+  setAccountType,
+  setCredentials,
+  setIsAuthenticated,
+} from "@/redux/features/authSlice";
 
 const Login = () => {
   // const [login, { isLoading }] = useLoginMutation();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const toast = useToast();
   const navigate = useNavigate();
 
@@ -31,59 +32,66 @@ const Login = () => {
     },
   });
 
-  const isLoading = false;
   async function onSubmit(values: z.infer<typeof LoginFormValidation>) {
     console.log(values);
-    // setIsLoading(true);
+
     try {
-      // Your form submission logic here
+      const { email, password } = values;
 
-      // const { email, password } = values;
+      const res = await loginUser({ email, password });
 
-      // const res = await login({ email, password }).unwrap();
-
-      // dispatch(setCredentials(res));
-
-      // localStorage.setItem("enrollai-user", res.token);
-      // dispatch(setIsAuthenticated(true));
-
-      // showToast(toast, "Enroll AI", "success", "You've successfully signed in");
-
-      navigate(DASHBOARD_ROUTE);
-    } catch (error: any) {
-      console.log(error);
-
-      if (error.status === 400 && error.data.msg === "Account not verified") {
+      if (res.success) {
+        dispatch(setCredentials(res));
+        dispatch(setAccountType(res.accountType));
+        localStorage.setItem("enrollai-user", res.token);
+        dispatch(setIsAuthenticated(true));
         showToast(
           toast,
           "Enroll AI",
-          "error",
-          "Please verify your email to continue"
+          "success",
+          "You've successfully signed in"
         );
 
-        setTimeout(() => {
-          navigate(VERIFY_EMAIL_ROUTE, { state: { email: values.email } });
-        }, 2000);
-      } else if (error.status === "FETCH_ERROR") {
-        showToast(toast, "Enroll AI", "error", `${error.error} `);
+        navigate(DASHBOARD_ROUTE);
       } else {
         showToast(
           toast,
           "Enroll AI",
           "error",
-          `${error.data.msg || "An error has occurred. Please try again"} `
+          `${res.message || "An error occurred."} `
         );
+
+        if (res.message === "Account not verified") {
+          showToast(
+            toast,
+            "Enroll AI",
+            "error",
+            "Please verify your email to continue"
+          );
+          setTimeout(() => {
+            navigate(VERIFY_EMAIL_ROUTE, { state: { email: values.email } });
+          }, 2000);
+        }
       }
+    } catch (error: any) {
+      console.log(error);
+
+      showToast(
+        toast,
+        "Enroll AI",
+        "error",
+        `${error.data.msg || "An error has occurred. Please try again"} `
+      );
     }
   }
-
+  const { isSubmitting } = form.formState;
   return (
     <AuthLayout
       title="Welcome Back!"
       desc="Lorem Ipsum Set dolor is a dummy text for place holders"
       form={form}
       onSubmit={onSubmit}
-      isLoading={isLoading}
+      isLoading={isSubmitting}
     >
       <CustomFormField
         control={form.control}

@@ -6,10 +6,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export type User = {
-  fullame: string;
-
+  fullName: string;
   email: string;
   isVerified: boolean;
+  professionalTitle: string;
+  password: string;
+  accountType: string;
 };
 
 export interface AuthState {
@@ -19,21 +21,20 @@ export interface AuthState {
 }
 
 // Function to safely parse the local storage item or default to false
-// const getIsAuthenticatedFromLocalStorage = () => {
-//   const item = localStorage.getItem("isAuthenticated");
-//   if (item === null) return false; // Default value if nothing is found
-//   try {
-//     return JSON.parse(item);
-//   } catch {
-//     return false; // Fallback if JSON parsing fails
-//   }
-// };
+const getIsAuthenticatedFromLocalStorage = () => {
+  const item = localStorage.getItem("isAuthenticated");
+  if (item === null) return false; // Default value if nothing is found
+  try {
+    return JSON.parse(item);
+  } catch {
+    return false;
+  }
+};
 
 const initialState: AuthState = {
   user: null, // User object
-  // isAuthenticated: getIsAuthenticatedFromLocalStorage(), // Authentication status
-  isAuthenticated: false,
-  accountType: "Provider",
+  isAuthenticated: getIsAuthenticatedFromLocalStorage(),
+  accountType: "provider",
 };
 
 // Create the auth slice using createSlice

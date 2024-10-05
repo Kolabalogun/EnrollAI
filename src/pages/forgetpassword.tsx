@@ -12,31 +12,19 @@ import {
 } from "@/lib/validation";
 import { AuthLayout } from "@/layout";
 import { useNavigate } from "react-router-dom";
-// import { CREATE_NEW_PASSWORD_ROUTE } from "@/router/routes";
-// import {
-//   useForgetPasswordMutation,
-//   useVerifyOtpMutation,
-//   useResendOtpMutation,
-// } from "@/services/auth";
 import { useToast } from "@chakra-ui/react";
 import showToast from "@/components/common/showtoast";
+import { resendOTP, verifyOTP } from "@/services/otp";
+import { CREATE_NEW_PASSWORD_ROUTE } from "@/router/routes";
+import { forgotPasswordApi } from "@/services/password";
 
 const ForgetPassword = () => {
   const navigate = useNavigate();
   const toast = useToast();
-  // const [forgetPassword, { isLoading }] = useForgetPasswordMutation();
-  // const [verifyOtp, { isLoading: verifyOtpLoading }] = useVerifyOtpMutation();
-
   const [emailIsPresent, setEmailIsPresent] = useState<string>("");
   const [timeLeft, setTimeLeft] = useState(10);
   const [isResendEnabled, setIsResendEnabled] = useState(false);
-  // const [resendOtp, { isLoading: resendLoading }] = useResendOtpMutation();
-
-  console.log(navigate, setEmailIsPresent);
-
-  const isLoading = false;
-  const verifyOtpLoading = false;
-  const resendLoading = false;
+  const [resendLoading, setResendLoading] = useState(false);
 
   const form = useForm<z.infer<typeof ForgetPasswordUnionValidation>>({
     resolver: zodResolver(
@@ -72,42 +60,74 @@ const ForgetPassword = () => {
     try {
       console.log(values);
       // Perform actions based on whether email or code is present
-      // if ("email" in values) {
-      //   // Handle email submission
+      if ("email" in values) {
+        // Handle email submission
 
-      //   const payload = {
-      //     email: values.email,
-      //   };
+        const payload = {
+          email: values.email,
+        };
 
-      //   const res = await forgetPassword(payload).unwrap();
+        const res = await forgotPasswordApi(payload);
 
-      //   console.log(res);
+        if (res.success) {
+          console.log(res);
 
-      //   showToast(toast, "Enroll AI", "success", res.msg);
+          showToast(
+            toast,
+            "Enroll AI",
+            "success",
+            `${
+              res.data.msg || res.message || "OTP has been sent to your mail."
+            } `
+          );
 
-      //   setEmailIsPresent(values.email);
-      //   form.reset();
-      // } else if ("code" in values) {
-      //   // Handle code submission
+          setEmailIsPresent(values.email);
+        } else {
+          showToast(
+            toast,
+            "Enroll AI",
+            "error",
+            `${res.message || "An error occurred."} `
+          );
+        }
 
-      //   const payload = {
-      //     email: emailIsPresent,
-      //     otp: values.code,
-      //   };
+        form.reset();
+      } else if ("code" in values) {
+        // Handle code submission
 
-      //   const res = await verifyOtp(payload).unwrap();
+        const payload = {
+          email: emailIsPresent,
+          otp: values.code,
+        };
 
-      //   console.log(res);
+        const res = await verifyOTP(payload);
 
-      //   showToast(toast, "Enroll AI", "success", res.msg);
+        console.log(res);
 
-      //   setEmailIsPresent("");
+        if (res.success) {
+          showToast(
+            toast,
+            "Enroll AI",
+            "success",
+            `${res.data.msg || res.message || "OTP resent successfully"} `
+          );
 
-      //   navigate(CREATE_NEW_PASSWORD_ROUTE, {
-      //     state: { email: emailIsPresent },
-      //   });
-      //   form.reset();
-      // }
+          setEmailIsPresent("");
+
+          navigate(CREATE_NEW_PASSWORD_ROUTE, {
+            state: { email: emailIsPresent, otp: values.code },
+          });
+        } else {
+          showToast(
+            toast,
+            "Enroll AI",
+            "error",
+            `${res.message || "An error occurred."} `
+          );
+        }
+
+        form.reset();
+      }
     } catch (error: any) {
       console.log(error);
       showToast(
@@ -120,10 +140,28 @@ const ForgetPassword = () => {
   }
 
   const resendCodeToEmail = async () => {
+    setResendLoading(true);
     try {
       if (emailIsPresent) {
-        // const res = await resendOtp({ email: emailIsPresent }).unwrap();
-        // showToast(toast, "Enroll AI", "success", res.msg);
+        const res = await resendOTP(emailIsPresent);
+        console.log(res);
+
+        if (res.success) {
+          console.log("OTP resent successfully:", res.data);
+          showToast(
+            toast,
+            "Enroll AI",
+            "success",
+            `${res.data.msg || res.message || "OTP resent successfully"} `
+          );
+        } else {
+          showToast(
+            toast,
+            "Enroll AI",
+            "error",
+            `${res.message || "An error occurred."} `
+          );
+        }
       }
     } catch (error: any) {
       console.log(error);
@@ -133,8 +171,12 @@ const ForgetPassword = () => {
         "error",
         "An error occurred. Please try again later."
       );
+    } finally {
+      setResendLoading(false);
     }
   };
+
+  const { isSubmitting } = form.formState;
 
   return (
     <AuthLayout
@@ -146,7 +188,7 @@ const ForgetPassword = () => {
       }
       form={form}
       onSubmit={onSubmit}
-      isLoading={isLoading || verifyOtpLoading || resendLoading}
+      isLoading={isSubmitting || resendLoading}
       isResendEnabled={emailIsPresent ? isResendEnabled : false}
       formatTime={formatTime}
       timeLeft={timeLeft}

@@ -5,8 +5,7 @@ import { z } from "zod";
 import { ForgetPasswordCodeFormValidation } from "@/lib/validation";
 import { AuthLayout } from "@/layout";
 import { useLocation, useNavigate } from "react-router-dom";
-import { GET_STARTED_ROUTE } from "@/router/routes";
-// import { useVerifyOtpMutation, useResendOtpMutation } from "@/services/auth";
+import { GET_STARTED_ROUTE, LOGIN_ROUTE } from "@/router/routes";
 import {
   PinInput,
   PinInputField,
@@ -16,19 +15,12 @@ import {
 import { useEffect, useState } from "react";
 import showToast from "@/components/common/showtoast";
 import SuccessModal from "@/components/modals/success";
+import { resendOTP, verifyOTP } from "@/services/otp";
 
 const VerifyEmail = () => {
   const navigate = useNavigate();
-
   const { onOpen, onClose, isOpen } = useDisclosure();
-
-  // const [verifyOtp, { isLoading }] = useVerifyOtpMutation();
-
-  // const [resendOtp, { isLoading: resendLoading }] = useResendOtpMutation();
-
-  const isLoading = false;
-  const resendLoading = false;
-
+  const [resendLoading, setResendLoading] = useState(false);
   const location = useLocation();
   const toast = useToast();
   const { email } = location.state || {};
@@ -36,9 +28,9 @@ const VerifyEmail = () => {
   const [timeLeft, setTimeLeft] = useState(10);
   const [isResendEnabled, setIsResendEnabled] = useState(false);
 
-  // useEffect(() => {
-  //   !email && navigate(LOGIN_ROUTE);
-  // }, []);
+  useEffect(() => {
+    if (!email) navigate(LOGIN_ROUTE);
+  }, [email, navigate]);
 
   useEffect(() => {
     if (timeLeft > 0) {
@@ -71,20 +63,24 @@ const VerifyEmail = () => {
     values: z.infer<typeof ForgetPasswordCodeFormValidation>
   ) {
     try {
-      console.log(values);
+      const payload = {
+        email: email,
+        otp: values.code,
+      };
 
-      // const payload = {
-      //   email: email,
-      //   otp: values.code,
-      // };
-
-      // const res = await verifyOtp(payload).unwrap();
-
-      // console.log(res);
-
-      // showToast(toast, "Enroll AI", "success", `${res.msg}`);
-      onOpen();
-      // navigate(LOGIN_ROUTE);
+      const res = await verifyOTP(payload);
+      console.log(res);
+      if (res.success) {
+        showToast(toast, "Enroll AI", "success", `${res.data.msg}`);
+        onOpen();
+      } else {
+        showToast(
+          toast,
+          "Enroll AI",
+          "error",
+          `${res.message || "An error occurred."} `
+        );
+      }
     } catch (error: any) {
       console.log(error);
       showToast(
@@ -97,13 +93,27 @@ const VerifyEmail = () => {
   }
 
   const resendCodeToEmail = async () => {
+    setResendLoading(true);
     try {
-      // const payload = {
-      //   email: email,
-      // };
-      // const res = await resendOtp(payload).unwrap();
-      // console.log(res);
-      // showToast(toast, "Enroll AI", "success", `${res.msg}`);
+      const res = await resendOTP(email);
+      console.log(res);
+
+      if (res.success) {
+        console.log("OTP resent successfully:", res.data);
+        showToast(
+          toast,
+          "Enroll AI",
+          "success",
+          `${res.data.msg || res.message || "OTP resent successfully"} `
+        );
+      } else {
+        showToast(
+          toast,
+          "Enroll AI",
+          "error",
+          `${res.message || "An error occurred."} `
+        );
+      }
     } catch (error: any) {
       console.log(error);
       showToast(
@@ -112,10 +122,13 @@ const VerifyEmail = () => {
         "error",
         "An error has occurred. Please try again"
       );
+    } finally {
+      setResendLoading(false);
     }
   };
 
   const { code } = form.getValues();
+  const { isSubmitting } = form.formState;
 
   const { setValue } = form;
 
@@ -130,7 +143,7 @@ const VerifyEmail = () => {
       desc={`Please enter the 6-digit code we sent to <br/> <strong>${email.toLowerCase()}</strong>.    `}
       form={form}
       onSubmit={onSubmit}
-      isLoading={isLoading || resendLoading}
+      isLoading={isSubmitting || resendLoading}
       isResendEnabled={isResendEnabled}
       formatTime={formatTime}
       timeLeft={timeLeft}

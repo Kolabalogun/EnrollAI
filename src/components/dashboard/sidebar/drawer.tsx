@@ -167,7 +167,7 @@ const SidebarDrawer = ({
                   }}
                   className={`flex gap-1 py-3 mt-2 rounded-md px-4 raleway font-semibold items-center   `}
                 >
-                  <LogOut size={20} className="text-[#667085] rotate-180" />,
+                  <LogOut size={20} className="text-[#667085] rotate-180" />
                   <div className={`text-[13px]  text-dark-200`}>Logout</div>
                 </button>
               </div>

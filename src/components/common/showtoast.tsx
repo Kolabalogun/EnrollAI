@@ -16,7 +16,7 @@ const showToast = (
     isClosable: true,
     containerStyle: {
       fontSize: "12px",
-      fontFamily: "raleway",
+      fontFamily: "Plus Jakarta Sans",
     },
   });
 };

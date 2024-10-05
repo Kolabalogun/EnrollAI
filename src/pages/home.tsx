@@ -8,13 +8,13 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="flex inter flex-col justify-center inter space-y-6 items-center h-screen bg-gray-50">
-      <div className="flex gap-4 items-center">
+    <div className="flex inter flex-col justify-center inter space-y-6 items-center h-screen bg-primary">
+      <div className="flex gap-4  items-center">
         <h1 className="text-lg font-semibold plus-jakarta ">Home</h1>
         <div className="h-full w-[1px] bg-fade"></div>
         <h2 className="text-lg font-semibold plus-jakarta  ">Oops!</h2>
       </div>
-      <p className="text-xs mt-2 font-semibold text-dark-200  text-center max-w-lg">
+      <p className="text-xs mt-2 p-5 font-semibold text-dark-200  text-center max-w-lg">
         Hey there, awesome visitor! 🌟 We know you were probably expecting to
         see an epic landing page right now, but... surprise! 🚧 It's still under
         construction. Stay tuned, because something amazing is coming your way

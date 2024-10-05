@@ -85,19 +85,20 @@ const AuthLayout = <T extends z.ZodType<any, any>>({
                 <div className="flex text-center items-center">
                   <p className="text-sm plus-jakarta font-medium text-center w-full my-1">
                     Didn't received the code?{" "}
-                    <span
+                    <button
+                      disabled={isLoading}
                       onClick={resendEmailFunction}
                       className={` ${
                         !isResendEnabled
                           ? "text-dark-200"
                           : "text-secondary cursor-pointer"
-                      } font-medium text-sm  `}
+                      } font-medium text-sm disabled:text-dark-200 `}
                     >
                       Resend{" "}
                       {!isResendEnabled &&
                         formatTime &&
                         `in ${formatTime(timeLeft || 0)}`}
-                    </span>
+                    </button>
                   </p>
                 </div>
               )}

@@ -2,29 +2,23 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
 import { CreateNewPasswordFormValidation } from "@/lib/validation";
 import { CustomFormField } from "@/components/common";
 import { FormFieldType } from "@/components/common/customFormField";
-
 import { AuthLayout } from "@/layout";
-
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { LOGIN_ROUTE } from "@/router/routes";
-
-import { useToast } from "@chakra-ui/react";
+import { useDisclosure, useToast } from "@chakra-ui/react";
 import showToast from "@/components/common/showtoast";
+import SuccessModal from "@/components/modals/success";
+import { resetPasswordApi } from "@/services/password";
 
 const CreateNewPassword = () => {
   const navigate = useNavigate();
   const toast = useToast();
-  // const location = useLocation();
-  // const { email } = location.state || {};
-  // const [resetPassword, { isLoading }] = useResetPasswordMutation();
-
-  const isLoading = false;
-
-  // const [dialogOpen, setDialogOpen] = useState(false);
+  const location = useLocation();
+  const { email, otp } = location.state || {};
+  const { onOpen, onClose, isOpen } = useDisclosure();
 
   const form = useForm<z.infer<typeof CreateNewPasswordFormValidation>>({
     resolver: zodResolver(CreateNewPasswordFormValidation),
@@ -37,21 +31,30 @@ const CreateNewPassword = () => {
   async function onSubmit(
     values: z.infer<typeof CreateNewPasswordFormValidation>
   ) {
-    // const payload = {
-    //   email: email,
-    //   newPassword: values.password,
-    // };
+    const payload = {
+      email,
+      otp,
+      newPassword: values.password,
+    };
 
     try {
       console.log(values);
 
-      // const res = await resetPassword(payload).unwrap();
+      const res = await resetPasswordApi(payload);
+      console.log(res);
 
-      // console.log(res);
+      if (res.success) {
+        showToast(toast, "Enroll AI", "success", `${res.message}`);
 
-      // showToast(toast, "Enroll AI", "success", `${res.msg}`);
-
-      navigate(LOGIN_ROUTE);
+        onOpen();
+      } else {
+        showToast(
+          toast,
+          "Enroll AI",
+          "error",
+          `${res.message || "An error occurred."} `
+        );
+      }
     } catch (error: any) {
       console.log(error);
       showToast(
@@ -62,27 +65,23 @@ const CreateNewPassword = () => {
       );
     }
   }
-
+  const { isSubmitting } = form.formState;
   return (
     <>
-      {/* <SuccessModal
-        isLoading={isLoading}
-        onSubmit={() => navigate(LOGIN_ROUTE)}
-        dialogOpen={dialogOpen}
-        setDialogOpen={setDialogOpen}
-        title={"Great Job!"}
-        desc={
-          "You have successfully updated your account password. Please click on “Login” and use your new password to access your account."
-        }
-        buttonText={"Login"}
-      /> */}
+      <SuccessModal
+        onClose={onClose}
+        isOpen={isOpen}
+        title="Reset Successful"
+        desc="You have successfully updated your account password. Please click on “Login” and use your new password to access your account."
+        handleClick={() => navigate(LOGIN_ROUTE)}
+      />
 
       <AuthLayout
         title="Create new password"
         desc={"Fantastic! Let's generate a new password for your account."}
         form={form}
         onSubmit={onSubmit}
-        isLoading={isLoading}
+        isLoading={isSubmitting}
       >
         <CustomFormField
           control={form.control}

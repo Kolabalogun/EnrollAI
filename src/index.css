@@ -30,7 +30,7 @@ p {
 }
 
 .header {
-  @apply text-3xl text-dark-200 font-semibold md:text-[32px] md:font-semibold;
+  @apply text-2xl text-dark-200 font-semibold md:text-[32px] md:font-semibold;
 }
 
 @layer base {
