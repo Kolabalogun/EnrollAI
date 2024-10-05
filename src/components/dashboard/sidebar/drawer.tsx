@@ -165,7 +165,7 @@ const SidebarDrawer = ({
                     onClose();
                     setDialogModal(true);
                   }}
-                  className={`flex gap-1 py-3 mt-2 rounded-md px-4 raleway font-semibold items-center   `}
+                  className={`flex gap-3 py-3 mt-2 rounded-md px-4 raleway font-semibold items-center   `}
                 >
                   <LogOut size={20} className="text-[#667085] rotate-180" />
                   <div className={`text-[13px]  text-dark-200`}>Logout</div>
