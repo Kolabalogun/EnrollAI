@@ -29,7 +29,9 @@ const VerifyEmail = () => {
   const [isResendEnabled, setIsResendEnabled] = useState(false);
 
   useEffect(() => {
-    if (!email) navigate(LOGIN_ROUTE);
+    if (!email) {
+      navigate(LOGIN_ROUTE);
+    }
   }, [email, navigate]);
 
   useEffect(() => {
@@ -142,7 +144,7 @@ const VerifyEmail = () => {
   return (
     <AuthLayout
       title="Verify your email"
-      desc={`Please enter the 6-digit code we sent to <br/> <strong>${email.toLowerCase()}</strong>.    `}
+      desc={`Please enter the 6-digit code we sent to <br/> <strong>${email?.toLowerCase()}</strong>.    `}
       form={form}
       onSubmit={onSubmit}
       isLoading={isSubmitting || resendLoading}
