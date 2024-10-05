@@ -29,8 +29,11 @@ const Education = ({ form, handleChange }: ApplicationProps) => {
         <div className="flex flex-1 xl:flex-row flex-col gap-10">
           <div className="flex flex-col flex-1 gap-3">
             <p className="font-semibold  ">Undergraduate</p>
-            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
-              <label className="w-16" htmlFor="undergraduateInstitution">
+            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+              <label
+                className="xl:w-16 w-full"
+                htmlFor="undergraduateInstitution"
+              >
                 Institution
               </label>
               <input
@@ -44,8 +47,8 @@ const Education = ({ form, handleChange }: ApplicationProps) => {
               />
             </div>
 
-            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
-              <label className="w-16" htmlFor="undergraduateDegree">
+            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+              <label className="xl:w-16 w-full" htmlFor="undergraduateDegree">
                 Degree
               </label>
               <input
@@ -59,8 +62,8 @@ const Education = ({ form, handleChange }: ApplicationProps) => {
               />
             </div>
 
-            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
-              <label className="w-16" htmlFor="undergraduateYOG">
+            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+              <label className="xl:w-16 w-full" htmlFor="undergraduateYOG">
                 Year of Graduation
               </label>
               <input
@@ -76,8 +79,8 @@ const Education = ({ form, handleChange }: ApplicationProps) => {
           </div>
           <div className="flex flex-col flex-1  gap-3">
             <p className="font-semibold  ">Graduate/Medical School Education</p>
-            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
-              <label className="w-16" htmlFor="graduateInstitution">
+            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+              <label className="xl:w-16 w-full" htmlFor="graduateInstitution">
                 Institution
               </label>
               <input
@@ -91,8 +94,8 @@ const Education = ({ form, handleChange }: ApplicationProps) => {
               />
             </div>
 
-            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
-              <label className="w-16" htmlFor="graduateDegree">
+            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+              <label className="xl:w-16 w-full" htmlFor="graduateDegree">
                 Degree
               </label>
               <input
@@ -106,8 +109,8 @@ const Education = ({ form, handleChange }: ApplicationProps) => {
               />
             </div>
 
-            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
-              <label className="w-16" htmlFor="graduateYOG">
+            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+              <label className="xl:w-16 w-full" htmlFor="graduateYOG">
                 Year of Graduation
               </label>
               <input
@@ -123,8 +126,8 @@ const Education = ({ form, handleChange }: ApplicationProps) => {
           </div>
           <div className="flex flex-col flex-1  gap-3">
             <p className="font-semibold  ">Internship</p>
-            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
-              <label className="w-16" htmlFor="internshipInstitution">
+            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+              <label className="xl:w-16 w-full" htmlFor="internshipInstitution">
                 Institution
               </label>
               <input
@@ -138,8 +141,8 @@ const Education = ({ form, handleChange }: ApplicationProps) => {
               />
             </div>
 
-            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
-              <label className="w-16" htmlFor="internshipDegree">
+            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+              <label className="xl:w-16 w-full" htmlFor="internshipDegree">
                 Degree
               </label>
               <input
@@ -153,8 +156,8 @@ const Education = ({ form, handleChange }: ApplicationProps) => {
               />
             </div>
 
-            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
-              <label className="w-16" htmlFor="internshipYOG">
+            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+              <label className="xl:w-16 w-full" htmlFor="internshipYOG">
                 Year completed
               </label>
               <input
@@ -173,8 +176,8 @@ const Education = ({ form, handleChange }: ApplicationProps) => {
         <div className="flex flex-1 xl:flex-row flex-col gap-10">
           <div className="flex flex-col flex-1 gap-3">
             <p className="font-semibold  ">Residency</p>
-            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
-              <label className="w-16" htmlFor="residencyInstitution">
+            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+              <label className="xl:w-16 w-full" htmlFor="residencyInstitution">
                 Institution
               </label>
               <input
@@ -188,8 +191,8 @@ const Education = ({ form, handleChange }: ApplicationProps) => {
               />
             </div>
 
-            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
-              <label className="w-16" htmlFor="residencyDegree">
+            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+              <label className="xl:w-16 w-full" htmlFor="residencyDegree">
                 Degree
               </label>
               <input
@@ -203,8 +206,8 @@ const Education = ({ form, handleChange }: ApplicationProps) => {
               />
             </div>
 
-            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
-              <label className="w-16" htmlFor="residencyYOG">
+            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+              <label className="xl:w-16 w-full" htmlFor="residencyYOG">
                 Year of Graduation
               </label>
               <input
@@ -220,8 +223,8 @@ const Education = ({ form, handleChange }: ApplicationProps) => {
           </div>
           <div className="flex flex-col flex-1  gap-3">
             <p className="font-semibold  ">Fellowship</p>
-            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
-              <label className="w-16" htmlFor="fellowshipInstitution">
+            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+              <label className="xl:w-16 w-full" htmlFor="fellowshipInstitution">
                 Institution
               </label>
               <input
@@ -235,8 +238,8 @@ const Education = ({ form, handleChange }: ApplicationProps) => {
               />
             </div>
 
-            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
-              <label className="w-16" htmlFor="fellowshipDegree">
+            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+              <label className="xl:w-16 w-full" htmlFor="fellowshipDegree">
                 Degree
               </label>
               <input
@@ -250,8 +253,8 @@ const Education = ({ form, handleChange }: ApplicationProps) => {
               />
             </div>
 
-            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
-              <label className="w-16" htmlFor="fellowshipYOG">
+            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+              <label className="xl:w-16 w-full" htmlFor="fellowshipYOG">
                 Year of Graduation
               </label>
               <input
@@ -269,8 +272,8 @@ const Education = ({ form, handleChange }: ApplicationProps) => {
             <p className="font-semibold  ">
               Continuing Medical Education (CME)
             </p>
-            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
-              <label className="w-16" htmlFor="cmeInstitution">
+            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+              <label className="xl:w-16 w-full" htmlFor="cmeInstitution">
                 Institution
               </label>
               <input
@@ -284,8 +287,8 @@ const Education = ({ form, handleChange }: ApplicationProps) => {
               />
             </div>
 
-            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
-              <label className="w-16" htmlFor="cmeDegree">
+            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+              <label className="xl:w-16 w-full" htmlFor="cmeDegree">
                 Degree
               </label>
               <input
@@ -299,8 +302,8 @@ const Education = ({ form, handleChange }: ApplicationProps) => {
               />
             </div>
 
-            <div className="raleway text-xs flex w-full flex-1 gap-5 items-center font-medium">
-              <label className="w-16" htmlFor="cmeYOG">
+            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+              <label className="xl:w-16 w-full" htmlFor="cmeYOG">
                 Year completed
               </label>
               <input

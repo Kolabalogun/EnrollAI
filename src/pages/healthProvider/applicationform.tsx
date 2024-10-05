@@ -61,6 +61,7 @@ const ApplicationForm = () => {
           dispatch(setApplicationList([...(lists || []), form]));
           // dispatch(resetLists());
           dispatch(resetForm());
+          dispatch(updateForm({ pageNo: 1 }));
           navigate(HEALTHCARE_APPLICATIONS);
         } else {
           onOpen();

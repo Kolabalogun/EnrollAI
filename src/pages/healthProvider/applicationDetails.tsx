@@ -60,17 +60,14 @@ const ApplicationsDetails = () => {
   return (
     <section className="space-y-5 remove-scrollbar flex mb-20 flex-col">
       <div className="flex flex-col gap-4">
-        <div
-          onClick={() => navigate(HEALTHCARE_APPLICATIONS)}
-          className="flex gap-3 items-center"
-        >
+        <div onClick={() => navigate(-1)} className="flex gap-3 items-center">
           <ChevronLeft size={15} />
           <p className="font-semibold cursor-pointer text-xs">Go back</p>
         </div>
         <p className="font-semibold text-3xl">Applications</p>
       </div>
 
-      <div className="bg-white rounded-lg flex-1 h-full w-full flex flex-col p-5 space-y-10">
+      <div className="bg-white rounded-lg flex-1 h-full w-full flex flex-col p-3 md:p-5 space-y-10">
         <div className="space-y-5">
           <div className="space-y-1">
             <p className="font-semibold text-base ">Health Plan</p>

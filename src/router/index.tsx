@@ -120,7 +120,7 @@ const router = createBrowserRouter([
         element: <HelpCenter />,
       },
       {
-        path: "/dashboard/health-provider/settings",
+        path: "/dashboard/settings",
         element: <HealthProviderSettings />,
       },
       {
@@ -179,7 +179,7 @@ const router = createBrowserRouter([
         element: <Articles />,
       },
       {
-        path: "/dashboard/credentializing-organization/settings",
+        path: "/dashboard/settings",
         element: <HealthProviderSettings />,
       },
       {

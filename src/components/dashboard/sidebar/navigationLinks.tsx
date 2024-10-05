@@ -71,7 +71,7 @@ export const healthProviderLinks = [
     icon: <Settings size={20} className="text-secondary" />,
     iconWhite: <Settings size={20} className="text-[#667085]" />,
     title: "Settings & Support",
-    buttonLink: "/dashboard/health-provider/settings",
+    buttonLink: "/dashboard/settings",
   },
   {
     label: "Help Center",
@@ -158,7 +158,7 @@ export const organizationLinks = [
     icon: <Settings size={20} className="text-secondary" />,
     iconWhite: <Settings size={20} className="text-[#667085]" />,
     title: "Settings & Support",
-    buttonLink: "/dashboard/credentializing-organization/settings",
+    buttonLink: "/dashboard/settings",
   },
   {
     label: "Help Center",

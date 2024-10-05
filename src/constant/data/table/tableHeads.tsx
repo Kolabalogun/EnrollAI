@@ -169,8 +169,8 @@ export const ApplicationFormTableHeads = (
   {
     header: "Details",
     accessor: (row) => <DetailsCell row={row} />,
-    className: "text-center w-32 xl:w-full",
-    headClassName: "text-center w-32 xl:w-full",
+    className: "text-center ",
+    headClassName: "text-center ",
   },
   {
     header: "Actions",

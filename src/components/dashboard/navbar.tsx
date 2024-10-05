@@ -2,8 +2,11 @@ import { Avatar } from "@/assets/img";
 import { Bell, Hexagon, Menu } from "lucide-react";
 import SidebarDrawer from "./sidebar/drawer";
 import { useDisclosure } from "@chakra-ui/react";
+import { SETTINGS_ROUTE } from "@/router/routes";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const { onClose, isOpen, onOpen } = useDisclosure();
 
   return (
@@ -31,7 +34,10 @@ const Navbar = () => {
 
         <div className="h-full w-[1.3px] bg-[#667085] " />
 
-        <div className="flex gap-2 items-center">
+        <div
+          onClick={() => navigate(SETTINGS_ROUTE)}
+          className="flex cursor-pointer gap-2 items-center"
+        >
           <div className="rounded-full">
             <img src={Avatar} alt="" className="h-8 rounded-full" />
           </div>

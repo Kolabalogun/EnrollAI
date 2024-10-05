@@ -95,6 +95,8 @@ const VerifyEmail = () => {
   const resendCodeToEmail = async () => {
     setResendLoading(true);
     try {
+      console.log(email);
+
       const res = await resendOTP(email);
       console.log(res);
 

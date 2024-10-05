@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import SecondaryButton from "@/components/common/buttons/secondaryButton";
+import { SubmitButton } from "@/components/common";
+
 import ConfirmationModal from "@/components/modals/confirmationModal";
 import PersonalInformations from "@/components/pages/applicationForm/step1/personalInformations";
 import ProfessionalID from "@/components/pages/applicationForm/step1/professionalID";
@@ -28,7 +29,7 @@ const Profile = () => {
         <p className="font-semibold text-3xl">Profile</p>
       </div>
 
-      <div className="bg-white rounded-lg flex-1 h-full w-full flex flex-col p-5 space-y-16">
+      <div className="bg-white rounded-lg flex-1 h-full w-full flex flex-col p-3 md:p-5 space-y-16">
         <div className="space-y-1">
           <p className="font-semibold text-base ">CAQH Credentialing</p>
           <p className="text-[12px] font-medium text-[#667085]">
@@ -45,12 +46,15 @@ const Profile = () => {
             Click to verify your CAHQ Data
           </p>
 
-          <SecondaryButton
-            title={"Verify Data"}
-            handleClick={() => {
+          <SubmitButton
+            type="button"
+            handleSubmit={() => {
               onOpen();
             }}
-          />
+            className="py-2 flex gap-2  w-auto px-8 border rounded-md font-semibold text-xs"
+          >
+            Verify Data
+          </SubmitButton>
         </div>
       </div>
     </section>

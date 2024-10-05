@@ -10,7 +10,7 @@ const Step3 = ({
   removeSubField,
 }: ApplicationProps) => {
   return (
-    <div className="bg-white rounded-lg p-5 space-y-4">
+    <div className="bg-white rounded-lg p-3 md:p-5 space-y-4">
       <div className="space-y-1">
         <p className="font-semibold text-base ">Health Plan</p>
         <p className="text-[12px] font-medium text-[#667085]">

@@ -11,6 +11,7 @@ export const CREATE_NEW_PASSWORD_ROUTE = "/create-new-password";
 export const REGISTER_ROUTE = "/health-provider-register";
 export const DASHBOARD_ROUTE = "/dashboard";
 export const ARTICLES_ROUTE = "/dashboard/articles";
+export const SETTINGS_ROUTE = "/dashboard/settings";
 
 export const HEALTHCARE_APPLICATION_FORM =
   "/dashboard/health-provider/application-form";

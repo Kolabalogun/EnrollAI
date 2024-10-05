@@ -118,7 +118,12 @@ export function LinksGroup({
       {subLinks && (isDropdownOpen || isActive) && (
         <div className="ml-6">
           {subLinks.map((subLink) => (
-            <LinksGroup {...subLink} key={subLink.label} />
+            <LinksGroup
+              onClose={onClose}
+              drawer={drawer}
+              {...subLink}
+              key={subLink.label}
+            />
           ))}
         </div>
       )}
