@@ -131,7 +131,7 @@ export const organizationLinks = [
     ],
   },
   {
-    label: "Provider Management",
+    label: "Provider",
     icon: <UserRoundCheck size={20} className="text-secondary " />,
     iconWhite: <UserRoundCheck size={20} className="text-[#667085] " />,
     title: "Menu",
