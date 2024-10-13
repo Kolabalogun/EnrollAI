@@ -106,7 +106,7 @@ export const organizationLinks = [
 
     subLinks: [
       {
-        label: "Incoming Applications",
+        label: "Incoming",
         icon: <Triangle size={16} className="text-secondary" />,
         iconWhite: <Triangle size={16} className="text-[#667085]" />,
         title: "Menu",
@@ -114,7 +114,7 @@ export const organizationLinks = [
           "/dashboard/credentializing-organization/incoming-applications",
       },
       {
-        label: "All Applications",
+        label: "All",
         icon: <Square size={16} className="rotate-45 text-secondary" />,
         iconWhite: <Square size={16} className="rotate-45 text-[#667085]" />,
         title: "Menu",
