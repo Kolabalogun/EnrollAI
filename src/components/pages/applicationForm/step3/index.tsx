@@ -1,8 +1,10 @@
 import { Progress } from "@chakra-ui/react";
 import { ApplicationProps } from "../step1";
-import WorkHistory from "./workhistory";
-import MalpracticeInsurance from "./malpracticeInsurance";
-import AdditionalDocument from "./additionalDocument";
+// import WorkHistory from "./workhistory";
+// import MalpracticeInsurance from "./malpracticeInsurance";
+// import AdditionalDocument from "./additionalDocument";
+import ProfessionalLiability from "./personalLiability";
+import BoardCertification from "./boardCertification";
 
 const Step3 = ({ form, handleDateChange, handleChange }: ApplicationProps) => {
   return (
@@ -23,7 +25,19 @@ const Step3 = ({ form, handleDateChange, handleChange }: ApplicationProps) => {
         />
       </div>
 
-      <WorkHistory
+      <ProfessionalLiability
+        form={form}
+        handleChange={handleChange}
+        handleDateChange={handleDateChange}
+      />
+
+      <BoardCertification
+        form={form}
+        handleChange={handleChange}
+        handleDateChange={handleDateChange}
+      />
+
+      {/* <WorkHistory
         form={form}
         handleChange={handleChange}
         handleDateChange={handleDateChange}
@@ -31,7 +45,7 @@ const Step3 = ({ form, handleDateChange, handleChange }: ApplicationProps) => {
 
       <MalpracticeInsurance form={form} handleChange={handleChange} />
 
-      <AdditionalDocument form={form} handleChange={handleChange} />
+      <AdditionalDocument form={form} handleChange={handleChange} /> */}
     </div>
   );
 };

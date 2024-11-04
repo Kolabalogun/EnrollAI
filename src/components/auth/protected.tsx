@@ -10,7 +10,7 @@ const Protected = ({ children }: { children: React.ReactNode }) => {
 
   const location = useLocation()?.pathname;
 
-  return !isAuthenticated ? (
+  return  isAuthenticated ? (
     children
   ) : (
     <Navigate to={"/login"} state={{ from: location }} replace />

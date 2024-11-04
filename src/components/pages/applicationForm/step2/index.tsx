@@ -1,13 +1,14 @@
 import { Progress } from "@chakra-ui/react";
-import PracticeLocation from "./practicelocation";
+
 import { ApplicationProps } from "../step1";
-import HospitalAffiliations from "./hospitalaffiliations";
+// import HospitalAffiliations from "./hospitalaffiliations";
 import Licensing from "./licensing";
+import ResidenciesFellowships from "./fellowship";
 
 const Step2 = ({
   form,
   handleDateChange,
-  handlePhoneChange,
+
   handleChange,
 }: ApplicationProps) => {
   return (
@@ -28,14 +29,13 @@ const Step2 = ({
         />
       </div>
 
-      <PracticeLocation
+      <ResidenciesFellowships
         form={form}
         handleChange={handleChange}
-        handlePhoneChange={handlePhoneChange}
         handleDateChange={handleDateChange}
       />
 
-      <HospitalAffiliations form={form} handleChange={handleChange} />
+      {/* <HospitalAffiliations form={form} handleChange={handleChange} /> */}
 
       <Licensing
         form={form}

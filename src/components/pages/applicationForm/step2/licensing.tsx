@@ -1,142 +1,145 @@
-import { Calendar } from "lucide-react";
+import DateInputField from "../Inputs/dateInput";
+import TextInputField from "../Inputs/TextInput";
 import { ApplicationProps } from "../step1";
-import ReactDatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+
+const mainLicenseRegistration = [
+  {
+    title: "Medical License/Registration",
+    fields: [
+      { label: "DEA Registration Number", name: "deaRegistrationNumber" },
+      { label: "DEA Expiration Date", name: "deaExpirationDate", type: "date" },
+      {
+        label: "Controlled Dangerous Substance Certificate",
+        name: "controlledSubstanceCertificate",
+      },
+      {
+        label: "Controlled Substance Expiration Date",
+        name: "controlledSubstanceExpirationDate",
+        type: "date",
+      },
+      { label: "ECFMG Number", name: "ecfmNumber" },
+      { label: "Date Issued", name: "ecfmIssueDate", type: "date" },
+      { label: "Valid Through", name: "ecfmValidThrough", type: "date" },
+      {
+        label: "Medicare UPIN/National Physician Identifier",
+        name: "medicareUpin",
+      },
+      { label: "Medicaid/Medicare Number", name: "medicaidMedicareNumber" },
+    ],
+  },
+];
+
+const medicalLicensesData = [
+  {
+    title: "State Medical License 1",
+    fields: [
+      { label: "License", name: "stateMedicalLicense1" },
+      { label: "License Number", name: "stateMedicalLicenseNumber1" },
+      {
+        label: "Expiration Date",
+        name: "stateMedicalLicenseExpirationDate1",
+        type: "date",
+      },
+    ],
+  },
+  {
+    title: "State Medical License 2",
+    fields: [
+      { label: "License", name: "stateMedicalLicense2" },
+      { label: "License Number", name: "stateMedicalLicenseNumber2" },
+      {
+        label: "Expiration Date",
+        name: "stateMedicalLicenseExpirationDate2",
+        type: "date",
+      },
+    ],
+  },
+  {
+    title: "State Medical License 3",
+    fields: [
+      { label: "License", name: "stateMedicalLicense3" },
+      { label: "License Number", name: "stateMedicalLicenseNumber3" },
+      {
+        label: "Expiration Date",
+        name: "stateMedicalLicenseExpirationDate3",
+        type: "date",
+      },
+    ],
+  },
+  // ... other license sections (DEA, CDS, ECFMG, Medicare)
+];
 
 const Licensing = ({
   form,
   handleChange,
   handleDateChange,
 }: ApplicationProps) => {
-  const {
-    stateMedicalicense,
-    stateMedicalicenseNumber,
-    stateMedicalicenseExpirationDate,
-    pcslicenseExpirationDate,
-    pcslicense,
-    pcslicenseNumber,
-  } = form;
-
   return (
     <div className="border rounded-lg pt-5 px-3 xl:px-5 pb-10 space-y-5">
-      <p className="font-semibold text-base">Licenses</p>
-      <div className="space-y-10 ">
-        <div className="flex flex-1 xl:flex-row flex-col gap-12 xl:gap-24">
-          <div className="flex flex-col flex-1 gap-3">
-            <p className="font-semibold  ">State Medical License</p>
-            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
-              <label className="w-28" htmlFor="stateMedicalicense">
-                License
-              </label>
-              <input
-                id="stateMedicalicense"
-                name="stateMedicalicense"
-                type="text"
-                placeholder="New York State medical License"
-                value={stateMedicalicense}
-                onChange={handleChange}
-                className="border rounded-md p-2 outline-[0.5px] outline-secondary flex-1"
-              />
-            </div>
-
-            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
-              <label className="w-28" htmlFor="stateMedicalicenseNumber">
-                License Number
-              </label>
-              <input
-                id="stateMedicalicenseNumber"
-                name="stateMedicalicenseNumber"
-                type="number"
-                placeholder="9876543210"
-                value={stateMedicalicenseNumber}
-                onChange={handleChange}
-                className="border rounded-md p-2 outline-[0.5px] outline-secondary flex-1"
-              />
-            </div>
-
-            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
-              <label className="w-[140px]" htmlFor="licenseNumber">
-                Expiration Date
-              </label>
-
-              <div
-                id="dob"
-                className="border flex items-center gap-3 rounded-md p-2 outline-[0.5px] outline-secondary w-full"
-              >
-                <div className="ml-2">
-                  <Calendar size={15} />
-                </div>
-
-                <ReactDatePicker
-                  selected={stateMedicalicenseExpirationDate}
-                  onChange={(date) =>
-                    handleDateChange("stateMedicalicenseExpirationDate", date)
-                  }
-                  dateFormat={"dd/MM/yyyy"}
-                  wrapperClassName="date-picker"
-                />
+      <div className="space-y-5">
+        <p className="font-semibold text-base">Licenses</p>
+        <div className=" ">
+          {mainLicenseRegistration.map((section, index) => (
+            <div key={index} className="flex flex-col gap-3">
+              <p className="font-semibold">{section.title}</p>
+              <div className="grid grid-cols-3 w-full gap-5">
+                {section.fields.map((field, fieldIndex) => (
+                  <div
+                    key={fieldIndex}
+                    className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium"
+                  >
+                    {field.type === "date" ? (
+                      <DateInputField
+                        label={field.label}
+                        selected={form[field.name]}
+                        onChange={(date) => handleDateChange(field.name, date)}
+                      />
+                    ) : (
+                      <TextInputField
+                        key={field.name}
+                        label={field.label}
+                        name={field.name}
+                        value={form[field.name]}
+                        onChange={handleChange}
+                      />
+                    )}
+                  </div>
+                ))}
               </div>
             </div>
-          </div>
-
-          <div className="flex flex-col flex-1 gap-3">
-            <p className="font-semibold  ">
-              Professional and controlled substance License
-            </p>
-            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
-              <label className="w-28" htmlFor="pcslicense">
-                License
-              </label>
-              <input
-                id="pcslicense"
-                name="pcslicense"
-                type="text"
-                placeholder="New York State medical License"
-                value={pcslicense}
-                onChange={handleChange}
-                className="border rounded-md p-2 outline-[0.5px] outline-secondary flex-1"
-              />
-            </div>
-
-            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
-              <label className="w-28" htmlFor="pcslicenseNumber">
-                License Number
-              </label>
-              <input
-                id="pcslicenseNumber"
-                name="pcslicenseNumber"
-                type="number"
-                placeholder="9876543210"
-                value={pcslicenseNumber}
-                onChange={handleChange}
-                className="border rounded-md p-2 outline-[0.5px] outline-secondary flex-1"
-              />
-            </div>
-
-            <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
-              <label className="w-[140px]" htmlFor="licenseNumber">
-                Expiration Date
-              </label>
-
-              <div
-                id="dob"
-                className="border flex  items-center gap-3 rounded-md p-2 outline-[0.5px] outline-secondary w-full"
-              >
-                <div className="ml-2">
-                  <Calendar size={15} />
+          ))}
+        </div>
+      </div>
+      <div className="space-y-5">
+        <p className="font-semibold text-base">Other Licenses</p>
+        <div className="grid grid-cols-3 gap-10">
+          {medicalLicensesData.map((section, index) => (
+            <div key={index} className="flex flex-col gap-3">
+              <p className="font-semibold">{section.title}</p>
+              {section.fields.map((field, fieldIndex) => (
+                <div
+                  key={fieldIndex}
+                  className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium"
+                >
+                  {field.type === "date" ? (
+                    <DateInputField
+                      label={field.label}
+                      selected={form[field.name]}
+                      onChange={(date) => handleDateChange(field.name, date)}
+                    />
+                  ) : (
+                    <TextInputField
+                      key={field.name}
+                      label={field.label}
+                      name={field.name}
+                      value={form[field.name]}
+                      onChange={handleChange}
+                    />
+                  )}
                 </div>
-
-                <ReactDatePicker
-                  selected={pcslicenseExpirationDate}
-                  onChange={(date) =>
-                    handleDateChange("pcslicenseExpirationDate", date)
-                  }
-                  dateFormat={"dd/MM/yyyy"}
-                  wrapperClassName="date-picker"
-                />
-              </div>
+              ))}
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>

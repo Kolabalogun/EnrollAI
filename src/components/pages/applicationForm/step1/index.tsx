@@ -2,8 +2,9 @@
 import { Progress } from "@chakra-ui/react";
 
 import PersonalInformations from "./personalInformations";
-import ProfessionalID from "./professionalID";
+// import ProfessionalID from "./professionalID";
 import Education from "./education";
+import PracticeLocation from "./practicelocation";
 
 export type ApplicationProps = {
   form: any;
@@ -50,9 +51,20 @@ const Step1 = ({
         handleDateChange={handleDateChange}
       />
 
-      <ProfessionalID form={form} handleChange={handleChange} />
+      <PracticeLocation
+        form={form}
+        handleChange={handleChange}
+        handlePhoneChange={handlePhoneChange}
+        handleDateChange={handleDateChange}
+      />
 
-      <Education form={form} handleChange={handleChange} />
+      {/* <ProfessionalID form={form} handleChange={handleChange} /> */}
+
+      <Education
+        form={form}
+        handleChange={handleChange}
+        handleDateChange={handleDateChange}
+      />
     </div>
   );
 };
