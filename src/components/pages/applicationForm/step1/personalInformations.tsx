@@ -34,6 +34,9 @@ const PersonalInformations = ({
     { label: "Specialty", name: "specialty" },
     { label: "Race/Ethnicity", name: "raceEthnicity" },
     { label: "Subspecialties", name: "subspecialties" },
+    { label: "National Physician Identifier (NPI I)", name: "NPI" },
+    { label: "CAHQ ID", name: "cahqID" },
+    { label: "CAHQ Password", name: "cahqPassword" },
   ];
 
   return (

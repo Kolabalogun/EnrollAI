@@ -13,17 +13,13 @@ const professionalLiabilityData = [
         name: "currentEffectiveDate",
         type: "date",
       },
+      { label: "Expiration Date", name: "currentExpirationDate", type: "date" },
       { label: "Mailing Address", name: "currentMailingAddress" },
       { label: "City", name: "currentCity" },
       { label: "State", name: "currentState" },
       { label: "ZIP", name: "currentZIP" },
       { label: "Per Claim Amount", name: "currentPerClaimAmount" },
       { label: "Aggregate Amount", name: "currentAggregateAmount" },
-      { label: "Expiration Date", name: "currentExpirationDate", type: "date" },
-      {
-        label: "Surcharge for Professional Liability Coverage",
-        name: "currentSurcharge",
-      },
     ],
   },
   {
@@ -37,6 +33,8 @@ const professionalLiabilityData = [
       { label: "City", name: "previousCarrier1City" },
       { label: "State", name: "previousCarrier1State" },
       { label: "ZIP", name: "previousCarrier1ZIP" },
+      { label: "Per Claim Amount", name: "currentPerClaimAmount" },
+      { label: "Aggregate Amount", name: "currentAggregateAmount" },
     ],
   },
   {
@@ -50,6 +48,8 @@ const professionalLiabilityData = [
       { label: "City", name: "previousCarrier2City" },
       { label: "State", name: "previousCarrier2State" },
       { label: "ZIP", name: "previousCarrier2ZIP" },
+      { label: "Per Claim Amount", name: "currentPerClaimAmount" },
+      { label: "Aggregate Amount", name: "currentAggregateAmount" },
     ],
   },
 ];

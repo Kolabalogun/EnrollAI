@@ -18,6 +18,11 @@ const boardCertificationsData = [
         name: "boardCertification1ExpirationDate",
         type: "date",
       },
+      {
+        label: "Certification 1",
+        name: "certificationfile1",
+        type: "file",
+      },
     ],
   },
   {
@@ -35,6 +40,11 @@ const boardCertificationsData = [
         name: "boardCertification2ExpirationDate",
         type: "date",
       },
+      {
+        label: "Certification 2",
+        name: "certificationfile2",
+        type: "file",
+      },
     ],
   },
   {
@@ -51,6 +61,11 @@ const boardCertificationsData = [
         label: "Expiration Date",
         name: "boardCertification3ExpirationDate",
         type: "date",
+      },
+      {
+        label: "Certification 3",
+        name: "certificationfile3",
+        type: "file",
       },
     ],
   },
@@ -73,12 +88,29 @@ const BoardCertification = ({
                 key={fieldIndex}
                 className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium"
               >
+                {field.type === "file" && (
+                  <p className="text-xs   w-28 font-medium">{field.label}:</p>
+                )}
                 {field.type === "date" ? (
                   <DateInputField
                     label={field.label}
                     selected={form[field.name]}
                     onChange={(date) => handleDateChange(field.name, date)}
                   />
+                ) : field.type === "file" ? (
+                  <div className="flex gap-2 items-center w-full">
+                    <input
+                      type="file"
+                      name={field.name}
+                      // onChange={handleFileChange}
+                      className="border rounded-md p-2 outline-[0.5px] outline-secondary flex-1 w-full"
+                    />
+                    {form[field.name] && (
+                      <span className="text-green-500 text-xs">
+                        File selected: {form[field.name].name}
+                      </span>
+                    )}
+                  </div>
                 ) : (
                   <TextInputField
                     key={field.name}

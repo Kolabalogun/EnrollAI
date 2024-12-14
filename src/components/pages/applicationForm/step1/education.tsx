@@ -51,6 +51,7 @@ const Education = ({
         {
           label: "Date of Graduation",
           name: "professionalSchoolGraduationDate",
+          type: "date",
         },
         { label: "Mailing Address", name: "professionalSchoolMailingAddress" },
         { label: "City", name: "professionalSchoolCity" },

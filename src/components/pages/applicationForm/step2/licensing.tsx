@@ -6,25 +6,73 @@ const mainLicenseRegistration = [
   {
     title: "Medical License/Registration",
     fields: [
-      { label: "DEA Registration Number", name: "deaRegistrationNumber" },
-      { label: "DEA Expiration Date", name: "deaExpirationDate", type: "date" },
       {
-        label: "Controlled Dangerous Substance Certificate",
-        name: "controlledSubstanceCertificate",
+        subField: "DEA Registration",
+        fields: [
+          { label: "DEA Registration Number", name: "deaRegistrationNumber" },
+          {
+            label: "DEA Expiration Date",
+            name: "deaExpirationDate",
+            type: "date",
+          },
+          {
+            label: "DEA Expiration File",
+            name: "deaExpirationFile",
+            type: "file",
+          },
+        ],
       },
       {
-        label: "Controlled Substance Expiration Date",
-        name: "controlledSubstanceExpirationDate",
-        type: "date",
+        subField: "Controlled Dangerous Substance",
+        fields: [
+          {
+            label: "Controlled Dangerous Substance Certificate",
+            name: "controlledSubstanceCertificate",
+          },
+          {
+            label: "Controlled Substance Expiration Date",
+            name: "controlledSubstanceExpirationDate",
+            type: "date",
+          },
+          {
+            label: "Controlled Substance Expiration File",
+            name: "controlledSubstanceExpirationFile",
+            type: "file",
+          },
+        ],
       },
-      { label: "ECFMG Number", name: "ecfmNumber" },
-      { label: "Date Issued", name: "ecfmIssueDate", type: "date" },
-      { label: "Valid Through", name: "ecfmValidThrough", type: "date" },
+
       {
-        label: "Medicare UPIN/National Physician Identifier",
-        name: "medicareUpin",
+        subField: "ECFMG",
+        fields: [
+          {
+            label: "ECFMG Number",
+            name: "ECFMGNumber",
+          },
+          { label: "Date Issued", name: "ecfmIssueDate", type: "date" },
+          { label: "Valid Through", name: "ecfmValidThrough", type: "date" },
+          {
+            label: "ECFMG File",
+            name: "ECFMGFile",
+            type: "file",
+          },
+        ],
       },
-      { label: "Medicaid/Medicare Number", name: "medicaidMedicareNumber" },
+      {
+        subField: "Medicaid",
+        fields: [
+          {
+            label: "Medicaid ID Number",
+            name: "medicaidIDNumber",
+          },
+
+          {
+            label: "Medicaid Certificate",
+            name: "medicaidCertificate",
+            type: "file",
+          },
+        ],
+      },
     ],
   },
 ];
@@ -40,6 +88,11 @@ const medicalLicensesData = [
         name: "stateMedicalLicenseExpirationDate1",
         type: "date",
       },
+      {
+        label: "License File",
+        name: "stateMedicalLicensefile1",
+        type: "file",
+      },
     ],
   },
   {
@@ -51,6 +104,11 @@ const medicalLicensesData = [
         label: "Expiration Date",
         name: "stateMedicalLicenseExpirationDate2",
         type: "date",
+      },
+      {
+        label: "License File",
+        name: "stateMedicalLicensefile2",
+        type: "file",
       },
     ],
   },
@@ -64,9 +122,13 @@ const medicalLicensesData = [
         name: "stateMedicalLicenseExpirationDate3",
         type: "date",
       },
+      {
+        label: "License File",
+        name: "stateMedicalLicensefile3",
+        type: "file",
+      },
     ],
   },
-  // ... other license sections (DEA, CDS, ECFMG, Medicare)
 ];
 
 const Licensing = ({
@@ -74,38 +136,68 @@ const Licensing = ({
   handleChange,
   handleDateChange,
 }: ApplicationProps) => {
+  // Handle file input changes
+  const handleFileChange = () => {};
+
   return (
     <div className="border rounded-lg pt-5 px-3 xl:px-5 pb-10 space-y-5">
       <div className="space-y-5">
         <p className="font-semibold text-base">Licenses</p>
-        <div className=" ">
+        <div>
           {mainLicenseRegistration.map((section, index) => (
             <div key={index} className="flex flex-col gap-3">
               <p className="font-semibold">{section.title}</p>
-              <div className="grid grid-cols-3 w-full gap-5">
-                {section.fields.map((field, fieldIndex) => (
-                  <div
-                    key={fieldIndex}
-                    className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium"
-                  >
-                    {field.type === "date" ? (
-                      <DateInputField
-                        label={field.label}
-                        selected={form[field.name]}
-                        onChange={(date) => handleDateChange(field.name, date)}
-                      />
-                    ) : (
-                      <TextInputField
-                        key={field.name}
-                        label={field.label}
-                        name={field.name}
-                        value={form[field.name]}
-                        onChange={handleChange}
-                      />
-                    )}
+              {section.fields.map((subSection, subIndex) => (
+                <div key={subIndex} className="mb-4">
+                  <p className="text-sm font-semibold text-gray-600 mb-3">
+                    {subSection.subField}
+                  </p>
+                  <div className="grid grid-cols-3 w-full gap-5">
+                    {subSection.fields.map((field, fieldIndex) => (
+                      <div
+                        key={fieldIndex}
+                        className="flex flex-col gap-1 text-xs font-medium"
+                      >
+                        {field.type === "file" && (
+                          <p className="text-xs font-medium">{field.label}</p>
+                        )}
+
+                        {field.type === "date" ? (
+                          <DateInputField
+                            label={field.label}
+                            selected={form[field.name]}
+                            onChange={(date) =>
+                              handleDateChange(field.name, date)
+                            }
+                          />
+                        ) : field.type === "file" ? (
+                          <div className="flex gap-2 items-center">
+                            <input
+                              type="file"
+                              name={field.name}
+                              onChange={handleFileChange}
+                              className="border rounded-md p-2 outline-[0.5px] outline-secondary flex-1"
+                            />
+                            {form[field.name] && (
+                              <span className="text-green-500 text-xs">
+                                File selected: {form[field.name].name}
+                              </span>
+                            )}
+                          </div>
+                        ) : (
+                          <TextInputField
+                            key={field.name}
+                            label={field.label}
+                            name={field.name}
+                            value={form[field.name]}
+                            onChange={handleChange}
+                          />
+                        )}
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           ))}
         </div>
@@ -121,12 +213,29 @@ const Licensing = ({
                   key={fieldIndex}
                   className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium"
                 >
+                  {field.type === "file" && (
+                    <p className="text-xs   w-24 font-medium">{field.label}:</p>
+                  )}
                   {field.type === "date" ? (
                     <DateInputField
                       label={field.label}
                       selected={form[field.name]}
                       onChange={(date) => handleDateChange(field.name, date)}
                     />
+                  ) : field.type === "file" ? (
+                    <div className="flex gap-2 items-center w-full">
+                      <input
+                        type="file"
+                        name={field.name}
+                        onChange={handleFileChange}
+                        className="border rounded-md p-2 outline-[0.5px] outline-secondary flex-1 w-full"
+                      />
+                      {form[field.name] && (
+                        <span className="text-green-500 text-xs">
+                          File selected: {form[field.name].name}
+                        </span>
+                      )}
+                    </div>
                   ) : (
                     <TextInputField
                       key={field.name}
