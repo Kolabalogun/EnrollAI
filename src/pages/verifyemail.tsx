@@ -15,7 +15,7 @@ import {
 import { useEffect, useState } from "react";
 import showToast from "@/components/common/showtoast";
 import SuccessModal from "@/components/modals/success";
-import { resendOTP, verifyOTP } from "@/services/otp";
+import { resendOTP, verifyOTP } from "@/services/auth";
 
 const VerifyEmail = () => {
   const navigate = useNavigate();

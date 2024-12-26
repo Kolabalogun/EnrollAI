@@ -14,9 +14,9 @@ import { AuthLayout } from "@/layout";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
 import showToast from "@/components/common/showtoast";
-import { resendOTP, verifyOTP } from "@/services/otp";
+
 import { CREATE_NEW_PASSWORD_ROUTE } from "@/router/routes";
-import { forgotPasswordApi } from "@/services/password";
+import { forgotPasswordApi, resendOTP, verifyOTP } from "@/services/auth";
 
 const ForgetPassword = () => {
   const navigate = useNavigate();

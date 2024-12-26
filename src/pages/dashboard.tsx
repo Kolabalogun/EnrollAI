@@ -38,7 +38,7 @@ const Dashboard = () => {
       <div className="flex flex-col gap-1">
         <p className="font-semibold text-lg">
           Welcome back,{" "}
-          {accountType === "Organization" ? "Cleveland Clinic!" : "Dr. Alex!"}
+          {accountType !== "provider" ? "Cleveland Clinic!" : "Dr. Alex!"}
         </p>
 
         <p className="font-medium text-fade text-xs">
@@ -52,11 +52,7 @@ const Dashboard = () => {
           className="flex flex-col justify-between w-full flex-1 space-y-9 "
         >
           <div className="">
-            {accountType === "Organization" ? (
-              <OrganizationStatBar />
-            ) : (
-              <StatBar />
-            )}
+            {accountType !== "provider" ? <OrganizationStatBar /> : <StatBar />}
           </div>
           <div className="flex xl:flex-row flex-col gap-5 xl:gap-8">
             <div onClick={() => onOpen()}>
@@ -128,12 +124,12 @@ const Dashboard = () => {
           className="bg-white rounded-lg flex-1 h-full w-full flex  flex-col p-5 space-y-8"
         >
           <p className="font-semibold text-base">
-            {accountType === "Organization"
+            {accountType !== "provider"
               ? "Incoming Applications"
               : "Tasks and Activities"}
           </p>
 
-          {accountType === "Organization" ? (
+          {accountType !== "provider" ? (
             <OrganizationApplicationLists />
           ) : (
             <ApplicationLists />

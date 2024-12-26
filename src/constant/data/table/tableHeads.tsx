@@ -71,7 +71,7 @@ export const ActionCell = ({
               <Eye color="blue" size={15} />
               View Application
             </li>
-            {accountType === "Organization" ? (
+            {accountType !== "provider" ? (
               <li
                 onClick={() => handleEdit(row)}
                 className="cursor-pointer raleway text-xs font-semibold  px-4 py-4 hover:bg-gray-200 flex items-center gap-3"
@@ -88,7 +88,7 @@ export const ActionCell = ({
                 Edit
               </li>
             )}
-            {accountType === "Organization" ? (
+            {accountType !== "provider" ? (
               <li
                 onClick={() => handleDelete(row)}
                 className="cursor-pointer raleway text-xs font-semibold  px-4 py-4 flex items-center gap-3 hover:bg-gray-200"

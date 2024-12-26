@@ -8,6 +8,7 @@ interface ErrorResponse {
   data?: any;
   token?: string;
   accountType?: string;
+  organization?: any;
 }
 
 export const handleError = (error: AxiosError): ErrorResponse => {
@@ -16,7 +17,10 @@ export const handleError = (error: AxiosError): ErrorResponse => {
     if (status === 400) {
       return {
         success: false,
-        message: (error.response.data as any).msg || "Validation error.",
+        message:
+          (error.response.data as any).msg ||
+          (error.response.data as any).message ||
+          "Validation error.",
         status,
       };
     } else if (status === 500) {
@@ -28,7 +32,10 @@ export const handleError = (error: AxiosError): ErrorResponse => {
     } else {
       return {
         success: false,
-        message: (error.response.data as any).msg || "Something went wrong.",
+        message:
+          (error.response.data as any).msg ||
+          (error.response.data as any).message ||
+          "Something went wrong.",
         status,
       };
     }

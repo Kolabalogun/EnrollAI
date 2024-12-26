@@ -11,7 +11,7 @@ import { LOGIN_ROUTE } from "@/router/routes";
 import { useDisclosure, useToast } from "@chakra-ui/react";
 import showToast from "@/components/common/showtoast";
 import SuccessModal from "@/components/modals/success";
-import { resetPasswordApi } from "@/services/password";
+import { resetPasswordApi } from "@/services/auth";
 
 const CreateNewPassword = () => {
   const navigate = useNavigate();

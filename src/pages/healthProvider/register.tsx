@@ -10,7 +10,7 @@ import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { VERIFY_EMAIL_ROUTE } from "@/router/routes";
 import showToast from "@/components/common/showtoast";
-import { registerProvider } from "@/services/register";
+import { registerProvider } from "@/services/auth";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ const Register = () => {
           toast,
           "Registration successful!",
           "success",
-          `${res.data.msg}`
+          `${res.data.message}`
         );
         setTimeout(() => {
           navigate(VERIFY_EMAIL_ROUTE, { state: { email: values.email } });
@@ -69,7 +69,7 @@ const Register = () => {
         toast,
         "Enroll AI",
         "error",
-        "An error has occurred. Please try again"
+        `${error.message || "An error has occurred. Please try again"} `
       );
     }
   }

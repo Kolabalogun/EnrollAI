@@ -76,9 +76,7 @@ const Sidebar = () => {
   };
 
   const links =
-    accountType === "Organization"
-      ? getOrganizationLinks()
-      : getProviderLinks();
+    accountType !== "provider" ? getOrganizationLinks() : getProviderLinks();
 
   return (
     <div

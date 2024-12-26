@@ -38,6 +38,7 @@ import {
   ApprovedApplications,
   CreateApplicationForm,
   IncomingApplications,
+  OrganizationLogin,
   OrganizationRegister,
   Providers,
   ReportAndAnalytics,
@@ -232,6 +233,15 @@ const router = createBrowserRouter([
       // Unauthenticated route for users who are not logged in
       <UnAuthenticated>
         <Login />
+      </UnAuthenticated>
+    ),
+  },
+  {
+    path: "/organization/login",
+    element: (
+      // Unauthenticated route for users who are not logged in
+      <UnAuthenticated>
+        <OrganizationLogin />
       </UnAuthenticated>
     ),
   },

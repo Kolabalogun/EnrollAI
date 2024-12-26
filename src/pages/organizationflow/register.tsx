@@ -8,17 +8,14 @@ import { FormFieldType } from "@/components/common/customFormField";
 import { AuthLayout } from "@/layout";
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-// import { useRegisterMutation } from "@/services/auth";
+
 import { VERIFY_EMAIL_ROUTE } from "@/router/routes";
 import showToast from "@/components/common/showtoast";
+import { organizationRegisterProvider } from "@/services/auth";
 
 const Register = () => {
   const navigate = useNavigate();
   const toast = useToast();
-  // Registration mutation hook
-  //   const [register, { isLoading }] = useRegisterMutation();
-
-  const isLoading = false;
 
   const form = useForm<z.infer<typeof OrganizationRegisterFormValidation>>({
     resolver: zodResolver(OrganizationRegisterFormValidation),
@@ -36,22 +33,37 @@ const Register = () => {
   ) {
     console.log(values);
 
-    // const payload = {
-    //   fullName: values.name,
-    //   email: values.email,
-    //   password: values.password,
-    //   confirmPassword: values.confirmPassword,
-    // };
+    const payload = {
+      organizationName: values.organizationName,
+      administratorFullName: values.adminFullName,
+      workEmail: values.email,
+      password: values.password,
+    };
 
     try {
-      //   const res = await register(payload).unwrap();
+      const res = await organizationRegisterProvider(payload);
 
-      //   console.log(res);
-      //   showToast(toast, "Enroll AI", "success", `${res.msg}`);
+      if (res.success) {
+        console.log(res);
+        showToast(
+          toast,
+          "Registration successful!",
+          "success",
+          `${res.data.message}`
+        );
+        setTimeout(() => {
+          navigate(VERIFY_EMAIL_ROUTE, { state: { email: values.email } });
+        }, 2000);
+      } else {
+        showToast(
+          toast,
+          "Enroll AI",
+          "error",
+          `${res.message || res.data?.msg || "An error occurred."} `
+        );
+      }
 
-      setTimeout(() => {
-        navigate(VERIFY_EMAIL_ROUTE, { state: { email: values.email } });
-      }, 2000);
+      console.log(res);
     } catch (error: any) {
       console.log(error);
       showToast(
@@ -63,13 +75,15 @@ const Register = () => {
     }
   }
 
+  const { isSubmitting } = form.formState;
+
   return (
     <AuthLayout
       title="Create your account"
       desc="Lorem Ipsum Set dolor is a dummy text for place holders"
       form={form}
       onSubmit={onSubmit}
-      isLoading={isLoading}
+      isLoading={isSubmitting}
     >
       <CustomFormField
         fieldType={FormFieldType.INPUT}

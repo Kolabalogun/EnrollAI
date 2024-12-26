@@ -65,7 +65,7 @@ const ApplicationsModal = ({
                   <div
                     key={idx}
                     onClick={
-                      accountType === "Organization"
+                      accountType !== "provider"
                         ? () => navigate(ORGANIZATION_CREATE_APPLICATION_FORM)
                         : () => navigate(HEALTHCARE_APPLICATION_FORM)
                     }

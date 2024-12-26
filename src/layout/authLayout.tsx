@@ -8,11 +8,12 @@ import { Form } from "@/components/ui/form";
 import {
   FORGET_PASSWORD_ROUTE,
   LOGIN_ROUTE,
+  ORG_LOGIN_ROUTE,
   TYPE_OF_REG,
 } from "@/router/routes";
 import { ReactNode } from "react";
 import { UseFormReturn } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { z } from "zod";
 
 interface AuthLayoutProps<T extends z.ZodType<any, any>> {
@@ -41,6 +42,11 @@ const AuthLayout = <T extends z.ZodType<any, any>>({
   resendEmailFunction,
 }: AuthLayoutProps<T>) => {
   const navigate = useNavigate();
+
+  const location = useLocation();
+
+  console.log(location);
+
   return (
     <main className="min-h-screen bg-primary  px-3 lg:px-5   py-5">
       <LogoBar />
@@ -129,7 +135,7 @@ const AuthLayout = <T extends z.ZodType<any, any>>({
                 </div>
               )}
 
-              <div className="flex text-center w-full items-center">
+              <div className="flex text-center flex-col w-full items-center">
                 <p className="text-sm text-center w-full plus-jakarta my-1">
                   {title === "Welcome Back!"
                     ? "Don't have an account? "
@@ -154,6 +160,30 @@ const AuthLayout = <T extends z.ZodType<any, any>>({
                       ? "Login"
                       : ""}
                   </span>
+                </p>
+
+                <p className="text-sm text-center w-full plus-jakarta my-1">
+                  {location.pathname === "/login"
+                    ? "Sign in as an Organization? "
+                    : location.pathname === "/organization/login" &&
+                      "Sign in as a Provider? "}
+                  {(location.pathname === "/organization/login" ||
+                    location.pathname === "/login") && (
+                    <span
+                      onClick={() =>
+                        navigate(
+                          location.pathname === "/login"
+                            ? ORG_LOGIN_ROUTE
+                            : location.pathname === "/organization/login"
+                            ? LOGIN_ROUTE
+                            : "#"
+                        )
+                      }
+                      className="text-tertiary font-medium text-sm cursor-pointer"
+                    >
+                      Click Here
+                    </span>
+                  )}
                 </p>
               </div>
             </form>

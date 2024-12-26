@@ -11,15 +11,15 @@ import { DASHBOARD_ROUTE, VERIFY_EMAIL_ROUTE } from "@/router/routes";
 import { useToast } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import showToast from "@/components/common/showtoast";
-import { loginUser } from "@/services/login";
+
 import {
   setAccountType,
   setCredentials,
   setIsAuthenticated,
 } from "@/redux/features/authSlice";
+import { loginOrg } from "@/services/auth";
 
-const Login = () => {
-  // const [login, { isLoading }] = useLoginMutation();
+const OrganizationLogin = () => {
   const dispatch = useDispatch();
   const toast = useToast();
   const navigate = useNavigate();
@@ -38,11 +38,25 @@ const Login = () => {
     try {
       const { email, password } = values;
 
-      const res = await loginUser({ email, password });
+      const data = {
+        workEmail: email,
+        password,
+      };
+
+      const res = await loginOrg(data);
+
+      // console.log(res.data);
 
       if (res.success) {
-        dispatch(setCredentials(res));
-        dispatch(setAccountType(res.accountType));
+        const data = {
+          ...res.data.organization,
+          accountType: "organization",
+        };
+
+        console.log(data);
+
+        dispatch(setCredentials(data));
+        dispatch(setAccountType("organization"));
         localStorage.setItem("enrollai-user", res.token);
         dispatch(setIsAuthenticated(true));
         showToast(
@@ -97,7 +111,7 @@ const Login = () => {
         control={form.control}
         fieldType={FormFieldType.INPUT}
         name="email"
-        label="Work Email"
+        label="Organization Email"
         placeholder="Enter your email address"
         iconSrc="/assets/img/email.svg"
         iconAlt="email"
@@ -107,7 +121,7 @@ const Login = () => {
         control={form.control}
         fieldType={FormFieldType.INPUT}
         name="password"
-        label="Password"
+        label="Organization Password"
         placeholder="Password"
         iconSrc="/assets/img/key.svg"
         iconAlt="user"
@@ -116,4 +130,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default OrganizationLogin;

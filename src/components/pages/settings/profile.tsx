@@ -2,16 +2,20 @@
 import { Avatar } from "@/assets/img";
 import { SubmitButton } from "@/components/common";
 import ConfirmationModal from "@/components/modals/confirmationModal";
-import { useDisclosure } from "@chakra-ui/react";
-import { useState } from "react";
+import { useDisclosure, useToast } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import PasswordModal from "./passwordModal";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import showToast from "@/components/common/showtoast";
+import { updateProfile } from "@/services/auth";
+import { setCredentials } from "@/redux/features/authSlice";
 
 type FormType = {
   fullName: string;
   email: string;
   password: string;
   companyName?: string;
+  data?: any;
 };
 
 const providerInitialState = {
@@ -25,23 +29,30 @@ const organizationInitialState = {
 };
 
 const Profile = () => {
+  const { user } = useSelector((state: any) => state.auth);
   const { isOpen, onClose, onOpen } = useDisclosure();
-
-  const { accountType } = useSelector((state: any) => state.auth);
-
   const {
     isOpen: saveIsOpen,
     onClose: saveOnClose,
     onOpen: saveOnOpen,
   } = useDisclosure();
+  const toast = useToast();
+  const dispatch = useDispatch();
 
   const [passwordDialogOpen, setPasswordDialogOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [form, setForm] = useState<FormType>(
-    accountType === "Organization"
+    user?.accountType !== "provider"
       ? organizationInitialState
       : providerInitialState
   );
+
+  useEffect(() => {
+    if (user) {
+      setForm(user.data || user);
+    }
+  }, [user]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -54,14 +65,74 @@ const Profile = () => {
     }));
   };
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    saveOnOpen();
+  console.log(user, "user");
+
+  const handleSubmit = async () => {
+    setIsLoading(true);
+
+    console.log(form, "form");
+
+    try {
+      if (user?.accountType !== "provider") {
+        console.log("WIP");
+      } else {
+        if (!form.fullName || !form.email)
+          return showToast(
+            toast,
+            "Enroll AI",
+            "error",
+            `Full Name and Email must be provided`
+          );
+
+        const data = {
+          fullName: form.fullName,
+          email: form.email,
+        };
+        const res = await updateProfile(data);
+        console.log(res);
+
+        if (res.success) {
+          const newUser = {
+            ...form,
+            fullName: form.fullName,
+            email: form.email,
+          };
+
+          console.log(newUser, "newUsernewUser");
+
+          dispatch(setCredentials(newUser));
+
+          saveOnClose();
+          showToast(
+            toast,
+            "Enroll AI",
+            "success",
+            `${res?.data?.msg || "Profile updated successfully"}`
+          );
+        } else {
+          showToast(
+            toast,
+            "Enroll AI",
+            "error",
+            `${res?.message || res.data?.msg || "An error occurred."} `
+          );
+        }
+      }
+    } catch (error: any) {
+      console.log(error);
+      showToast(
+        toast,
+        "Enroll AI",
+        "error",
+        `${error.message || "An error occurred"}`
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const { fullName, email, password, companyName } = form;
   return (
-    <form onSubmit={handleSubmit} className="space-y-9">
+    <div onSubmit={handleSubmit} className="space-y-9">
       <ConfirmationModal
         onClose={onClose}
         isOpen={isOpen}
@@ -72,7 +143,8 @@ const Profile = () => {
       <ConfirmationModal
         onClose={saveOnClose}
         isOpen={saveIsOpen}
-        onConfirm={() => console.log("")}
+        onConfirm={() => handleSubmit()}
+        isLoading={isLoading}
       />
 
       <PasswordModal
@@ -118,7 +190,7 @@ const Profile = () => {
                 name="fullName"
                 type="text"
                 placeholder="Full Name"
-                value={fullName}
+                value={form.fullName}
                 onChange={handleChange}
                 className="border rounded-md px-3 py-4 outline-[0.5px] outline-secondary"
               />
@@ -133,7 +205,7 @@ const Profile = () => {
                 name="email"
                 type="text"
                 placeholder="Email Address"
-                value={email}
+                value={form.email}
                 onChange={handleChange}
                 className="border rounded-md px-3 py-4 outline-[0.5px] outline-secondary"
               />
@@ -141,7 +213,7 @@ const Profile = () => {
           </div>
 
           <div className="flex xl:flex-row flex-col justify-between gap-8">
-            {accountType === "Organization" && (
+            {user?.accountType !== "provider" && (
               <div className="raleway text-xs flex w-full flex-1 flex-col gap-1 font-medium">
                 <label className="font-semibold" htmlFor="companyName">
                   Company Name
@@ -151,7 +223,7 @@ const Profile = () => {
                   name="companyName"
                   type="text"
                   placeholder="Your Company Name"
-                  value={companyName}
+                  value={form.companyName}
                   onChange={handleChange}
                   className="border rounded-md px-3 py-4 outline-[0.5px] outline-secondary"
                 />
@@ -166,12 +238,14 @@ const Profile = () => {
                 name="password"
                 type="Password"
                 placeholder="Password"
-                value={password}
+                value={form.password}
                 onChange={handleChange}
                 className="border rounded-md px-3 py-4 outline-[0.5px] outline-secondary"
               />
             </div>
-            {accountType !== "Organization" && <div className="flex-1"></div>}
+            {user?.accountType !== "Organization" && (
+              <div className="flex-1"></div>
+            )}
           </div>
         </div>
       </section>
@@ -188,7 +262,11 @@ const Profile = () => {
           </div>
 
           <div className="">
-            <SubmitButton className="py-2 flex gap-2  w-auto px-8 border rounded-md font-semibold text-xs">
+            <SubmitButton
+              handleSubmit={() => saveOnOpen()}
+              isLoading={isLoading}
+              className="py-2 flex gap-2  w-auto px-8 border rounded-md font-semibold text-xs"
+            >
               <p className="font-bold text-xs">Save</p>
             </SubmitButton>
           </div>
@@ -218,7 +296,7 @@ const Profile = () => {
           </button>
         </div>
       </section>
-    </form>
+    </div>
   );
 };
 

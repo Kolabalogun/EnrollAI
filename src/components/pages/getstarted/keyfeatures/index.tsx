@@ -25,7 +25,7 @@ const ExploreKeyFeatures = ({ tab }: { tab: number }) => {
             ? "Login to CAQH ProView:"
             : tab === 3
             ? "Start a New Application:"
-            : tab === 0 && accountType === "Organization"
+            : tab === 0 && accountType !== "provider"
             ? "Automating data retrieval from CAQH ProView:"
             : "Pre-Filled Applications:"
         }
@@ -47,7 +47,7 @@ const ExploreKeyFeatures = ({ tab }: { tab: number }) => {
             ? "Authorize Access:"
             : tab === 3
             ? "Review and Edit:"
-            : tab === 0 && accountType === "Organization"
+            : tab === 0 && accountType !== "provider"
             ? "Simplifying application management:"
             : "Real-Time Tracking:"
         }
@@ -69,7 +69,7 @@ const ExploreKeyFeatures = ({ tab }: { tab: number }) => {
             ? "Link Accounts:"
             : tab === 3
             ? "Submit with Confidence:"
-            : tab === 0 && accountType === "Organization"
+            : tab === 0 && accountType !== "provider"
             ? "Customized Credentialing Templates:"
             : "Secure Data Handling:"
         }
@@ -84,7 +84,7 @@ const ExploreKeyFeatures = ({ tab }: { tab: number }) => {
         }
       />
 
-      {tab === 0 && accountType === "Organization" && (
+      {tab === 0 && accountType !== "provider" && (
         <PointChecks
           title={"Bulk application processing:"}
           desc={

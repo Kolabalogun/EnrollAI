@@ -1,6 +1,7 @@
 // Routes
 
 export const LOGIN_ROUTE = "/login";
+export const ORG_LOGIN_ROUTE = "/organization/login";
 export const TYPE_OF_REG = "/choose-type-of-reg";
 export const VERIFY_EMAIL_ROUTE = "/verifyemail";
 export const GET_STARTED_ROUTE = "/getstarted";

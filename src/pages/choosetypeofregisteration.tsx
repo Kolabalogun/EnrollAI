@@ -96,13 +96,13 @@ const ChooseTypeOfRegisteration = () => {
             <div
               onClick={() => setState("Organization")}
               className={`rounded-xl p-6 cursor-pointer flex border-2 border-fade2 flex-col  space-y-6 ${
-                state === "Organization" && "bg-fadesecondary"
+                state !== "provider" && "bg-fadesecondary"
               } `}
             >
               <div className="">
                 <Briefcase
                   className={`${
-                    state === "Organization" ? "text-secondary" : "text-teal"
+                    state !== "provider" ? "text-secondary" : "text-teal"
                   } `}
                 />
               </div>
@@ -121,14 +121,12 @@ const ChooseTypeOfRegisteration = () => {
                 >
                   <div
                     className={`p-1 rounded-full ${
-                      state === "Organization"
-                        ? "border-secondary"
-                        : "border-fade2"
+                      state !== "provider" ? "border-secondary" : "border-fade2"
                     }  border-2 `}
                   >
                     <div
                       className={`p-2 rounded-full ${
-                        state === "Organization"
+                        state !== "provider"
                           ? "border-secondary bg-secondary"
                           : "border-none"
                       } border-2 `}

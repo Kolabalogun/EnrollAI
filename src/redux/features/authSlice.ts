@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Redux slice for managing authentication state.
  * Uses createSlice from @reduxjs/toolkit for reducer creation and state management.
@@ -12,6 +13,7 @@ export type User = {
   professionalTitle: string;
   password: string;
   accountType: string;
+  organization?: any;
 };
 
 export interface AuthState {

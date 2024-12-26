@@ -11,3 +11,5 @@ export { default as IncomingApplications } from "./incomingapplications";
 export { default as Providers } from "./providers";
 
 export { default as ReportAndAnalytics } from "./reportandanalytics";
+
+export { default as OrganizationLogin } from "./login";

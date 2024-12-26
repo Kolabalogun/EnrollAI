@@ -1,5 +1,5 @@
 export { default as PageNotFound } from "./pagenotfound";
-export { default as Login } from "./login";
+export { default as Login } from "./healthProvider/login";
 
 export { default as ErrorPage } from "./error";
 export { default as Root } from "./root";

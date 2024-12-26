@@ -109,9 +109,7 @@ const SidebarDrawer = ({
   };
 
   const links =
-    accountType === "Organization"
-      ? getOrganizationLinks()
-      : getProviderLinks();
+    accountType !== "provider" ? getOrganizationLinks() : getProviderLinks();
 
   return (
     <>

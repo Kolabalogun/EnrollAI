@@ -25,9 +25,18 @@ const personalInfoFields = [
     { label: "Specialty", name: "specialty" },
     { label: "Race/Ethnicity", name: "raceEthnicity" },
     { label: "Subspecialties", name: "subspecialties" },
+
+
+//
+
     { label: "National Physician Identifier (NPI I)", name: "NPI" },
     { label: "CAHQ ID", name: "cahqID" },
     { label: "CAHQ Password", name: "cahqPassword" },
+
+
+//
+
+
   ];
 
     const educationData = [
@@ -119,11 +128,18 @@ const personalInfoFields = [
           name: "primaryOfficeManagerPhone",
           isPhone: true,
         },
+
+
+        // 
         {
           label: "Office Manager Fax",
           name: "primaryOfficeManagerFax",
           isPhone: true,
         },
+        //
+
+
+
         { label: "Name Affiliated with Tax ID", name: "primaryTaxIDName" },
         { label: "Federal Tax ID Number", name: "primaryFederalTaxID" },
       ],
@@ -140,7 +156,12 @@ const personalInfoFields = [
           name: "secondaryOfficeManager",
         },
         { label: "Telephone", name: "secondaryTelephone", isPhone: true },
+
+        //
         { label: "Fax", name: "secondaryFax", isPhone: true },
+        //
+
+
         { label: "Name Affiliated with Tax ID", name: "secondaryTaxIDName" },
         { label: "Federal Tax ID Number", name: "secondaryFederalTaxID" },
       ],
@@ -157,7 +178,12 @@ const personalInfoFields = [
           name: "tertiaryOfficeManager",
         },
         { label: "Telephone", name: "tertiaryTelephone", isPhone: true },
+
+        //
         { label: "Fax", name: "tertiaryFax", isPhone: true },
+        //
+
+
         { label: "Name Affiliated with Tax ID", name: "tertiaryTaxIDName" },
         { label: "Federal Tax ID Number", name: "tertiaryFederalTaxID" },
       ],
@@ -183,11 +209,14 @@ const residenciesFellowshipsData = [
         { label: "Specialty", name: "residency1Specialty" },
         { label: "From Date", name: "residency1FromDate", type: "date" },
         { label: "To Date", name: "residency1ToDate", type: "date" },
+
+        //
         {
           label: "Did You Successfully Complete the Program?",
           name: "residency1Completed",
           type: "checkbox",
         },
+        //
       ],
     },
     {
