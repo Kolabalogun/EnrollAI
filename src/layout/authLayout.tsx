@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { GoogleIcon } from "@/assets/icon";
+// import { GoogleIcon } from "@/assets/icon";
 import { CustomFormField, SubmitButton } from "@/components/common";
 import { FormFieldType } from "@/components/common/customFormField";
 import LogoBar from "@/components/common/logoBar";
@@ -44,8 +44,6 @@ const AuthLayout = <T extends z.ZodType<any, any>>({
   const navigate = useNavigate();
 
   const location = useLocation();
-
-  console.log(location);
 
   return (
     <main className="min-h-screen bg-primary  px-3 lg:px-5   py-5">
@@ -117,23 +115,23 @@ const AuthLayout = <T extends z.ZodType<any, any>>({
                   : "Continue"}
               </SubmitButton>
 
-              {title === "Welcome Back!" && (
+              {/* {title === "Welcome Back!" && (
                 <div className="flex items-center border border-fade2 rounded-lg p-3 justify-center gap-3">
                   <img src={GoogleIcon} className="h-4" alt="" />
                   <p className="raleway font-bold plus-jakarta">
                     Sign In with Google
                   </p>
                 </div>
-              )}
+              )} */}
 
-              {title === "Create your account" && (
+              {/* {title === "Create your account" && (
                 <div className="flex items-center border border-fade2 rounded-lg p-3 justify-center gap-3">
                   <img src={GoogleIcon} className="h-4" alt="" />
                   <p className="raleway font-bold plus-jakarta">
                     Sign up with Google
                   </p>
                 </div>
-              )}
+              )} */}
 
               <div className="flex text-center flex-col w-full items-center">
                 <p className="text-sm text-center w-full plus-jakarta my-1">
@@ -147,8 +145,12 @@ const AuthLayout = <T extends z.ZodType<any, any>>({
                       navigate(
                         title === "Welcome Back!"
                           ? TYPE_OF_REG
-                          : title === "Create your account"
+                          : title === "Create your account" &&
+                            location.pathname === "/health-provider-register"
                           ? LOGIN_ROUTE
+                          : title === "Create your account" &&
+                            location.pathname !== "/health-provider-register"
+                          ? ORG_LOGIN_ROUTE
                           : "#"
                       )
                     }

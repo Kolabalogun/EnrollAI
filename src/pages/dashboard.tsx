@@ -16,7 +16,10 @@ import { useNavigate } from "react-router-dom";
 const Dashboard = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const navigate = useNavigate();
-  const { accountType } = useSelector((state: any) => state.auth);
+
+  const { user } = useSelector((state: any) => state.auth);
+
+  console.log(user);
 
   const notifications = notificationsData.map((activity) => (
     <div className="border-b space-x-5  flex items-center justify-between py-4">
@@ -38,7 +41,9 @@ const Dashboard = () => {
       <div className="flex flex-col gap-1">
         <p className="font-semibold text-lg">
           Welcome back,{" "}
-          {accountType !== "provider" ? "Cleveland Clinic!" : "Dr. Alex!"}
+          {user?.accountType !== "provider"
+            ? `${user?.organizationName || "N/A"}`
+            : `${user?.data?.fullName || "N/A"}`}
         </p>
 
         <p className="font-medium text-fade text-xs">
@@ -52,7 +57,11 @@ const Dashboard = () => {
           className="flex flex-col justify-between w-full flex-1 space-y-9 "
         >
           <div className="">
-            {accountType !== "provider" ? <OrganizationStatBar /> : <StatBar />}
+            {user?.accountType !== "provider" ? (
+              <OrganizationStatBar />
+            ) : (
+              <StatBar />
+            )}
           </div>
           <div className="flex xl:flex-row flex-col gap-5 xl:gap-8">
             <div onClick={() => onOpen()}>
@@ -65,7 +74,8 @@ const Dashboard = () => {
                  gap-4"
                 >
                   <p className="text-xs font-semibold">
-                    {accountType ? "Create" : "Start"} New Application
+                    {user?.accountType !== "provider" ? "Create" : "Start"} New
+                    Application
                   </p>
                   <PlusIcon size={16} />
                 </div>
@@ -84,34 +94,51 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {accountType !== "Organization" && (
+        {user?.accountType !== "Organization" && (
           <div className="p-5 bg-white flex-1 rounded-lg space-y-5">
             <p className="font-semibold text-sm">
               Your CAQH Profile is:{" "}
-              <span className="text-secondary">100% complete</span>{" "}
+              <span
+                className={` ${
+                  user?.data?.applicationSent
+                    ? "text-secondary "
+                    : "text-[#ef8b66] "
+                } `}
+              >
+                {user?.data?.profilePicture ? 50 : 30}% complete
+              </span>{" "}
             </p>
 
             <div className="space-y-3">
               <p className="text-black text-xs  ">
-                Great job! Your CAQH profile is 100% complete and up to date.
-                Keeping your profile current helps streamline credentialing and
-                enrollment processes with health plans.
+                {user?.data?.applicationSent
+                  ? "Great job! Your CAQH profile is 100% complete and up to date. Keeping your profile current helps streamline credentialing and    enrollment processes with health plans."
+                  : "To ensure smooth credentialing and enrollment, please complete your profile as soon as possible."}
               </p>
 
               <div className="flex items-center gap-2">
-                <Progress color={"green"} value={100} />
+                <Progress
+                  color={user?.data?.applicationSent ? "green" : "orange"}
+                  className={`${
+                    user?.data?.applicationSent ? "bg-green" : "bg-[#ef8b66]"
+                  }`}
+                  value={user?.data?.profilePicture ? 50 : 30}
+                />
 
-                <p className="font-semibold">100%</p>
+                <p className="font-semibold">
+                  {user?.data?.profilePicture ? 50 : 30}%
+                </p>
               </div>
               <p className="text-black text-xs italic">
-                Consider reviewing your profile periodically to ensure all
-                information remains accurate.
+                {user?.data?.applicationSent
+                  ? "Consider reviewing your profile periodically to ensure all information remains accurate."
+                  : "Complete the missing sections to keep your credentialing information up to date."}
               </p>
             </div>
 
             <div className="">
               <SubmitButton className=" border-0 px-6 py-4 rounded-lg">
-                Review Profile
+                {user?.data?.applicationSent ? "Review" : "Update"} Profile
               </SubmitButton>
             </div>
           </div>
@@ -124,12 +151,12 @@ const Dashboard = () => {
           className="bg-white rounded-lg flex-1 h-full w-full flex  flex-col p-5 space-y-8"
         >
           <p className="font-semibold text-base">
-            {accountType !== "provider"
+            {user?.accountType !== "provider"
               ? "Incoming Applications"
               : "Tasks and Activities"}
           </p>
 
-          {accountType !== "provider" ? (
+          {user?.accountType !== "provider" ? (
             <OrganizationApplicationLists />
           ) : (
             <ApplicationLists />

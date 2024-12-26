@@ -19,13 +19,13 @@ const ChooseTypeOfRegisteration = () => {
 
   const isLoading = false;
 
-  const [state, setState] = useState<string>("Provider");
+  const [state, setState] = useState<string>("provider");
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
     dispatch(setAccountType(state));
 
-    if (state === "Provider") {
+    if (state === "provider") {
       navigate(REGISTER_ROUTE);
     } else {
       navigate(ORGANIZATION_REGISTER_ROUTE);
@@ -49,15 +49,15 @@ const ChooseTypeOfRegisteration = () => {
           </section>
           <form onSubmit={onSubmit} className="space-y-5 raleway flex-1">
             <div
-              onClick={() => setState("Provider")}
+              onClick={() => setState("provider")}
               className={`rounded-xl p-6 cursor-pointer flex border-2 border-fade2 flex-col  space-y-6 ${
-                state === "Provider" && "bg-fadesecondary"
+                state === "provider" && "bg-fadesecondary"
               } `}
             >
               <div className="">
                 <SquarePen
                   className={`${
-                    state === "Provider" ? "text-secondary" : "text-teal"
+                    state === "provider" ? "text-secondary" : "text-teal"
                   } `}
                 />
               </div>
@@ -71,19 +71,19 @@ const ChooseTypeOfRegisteration = () => {
                 </div>
 
                 <div
-                  onClick={() => setState("Provider")}
+                  onClick={() => setState("provider")}
                   className="cursor-pointer"
                 >
                   <div
                     className={`p-1 rounded-full ${
-                      state === "Provider"
+                      state === "provider"
                         ? "border-secondary  "
                         : "border-fade2"
                     }  border-2 `}
                   >
                     <div
                       className={`p-2 rounded-full ${
-                        state === "Provider"
+                        state === "provider"
                           ? "border-secondary bg-secondary"
                           : "border-none"
                       } border-2 `}
@@ -94,7 +94,7 @@ const ChooseTypeOfRegisteration = () => {
             </div>
 
             <div
-              onClick={() => setState("Organization")}
+              onClick={() => setState("organization")}
               className={`rounded-xl p-6 cursor-pointer flex border-2 border-fade2 flex-col  space-y-6 ${
                 state !== "provider" && "bg-fadesecondary"
               } `}
@@ -116,7 +116,7 @@ const ChooseTypeOfRegisteration = () => {
                 </div>
 
                 <div
-                  onClick={() => setState("Provider")}
+                  onClick={() => setState("provider")}
                   className="cursor-pointer"
                 >
                   <div

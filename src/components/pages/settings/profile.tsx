@@ -9,13 +9,17 @@ import { useDispatch, useSelector } from "react-redux";
 import showToast from "@/components/common/showtoast";
 import { updateProfile } from "@/services/auth";
 import { setCredentials } from "@/redux/features/authSlice";
+import React from "react";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 type FormType = {
-  fullName: string;
-  email: string;
+  fullName?: string;
+  email?: string;
   password: string;
-  companyName?: string;
+  organizationName?: string;
   data?: any;
+  workEmail?: string;
+  administratorFullName?: string;
 };
 
 const providerInitialState = {
@@ -24,8 +28,10 @@ const providerInitialState = {
   password: "",
 };
 const organizationInitialState = {
-  ...providerInitialState,
-  companyName: "",
+  organizationName: "",
+  workEmail: "",
+  administratorFullName: "",
+  password: "",
 };
 
 const Profile = () => {
@@ -41,6 +47,12 @@ const Profile = () => {
 
   const [passwordDialogOpen, setPasswordDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const [form, setForm] = useState<FormType>(
     user?.accountType !== "provider"
@@ -155,16 +167,28 @@ const Profile = () => {
         <div className="flex xl:flex-row flex-col gap-4 xl:items-center justify-between">
           <div className="flex gap-5 items-center">
             <img
-              src={Avatar}
+              src={
+                user?.accountType !== "provider"
+                  ? `https://eu.ui-avatars.com/api/?name=${user?.administratorFullName}&size=200`
+                  : `https://eu.ui-avatars.com/api/?name=${user?.data?.fullName}&size=200`
+              }
               className="h-24 w-24 rounded-full"
               alt="profile picture"
             />
 
             <div className="space-y-2">
-              <p className="font-bold text-base">Dr. Alex Johnson</p>
+              <p className="font-bold text-base">
+                {user?.accountType !== "provider"
+                  ? `${user?.administratorFullName || "N/A"}`
+                  : `${user?.data?.fullName || "N/A"}`}
+              </p>
+              <p className="font-semibold text-xs">
+                {user?.accountType !== "provider" &&
+                  `${user?.organizationName || "N/A"}`}
+              </p>
 
               <p className="font-semibold text-fade   text-sm">
-                alex.johnson@gmail.com
+                {user?.data?.email || user?.workEmail || "N/A"}
               </p>
             </div>
           </div>
@@ -187,10 +211,14 @@ const Profile = () => {
               </label>
               <input
                 id="fullName"
-                name="fullName"
+                name={
+                  user?.accountType !== "provider"
+                    ? "administratorFullName"
+                    : "fullName"
+                }
                 type="text"
                 placeholder="Full Name"
-                value={form.fullName}
+                value={form.fullName ?? form.administratorFullName}
                 onChange={handleChange}
                 className="border rounded-md px-3 py-4 outline-[0.5px] outline-secondary"
               />
@@ -202,48 +230,64 @@ const Profile = () => {
               </label>
               <input
                 id="email"
-                name="email"
+                name={user?.accountType !== "provider" ? "workEmail" : "email"}
                 type="text"
                 placeholder="Email Address"
-                value={form.email}
+                value={form.email ?? form.workEmail}
                 onChange={handleChange}
                 className="border rounded-md px-3 py-4 outline-[0.5px] outline-secondary"
               />
             </div>
           </div>
 
-          <div className="flex xl:flex-row flex-col justify-between gap-8">
+          <div className="flex xl:flex-row w-full flex-col justify-between gap-8">
             {user?.accountType !== "provider" && (
               <div className="raleway text-xs flex w-full flex-1 flex-col gap-1 font-medium">
-                <label className="font-semibold" htmlFor="companyName">
+                <label className="font-semibold" htmlFor="organizationName">
                   Company Name
                 </label>
                 <input
-                  id="companyName"
-                  name="companyName"
+                  id="organizationName"
+                  name="organizationName"
                   type="text"
                   placeholder="Your Company Name"
-                  value={form.companyName}
+                  value={form.organizationName}
                   onChange={handleChange}
                   className="border rounded-md px-3 py-4 outline-[0.5px] outline-secondary"
                 />
               </div>
             )}
-            <div className="raleway text-xs flex w-full flex-1 flex-col gap-1 font-medium">
-              <label className="font-semibold" htmlFor="password">
-                Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="Password"
-                placeholder="Password"
-                value={form.password}
-                onChange={handleChange}
-                className="border rounded-md px-3 py-4 outline-[0.5px] outline-secondary"
-              />
-            </div>
-            {user?.accountType !== "Organization" && (
+            {form?.password && (
+              <div className="raleway text-xs flex w-full flex-1 flex-col gap-1 font-medium">
+                <label className="font-semibold" htmlFor="password">
+                  Password
+                </label>
+                <div className="relative">
+                  <input
+                    id="password"
+                    name="password"
+                    type="Password"
+                    placeholder="Password"
+                    value={form.password}
+                    // onChange={handleChange}
+                    readOnly
+                    className="border rounded-md px-3 py-4 w-full outline-[0.5px] outline-secondary"
+                  />
+                  <button
+                    type="button"
+                    onClick={togglePasswordVisibility}
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2"
+                  >
+                    {showPassword ? (
+                      <EyeOffIcon className="w-5 h-5 text-gray-500" />
+                    ) : (
+                      <EyeIcon className="w-5 h-5 text-gray-500" />
+                    )}
+                  </button>
+                </div>
+              </div>
+            )}
+            {(user?.accountType === "provider" || !form?.password) && (
               <div className="flex-1"></div>
             )}
           </div>
