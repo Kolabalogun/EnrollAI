@@ -17,7 +17,7 @@ import {
   setCredentials,
   setIsAuthenticated,
 } from "@/redux/features/authSlice";
-import { loginOrg } from "@/services/auth";
+import { loginOrg } from "@/services/org/auth";
 
 const OrganizationLogin = () => {
   const dispatch = useDispatch();

@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 import { VERIFY_EMAIL_ROUTE } from "@/router/routes";
 import showToast from "@/components/common/showtoast";
-import { organizationRegisterProvider } from "@/services/auth";
+import { organizationRegisterProvider } from "@/services/org/auth";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -38,6 +38,7 @@ const Register = () => {
       administratorFullName: values.adminFullName,
       workEmail: values.email,
       password: values.password,
+      accountType: "credentialing_organization",
     };
 
     try {

@@ -32,59 +32,11 @@ export const loginUser = async (formData: any) => {
   }
 };
 
-// Login Provider
-export const loginOrg = async (formData: any) => {
-  try {
-    const response = await axios.post(
-      `${VITE_API_BASE_URL}/organizations/login`,
-      formData,
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    return {
-      success: true,
-      data: response.data,
-      token: response.data.token,
-      accountType: response.data.accountType,
-      message: "You have successfully signed in.",
-    };
-  } catch (error: any) {
-    return handleError(error);
-  }
-};
-
 // Provider Registration
 export const registerProvider = async (formData: any) => {
   try {
     const response = await axios.post(
       `${VITE_API_BASE_URL}/auth/register`,
-      formData,
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    return {
-      success: true,
-      data: response.data,
-      message: "You have been registered successfully.",
-    };
-  } catch (error: any) {
-    return handleError(error);
-  }
-};
-
-// Organization registration
-export const organizationRegisterProvider = async (formData: any) => {
-  try {
-    const response = await axios.post(
-      `${VITE_API_BASE_URL}/organizations/register`,
       formData,
       {
         headers: {
@@ -195,6 +147,8 @@ export const resendOTP = async (email: string) => {
 //  Update Provider Profile
 
 export const updateProfile = async (formData: any) => {
+  const token = localStorage.getItem("enrollai-user");
+
   if (!token) {
     throw new Error("Authentication token not found");
   }

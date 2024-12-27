@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Avatar } from "@/assets/img";
+
 import { SubmitButton } from "@/components/common";
 import ConfirmationModal from "@/components/modals/confirmationModal";
 import { useDisclosure, useToast } from "@chakra-ui/react";
@@ -11,6 +11,7 @@ import { updateProfile } from "@/services/auth";
 import { setCredentials } from "@/redux/features/authSlice";
 import React from "react";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { updateProfileOrg } from "@/services/org/auth";
 
 type FormType = {
   fullName?: string;
@@ -86,7 +87,39 @@ const Profile = () => {
 
     try {
       if (user?.accountType !== "provider") {
-        console.log("WIP");
+        if (
+          !form.organizationName ||
+          !form.administratorFullName ||
+          !form.workEmail
+        )
+          return showToast(
+            toast,
+            "Enroll AI",
+            "error",
+            `Full Name and Email must be provided`
+          );
+
+        const data = {
+          organizationName: form.organizationName,
+          administratorFullName: form.administratorFullName,
+          workEmail: form.workEmail,
+        };
+        const res = await updateProfileOrg(data);
+        console.log(res);
+
+        const newUser = {
+          ...res?.data?.organization,
+        };
+
+        dispatch(setCredentials(newUser));
+
+        saveOnClose();
+        showToast(
+          toast,
+          "Enroll AI",
+          "success",
+          `${res?.message || "Profile updated successfully"}`
+        );
       } else {
         if (!form.fullName || !form.email)
           return showToast(
@@ -180,7 +213,7 @@ const Profile = () => {
               <p className="font-bold text-base">
                 {user?.accountType !== "provider"
                   ? `${user?.administratorFullName || "N/A"}`
-                  : `${user?.data?.fullName || "N/A"}`}
+                  : `${user?.data?.fullName || user?.fullName || "N/A"}`}
               </p>
               <p className="font-semibold text-xs">
                 {user?.accountType !== "provider" &&
@@ -188,7 +221,7 @@ const Profile = () => {
               </p>
 
               <p className="font-semibold text-fade   text-sm">
-                {user?.data?.email || user?.workEmail || "N/A"}
+                {user?.data?.email || user?.email || user?.workEmail || "N/A"}
               </p>
             </div>
           </div>

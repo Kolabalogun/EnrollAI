@@ -23,7 +23,7 @@ const SubmitButton = ({
       disabled={isLoading}
       onClick={handleSubmit}
       className={`         
-        bg-secondary hover:text-secondary border-[##b076e7] border-2  py-6 rounded-xl  raleway text-[13px] font-semibold transition duration-500 text-white w-full  ${className}`}
+        bg-secondary hover:text-secondary border-[#b076e7] border-2  py-6 rounded-xl  raleway text-[13px] font-semibold transition duration-500 text-white w-full  ${className}`}
     >
       {isLoading ? (
         <div className="flex items-center gap-2">

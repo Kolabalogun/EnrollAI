@@ -11,6 +11,7 @@ import {
   Triangle,
   Square,
   Hexagon,
+  Pen,
 } from "lucide-react";
 
 export const healthProviderLinks = [
@@ -105,6 +106,14 @@ export const organizationLinks = [
     buttonLink: "/dashboard/credentializing-organization/incoming-applications",
 
     subLinks: [
+      {
+        label: "Created",
+        icon: <Pen size={16} className="text-secondary" />,
+        iconWhite: <Pen size={16} className="text-[#667085]" />,
+        title: "Menu",
+        buttonLink:
+          "/dashboard/credentializing-organization/created-applications",
+      },
       {
         label: "Incoming",
         icon: <Triangle size={16} className="text-secondary" />,

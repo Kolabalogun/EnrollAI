@@ -43,6 +43,7 @@ import {
   Providers,
   ReportAndAnalytics,
 } from "@/pages/organizationflow";
+import CreatedApplications from "@/pages/organizationflow/createdapplications";
 
 // Lazy-loading components
 const Home = lazy(() => import("../pages/home"));
@@ -150,6 +151,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/credentializing-organization/create-application-form",
         element: <CreateApplicationForm />,
+      },
+      {
+        path: "/dashboard/credentializing-organization/created-applications",
+        element: <CreatedApplications />,
       },
       {
         path: "/dashboard/credentializing-organization/incoming-applications",

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { SubmitButton } from "@/components/common";
 import ApplicationsModal from "@/components/modals/applications";
+import CreateApplicationModal from "@/components/modals/createApplicationModal";
 import ApplicationLists from "@/components/pages/applications";
 import OrganizationApplicationLists from "@/components/pages/applications/organization";
 import Notifications from "@/components/pages/dashboard/notifications";
@@ -15,6 +16,12 @@ import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
+
+  const {
+    isOpen: orgIsOpen,
+    onClose: orgOnClose,
+    onOpen: orgOnOpen,
+  } = useDisclosure();
   const navigate = useNavigate();
 
   const { user } = useSelector((state: any) => state.auth);
@@ -38,6 +45,8 @@ const Dashboard = () => {
   return (
     <section className="flex space-y-6 mb-20 flex-col">
       <ApplicationsModal isOpen={isOpen} onClose={onClose} />
+
+      <CreateApplicationModal isOpen={orgIsOpen} onClose={orgOnClose} />
       <div className="flex flex-col gap-1">
         <p className="font-semibold text-lg">
           Welcome back,{" "}
@@ -64,7 +73,13 @@ const Dashboard = () => {
             )}
           </div>
           <div className="flex xl:flex-row flex-col gap-5 xl:gap-8">
-            <div onClick={() => onOpen()}>
+            <div
+              onClick={
+                user?.accountType !== "provider"
+                  ? () => orgOnOpen()
+                  : () => onOpen()
+              }
+            >
               <SubmitButton
                 type="button"
                 className=" border-0 px-6 py-4 rounded-lg"

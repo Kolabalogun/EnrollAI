@@ -1,15 +1,23 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
-import { Modal, ModalOverlay, ModalContent, ModalBody } from "@chakra-ui/react";
+import { useState, useEffect } from "react";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalBody,
+  useToast,
+} from "@chakra-ui/react";
 import { Search } from "lucide-react";
-
 import { useNavigate } from "react-router-dom";
+
+import { useSelector } from "react-redux";
+import { getAllApplicationsForProviders } from "@/services/applications";
+import showToast from "../common/showtoast";
 import {
   HEALTHCARE_APPLICATION_FORM,
   ORGANIZATION_CREATE_APPLICATION_FORM,
 } from "@/router/routes";
-import { ApplicationsData } from "@/constant/data/applicationsdata";
-import { useSelector } from "react-redux";
 
 const ApplicationsModal = ({
   onClose,
@@ -19,13 +27,49 @@ const ApplicationsModal = ({
   isOpen: boolean;
 }) => {
   const navigate = useNavigate();
-  // State to track the search input
-  const [searchQuery, setSearchQuery] = useState("");
   const { accountType } = useSelector((state: any) => state.auth);
+  const toast = useToast();
+  // State for search input and fetched applications
+  const [searchQuery, setSearchQuery] = useState("");
+  const [applications, setApplications] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  // Filter applications based on search input
-  const filteredApplications = ApplicationsData.filter((app) =>
-    app.title.toLowerCase().includes(searchQuery.toLowerCase())
+  // Fetch applications when the modal is opened
+  useEffect(() => {
+    const fetchApplications = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await getAllApplicationsForProviders();
+        setApplications(response.data.applications);
+        console.log(response);
+      } catch (err: any) {
+        showToast(
+          toast,
+          "Enroll AI",
+          "error",
+          `${err.message || "Failed to fetch applications."}`
+        );
+        setError(err.message || "Failed to fetch applications.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (isOpen) {
+      fetchApplications();
+    }
+  }, [isOpen]);
+
+  // Filter applications based on the search input
+  const filteredApplications = applications.filter(
+    (app) =>
+      app.applicationTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      app.applicationName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      app.organization.organizationName
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -43,7 +87,7 @@ const ApplicationsModal = ({
           paddingBottom={10}
           paddingTop={5}
         >
-          {/* Modal body containing a description */}
+          {/* Modal body */}
           <div className="flex flex-col space-y-5 bg-white">
             <div className="">
               <div className="bg-[#f9fafb] border-fade border items-center flex rounded-full w-96 py-2 px-4">
@@ -53,17 +97,21 @@ const ApplicationsModal = ({
                   className="bg-transparent outline-none raleway text-xs px-2"
                   placeholder="Search Application..."
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)} // Update search query on input change
+                  onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </div>
             </div>
 
-            {/* Display filtered applications */}
+            {/* Display applications */}
             <div className="flex flex-col gap-3">
-              {filteredApplications.length > 0 ? (
-                filteredApplications.map((app, idx) => (
+              {loading ? (
+                <p className="text-fade text-xs">Loading applications...</p>
+              ) : error ? (
+                <p className="text-red-500 text-xs">{error}</p>
+              ) : filteredApplications.length > 0 ? (
+                filteredApplications.map((app) => (
                   <div
-                    key={idx}
+                    key={app._id}
                     onClick={
                       accountType !== "provider"
                         ? () => navigate(ORGANIZATION_CREATE_APPLICATION_FORM)
@@ -71,9 +119,12 @@ const ApplicationsModal = ({
                     }
                     className="flex flex-col cursor-pointer gap-2 hover:bg-primary p-2"
                   >
-                    <p className="font-semibold">{app.title}</p>
+                    <p className="font-semibold">{app?.applicationName}</p>
+                    <p className="font-semibold text-sm text-gray-600">
+                      {app?.applicationTitle}
+                    </p>
                     <p className="font-medium capitalize text-fade text-xs">
-                      {app.desc}
+                      {app?.organization?.organizationName}
                     </p>
                   </div>
                 ))
@@ -88,5 +139,4 @@ const ApplicationsModal = ({
   );
 };
 
-// Export the ApplicationsModal component
 export default ApplicationsModal;
