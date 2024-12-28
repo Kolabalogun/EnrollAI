@@ -3,13 +3,6 @@ import { ApplicationProps } from "../step1";
 
 const Review1 = ({ form }: ApplicationProps) => {
   const {
-    pageNo,
-    userId,
-    applicationType,
-    organizationApplicationId,
-    applicationTitle,
-    organizationName,
-    status,
     step1: {
       personalInformation: {
         lastName,
@@ -109,18 +102,14 @@ const Review1 = ({ form }: ApplicationProps) => {
         internshipPhysicianName,
       },
     },
-    step2,
-    step3,
-    termsAndConditionsOne,
-    termsAndConditionsTwo,
   } = form;
 
   return (
     <div className="bg-white p-5 space-y-6">
       <div className="space-y-1">
-        <p className="font-semibold text-base ">Health Plan</p>
+        <p className="font-semibold text-base ">{form?.applicationType}</p>
         <p className="text-[12px] font-medium text-[#667085]">
-          Lorem Ipsum Organization
+          {form?.organizationName} - {form?.applicationTitle}
         </p>
       </div>
 
@@ -712,122 +701,289 @@ const Review1 = ({ form }: ApplicationProps) => {
           </div> */}
         </div>
 
-        {/* <div className="flex xl:flex-row flex-col  justify-between xl:gap-20 gap-8   border-b-2 pb-10  ">
-          <div className="    flex w-full flex-1 flex-col gap-5    ">
-            <p className="font-semibold text-xl">Practice Locations</p>
+        <div className="flex xl:flex-row flex-col  justify-between xl:gap-20 gap-8  ">
+          <div className="flex w-full flex-1 flex-col gap-5    ">
+            <p className="font-semibold text-xl">Practice Information</p>
 
-            <div className="flex xl:flex-row flex-col  justify-between xl:gap-20 gap-8  ">
-              <div className="space-y-3 flex-1">
-                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
-                  <p className="font-semibold text-xs text-black">
-                    Primary Practice Location
-                  </p>
-                </div>
-
-                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
-                  <p className="font-semibold text-xs text-black">Name:</p>
-                  <p className="text-xs text-[#667085] font-medium capitalize ">
-                    {primarypracticelocationName || ""}
-                  </p>
-                </div>
-
-                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
-                  <p className="font-semibold text-xs text-black">
-                    Office Address:
-                  </p>
-                  <p className="text-xs text-[#667085] font-medium capitalize ">
-                    {primarypracticelocationOfficeAddress || ""}
-                  </p>
-                </div>
-
-                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
-                  <p className="font-semibold text-xs text-black">Contact:</p>
-                  <p className="text-xs text-[#667085] font-medium capitalize ">
-                    {primarypracticelocationContact || ""}
-                  </p>
-                </div>
-                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
-                  <p className="font-semibold text-xs text-black">
-                    Email Address:
-                  </p>
-                  <p className="text-xs text-[#667085] font-medium lowercase ">
-                    {primarypracticelocationEmail || ""}
-                  </p>
-                </div>
-                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
-                  <p className="font-semibold text-xs text-black">
-                    Office Hours:
-                  </p>
-
-                  <p className="text-xs text-[#667085] font-medium capitalize ">
-                    {primarypracticelocationOfficeHours || ""}
-                  </p>
-                </div>
-                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
-                  <p className="font-semibold text-xs text-black">Fax:</p>
-
-                  <p className="text-xs text-[#667085] font-medium capitalize ">
-                    {primarypracticelocationFax || ""}
-                  </p>
-                </div>
+            <div className="space-y-3">
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-black text-xl">
+                  Primary Office
+                </p>
               </div>
-              <div className="space-y-3 flex-1">
-                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
-                  <p className="font-semibold text-xs text-black">
-                    Additional Practice Location
-                  </p>
-                </div>
 
-                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
-                  <p className="font-semibold text-xs text-black">Name:</p>
-                  <p className="text-xs text-[#667085] font-medium capitalize ">
-                    {primarypracticelocation2Name || ""}
-                  </p>
-                </div>
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">Name:</p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {primaryOfficeName || ""}
+                </p>
+              </div>
 
-                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
-                  <p className="font-semibold text-xs text-black">
-                    Office Address:
-                  </p>
-                  <p className="text-xs text-[#667085] font-medium capitalize ">
-                    {primarypracticelocation2OfficeAddress || ""}
-                  </p>
-                </div>
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">
+                  Department Name:
+                </p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {primaryDepartmentName || ""}
+                </p>
+              </div>
 
-                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
-                  <p className="font-semibold text-xs text-black">Contact:</p>
-                  <p className="text-xs text-[#667085] font-medium capitalize ">
-                    {primarypracticelocation2Contact || ""}
-                  </p>
-                </div>
-                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
-                  <p className="font-semibold text-xs text-black">
-                    Email Address:
-                  </p>
-                  <p className="text-xs text-[#667085] font-medium lowercase ">
-                    {primarypracticelocation2Email || ""}
-                  </p>
-                </div>
-                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
-                  <p className="font-semibold text-xs text-black">
-                    Office Hours:
-                  </p>
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">
+                  Office Address:
+                </p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {primaryOfficeAddress || ""}
+                </p>
+              </div>
 
-                  <p className="text-xs text-[#667085] font-medium capitalize ">
-                    {primarypracticelocation2OfficeHours || ""}
-                  </p>
-                </div>
-                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
-                  <p className="font-semibold text-xs text-black">Fax:</p>
-
-                  <p className="text-xs text-[#667085] font-medium capitalize ">
-                    {primarypracticelocation2Fax || ""}
-                  </p>
-                </div>
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">City:</p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {primaryCity || ""}
+                </p>
+              </div>
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">State:</p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {primaryState || ""}
+                </p>
+              </div>
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">ZIP:</p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {primaryZIP || ""}
+                </p>
+              </div>
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">Telephone:</p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {primaryTelephone || ""}
+                </p>
+              </div>
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">Fax:</p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {primaryFax || ""}
+                </p>
+              </div>
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">
+                  Office Manager:
+                </p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {primaryOfficeManager || ""}
+                </p>
+              </div>
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">
+                  Office Manager Phone:
+                </p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {primaryOfficeManagerPhone || ""}
+                </p>
+              </div>
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">
+                  Office Manager Fax:
+                </p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {primaryOfficeManagerFax || ""}
+                </p>
+              </div>
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">
+                  Primary Tax ID Name:
+                </p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {primaryTaxIDName || ""}
+                </p>
+              </div>
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">
+                  Primary Federal Tax ID:
+                </p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {primaryFederalTaxID || ""}
+                </p>
               </div>
             </div>
           </div>
-        </div> */}
+
+          <div className="flex w-full flex-1 flex-col gap-5    ">
+            <p className="font-semibold text-white text-xl">
+              Contact Information
+            </p>
+
+            <div className="space-y-3">
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-black text-xl">
+                  Secondary Office
+                </p>
+              </div>
+
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">
+                  Office Address:
+                </p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {secondaryOfficeAddress || ""}
+                </p>
+              </div>
+
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">City:</p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {secondaryCity || ""}
+                </p>
+              </div>
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">State:</p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {secondaryState || ""}
+                </p>
+              </div>
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">ZIP:</p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {secondaryZIP || ""}
+                </p>
+              </div>
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">Telephone:</p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {secondaryTelephone || ""}
+                </p>
+              </div>
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">Fax:</p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {secondaryFax || ""}
+                </p>
+              </div>
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">
+                  Office Manager:
+                </p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {secondaryOfficeManager || ""}
+                </p>
+              </div>
+
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">
+                  Office Manager Fax:
+                </p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {secondaryFax || ""}
+                </p>
+              </div>
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">
+                  Secondary Tax ID Name:
+                </p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {secondaryTaxIDName || ""}
+                </p>
+              </div>
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">
+                  Secondary Federal Tax ID:
+                </p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {secondaryFederalTaxID || ""}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex w-full flex-1 flex-col gap-5    ">
+            <p className="font-semibold text-white text-xl">
+              Contact Information
+            </p>
+
+            <div className="space-y-3">
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-black text-xl">
+                  Tertiary Office
+                </p>
+              </div>
+
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">
+                  Office Address:
+                </p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {tertiaryOfficeAddress || ""}
+                </p>
+              </div>
+
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">City:</p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {tertiaryCity || ""}
+                </p>
+              </div>
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">State:</p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {tertiaryState || ""}
+                </p>
+              </div>
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">ZIP:</p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {tertiaryZIP || ""}
+                </p>
+              </div>
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">Telephone:</p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {tertiaryTelephone || ""}
+                </p>
+              </div>
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">Fax:</p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {tertiaryFax || ""}
+                </p>
+              </div>
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">
+                  Office Manager:
+                </p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {tertiaryOfficeManager || ""}
+                </p>
+              </div>
+
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">
+                  Office Manager Fax:
+                </p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {tertiaryFax || ""}
+                </p>
+              </div>
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">
+                  Tertiary Tax ID Name:
+                </p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {tertiaryTaxIDName || ""}
+                </p>
+              </div>
+              <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
+                <p className="font-semibold text-xs text-black">
+                  Tertiary Federal Tax ID:
+                </p>
+                <p className="text-xs text-[#667085] font-medium capitalize ">
+                  {tertiaryFederalTaxID || ""}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
