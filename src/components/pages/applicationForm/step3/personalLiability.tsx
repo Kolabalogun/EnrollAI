@@ -33,8 +33,8 @@ const professionalLiabilityData = [
       { label: "City", name: "previousCarrier1City" },
       { label: "State", name: "previousCarrier1State" },
       { label: "ZIP", name: "previousCarrier1ZIP" },
-      { label: "Per Claim Amount", name: "currentPerClaimAmount" },
-      { label: "Aggregate Amount", name: "currentAggregateAmount" },
+      { label: "Per Claim Amount", name: "currentPerClaim1Amount" },
+      { label: "Aggregate Amount", name: "currentAggregate1Amount" },
     ],
   },
   {
@@ -48,8 +48,8 @@ const professionalLiabilityData = [
       { label: "City", name: "previousCarrier2City" },
       { label: "State", name: "previousCarrier2State" },
       { label: "ZIP", name: "previousCarrier2ZIP" },
-      { label: "Per Claim Amount", name: "currentPerClaimAmount" },
-      { label: "Aggregate Amount", name: "currentAggregateAmount" },
+      { label: "Per Claim Amount", name: "currentPerClaim2Amount" },
+      { label: "Aggregate Amount", name: "currentAggregate2Amount" },
     ],
   },
 ];
@@ -57,7 +57,7 @@ const professionalLiabilityData = [
 const ProfessionalLiability = ({
   form,
   handleChange,
-  handleDateChange,
+  errors,
 }: ApplicationProps) => {
   return (
     <div className="border rounded-lg pt-5 px-3 xl:px-5 pb-10 space-y-5">
@@ -74,16 +74,27 @@ const ProfessionalLiability = ({
                 {field.type === "date" ? (
                   <DateInputField
                     label={field.label}
-                    selected={form[field.name]}
-                    onChange={(date) => handleDateChange(field.name, date)}
+                    selected={form.step3.carriers[field.name]}
+                    error={!!errors[field.name]}
+                    onChange={(date) =>
+                      handleChange("step3", "carriers", field.name, date)
+                    }
                   />
                 ) : (
                   <TextInputField
                     key={field.name}
                     label={field.label}
+                    error={errors[field.name]}
                     name={field.name}
-                    value={form[field.name]}
-                    onChange={handleChange}
+                    value={form.step3.carriers[field.name]}
+                    onChange={(e) =>
+                      handleChange(
+                        "step3",
+                        "carriers",
+                        field.name,
+                        e.target.value
+                      )
+                    }
                   />
                 )}
               </div>

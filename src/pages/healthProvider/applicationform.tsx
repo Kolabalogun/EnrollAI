@@ -19,15 +19,16 @@ import {
 } from "@/redux/features/applicationFormSlice";
 import Review2 from "@/components/pages/applicationForm/reviews/review2";
 import ApplicationSuccessModal from "@/components/modals/applicationSuccess";
-import { useDisclosure } from "@chakra-ui/react";
+import { useDisclosure, useToast } from "@chakra-ui/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { HEALTHCARE_APPLICATIONS } from "@/router/routes";
+import showToast from "@/components/common/showtoast";
 
-const validateForm = (form) => {
-  const errors = {};
+const validateForm = (form: any): Record<string, string> => {
+  const errors: Record<string, string> = {};
 
   // Helper function to check if a field is empty
-  const isEmpty = (value) =>
+  const isEmpty = (value: unknown) =>
     value === "" || value === null || value === undefined;
 
   // Validate Personal Information
@@ -61,9 +62,10 @@ const ApplicationForm = () => {
 
   const { user } = useSelector((state: any) => state.auth);
   const dispatch = useDispatch();
+  const toast = useToast();
   const navigate = useNavigate();
   const location = useLocation();
-  const state = location.state || {};
+  const state = location.state || null;
   const [errors, setErrors] = useState({});
 
   console.log(form);
@@ -71,7 +73,8 @@ const ApplicationForm = () => {
   console.log(errors);
 
   useEffect(() => {
-    if (!state || !JSON.parse(state)?.applicationName) return navigate(-1);
+    if (!state || (state && !JSON.parse(state)?.applicationName))
+      return navigate(-1);
     if (state) {
       const orgData = JSON.parse(state);
       console.log(orgData);
@@ -108,6 +111,59 @@ const ApplicationForm = () => {
     dispatch(updateForm(data));
   };
 
+  const handleFileChange = (
+    step: string,
+    parentObject: string,
+    fieldName: string,
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64 = reader.result;
+
+        const data = {
+          ...form,
+          [step]: {
+            ...form[step],
+            [parentObject]: {
+              ...form[step][parentObject],
+              [fieldName]: base64,
+            },
+          },
+        };
+        dispatch(updateForm(data));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleResidencyChange = (
+    index: number,
+    fieldName: string,
+    value: string
+  ) => {
+    const data = {
+      ...form,
+      step2: {
+        ...form.step2,
+        residencies: [
+          ...form.step2.residencies.map((item: any, i: number) =>
+            i === index
+              ? {
+                  ...item,
+                  [fieldName]: value,
+                }
+              : item
+          ),
+        ],
+      },
+    };
+    dispatch(updateForm(data));
+  };
+
   const handleCheckBoxChange = (fieldName: string, value: any) => {
     dispatch(updateForm({ [fieldName]: value }));
   };
@@ -130,6 +186,12 @@ const ApplicationForm = () => {
       } else {
         const validationErrors = validateForm(form);
         if (Object.keys(validationErrors).length > 0) {
+          showToast(
+            toast,
+            "Enroll AI",
+            "error",
+            `Please fill all required fields.`
+          );
           setErrors(validationErrors);
         } else {
           setErrors({});
@@ -160,9 +222,20 @@ const ApplicationForm = () => {
         {form.pageNo === 5 ? (
           <Review2 form={form} handleCheckBoxChange={handleCheckBoxChange} />
         ) : form.pageNo === 2 ? (
-          <Step2 form={form} handleChange={handleChange} />
+          <Step2
+            form={form}
+            errors={errors}
+            handleResidencyChange={handleResidencyChange}
+            handleChange={handleChange}
+            handleFileChange={handleFileChange}
+          />
         ) : form.pageNo === 3 ? (
-          <Step3 form={form} handleChange={handleChange} />
+          <Step3
+            form={form}
+            errors={errors}
+            handleChange={handleChange}
+            handleFileChange={handleFileChange}
+          />
         ) : form.pageNo === 4 ? (
           <Review1 form={form} />
         ) : (

@@ -7,15 +7,17 @@ import ResidenciesFellowships from "./fellowship";
 
 const Step2 = ({
   form,
-
+  errors,
   handleChange,
+  handleResidencyChange,
+  handleFileChange,
 }: ApplicationProps) => {
   return (
     <div className="bg-white rounded-lg px-3 py-5 xl:p-5 space-y-4">
       <div className="space-y-1">
-        <p className="font-semibold text-base ">Health Plan</p>
+        <p className="font-semibold text-base ">{form?.applicationType}</p>
         <p className="text-[12px] font-medium text-[#667085]">
-          Lorem Ipsum Organization
+          {form?.organizationName} - {form?.applicationTitle}
         </p>
       </div>
 
@@ -28,11 +30,20 @@ const Step2 = ({
         />
       </div>
 
-      <ResidenciesFellowships form={form} handleChange={handleChange} />
+      <ResidenciesFellowships
+        form={form}
+        errors={errors}
+        handleResidencyChange={handleResidencyChange}
+      />
 
       {/* <HospitalAffiliations form={form} handleChange={handleChange} /> */}
 
-      <Licensing form={form} handleChange={handleChange} />
+      <Licensing
+        form={form}
+        errors={errors}
+        handleChange={handleChange}
+        handleFileChange={handleFileChange}
+      />
     </div>
   );
 };

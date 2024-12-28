@@ -17,9 +17,13 @@ export type ApplicationProps = {
   removeSection?: any;
   removeSubField?: any;
   errors?: any;
+  handleResidencyChange?: any;
+  handleFileChange?: any;
 };
 
 const Step1 = ({ form, errors, handleChange }: ApplicationProps) => {
+  console.log(errors, "errors errors");
+
   return (
     <div className="bg-white rounded-lg px-3 py-5 xl:p-5 space-y-4">
       <div className="space-y-1">
@@ -44,11 +48,15 @@ const Step1 = ({ form, errors, handleChange }: ApplicationProps) => {
         handleChange={handleChange}
       />
 
-      <PracticeLocation form={form} handleChange={handleChange} />
+      <PracticeLocation
+        form={form}
+        errors={errors}
+        handleChange={handleChange}
+      />
 
       {/* <ProfessionalID form={form} handleChange={handleChange} /> */}
 
-      <Education form={form} handleChange={handleChange} />
+      <Education form={form} errors={errors} handleChange={handleChange} />
     </div>
   );
 };

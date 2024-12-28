@@ -26,7 +26,7 @@ const mainLicenseRegistration = [
         subField: "Controlled Dangerous Substance",
         fields: [
           {
-            label: "Controlled Dangerous Substance Certificate",
+            label: "Controlled Dangerous Substance Certificate Number",
             name: "controlledSubstanceCertificate",
           },
           {
@@ -43,7 +43,7 @@ const mainLicenseRegistration = [
       },
 
       {
-        subField: "ECFMG",
+        subField: "ECFMG (For Foreign Medical Students)",
         fields: [
           {
             label: "ECFMG Number",
@@ -133,12 +133,10 @@ const medicalLicensesData = [
 
 const Licensing = ({
   form,
+  errors,
   handleChange,
-  handleDateChange,
+  handleFileChange,
 }: ApplicationProps) => {
-  // Handle file input changes
-  const handleFileChange = () => {};
-
   return (
     <div className="border rounded-lg pt-5 px-3 xl:px-5 pb-10 space-y-5">
       <div className="space-y-5">
@@ -165,9 +163,15 @@ const Licensing = ({
                         {field.type === "date" ? (
                           <DateInputField
                             label={field.label}
-                            selected={form[field.name]}
+                            selected={form.step2.medicalLicenses[field.name]}
+                            error={!!errors[field.name]}
                             onChange={(date) =>
-                              handleDateChange(field.name, date)
+                              handleChange(
+                                "step2",
+                                "medicalLicenses",
+                                field.name,
+                                date
+                              )
                             }
                           />
                         ) : field.type === "file" ? (
@@ -175,22 +179,32 @@ const Licensing = ({
                             <input
                               type="file"
                               name={field.name}
-                              onChange={handleFileChange}
+                              onChange={(e) =>
+                                handleFileChange(
+                                  "step2",
+                                  "medicalLicenses",
+                                  field.name,
+                                  e
+                                )
+                              }
                               className="border rounded-md p-2 outline-[0.5px] outline-secondary flex-1"
                             />
-                            {form[field.name] && (
-                              <span className="text-green-500 text-xs">
-                                File selected: {form[field.name].name}
-                              </span>
-                            )}
                           </div>
                         ) : (
                           <TextInputField
                             key={field.name}
                             label={field.label}
+                            error={errors[field.name]}
                             name={field.name}
-                            value={form[field.name]}
-                            onChange={handleChange}
+                            value={form.step2.medicalLicenses[field.name]}
+                            onChange={(e) =>
+                              handleChange(
+                                "step2",
+                                "medicalLicenses",
+                                field.name,
+                                e.target.value
+                              )
+                            }
                           />
                         )}
                       </div>
@@ -202,6 +216,7 @@ const Licensing = ({
           ))}
         </div>
       </div>
+
       <div className="space-y-5">
         <p className="font-semibold text-base">Other Licenses</p>
         <div className="grid grid-cols-3 gap-10">
@@ -219,30 +234,48 @@ const Licensing = ({
                   {field.type === "date" ? (
                     <DateInputField
                       label={field.label}
-                      selected={form[field.name]}
-                      onChange={(date) => handleDateChange(field.name, date)}
+                      selected={form.step2.otherMedLicenses[field.name]}
+                      error={!!errors[field.name]}
+                      onChange={(date) =>
+                        handleChange(
+                          "step2",
+                          "otherMedLicenses",
+                          field.name,
+                          date
+                        )
+                      }
                     />
                   ) : field.type === "file" ? (
                     <div className="flex gap-2 items-center w-full">
                       <input
                         type="file"
                         name={field.name}
-                        onChange={handleFileChange}
-                        className="border rounded-md p-2 outline-[0.5px] outline-secondary flex-1 w-full"
+                        onChange={(e) =>
+                          handleFileChange(
+                            "step2",
+                            "otherMedLicenses",
+                            field.name,
+                            e
+                          )
+                        }
+                        className="border rounded-md p-2 outline-[0.5px] outline-secondary flex-1"
                       />
-                      {form[field.name] && (
-                        <span className="text-green-500 text-xs">
-                          File selected: {form[field.name].name}
-                        </span>
-                      )}
                     </div>
                   ) : (
                     <TextInputField
                       key={field.name}
                       label={field.label}
+                      error={errors[field.name]}
                       name={field.name}
-                      value={form[field.name]}
-                      onChange={handleChange}
+                      value={form.step2.otherMedLicenses[field.name]}
+                      onChange={(e) =>
+                        handleChange(
+                          "step2",
+                          "otherMedLicenses",
+                          field.name,
+                          e.target.value
+                        )
+                      }
                     />
                   )}
                 </div>

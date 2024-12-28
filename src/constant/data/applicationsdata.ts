@@ -6,6 +6,7 @@ export const ApplicationFormInitialState = {
   organizationApplicationId: "",
   applicationTitle: "",
   organizationName: "",
+  status: "pending",
 
   // Personal Information
 
@@ -113,69 +114,145 @@ export const ApplicationFormInitialState = {
     },
   },
 
-  dob: new Date(Date.now()),
+  step2: {
+    residencies: [
+      {
+        residency1Institution: "",
+        residency1ProgramDirector: "",
+        residency1MailingAddress: "",
+        residency1City: "",
+        residency1State: "",
+        residency1ZIP: "",
+        residency1Type: "",
+        residency1Specialty: "",
+        residency1FromDate: null,
+        residency1ToDate: null,
+        residency1Completed: false,
+      },
+      {
+        residency2Institution: "",
+        residency2ProgramDirector: "",
+        residency2MailingAddress: "",
+        residency2City: "",
+        residency2State: "",
+        residency2ZIP: "",
+        residency2Type: "",
+        residency2Specialty: "",
+        residency2FromDate: null,
+        residency2ToDate: null,
+        residency2Completed: false,
+      },
+      {
+        residency3Institution: "",
+        residency3ProgramDirector: "",
+        residency3MailingAddress: "",
+        residency3City: "",
+        residency3State: "",
+        residency3ZIP: "",
+        residency3Type: "",
+        residency3Specialty: "",
+        residency3FromDate: null,
+        residency3ToDate: null,
+        residency3Completed: false,
+      },
+    ],
 
-  // Step 2
+    medicalLicenses: {
+      deaRegistrationNumber: "",
+      deaExpirationDate: null,
+      deaExpirationFile: "",
 
-  // Practice Location I
-  primarypracticelocationName: "",
-  primarypracticelocationOfficeAddress: "",
-  primarypracticelocationContact: "",
-  primarypracticelocationEmail: "",
-  primarypracticelocationOfficeHours: "",
-  primarypracticelocationFax: "",
+      controlledSubstanceCertificate: "",
+      controlledSubstanceExpirationDate: null,
+      controlledSubstanceExpirationFile: "",
 
-  // Practice Location II
-  primarypracticelocation2Name: "",
-  primarypracticelocation2OfficeAddress: "",
-  primarypracticelocation2Contact: "",
-  primarypracticelocation2Email: "",
-  primarypracticelocation2OfficeHours: "",
-  primarypracticelocation2Fax: "",
+      ECFMGNumber: "",
+      ecfmIssueDate: null,
+      ecfmValidThrough: null,
+      ECFMGFile: "",
 
-  // Hospital Affiliation
-  currentHospitalAffliationHospital: "",
-  currentHospitalAffliationPrivileges: "",
-  previousHospitalAffliationHospital: "",
-  previousHospitalAffliationPrivileges: "",
+      medicaidIDNumber: "",
+      medicaidCertificate: null,
+    },
 
-  // Licensing
-  stateMedicalicense: "",
-  stateMedicalicenseNumber: "",
-  stateMedicalicenseExpirationDate: new Date(Date.now()),
-  pcslicenseExpirationDate: new Date(Date.now()),
-  pcslicense: "",
-  pcslicenseNumber: "",
+    otherMedLicenses: {
+      stateMedicalLicense1: "",
+      stateMedicalLicenseNumber1: "",
+      stateMedicalLicenseExpirationDate1: null,
+      stateMedicalLicensefile1: "",
 
-  // Step 3
+      stateMedicalLicense2: "",
+      stateMedicalLicenseNumber2: "",
+      stateMedicalLicenseExpirationDate2: null,
+      stateMedicalLicensefile2: "",
 
-  // Work History
-  currentEmploymentPosition: "",
-  currentEmploymentStartDate: new Date(Date.now()),
-  currentEmploymentEndDate: new Date(Date.now()),
-  previousEmploymentPosition: "",
-  previousEmploymentStartDate: new Date(Date.now()),
-  previousEmploymentEndDate: new Date(Date.now()),
-  previousEmploymentGAP: "",
-  previousEmploymentMilitaryService: "",
+      stateMedicalLicense3: "",
+      stateMedicalLicenseNumber3: "",
+      stateMedicalLicenseExpirationDate3: null,
+      stateMedicalLicensefile3: "",
+    },
+  },
 
-  // Malpractice Information
-  malpracticeInsuranceCurrentCarrier: "",
-  malpracticeInsurancePolicyNumber: "",
-  malpracticeInsuranceCoverageLimit: "",
-  malpracticeInsuranceEffectiveDate: "",
-  liabilityClaimsHistoryMalpracticeClaims: "",
-  liabilityClaimsHistoryPendingLitigation: "",
-  liabilityClaimsHistorySettlement: "",
-  liabilityClaimsHistoryDisciplinaryAction: "",
+  step3: {
+    carriers: {
+      currentCarrierName: "",
+      currentPolicyNumber: "",
+      currentEffectiveDate: null,
+      currentExpirationDate: null,
+      currentMailingAddress: "",
+      currentCity: "",
+      currentState: "",
+      currentZIP: "",
+      currentPerClaimAmount: 0,
+      currentAggregateAmount: 0,
 
-  // Additional Documents
-  additionalDocumentstateMedicalicense: "",
-  additionalDocumentstateMedicalicenseNumber: "",
-  additionalDocumentPcslicense: "",
-  additionalDocumentPcslicenseNumber: "",
-  additionalDocumentstateMedicalicenseExpirationDate: new Date(Date.now()),
-  additionalDocumentPcslicenseExpirationDate: new Date(Date.now()),
+      previousCarrier1Name: "",
+      previousCarrier1PolicyNumber: "",
+      previousCarrier1FromDate: null,
+      previousCarrier1ToDate: null,
+      previousCarrier1MailingAddress: "",
+      previousCarrier1City: "",
+      previousCarrier1State: "",
+      previousCarrier1ZIP: "",
+      currentPerClaim1Amount: 0,
+      currentAggregate1Amount: 0,
+
+      previousCarrier2Name: "",
+      previousCarrier2PolicyNumber: "",
+      previousCarrier2FromDate: null,
+      previousCarrier2ToDate: null,
+      previousCarrier2MailingAddress: "",
+      previousCarrier2City: "",
+      previousCarrier2State: "",
+      previousCarrier2ZIP: "",
+      currentPerClaim2Amount: 0,
+      currentAggregate2Amount: 0,
+    },
+
+    boards: {
+      boardCertification1Board: "",
+      boardCertification1Specialty: "",
+      boardCertification1CertifiedDate: null,
+      boardCertification1ExpirationDate: null,
+      certificationfile1: "",
+
+      boardCertification2Board: "",
+      boardCertification2Specialty: "",
+      boardCertification2CertifiedDate: null,
+      boardCertification2ExpirationDate: null,
+      certificationfile2: "",
+
+      boardCertification3Board: "",
+      boardCertification3Specialty: "",
+      boardCertification3CertifiedDate: null,
+      boardCertification3ExpirationDate: null,
+      certificationfile3: "",
+
+      appliedForOtherBoardCertification: false,
+
+      additionalBoardCertificationIntent: "",
+    },
+  },
 
   // Terms and Conditions
 

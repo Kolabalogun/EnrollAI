@@ -2,8 +2,7 @@ import { ApplicationProps } from ".";
 import PhoneInputField from "../Inputs/phoneInput";
 import TextInputField from "../Inputs/TextInput";
 
-const PracticeLocation = ({ form, handleChange }: ApplicationProps) => {
-  // Define an array with office sections and corresponding fields
+const PracticeLocation = ({ form, errors, handleChange }: ApplicationProps) => {
   const officeSections = [
     {
       label: "Primary Office",
@@ -76,7 +75,6 @@ const PracticeLocation = ({ form, handleChange }: ApplicationProps) => {
 
       <div className="space-y-4">
         <div className="flex xl:flex-row flex-col justify-between gap-5">
-          {/* Last Name */}
           <div className="raleway text-xs flex w-full flex-1 flex-col gap-1 font-medium">
             <label htmlFor="primaryOfficeName">Practice Name</label>
             <input
@@ -93,10 +91,12 @@ const PracticeLocation = ({ form, handleChange }: ApplicationProps) => {
                   e.target.value
                 )
               }
-              className="border rounded-md p-2 outline-[0.5px] outline-secondary"
+              className={` ${
+                errors?.primaryOfficeName ? "border-red-500 border-2" : ""
+              } border flex items-center gap-3 rounded-md p-2 outline-[0.5px] outline-secondary w-full`}
             />
           </div>
-          {/* First Name */}
+
           <div className="raleway text-xs flex w-full flex-1 flex-col gap-1 font-medium">
             <label htmlFor="primaryDepartmentName">Department Name</label>
             <input
@@ -113,7 +113,9 @@ const PracticeLocation = ({ form, handleChange }: ApplicationProps) => {
                   e.target.value
                 )
               }
-              className="border rounded-md p-2 outline-[0.5px] outline-secondary"
+              className={` ${
+                errors?.primaryDepartmentName ? "border-red-500 border-2" : ""
+              } border flex items-center gap-3 rounded-md p-2 outline-[0.5px] outline-secondary w-full`}
             />
           </div>
         </div>
@@ -128,6 +130,7 @@ const PracticeLocation = ({ form, handleChange }: ApplicationProps) => {
                 <PhoneInputField
                   key={field.name}
                   label={field.label}
+                  error={!!errors[field.name]}
                   value={form.step1.practiceInformation[field.name]}
                   onChange={(phone) =>
                     handleChange(
@@ -142,6 +145,7 @@ const PracticeLocation = ({ form, handleChange }: ApplicationProps) => {
                 <TextInputField
                   key={field.name}
                   label={field.label}
+                  error={!!errors[field.name]}
                   name={field.name}
                   value={form.step1.practiceInformation[field.name]}
                   onChange={(e) =>

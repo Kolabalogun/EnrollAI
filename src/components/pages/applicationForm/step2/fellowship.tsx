@@ -67,8 +67,8 @@ const residenciesFellowshipsData = [
 
 const ResidenciesFellowships = ({
   form,
-  handleChange,
-  handleDateChange,
+  errors,
+  handleResidencyChange,
 }: ApplicationProps) => {
   return (
     <div className="border rounded-lg pt-5 px-3 xl:px-5 pb-10 space-y-5">
@@ -93,17 +93,22 @@ const ResidenciesFellowships = ({
                 {field.type === "date" ? (
                   <DateInputField
                     label={field.label}
-                    selected={form[field.name]}
-                    onChange={(date) => handleDateChange(field.name, date)}
+                    max
+                    error={!!errors[field.name]}
+                    selected={form.step2.residencies[index][field.name]}
+                    onChange={(date) =>
+                      handleResidencyChange(index, field.name, date)
+                    }
                   />
                 ) : field.type === "checkbox" ? (
                   <input
                     type="checkbox"
                     id={field.name}
                     name={field.name}
-                    checked={form[field.name]}
+                    checked={form.step2.residencies[index][field.name]}
+                    value={form.step2.residencies[index][field.name]}
                     onChange={(e) =>
-                      handleDateChange(field.name, e.target.checked)
+                      handleResidencyChange(index, field.name, e.target.checked)
                     }
                   />
                 ) : (
@@ -111,8 +116,10 @@ const ResidenciesFellowships = ({
                     key={field.name}
                     label={field.label}
                     name={field.name}
-                    value={form[field.name]}
-                    onChange={handleChange}
+                    value={form.step2.residencies[index][field.name]}
+                    onChange={(e) =>
+                      handleResidencyChange(index, field.name, e.target.value)
+                    }
                   />
                 )}
               </div>

@@ -36,8 +36,6 @@ const PersonalInformations = ({
     { label: "CAHQ Password", name: "cahqPassword" },
   ];
 
-  console.log(errors.cahqID);
-
   return (
     <div className="border rounded-lg pt-5 px-3 xl:px-5 pb-10 space-y-5">
       <p className="font-semibold text-base">Personal Information</p>

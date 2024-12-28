@@ -6,13 +6,18 @@ import { ApplicationProps } from "../step1";
 import ProfessionalLiability from "./personalLiability";
 import BoardCertification from "./boardCertification";
 
-const Step3 = ({ form, handleDateChange, handleChange }: ApplicationProps) => {
+const Step3 = ({
+  form,
+  errors,
+  handleChange,
+  handleFileChange,
+}: ApplicationProps) => {
   return (
     <div className="bg-white rounded-lg px-3 py-5 xl:p-5 space-y-4">
       <div className="space-y-1">
-        <p className="font-semibold text-base ">Health Plan</p>
+        <p className="font-semibold text-base ">{form?.applicationType}</p>
         <p className="text-[12px] font-medium text-[#667085]">
-          Lorem Ipsum Organization
+          {form?.organizationName} - {form?.applicationTitle}
         </p>
       </div>
 
@@ -27,14 +32,15 @@ const Step3 = ({ form, handleDateChange, handleChange }: ApplicationProps) => {
 
       <ProfessionalLiability
         form={form}
+        errors={errors}
         handleChange={handleChange}
-        handleDateChange={handleDateChange}
       />
 
       <BoardCertification
         form={form}
+        errors={errors}
         handleChange={handleChange}
-        handleDateChange={handleDateChange}
+        handleFileChange={handleFileChange}
       />
 
       {/* <WorkHistory
