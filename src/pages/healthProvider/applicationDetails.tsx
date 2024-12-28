@@ -130,7 +130,7 @@ const ApplicationsDetails = () => {
             <SecondaryButton
               title={"Cancel Application"}
               handleClick={() => {
-                deleleForm(form.id);
+                deleleForm(form._id);
               }}
             />
 
