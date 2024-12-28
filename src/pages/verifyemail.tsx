@@ -21,8 +21,8 @@ const VerifyEmail = () => {
   const navigate = useNavigate();
   const { onOpen, onClose, isOpen } = useDisclosure();
   const [resendLoading, setResendLoading] = useState(false);
-  const location = useLocation();
   const toast = useToast();
+  const location = useLocation();
   const { email } = location.state || {};
 
   const [timeLeft, setTimeLeft] = useState(10);

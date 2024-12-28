@@ -7,12 +7,9 @@ import { ApplicationProps } from ".";
 
 const PersonalInformations = ({
   form,
-  handleDateChange,
-  handlePhoneChange,
+  errors,
   handleChange,
-  disableForm,
 }: ApplicationProps) => {
-  // Define an array with personal information fields
   const personalInfoFields = [
     { label: "Last Name", name: "lastName" },
     { label: "First Name", name: "firstName" },
@@ -28,8 +25,8 @@ const PersonalInformations = ({
     { label: "Cell Phone", name: "cellPhone", isPhone: true },
     { label: "Date of Birth", name: "birthdate", isDate: true },
     { label: "Birthplace", name: "birthplace" },
-    { label: "SSN", name: "ssn" },
-    { label: "Gender", name: "gender" },
+    { label: "SSN", name: "SSN" },
+    { label: "Gender", name: "gender", isSelect: true },
     { label: "Citizenship", name: "citizenship" },
     { label: "Specialty", name: "specialty" },
     { label: "Race/Ethnicity", name: "raceEthnicity" },
@@ -38,6 +35,8 @@ const PersonalInformations = ({
     { label: "CAHQ ID", name: "cahqID" },
     { label: "CAHQ Password", name: "cahqPassword" },
   ];
+
+  console.log(errors.cahqID);
 
   return (
     <div className="border rounded-lg pt-5 px-3 xl:px-5 pb-10 space-y-5">
@@ -52,15 +51,31 @@ const PersonalInformations = ({
                 key={field.name}
                 className="raleway text-xs flex flex-col gap-1 font-medium"
               >
-                <label htmlFor={field.name}>{field.label}</label>
-                <div className="border flex items-center gap-3 rounded-md p-2 outline-[0.5px] outline-secondary w-full">
+                <div className="flex gap-1 items-center">
+                  <label htmlFor={field.name}>{field.label}</label>
+                  {errors[field.name] && (
+                    <p className="text-xs text-red-500"> is required</p>
+                  )}
+                </div>
+                <div
+                  className={` ${
+                    errors[field.name] ? "border-red-500 border-2" : ""
+                  } border flex items-center gap-3 rounded-md p-2 outline-[0.5px] outline-secondary w-full`}
+                >
                   <div className="ml-2">
                     <Calendar size={15} />
                   </div>
                   <ReactDatePicker
-                    selected={form[field.name]}
-                    disabled={disableForm}
-                    onChange={(date) => handleDateChange(field.name, date)}
+                    maxDate={new Date(Date.now())}
+                    selected={form.step1.personalInformation[field.name]}
+                    onChange={(date) =>
+                      handleChange(
+                        "step1",
+                        "personalInformation",
+                        field.name,
+                        date
+                      )
+                    }
                     dateFormat={"dd/MM/yyyy"}
                     wrapperClassName="date-picker"
                   />
@@ -73,10 +88,53 @@ const PersonalInformations = ({
             return (
               <PhoneInputField
                 key={field.name}
+                error={!!errors[field.name]}
                 label={field.label}
-                value={form[field.name]}
-                onChange={(phone) => handlePhoneChange(field.name, phone)}
+                value={form.step1.personalInformation[field.name]}
+                onChange={(phone) =>
+                  handleChange(
+                    "step1",
+                    "personalInformation",
+                    field.name,
+                    phone
+                  )
+                }
               />
+            );
+          }
+
+          if (field.isSelect) {
+            return (
+              <div
+                key={field.name}
+                className="raleway text-xs flex flex-col gap-1 font-medium"
+              >
+                <div className="flex gap-1 items-center">
+                  <label htmlFor={field.name}>{field.label}</label>
+                  {errors[field.name] && (
+                    <p className="text-xs text-red-500"> is required</p>
+                  )}
+                </div>
+                <select
+                  id={field.name}
+                  value={form.step1.personalInformation[field.name]}
+                  onChange={(e) =>
+                    handleChange(
+                      "step1",
+                      "personalInformation",
+                      field.name,
+                      e.target.value
+                    )
+                  }
+                  className={`${
+                    errors[field.name] ? "border-red-500 border-2" : ""
+                  }  border rounded-md p-2 outline-[0.5px] outline-secondary w-full`}
+                >
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
             );
           }
 
@@ -85,8 +143,21 @@ const PersonalInformations = ({
               key={field.name}
               label={field.label}
               name={field.name}
-              value={form[field.name]}
-              onChange={handleChange}
+              error={!!errors[field.name]}
+              type={
+                field.name === "SSN" || field.name === "homeFax"
+                  ? "number"
+                  : "text"
+              }
+              value={form.step1.personalInformation[field.name]}
+              onChange={(e) =>
+                handleChange(
+                  "step1",
+                  "personalInformation",
+                  field.name,
+                  e.target.value
+                )
+              }
             />
           );
         })}

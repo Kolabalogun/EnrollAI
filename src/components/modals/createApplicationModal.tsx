@@ -12,6 +12,7 @@ import {
   FormLabel,
   useToast,
   Divider,
+  Select,
 } from "@chakra-ui/react";
 
 import { createApplicationOrg } from "@/services/org/applications";
@@ -95,15 +96,23 @@ const CreateApplicationModal = ({
             <FormLabel>
               <p className="font-semibold text-sm">Application Type</p>
             </FormLabel>
-            <Input
+            <Select
+              placeholder="Select application type"
+              value={applicationName}
+              onChange={(e) => setApplicationName(e.target.value)}
               _focus={{
                 borderColor: "#b076e7",
               }}
               fontSize={14}
-              placeholder="Enter application type"
-              value={applicationName}
-              onChange={(e) => setApplicationName(e.target.value)}
-            />
+            >
+              <option value="credentialing request">
+                Credentialing Request
+              </option>
+              <option value="health plan">Health Plan</option>
+              <option value="health insurance">Health Insurance</option>
+              <option value="licensing">Licensing</option>
+              <option value="credentialing">Credentialing</option>
+            </Select>
           </FormControl>
 
           <FormControl mb={4}>

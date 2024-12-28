@@ -2,11 +2,7 @@ import { ApplicationProps } from ".";
 import DateInputField from "../Inputs/dateInput";
 import TextInputField from "../Inputs/TextInput";
 
-const Education = ({
-  form,
-  handleChange,
-  handleDateChange,
-}: ApplicationProps) => {
+const Education = ({ form, handleChange }: ApplicationProps) => {
   const educationData = [
     {
       title: "Premedical",
@@ -24,6 +20,7 @@ const Education = ({
         { label: "ZIP", name: "premedicalZIP" },
       ],
     },
+
     {
       title: "Medical School",
       fields: [
@@ -91,16 +88,26 @@ const Education = ({
                 {field.type === "date" ? (
                   <DateInputField
                     label={field.label}
-                    selected={form[field.name]}
-                    onChange={(date) => handleDateChange(field.name, date)}
+                    max
+                    selected={form.step1.education[field.name]}
+                    onChange={(date) =>
+                      handleChange("step1", "education", field.name, date)
+                    }
                   />
                 ) : (
                   <TextInputField
                     key={field.name}
                     label={field.label}
                     name={field.name}
-                    value={form[field.name]}
-                    onChange={handleChange}
+                    value={form.step1.education[field.name]}
+                    onChange={(e) =>
+                      handleChange(
+                        "step1",
+                        "education",
+                        field.name,
+                        e.target.value
+                      )
+                    }
                   />
                 )}
               </div>

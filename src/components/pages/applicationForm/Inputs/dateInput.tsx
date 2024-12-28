@@ -9,6 +9,7 @@ interface DateInputFieldProps {
   selected: Date | null;
   onChange: (date: Date | null) => void;
   disabled?: boolean;
+  max?: boolean;
 }
 
 const DateInputField: React.FC<DateInputFieldProps> = ({
@@ -16,6 +17,7 @@ const DateInputField: React.FC<DateInputFieldProps> = ({
   selected,
   onChange,
   disabled = false,
+  max,
 }) => {
   return (
     <div className="raleway text-xs flex w-full flex-1 flex-col gap-1 font-medium">
@@ -30,6 +32,7 @@ const DateInputField: React.FC<DateInputFieldProps> = ({
           <ReactDatePicker
             selected={selected}
             onChange={onChange}
+            maxDate={max ? new Date() : undefined}
             dateFormat="dd/MM/yyyy"
             disabled={disabled}
             className="w-full outline-none"

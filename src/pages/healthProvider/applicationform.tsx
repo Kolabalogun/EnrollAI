@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { ChevronRight, ChevronRightIcon } from "lucide-react";
 
 import "react-phone-input-2/lib/style.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Step1 from "@/components/pages/applicationForm/step1";
 import { SubmitButton } from "@/components/common";
 import Step2 from "@/components/pages/applicationForm/step2";
@@ -19,32 +20,92 @@ import {
 import Review2 from "@/components/pages/applicationForm/reviews/review2";
 import ApplicationSuccessModal from "@/components/modals/applicationSuccess";
 import { useDisclosure } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { HEALTHCARE_APPLICATIONS } from "@/router/routes";
+
+const validateForm = (form) => {
+  const errors = {};
+
+  // Helper function to check if a field is empty
+  const isEmpty = (value) =>
+    value === "" || value === null || value === undefined;
+
+  // Validate Personal Information
+  for (const [key, value] of Object.entries(form.step1.personalInformation)) {
+    if (isEmpty(value)) {
+      errors[key] = `${key} is required`;
+    }
+  }
+
+  // Validate Practice Information
+  for (const [key, value] of Object.entries(form.step1.practiceInformation)) {
+    if (isEmpty(value)) {
+      errors[key] = `${key} is required`;
+    }
+  }
+
+  // Validate Education
+  for (const [key, value] of Object.entries(form.step1.education)) {
+    if (isEmpty(value)) {
+      errors[key] = `${key} is required`;
+    }
+  }
+
+  return errors;
+};
 
 const ApplicationForm = () => {
   const [isLoading, setLoading] = useState<boolean>(false);
   const { isOpen, onClose, onOpen } = useDisclosure();
   const { form, lists } = useSelector((state: any) => state.applicationForm);
+
+  const { user } = useSelector((state: any) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const state = location.state || {};
+  const [errors, setErrors] = useState({});
 
-  console.log(lists);
   console.log(form);
 
+  console.log(errors);
+
+  useEffect(() => {
+    if (!state || !JSON.parse(state)?.applicationName) return navigate(-1);
+    if (state) {
+      const orgData = JSON.parse(state);
+      console.log(orgData);
+
+      const data = {
+        ...form,
+        userId: user?.data?.userId,
+        applicationType: orgData?.applicationName || "",
+        organizationApplicationId: orgData?.organization?._id || "",
+        organizationName: orgData?.organization?.organizationName || "",
+        applicationTitle: orgData?.applicationTitle || "",
+      };
+
+      dispatch(updateForm(data));
+    }
+  }, [state]);
+
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    step: string,
+    parentObject: string,
+    fieldName: string,
+    value: string
   ) => {
-    const { name, value } = e.target;
-    dispatch(updateForm({ [name]: value }));
-  };
-
-  const handleDateChange = (fieldName: string, date: Date | null) => {
-    dispatch(updateForm({ [fieldName]: date }));
-  };
-
-  const handlePhoneChange = (fieldName: string, phone: string) => {
-    dispatch(updateForm({ [fieldName]: phone }));
+    const data = {
+      ...form,
+      [step]: {
+        ...form[step],
+        [parentObject]: {
+          ...form[step][parentObject],
+          [fieldName]: value,
+        },
+      },
+    };
+    dispatch(updateForm(data));
   };
 
   const handleCheckBoxChange = (fieldName: string, value: any) => {
@@ -67,7 +128,13 @@ const ApplicationForm = () => {
           onOpen();
         }
       } else {
-        dispatch(updateForm({ pageNo: form.pageNo + 1 }));
+        const validationErrors = validateForm(form);
+        if (Object.keys(validationErrors).length > 0) {
+          setErrors(validationErrors);
+        } else {
+          setErrors({});
+          dispatch(updateForm({ pageNo: form.pageNo + 1 }));
+        }
       }
     } catch (error) {
       console.log(error);
@@ -93,27 +160,13 @@ const ApplicationForm = () => {
         {form.pageNo === 5 ? (
           <Review2 form={form} handleCheckBoxChange={handleCheckBoxChange} />
         ) : form.pageNo === 2 ? (
-          <Step2
-            form={form}
-            handleChange={handleChange}
-            handlePhoneChange={handlePhoneChange}
-            handleDateChange={handleDateChange}
-          />
+          <Step2 form={form} handleChange={handleChange} />
         ) : form.pageNo === 3 ? (
-          <Step3
-            form={form}
-            handleChange={handleChange}
-            handleDateChange={handleDateChange}
-          />
+          <Step3 form={form} handleChange={handleChange} />
         ) : form.pageNo === 4 ? (
           <Review1 form={form} />
         ) : (
-          <Step1
-            form={form}
-            handleChange={handleChange}
-            handlePhoneChange={handlePhoneChange}
-            handleDateChange={handleDateChange}
-          />
+          <Step1 form={form} errors={errors} handleChange={handleChange} />
         )}
 
         <div className="flex justify-end gap-5 my-10 items-center">

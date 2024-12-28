@@ -12,26 +12,20 @@ export type ApplicationProps = {
   handleCheckBoxChange?: any;
   handlePhoneChange?: any;
   disableForm?: boolean;
-  handleChange?: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => void;
+  handleChange?: any;
   removeField?: any;
   removeSection?: any;
   removeSubField?: any;
+  errors?: any;
 };
 
-const Step1 = ({
-  form,
-  handleDateChange,
-  handlePhoneChange,
-  handleChange,
-}: ApplicationProps) => {
+const Step1 = ({ form, errors, handleChange }: ApplicationProps) => {
   return (
     <div className="bg-white rounded-lg px-3 py-5 xl:p-5 space-y-4">
       <div className="space-y-1">
-        <p className="font-semibold text-base ">Health Plan</p>
+        <p className="font-semibold text-base ">{form?.applicationType}</p>
         <p className="text-[12px] font-medium text-[#667085]">
-          Lorem Ipsum Organization
+          {form?.organizationName} - {form?.applicationTitle}
         </p>
       </div>
 
@@ -46,25 +40,15 @@ const Step1 = ({
 
       <PersonalInformations
         form={form}
+        errors={errors}
         handleChange={handleChange}
-        handlePhoneChange={handlePhoneChange}
-        handleDateChange={handleDateChange}
       />
 
-      <PracticeLocation
-        form={form}
-        handleChange={handleChange}
-        handlePhoneChange={handlePhoneChange}
-        handleDateChange={handleDateChange}
-      />
+      <PracticeLocation form={form} handleChange={handleChange} />
 
       {/* <ProfessionalID form={form} handleChange={handleChange} /> */}
 
-      <Education
-        form={form}
-        handleChange={handleChange}
-        handleDateChange={handleDateChange}
-      />
+      <Education form={form} handleChange={handleChange} />
     </div>
   );
 };

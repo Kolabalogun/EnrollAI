@@ -7,7 +7,6 @@ import ResidenciesFellowships from "./fellowship";
 
 const Step2 = ({
   form,
-  handleDateChange,
 
   handleChange,
 }: ApplicationProps) => {
@@ -29,19 +28,11 @@ const Step2 = ({
         />
       </div>
 
-      <ResidenciesFellowships
-        form={form}
-        handleChange={handleChange}
-        handleDateChange={handleDateChange}
-      />
+      <ResidenciesFellowships form={form} handleChange={handleChange} />
 
       {/* <HospitalAffiliations form={form} handleChange={handleChange} /> */}
 
-      <Licensing
-        form={form}
-        handleChange={handleChange}
-        handleDateChange={handleDateChange}
-      />
+      <Licensing form={form} handleChange={handleChange} />
     </div>
   );
 };

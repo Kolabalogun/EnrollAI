@@ -1,47 +1,119 @@
 export const ApplicationFormInitialState = {
-  id: new Date(Date.now()).toISOString(),
   pageNo: 1,
-  // Step 1
+
+  userId: "",
+  applicationType: "",
+  organizationApplicationId: "",
+  applicationTitle: "",
+  organizationName: "",
 
   // Personal Information
-  fullName: "",
-  sex: "male",
+
+  step1: {
+    personalInformation: {
+      lastName: "",
+      firstName: "",
+      middleName: "",
+      otherNames: "",
+      homeMailingAddress: "",
+      city: "",
+      state: "",
+      zip: "",
+      homeTelephone: "",
+      email: "",
+      homeFax: "",
+      cellPhone: "",
+      birthdate: null,
+      birthplace: "",
+      SSN: "",
+      gender: "Male",
+      citizenship: "",
+      specialty: "",
+      raceEthnicity: "",
+      subspecialties: "",
+      NPI: "",
+      cahqID: "",
+      cahqPassword: "",
+    },
+
+    // Practice Information
+
+    practiceInformation: {
+      primaryOfficeName: "",
+      primaryDepartmentName: "",
+      primaryOfficeAddress: "",
+      primaryCity: "",
+      primaryState: "",
+      primaryZIP: "",
+      primaryTelephone: "",
+      primaryFax: "",
+      primaryOfficeManager: "",
+      primaryOfficeManagerPhone: "",
+      primaryOfficeManagerFax: "",
+      primaryTaxIDName: "",
+      primaryFederalTaxID: "",
+
+      secondaryOfficeAddress: "",
+      secondaryCity: "",
+      secondaryState: "",
+      secondaryZIP: "",
+      secondaryOfficeManager: "",
+      secondaryFax: "",
+      secondaryTelephone: "",
+      secondaryTaxIDName: "",
+      secondaryFederalTaxID: "",
+
+      tertiaryOfficeAddress: "",
+      tertiaryCity: "",
+      tertiaryState: "",
+      tertiaryZIP: "",
+      tertiaryOfficeManager: "",
+      tertiaryFax: "",
+      tertiaryTelephone: "",
+      tertiaryTaxIDName: "",
+      tertiaryFederalTaxID: "",
+    },
+
+    education: {
+      premedicalInstitution: "",
+      premedicalDegree: "",
+      premedicalGraduationDate: new Date(Date.now()),
+      premedicalMailingAddress: "",
+      premedicalCity: "",
+      premedicalState: "",
+      premedicalZIP: "",
+
+      medicalSchoolInstitution: "",
+      medicalSchoolDegree: "",
+      medicalSchoolGraduationDate: new Date(Date.now()),
+      medicalSchoolMailingAddress: "",
+      medicalSchoolCity: "",
+      medicalSchoolState: "",
+      medicalSchoolZIP: "",
+
+      professionalSchoolInstitution: "",
+      professionalSchoolDegree: "",
+      professionalSchoolGraduationDate: new Date(Date.now()),
+      professionalSchoolMailingAddress: "",
+      professionalSchoolCity: "",
+      professionalSchoolState: "",
+      professionalSchoolZIP: "",
+
+      internshipInstitution: "",
+      internshipProgramDirector: "",
+      internshipMailingAddress: "",
+      internshipCity: "",
+      internshipState: "",
+      internshipZIP: "",
+      internshipType: "",
+      internshipSpecialty: "",
+      internshipFromDate: new Date(Date.now()),
+      internshipToDate: new Date(Date.now()),
+      internshipPhysicianName: "",
+    },
+  },
+
   dob: new Date(Date.now()),
-  ssn: "",
-  language: "",
-  phoneNumber: "",
-  email: "",
-  address: "",
-
-  // Profession ID
-  npi: "",
-  tin: "",
-  deacn: "",
-  medicalCareId: "",
-
-  // Education Information
-  undergraduateInstitution: "",
-  undergraduateDegree: "",
-  graduateInstitution: "",
-  graduateDegree: "",
-  graduateYOG: "",
-
-  internshipInstitution: "",
-  internshipDegree: "",
-  internshipYOG: "",
-  undergraduateYOG: "",
-
-  residencyInstitution: "",
-  residencyDegree: "",
-  residencyYOG: "",
-
-  fellowshipInstitution: "",
-  fellowshipDegree: "",
-  fellowshipYOG: "",
-
-  cmeInstitution: "",
-  cmeDegree: "",
-  cmeYOG: "",
 
   // Step 2
 
@@ -109,11 +181,6 @@ export const ApplicationFormInitialState = {
 
   termsAndConditionsOne: true,
   termsAndConditionsTwo: false,
-
-  //Submission
-
-  status: "Under review",
-  date: new Date(Date.now()),
 };
 
 export const ApplicationsData = [

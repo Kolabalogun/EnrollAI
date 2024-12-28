@@ -23,6 +23,7 @@ export const getAllApplicationsForProviders = async () => {
       }
     );
     return {
+      success: true,
       data: response.data,
       message: "",
     };

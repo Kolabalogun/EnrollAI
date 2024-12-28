@@ -18,7 +18,7 @@ import SecondaryButton from "@/components/common/buttons/secondaryButton";
 const ApplicationsDetails = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const { id } = useParams();
+
   const { lists } = useSelector((state: any) => state.applicationForm);
   const [form, setForm] = useState(ApplicationFormInitialState);
   const [disableForm, setDisableForm] = useState(true);

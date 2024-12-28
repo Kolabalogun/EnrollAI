@@ -2,11 +2,7 @@ import { ApplicationProps } from ".";
 import PhoneInputField from "../Inputs/phoneInput";
 import TextInputField from "../Inputs/TextInput";
 
-const PracticeLocation = ({
-  form,
-  handleChange,
-  handlePhoneChange,
-}: ApplicationProps) => {
+const PracticeLocation = ({ form, handleChange }: ApplicationProps) => {
   // Define an array with office sections and corresponding fields
   const officeSections = [
     {
@@ -20,7 +16,10 @@ const PracticeLocation = ({
         { label: "ZIP", name: "primaryZIP" },
         { label: "Telephone", name: "primaryTelephone", isPhone: true },
         { label: "Fax", name: "primaryFax", isPhone: true },
-        { label: "Office Manager/Administrator", name: "primaryOfficeManager" },
+        {
+          label: "Office Manager/Administrator Name",
+          name: "primaryOfficeManager",
+        },
         {
           label: "Office Manager Telephone",
           name: "primaryOfficeManagerPhone",
@@ -85,8 +84,15 @@ const PracticeLocation = ({
               name="primaryOfficeName"
               type="text"
               placeholder="Practice Name"
-              value={form.primaryOfficeName || ""}
-              onChange={handleChange}
+              value={form.step1.practiceInformation.primaryOfficeName || ""}
+              onChange={(e) =>
+                handleChange(
+                  "step1",
+                  "practiceInformation",
+                  "primaryOfficeName",
+                  e.target.value
+                )
+              }
               className="border rounded-md p-2 outline-[0.5px] outline-secondary"
             />
           </div>
@@ -98,8 +104,15 @@ const PracticeLocation = ({
               name="primaryDepartmentName"
               type="text"
               placeholder="Department Name"
-              value={form.primaryDepartmentName || ""}
-              onChange={handleChange}
+              value={form.step1.practiceInformation.primaryDepartmentName || ""}
+              onChange={(e) =>
+                handleChange(
+                  "step1",
+                  "practiceInformation",
+                  "primaryDepartmentName",
+                  e.target.value
+                )
+              }
               className="border rounded-md p-2 outline-[0.5px] outline-secondary"
             />
           </div>
@@ -115,16 +128,30 @@ const PracticeLocation = ({
                 <PhoneInputField
                   key={field.name}
                   label={field.label}
-                  value={form[field.name]}
-                  onChange={(phone) => handlePhoneChange(field.name, phone)}
+                  value={form.step1.practiceInformation[field.name]}
+                  onChange={(phone) =>
+                    handleChange(
+                      "step1",
+                      "practiceInformation",
+                      field.name,
+                      phone
+                    )
+                  }
                 />
               ) : (
                 <TextInputField
                   key={field.name}
                   label={field.label}
                   name={field.name}
-                  value={form[field.name]}
-                  onChange={handleChange}
+                  value={form.step1.practiceInformation[field.name]}
+                  onChange={(e) =>
+                    handleChange(
+                      "step1",
+                      "practiceInformation",
+                      field.name,
+                      e.target.value
+                    )
+                  }
                 />
               )
             )}

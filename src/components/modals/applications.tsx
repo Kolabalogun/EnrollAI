@@ -42,8 +42,16 @@ const ApplicationsModal = ({
       setError(null);
       try {
         const response = await getAllApplicationsForProviders();
-        setApplications(response.data.applications);
+        setApplications(response?.data?.applications);
         console.log(response);
+
+        if (!response.success)
+          return showToast(
+            toast,
+            "Enroll AI",
+            "error",
+            `${response.message || "Failed to fetch applications."}`
+          );
       } catch (err: any) {
         showToast(
           toast,
@@ -63,11 +71,11 @@ const ApplicationsModal = ({
   }, [isOpen]);
 
   // Filter applications based on the search input
-  const filteredApplications = applications.filter(
+  const filteredApplications = applications?.filter(
     (app) =>
-      app.applicationTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      app.applicationName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      app.organization.organizationName
+      app?.applicationTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      app?.applicationName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      app?.organization?.organizationName
         .toLowerCase()
         .includes(searchQuery.toLowerCase())
   );
@@ -108,14 +116,17 @@ const ApplicationsModal = ({
                 <p className="text-fade text-xs">Loading applications...</p>
               ) : error ? (
                 <p className="text-red-500 text-xs">{error}</p>
-              ) : filteredApplications.length > 0 ? (
-                filteredApplications.map((app) => (
+              ) : filteredApplications?.length > 0 ? (
+                filteredApplications?.map((app) => (
                   <div
                     key={app._id}
                     onClick={
                       accountType !== "provider"
                         ? () => navigate(ORGANIZATION_CREATE_APPLICATION_FORM)
-                        : () => navigate(HEALTHCARE_APPLICATION_FORM)
+                        : () =>
+                            navigate(HEALTHCARE_APPLICATION_FORM, {
+                              state: JSON.stringify(app),
+                            })
                     }
                     className="flex flex-col cursor-pointer gap-2 hover:bg-primary p-2"
                   >
