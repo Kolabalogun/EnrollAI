@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import EmptyCarts from "../dashboard/emptyCarts";
 import { TableComponent } from "@/components/table";
 import { ApplicationFormTableHeads } from "@/constant/data/table/tableHeads";
-import { ApplicationFormType } from "@/lib/types/tables";
+import { ApplicationFormInterface } from "@/lib/types/tables";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -12,7 +12,7 @@ const ApplicationLists = ({ full }: { full?: boolean }) => {
   const [activeMenu, setActiveMenu] = useState<string | number | null>(null);
   const navigate = useNavigate();
 
-  const handleViewDetails = (row: ApplicationFormType) => {
+  const handleViewDetails = (row: ApplicationFormInterface) => {
     console.log(row);
     navigate("/dashboard/health-provider/applications/details/id");
   };
@@ -25,11 +25,11 @@ const ApplicationLists = ({ full }: { full?: boolean }) => {
     }
   };
 
-  const handleEdit = (row: ApplicationFormType) => {
+  const handleEdit = (row: ApplicationFormInterface) => {
     console.log(row);
   };
 
-  const handleDelete = (row: ApplicationFormType) => {
+  const handleDelete = (row: ApplicationFormInterface) => {
     console.log(row);
   };
 

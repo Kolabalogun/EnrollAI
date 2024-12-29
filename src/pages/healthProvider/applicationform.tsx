@@ -12,11 +12,7 @@ import Step2 from "@/components/pages/applicationForm/step2";
 import Step3 from "@/components/pages/applicationForm/step3";
 import Review1 from "@/components/pages/applicationForm/reviews/review1";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  resetForm,
-  setApplicationList,
-  updateForm,
-} from "@/redux/features/applicationFormSlice";
+import { resetForm, updateForm } from "@/redux/features/applicationFormSlice";
 import Review2 from "@/components/pages/applicationForm/reviews/review2";
 import ApplicationSuccessModal from "@/components/modals/applicationSuccess";
 import { useDisclosure, useToast } from "@chakra-ui/react";
@@ -185,7 +181,7 @@ const ApplicationForm = () => {
           const {
             _id,
             status,
-            organizationName,
+            organizationApplication,
             createdAt,
             userId,
             termsAndConditionsOne,
@@ -222,7 +218,7 @@ const ApplicationForm = () => {
           console.log(
             status,
             _id,
-            organizationName,
+            organizationApplication,
             createdAt,
             userId,
             medicaidCertificate,

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import showToast from "@/components/common/showtoast";
 import OrganizationApplicationLists from "@/components/pages/applications/organization";
@@ -37,8 +38,11 @@ const DraftApplications = () => {
   }, [user]);
 
   return (
-    <ApplicationsPageLayout title="Draft Applications">
-      <OrganizationApplicationLists data={data} />
+    <ApplicationsPageLayout title="Pending Applications">
+      <OrganizationApplicationLists
+        data={data}
+        fetchFunction={fetchPendingApplications}
+      />
     </ApplicationsPageLayout>
   );
 };

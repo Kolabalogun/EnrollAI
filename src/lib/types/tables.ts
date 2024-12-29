@@ -1,4 +1,4 @@
-export type ApplicationFormType = {
+export type ApplicationFormInterface = {
   id: string;
   fullName: string;
   application: string;

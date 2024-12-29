@@ -14,6 +14,7 @@ export type User = {
   password: string;
   accountType: string;
   organization?: any;
+  data: any;
 };
 
 export interface AuthState {

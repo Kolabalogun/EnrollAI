@@ -5,7 +5,7 @@ import { ChevronLeft } from "lucide-react";
 import PersonalInformations from "@/components/pages/applicationForm/step1/personalInformations";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ApplicationFormType } from "@/lib/types/tables";
+import { ApplicationFormInterface } from "@/lib/types/tables";
 import { ApplicationFormInitialState } from "@/constant/data/applicationsdata";
 import ProfessionalID from "@/components/pages/applicationForm/step1/professionalID";
 import {
@@ -27,7 +27,7 @@ const ApplicationsDetails = () => {
 
   // useEffect(() => {
   //   const filteredForm = lists.find(
-  //     (list: ApplicationFormType) => list.id === id
+  //     (list: ApplicationFormInterface) => list.id === id
   //   );
 
   //   setForm(filteredForm);
@@ -35,7 +35,7 @@ const ApplicationsDetails = () => {
 
   const deleleForm = (id: string) => {
     const filteredForm = lists.filter(
-      (list: ApplicationFormType) => list.id !== id
+      (list: ApplicationFormInterface) => list.id !== id
     );
 
     dispatch(setApplicationList(filteredForm));

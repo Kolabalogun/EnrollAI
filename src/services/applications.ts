@@ -60,6 +60,34 @@ export const getAllApplicationsByUserId = async (id: string) => {
   }
 };
 
+export const getApplicationStatByUserId = async (id: string) => {
+  const token = localStorage.getItem("enrollai-user");
+
+  if (!token) {
+    throw new Error("Authentication token not found");
+  }
+  try {
+    const response = await axios.get(
+      `${VITE_API_BASE_URL}/application/user-stat/${id}`,
+
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return {
+      success: true,
+      data: response.data,
+      message: "",
+    };
+  } catch (error: any) {
+    return handleError(error);
+  }
+};
+
 export const createProviderApplication = async (formData: any) => {
   const token = localStorage.getItem("enrollai-user");
 
@@ -70,6 +98,33 @@ export const createProviderApplication = async (formData: any) => {
     const response = await axios.post(
       `${VITE_API_BASE_URL}/application/apply`,
       formData,
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return {
+      success: true,
+      data: response.data,
+      message: "",
+    };
+  } catch (error: any) {
+    return handleError(error);
+  }
+};
+
+export const deleteProviderApplication = async (id: string) => {
+  const token = localStorage.getItem("enrollai-user");
+
+  if (!token) {
+    throw new Error("Authentication token not found");
+  }
+  try {
+    const response = await axios.delete(
+      `${VITE_API_BASE_URL}/application/${id}`,
       {
         headers: {
           Accept: "application/json",

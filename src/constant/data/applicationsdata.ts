@@ -18,6 +18,17 @@ export const ApplicationFormInitialState = {
     email: "",
   },
 
+  organizationApplication: {
+    accountType: "",
+    administratorFullName: "",
+    createdAt: "",
+    organizationName: "",
+    password: "",
+    workEmail: "",
+
+    _id: "",
+  },
+
   // Personal Information
 
   step1: {
@@ -294,5 +305,3 @@ export const ApplicationsData = [
     desc: "lorem ipsum dolor sit amet",
   },
 ];
-
- 

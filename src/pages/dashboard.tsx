@@ -1,5 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { SubmitButton } from "@/components/common";
+import showToast from "@/components/common/showtoast";
 import ApplicationsModal from "@/components/modals/applications";
 import CreateApplicationModal from "@/components/modals/createApplicationModal";
 import ApplicationLists from "@/components/pages/applications";
@@ -9,8 +11,12 @@ import OrganizationStatBar from "@/components/pages/dashboard/organization/statb
 import StatBar from "@/components/pages/dashboard/statbar";
 import { Progress } from "@/components/ui/progress";
 import { notificationsData } from "@/constant/data/noticationdata";
+
+import { RootState } from "@/redux/store";
+
 import { useDisclosure } from "@chakra-ui/react";
 import { Pen, PlusIcon } from "lucide-react";
+
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -23,9 +29,7 @@ const Dashboard = () => {
     onOpen: orgOnOpen,
   } = useDisclosure();
   const navigate = useNavigate();
-
-  const { user } = useSelector((state: any) => state.auth);
-
+  const { user } = useSelector((state: RootState) => state.auth);
   console.log(user);
 
   const notifications = notificationsData.map((activity) => (
@@ -56,7 +60,7 @@ const Dashboard = () => {
         </p>
 
         <p className="font-medium text-fade text-xs">
-          You have 0 pending application. Start a new application now.
+          {`Start a new application now.`}
         </p>
       </div>
 

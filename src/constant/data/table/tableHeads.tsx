@@ -67,7 +67,7 @@ export const ActionCell = ({
           <ul className="text-left">
             <li
               onClick={() => handleViewDetails(row)}
-              className="cursor-pointer raleway text-xs font-semibold  px-4 py-4 flex items-center gap-3 hover:bg-gray-200"
+              className="cursor-pointer raleway text-xs font-semibold  px-4 py-3 flex items-center gap-3 hover:bg-gray-200"
             >
               <Eye color="blue" size={15} />
               View Application
@@ -75,7 +75,7 @@ export const ActionCell = ({
             {accountType !== "provider" ? (
               <li
                 onClick={() => handleEdit(row)}
-                className="cursor-pointer raleway text-xs font-semibold  px-4 py-4 hover:bg-gray-200 flex items-center gap-3"
+                className="cursor-pointer raleway text-xs font-semibold  px-4 py-3 hover:bg-gray-200 flex items-center gap-3"
               >
                 <CheckCircle color="green" size={15} />
                 Approve Application
@@ -83,7 +83,7 @@ export const ActionCell = ({
             ) : (
               <li
                 onClick={() => handleEdit(row)}
-                className="cursor-pointer raleway text-xs font-semibold  px-4 py-4 hover:bg-gray-200 flex items-center gap-3"
+                className="cursor-pointer raleway text-xs font-semibold  px-4 py-3 hover:bg-gray-200 flex items-center gap-3"
               >
                 <Pen color="blue" size={15} />
                 Edit
@@ -92,7 +92,7 @@ export const ActionCell = ({
             {accountType !== "provider" ? (
               <li
                 onClick={() => handleDelete(row)}
-                className="cursor-pointer raleway text-xs font-semibold  px-4 py-4 flex items-center gap-3 hover:bg-gray-200"
+                className="cursor-pointer raleway text-xs font-semibold  px-4 py-3 flex items-center gap-3 hover:bg-gray-200"
               >
                 <X color="red" size={15} />
                 Reject Application
@@ -100,7 +100,7 @@ export const ActionCell = ({
             ) : (
               <li
                 onClick={() => handleDelete(row)}
-                className="cursor-pointer raleway text-xs font-semibold  px-4 py-4 flex items-center gap-3 hover:bg-gray-200"
+                className="cursor-pointer raleway text-xs font-semibold  px-4 py-3 flex items-center gap-3 hover:bg-gray-200"
               >
                 <Trash color="red" size={15} />
                 Delete
@@ -149,7 +149,7 @@ export const ApplicationFormTableHeads = (
     header: "Date",
     accessor: (row) => (
       <div className="space-y-1 w-32 xl:w-full">
-        <p className="font-semibold py-4  text-xs">
+        <p className="font-semibold py-3  text-xs">
           {formatDateTime(row.createdAt) ?? "N/A"}
         </p>
       </div>
@@ -181,7 +181,7 @@ export const ApplicationFormTableHeads = (
         handleEdit={handleEdit}
         handleViewDetails={handleViewDetails}
         handleDelete={handleDelete}
-        isMenuVisible={activeMenu === row.id}
+        isMenuVisible={activeMenu === row._id}
         toggleMenu={toggleMenu}
       />
     ),
@@ -211,6 +211,18 @@ export const OrganizationApplicationFormTableHeads = (
     flex: 2,
   },
   {
+    header: "Organzation Name",
+    accessor: (row) => (
+      <div className="  w-32 xl:w-full">
+        <p className="font-semibold text-xs">
+          {row?.organizationApplication?.organizationName ?? "N/A"}
+        </p>
+      </div>
+    ),
+    flex: 2,
+  },
+
+  {
     header: "Application Type",
     accessor: (row) => (
       <div className="space-y-1 w-32 xl:w-full">
@@ -220,10 +232,21 @@ export const OrganizationApplicationFormTableHeads = (
     flex: 2,
   },
   {
+    header: "Application Title",
+    accessor: (row) => (
+      <div className="  w-32 xl:w-full">
+        <p className="font-medium text-gray-600 text-xs">
+          {row?.applicationTitle}
+        </p>
+      </div>
+    ),
+    flex: 2,
+  },
+  {
     header: "Date",
     accessor: (row) => (
       <div className="space-y-1 w-32 xl:w-full">
-        <p className="font-semibold py-4  text-xs">
+        <p className="font-semibold py-3  text-xs">
           {formatDateTime(row.createdAt, true) ?? "N/A"}
         </p>
       </div>
@@ -258,7 +281,7 @@ export const OrganizationApplicationFormTableHeads = (
         handleEdit={handleEdit}
         handleViewDetails={handleViewDetails}
         handleDelete={handleDelete}
-        isMenuVisible={activeMenu === row.id}
+        isMenuVisible={activeMenu === row._id}
         toggleMenu={toggleMenu}
       />
     ),

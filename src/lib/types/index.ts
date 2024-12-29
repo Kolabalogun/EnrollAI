@@ -14,6 +14,17 @@ export interface ApplicationFormInterface {
     professionalTitle: string;
     email: string;
   };
+  organizationApplication: {
+    accountType: string;
+    administratorFullName: string;
+    createdAt: string;
+    organizationName: string;
+    password: string;
+    workEmail: string;
+
+    _id: string;
+  };
+
   step1: {
     personalInformation: {
       lastName: string;
@@ -207,3 +218,9 @@ export interface ApplicationFormInterface {
   termsAndConditionsOne: boolean;
   termsAndConditionsTwo: boolean;
 }
+
+export type ApplicationStatType = {
+  activeApplications: number;
+  pendingApplications: number;
+  totalApplications: number;
+};
