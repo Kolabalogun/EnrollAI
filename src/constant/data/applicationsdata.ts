@@ -1,13 +1,22 @@
 export const ApplicationFormInitialState = {
   _id: "",
-  pageNo: 1,
+  createdAt: "",
 
-  userId: "",
   applicationType: "",
   organizationApplicationId: "",
+
   applicationTitle: "",
   organizationName: "",
   status: "pending",
+
+  updatedAt: "",
+  userId: {
+    _id: "",
+    accountType: "",
+    fullName: "",
+    professionalTitle: "",
+    email: "",
+  },
 
   // Personal Information
 
@@ -286,140 +295,4 @@ export const ApplicationsData = [
   },
 ];
 
-export const CreateApplicationFormTemplateInitialState = {
-  // Step 1
-
-  personalInformation: {
-    // Personal Information
-    fullName: "",
-    sex: "male",
-    dob: null,
-    ssn: "",
-    language: "",
-    phoneNumber: "",
-    email: "",
-    address: "",
-  },
-
-  professionID: {
-    // Profession ID
-    npi: "",
-    tin: "",
-    deacn: "",
-    medicalCareId: "",
-  },
-
-  educationInformation: {
-    // Education Information
-
-    undergraduate: {
-      undergraduateInstitution: "",
-      undergraduateDegree: "",
-      undergraduateYOG: "",
-    },
-
-    graduate: {
-      graduateInstitution: "",
-      graduateDegree: "",
-      graduateYOG: "",
-    },
-
-    internship: {
-      internshipInstitution: "",
-      internshipDegree: "",
-      internshipYOG: "",
-    },
-
-    residency: {
-      residencyInstitution: "",
-      residencyDegree: "",
-      residencyYOG: "",
-    },
-
-    fellowship: {
-      fellowshipInstitution: "",
-      fellowshipDegree: "",
-      fellowshipYOG: "",
-    },
-    cme: {
-      cmeInstitution: "",
-      cmeDegree: "",
-      cmeYOG: "",
-    },
-  },
-
-  // Step 2
-  practiceLocation: {
-    practiceLocationI: {
-      // Practice Location I
-      primarypracticelocationName: "",
-      primarypracticelocationOfficeAddress: "",
-      primarypracticelocationContact: "",
-      primarypracticelocationEmail: "",
-      primarypracticelocationOfficeHours: "",
-      primarypracticelocationFax: "",
-    },
-
-    practiceLocationII: {
-      // Practice Location II
-      primarypracticelocation2Name: "",
-      primarypracticelocation2OfficeAddress: "",
-      primarypracticelocation2Contact: "",
-      primarypracticelocation2Email: "",
-      primarypracticelocation2OfficeHours: "",
-      primarypracticelocation2Fax: "",
-    },
-  },
-
-  hospitalAffiliation: {
-    // Hospital Affiliation
-    currentHospitalAffliationHospital: "",
-    currentHospitalAffliationPrivileges: "",
-    previousHospitalAffliationHospital: "",
-    previousHospitalAffliationPrivileges: "",
-  },
-
-  licensing: {
-    // Licensing
-    stateMedicalicense: "",
-    stateMedicalicenseNumber: "",
-    stateMedicalicenseExpirationDate: null,
-    pcslicenseExpirationDate: null,
-    pcslicense: "",
-    pcslicenseNumber: "",
-  },
-
-  // Step 3
-
-  workHistory: {
-    // Work History
-    currentEmploymentPosition: "",
-    currentEmploymentStartDate: null,
-    currentEmploymentEndDate: null,
-    previousEmploymentPosition: "",
-    previousEmploymentStartDate: null,
-    previousEmploymentEndDate: null,
-    previousEmploymentGAP: "",
-    previousEmploymentMilitaryService: "",
-  },
-
-  malpracticeInformation: {
-    // Malpractice Information
-
-    malpracticeInsurance: {
-      malpracticeInsuranceCurrentCarrier: "",
-      malpracticeInsurancePolicyNumber: "",
-      malpracticeInsuranceCoverageLimit: "",
-      malpracticeInsuranceEffectiveDate: "",
-    },
-
-    liabilityClaims: {
-      liabilityClaimsHistoryMalpracticeClaims: "",
-      liabilityClaimsHistoryPendingLitigation: "",
-      liabilityClaimsHistorySettlement: "",
-      liabilityClaimsHistoryDisciplinaryAction: "",
-    },
-  },
-
-  additionalDocuments: [],
-};
+ 

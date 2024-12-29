@@ -8,12 +8,13 @@ import {
   Trash,
   X,
 } from "lucide-react";
-import { ApplicationFormType } from "@/lib/types/tables";
+
 import { TableColumn } from "@/components/table";
 import { formatDateTime } from "@/utils/formatDateTime";
 import { HEALTHCARE_APPLICATIONS_DETALIS } from "@/router/routes";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { ApplicationFormInterface } from "@/lib/types";
 
 export const ActionCell = ({
   row,
@@ -23,10 +24,10 @@ export const ActionCell = ({
   isMenuVisible,
   toggleMenu,
 }: {
-  handleViewDetails: (row: ApplicationFormType) => void;
-  row: ApplicationFormType;
-  handleEdit: (row: ApplicationFormType) => void;
-  handleDelete: (row: ApplicationFormType) => void;
+  handleViewDetails: (row: ApplicationFormInterface) => void;
+  row: ApplicationFormInterface;
+  handleEdit: (row: ApplicationFormInterface) => void;
+  handleDelete: (row: ApplicationFormInterface) => void;
   isMenuVisible: boolean;
   toggleMenu: (id: string | number | null) => void;
 }) => {
@@ -54,7 +55,7 @@ export const ActionCell = ({
   return (
     <div className="relative " ref={menuRef}>
       <div
-        onClick={() => toggleMenu(row.id)} // Pass row.id to toggleMenu
+        onClick={() => toggleMenu(row._id)} // Pass row.id to toggleMenu
         className="cursor-pointer flex items-center z-[1001] justify-center"
       >
         <EllipsisVertical size={18} className="text-text-primary" />
@@ -112,11 +113,11 @@ export const ActionCell = ({
   );
 };
 
-export const DetailsCell = ({ row }: { row: ApplicationFormType }) => {
+export const DetailsCell = ({ row }: { row: ApplicationFormInterface }) => {
   const navigate = useNavigate();
   return (
     <div
-      onClick={() => navigate(`${HEALTHCARE_APPLICATIONS_DETALIS}/${row.id}`)}
+      onClick={() => navigate(`${HEALTHCARE_APPLICATIONS_DETALIS}/${row._id}`)}
       className="  text-xs w-32 xl:w-full text-center items-center justify-center flex gap-2 font-medium text-[#667085]  cursor-pointer  "
     >
       View Details
@@ -126,19 +127,19 @@ export const DetailsCell = ({ row }: { row: ApplicationFormType }) => {
 
 // Table column definition
 export const ApplicationFormTableHeads = (
-  handleViewDetails: (row: ApplicationFormType) => void,
-  handleEdit: (row: ApplicationFormType) => void,
-  handleDelete: (row: ApplicationFormType) => void,
+  handleViewDetails: (row: ApplicationFormInterface) => void,
+  handleEdit: (row: ApplicationFormInterface) => void,
+  handleDelete: (row: ApplicationFormInterface) => void,
   activeMenu: string | number | null,
   toggleMenu: (id: string | number | null) => void
-): TableColumn<ApplicationFormType>[] => [
+): TableColumn<ApplicationFormInterface>[] => [
   {
     header: "Application",
     accessor: (row) => (
       <div className="space-y-1 w-32 xl:w-full ">
         <p className="font-semibold text-xs">Credentialing Request</p>
         <p className="text-fade font-medium text-xs">
-          lorem ipsum organization {row.application}{" "}
+          {row?.organizationName} - {row?.applicationType}
         </p>
       </div>
     ),
@@ -149,7 +150,7 @@ export const ApplicationFormTableHeads = (
     accessor: (row) => (
       <div className="space-y-1 w-32 xl:w-full">
         <p className="font-semibold py-4  text-xs">
-          {formatDateTime(row.date)}
+          {formatDateTime(row.createdAt) ?? "N/A"}
         </p>
       </div>
     ),
@@ -159,7 +160,7 @@ export const ApplicationFormTableHeads = (
   {
     header: "Status",
     accessor: (row) => (
-      <div className="self-center text-xs  text-center items-center justify-center flex gap-2 font-medium p-0.5 rounded-full  w-32 border-[#21A0A0] text-[#21A0A0] border bg-[#d3ecec] ">
+      <div className="self-center text-xs  text-center items-center justify-center flex gap-2 font- p-0.5 rounded-full  w-32 border-[#21A0A0] text-[#21A0A0] border bg-[#d3ecec] ">
         {row.status}
       </div>
     ),
@@ -191,26 +192,29 @@ export const ApplicationFormTableHeads = (
 
 // Table column definition
 export const OrganizationApplicationFormTableHeads = (
-  handleViewDetails: (row: ApplicationFormType) => void,
-  handleEdit: (row: ApplicationFormType) => void,
-  handleDelete: (row: ApplicationFormType) => void,
+  handleViewDetails: (row: ApplicationFormInterface) => void,
+  handleEdit: (row: ApplicationFormInterface) => void,
+  handleDelete: (row: ApplicationFormInterface) => void,
   activeMenu: string | number | null,
   toggleMenu: (id: string | number | null) => void
-): TableColumn<ApplicationFormType>[] => [
+): TableColumn<ApplicationFormInterface>[] => [
   {
     header: "Provider Name",
     accessor: (row) => (
       <div className="space-y-1 w-32 xl:w-full">
-        <p className="font-semibold text-xs">{row.fullName}</p>
+        <p className="font-semibold text-xs">
+          {row?.step1?.personalInformation?.firstName}{" "}
+          {row?.step1?.personalInformation?.lastName}
+        </p>
       </div>
     ),
     flex: 2,
   },
   {
     header: "Application Type",
-    accessor: () => (
+    accessor: (row) => (
       <div className="space-y-1 w-32 xl:w-full">
-        <p className="font-semibold text-xs">Credentialing Request</p>
+        <p className="font-semibold text-xs">{row?.applicationType || "N.A"}</p>
       </div>
     ),
     flex: 2,
@@ -220,7 +224,7 @@ export const OrganizationApplicationFormTableHeads = (
     accessor: (row) => (
       <div className="space-y-1 w-32 xl:w-full">
         <p className="font-semibold py-4  text-xs">
-          {formatDateTime(row.date, true)}
+          {formatDateTime(row.createdAt, true) ?? "N/A"}
         </p>
       </div>
     ),
@@ -230,7 +234,15 @@ export const OrganizationApplicationFormTableHeads = (
   {
     header: "Status",
     accessor: (row) => (
-      <div className="self-center text-xs   items-center justify-center flex gap-2 font-medium p-0.5 rounded-full  w-32 border-[#21A0A0] text-[#21A0A0] border bg-[#d3ecec] ">
+      <div
+        className={`self-center text-xs   items-center justify-center flex gap-2 font-medium p-0.5 rounded-full capitalize  w-32 ${
+          row?.status === "approved"
+            ? "border-[#21A0A0] text-[#21A0A0] bg-[#d3ecec] "
+            : row?.status === "pending"
+            ? "border-yellow-500 text-yellow-500 bg-yellow-500/10"
+            : "border-[#21A0A0] text-[#21A0A0]"
+        } border `}
+      >
         {row.status}
       </div>
     ),

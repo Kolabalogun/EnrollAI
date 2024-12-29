@@ -23,6 +23,8 @@ import { useDisclosure, useToast } from "@chakra-ui/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { HEALTHCARE_APPLICATIONS } from "@/router/routes";
 import showToast from "@/components/common/showtoast";
+import { createProviderApplication } from "@/services/applications";
+import { RootState } from "@/redux/store";
 
 const validateForm = (form: any): Record<string, string> => {
   const errors: Record<string, string> = {};
@@ -57,10 +59,10 @@ const validateForm = (form: any): Record<string, string> => {
 
 const ApplicationForm = () => {
   const [isLoading, setLoading] = useState<boolean>(false);
+  const [pageNo, setPageNo] = useState<number>(1);
   const { isOpen, onClose, onOpen } = useDisclosure();
-  const { form, lists } = useSelector((state: any) => state.applicationForm);
+  const { form } = useSelector((state: RootState) => state.applicationForm);
 
-  const { user } = useSelector((state: any) => state.auth);
   const dispatch = useDispatch();
   const toast = useToast();
   const navigate = useNavigate();
@@ -81,7 +83,7 @@ const ApplicationForm = () => {
 
       const data = {
         ...form,
-        userId: user?.data?.userId,
+
         applicationType: orgData?.applicationName || "",
         organizationApplicationId: orgData?.organization?._id || "",
         organizationName: orgData?.organization?.organizationName || "",
@@ -173,15 +175,107 @@ const ApplicationForm = () => {
     try {
       setLoading(true);
 
-      if (form.pageNo === 5) {
+      if (pageNo === 5) {
         if (isOpen) {
-          dispatch(setApplicationList([...(lists || []), form]));
-          // dispatch(resetLists());
           dispatch(resetForm());
-          dispatch(updateForm({ pageNo: 1 }));
+
           navigate(HEALTHCARE_APPLICATIONS);
         } else {
-          onOpen();
+          // Filter out problematic fields
+          const {
+            _id,
+            status,
+            organizationName,
+            createdAt,
+            userId,
+            termsAndConditionsOne,
+            termsAndConditionsTwo,
+            step2: {
+              medicalLicenses: {
+                medicaidCertificate,
+                ECFMGFile,
+                controlledSubstanceExpirationFile,
+                deaExpirationFile,
+                ...medicalLicensesRest
+              },
+              otherMedLicenses: {
+                stateMedicalLicensefile1,
+                stateMedicalLicensefile2,
+                stateMedicalLicensefile3,
+                ...otherMedLicensesRest
+              },
+              ...restStep2
+            },
+            step3: {
+              boards: {
+                certificationfile1,
+                certificationfile2,
+                certificationfile3,
+                ...boardRest
+              },
+              ...step3Rest
+            },
+            ...data
+          } = form;
+
+          // Log for debugging
+          console.log(
+            status,
+            _id,
+            organizationName,
+            createdAt,
+            userId,
+            medicaidCertificate,
+            ECFMGFile,
+            controlledSubstanceExpirationFile,
+            deaExpirationFile,
+            stateMedicalLicensefile1,
+            stateMedicalLicensefile2,
+            stateMedicalLicensefile3,
+            certificationfile1,
+            certificationfile2,
+            certificationfile3
+          );
+
+          if (!termsAndConditionsTwo || !termsAndConditionsOne) {
+            return showToast(
+              toast,
+              "Enroll AI",
+              "error",
+              "Accept terms and conditions before you proceed"
+            );
+          }
+
+          // Construct the new form data without the problematic fields
+          const cleanedFormData = {
+            ...data,
+            step2: {
+              ...restStep2,
+              medicalLicenses: medicalLicensesRest,
+              otherMedLicenses: otherMedLicensesRest,
+            },
+            step3: {
+              ...step3Rest,
+              boards: boardRest,
+            },
+          };
+
+          try {
+            const res = await createProviderApplication(cleanedFormData);
+            console.log(res);
+
+            if (res.success) {
+              onOpen();
+              showToast(
+                toast,
+                "Enroll AI",
+                "error",
+                `${res?.data?.message || "Application created successfully"}`
+              );
+            }
+          } catch (error) {
+            console.log(error);
+          }
         }
       } else {
         const validationErrors = validateForm(form);
@@ -195,7 +289,7 @@ const ApplicationForm = () => {
           setErrors(validationErrors);
         } else {
           setErrors({});
-          dispatch(updateForm({ pageNo: form.pageNo + 1 }));
+          setPageNo(pageNo + 1);
         }
       }
     } catch (error) {
@@ -208,9 +302,18 @@ const ApplicationForm = () => {
   return (
     <div className="space-y-5 remove-scrollbar">
       <ApplicationSuccessModal
-        onClose={onClose}
+        onClose={() => {
+          onClose();
+          dispatch(resetForm());
+
+          navigate(HEALTHCARE_APPLICATIONS);
+        }}
         isOpen={isOpen}
-        handleClick={handleSubmit}
+        handleClick={() => {
+          dispatch(resetForm());
+
+          navigate(HEALTHCARE_APPLICATIONS);
+        }}
       />
       <div className="flex items-center gap-1">
         <p className="text-[11px] font-semibold text-fade">Dashboard</p>
@@ -219,9 +322,9 @@ const ApplicationForm = () => {
       </div>
 
       <form onSubmit={handleSubmit}>
-        {form.pageNo === 5 ? (
+        {pageNo === 5 ? (
           <Review2 form={form} handleCheckBoxChange={handleCheckBoxChange} />
-        ) : form.pageNo === 2 ? (
+        ) : pageNo === 2 ? (
           <Step2
             form={form}
             errors={errors}
@@ -229,14 +332,14 @@ const ApplicationForm = () => {
             handleChange={handleChange}
             handleFileChange={handleFileChange}
           />
-        ) : form.pageNo === 3 ? (
+        ) : pageNo === 3 ? (
           <Step3
             form={form}
             errors={errors}
             handleChange={handleChange}
             handleFileChange={handleFileChange}
           />
-        ) : form.pageNo === 4 ? (
+        ) : pageNo === 4 ? (
           <Review1 form={form} />
         ) : (
           <Step1 form={form} errors={errors} handleChange={handleChange} />
@@ -246,13 +349,13 @@ const ApplicationForm = () => {
           <button
             type="button"
             onClick={() => {
-              if (form.pageNo > 1) {
-                dispatch(updateForm({ pageNo: form.pageNo - 1 }));
+              if (pageNo > 1) {
+                setPageNo(pageNo - 1);
               }
             }}
             className="py-2 raleway px-8 border rounded-md font-semibold text-xs"
           >
-            {form.pageNo === 1 ? "Cancel" : form.pageNo === 4 ? "Edit" : "Back"}
+            {pageNo === 1 ? "Cancel" : pageNo === 4 ? "Edit" : "Back"}
           </button>
 
           <SubmitButton
@@ -260,14 +363,10 @@ const ApplicationForm = () => {
             className="py-2 flex gap-2  w-auto px-8 border rounded-md font-semibold text-xs"
           >
             <p className="font-bold text-xs">
-              {form.pageNo === 3
-                ? "Review"
-                : form.pageNo === 5
-                ? "Submit"
-                : "Next"}
+              {pageNo === 3 ? "Review" : pageNo === 5 ? "Submit" : "Next"}
             </p>
 
-            {form.pageNo !== 5 && <ChevronRightIcon size={15} />}
+            {pageNo !== 5 && <ChevronRightIcon size={15} />}
           </SubmitButton>
         </div>
       </form>

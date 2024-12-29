@@ -120,7 +120,7 @@ const Review1 = ({ form }: ApplicationProps) => {
           </p>
         </div>
 
-        <div className="flex xl:flex-row flex-col  justify-between xl:gap-20 gap-8 border-b-2 pb-10">
+        <div className="grid xl:grid-cols-3 flex-col  justify-between  0 gap-8 border-b-2 pb-10">
           <div className="    flex w-full flex-1 flex-col gap-5    ">
             <p className="font-semibold text-xl">Personal Information</p>
 
@@ -285,7 +285,7 @@ const Review1 = ({ form }: ApplicationProps) => {
         </div>
 
         <div className="space-y-16 border-b-2 pb-10">
-          <div className="flex xl:flex-row flex-col  justify-between xl:gap-20 gap-8  ">
+          <div className="grid xl:grid-cols-3 flex-col  justify-between   gap-x-8  ">
             <div className="    flex w-full flex-1 flex-col gap-5    ">
               <p className="font-semibold text-xl">Education</p>
 
@@ -597,108 +597,6 @@ const Review1 = ({ form }: ApplicationProps) => {
               </div>
             </div>
           </div>
-          {/* <div className="flex xl:flex-row flex-col  justify-between xl:gap-20 gap-8   ">
-            <div className="    flex w-full flex-1 flex-col gap-5    ">
-              <div className="space-y-3">
-                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
-                  <p className="font-semibold text-xs text-black">Residency</p>
-                </div>
-
-                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
-                  <p className="font-semibold text-xs text-black">
-                    Institution:
-                  </p>
-                  <p className="text-xs text-[#667085] font-medium capitalize ">
-                    {residencyInstitution || ""}
-                  </p>
-                </div>
-
-                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
-                  <p className="font-semibold text-xs text-black">Degree:</p>
-                  <p className="text-xs text-[#667085] font-medium capitalize ">
-                    {residencyDegree || ""}
-                  </p>
-                </div>
-
-                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
-                  <p className="font-semibold text-xs text-black">
-                    Year of Graduation:
-                  </p>
-                  <p className="text-xs text-[#667085] font-medium capitalize ">
-                    {residencyYOG || ""}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="    flex w-full flex-1 flex-col gap-5    ">
-              <div className="space-y-3">
-                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
-                  <p className="font-semibold text-xs text-black">Fellowship</p>
-                </div>
-
-                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
-                  <p className="font-semibold text-xs text-black">
-                    Institution:
-                  </p>
-                  <p className="text-xs text-[#667085] font-medium capitalize ">
-                    {fellowshipInstitution || ""}
-                  </p>
-                </div>
-
-                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
-                  <p className="font-semibold text-xs text-black">Degree:</p>
-                  <p className="text-xs text-[#667085] font-medium capitalize ">
-                    {fellowshipDegree || ""}
-                  </p>
-                </div>
-
-                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
-                  <p className="font-semibold text-xs text-black">
-                    Year of Graduation:
-                  </p>
-                  <p className="text-xs text-[#667085] font-medium capitalize ">
-                    {fellowshipYOG || ""}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="    flex w-full flex-1 flex-col gap-5    ">
-              <div className="space-y-3">
-                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
-                  <p className="font-semibold text-xs text-black">
-                    Continuing Medical Education (CME)
-                  </p>
-                </div>
-
-                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
-                  <p className="font-semibold text-xs text-black">
-                    Institution:
-                  </p>
-                  <p className="text-xs text-[#667085] font-medium capitalize ">
-                    {cmeInstitution || ""}
-                  </p>
-                </div>
-
-                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
-                  <p className="font-semibold text-xs text-black">Degree:</p>
-                  <p className="text-xs text-[#667085] font-medium capitalize ">
-                    {cmeDegree || ""}
-                  </p>
-                </div>
-
-                <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
-                  <p className="font-semibold text-xs text-black">
-                    Year of Graduation:
-                  </p>
-                  <p className="text-xs text-[#667085] font-medium capitalize ">
-                    {cmeYOG || ""}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div> */}
         </div>
 
         <div className="flex xl:flex-row flex-col  justify-between xl:gap-20 gap-8  ">

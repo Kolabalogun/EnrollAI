@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import Step1 from "@/components/pages/applicationFormTemplates/step1";
 import Step2 from "@/components/pages/applicationFormTemplates/step2";
 import Step3 from "@/components/pages/applicationFormTemplates/step3";
-import { CreateApplicationFormTemplateInitialState } from "@/constant/data/applicationsdata";
+import { ApplicationFormInitialState } from "@/constant/data/applicationsdata";
 
 const CreateApplicationForm = () => {
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -22,9 +22,7 @@ const CreateApplicationForm = () => {
   const navigate = useNavigate();
 
   // Use the correct type for form state
-  const [form, setForm] = useState<any>(
-    CreateApplicationFormTemplateInitialState
-  );
+  const [form, setForm] = useState<any>(ApplicationFormInitialState);
   const [pageNo, setPageNo] = useState(1);
 
   console.log(form);
