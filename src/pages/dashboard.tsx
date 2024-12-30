@@ -103,7 +103,7 @@ const Dashboard = () => {
 
             <div
               onClick={() =>
-                navigate("/dashboard/health-provider/draft-applications")
+                navigate("/dashboard/health-provider/pending-applications")
               }
               className="border-secondary text-secondary bg-transparent border-2 hover:bg-secondary transition duration-500 hover:text-white py-2 gap-3 px-10 cursor-pointer flex items-center justify-center rounded-lg"
             >

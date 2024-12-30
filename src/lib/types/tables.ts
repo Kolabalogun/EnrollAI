@@ -1,13 +1,3 @@
-export type ApplicationFormInterface = {
-  id: string;
-  fullName: string;
-  application: string;
-  description: string;
-  date: string;
-  status: string;
-  dob: string;
-};
-
 export type NotificationType = {
   id: number;
   title: string;

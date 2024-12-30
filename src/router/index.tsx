@@ -84,16 +84,16 @@ const router = createBrowserRouter([
         element: <HealthProviderApplications />,
       },
       {
-        path: "/dashboard/health-provider/active-applications",
+        path: "/dashboard/health-provider/approved-applications",
         element: <HealthProviderActiveApplications />,
       },
       {
-        path: "/dashboard/health-provider/draft-applications",
+        path: "/dashboard/health-provider/pending-applications",
         element: <HealthProviderDraftApplications />,
       },
 
       {
-        path: "/dashboard/health-provider/completed-applications",
+        path: "/dashboard/health-provider/declined-applications",
         element: <HealthProviderCompletedApplications />,
       },
 

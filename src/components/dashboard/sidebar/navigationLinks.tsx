@@ -31,25 +31,25 @@ export const healthProviderLinks = [
 
     subLinks: [
       {
-        label: "Active",
+        label: "Approved",
         icon: <Triangle size={16} className="text-secondary" />,
         iconWhite: <Triangle size={16} className="text-[#667085]" />,
         title: "Menu",
-        buttonLink: "/dashboard/health-provider/active-applications",
+        buttonLink: "/dashboard/health-provider/approved-applications",
       },
       {
-        label: "Draft",
+        label: "Pending",
         icon: <Square size={16} className="rotate-45 text-secondary" />,
         iconWhite: <Square size={16} className="rotate-45 text-[#667085]" />,
         title: "Menu",
-        buttonLink: "/dashboard/health-provider/draft-applications",
+        buttonLink: "/dashboard/health-provider/pending-applications",
       },
       {
-        label: "Completed",
+        label: "Declined",
         icon: <Hexagon size={18} className=" text-secondary" />,
         iconWhite: <Hexagon size={18} className=" text-[#667085]" />,
         title: "Menu",
-        buttonLink: "/dashboard/health-provider/completed-applications",
+        buttonLink: "/dashboard/health-provider/declined-applications",
       },
     ],
   },

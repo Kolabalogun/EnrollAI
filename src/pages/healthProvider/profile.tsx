@@ -1,18 +1,59 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { SubmitButton } from "@/components/common";
+import showToast from "@/components/common/showtoast";
 
 import ConfirmationModal from "@/components/modals/confirmationModal";
 import PersonalInformations from "@/components/pages/applicationForm/step1/personalInformations";
 import ProfessionalID from "@/components/pages/applicationForm/step1/professionalID";
+import { ApplicationFormInitialState } from "@/constant/data/applicationsdata";
+import { ApplicationFormInterface } from "@/lib/types";
+import { RootState } from "@/redux/store";
 import { HEALTHCARE_APPLICATIONS_CAHQPROFILE } from "@/router/routes";
-import { useDisclosure } from "@chakra-ui/react";
+import { getAllApplicationsByUserId } from "@/services/applications";
+import { useDisclosure, useToast } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
-  const { form } = useSelector((state: any) => state.applicationForm);
+  const { form } = useSelector((state: RootState) => state.applicationForm);
   const { isOpen, onClose, onOpen } = useDisclosure();
   const navigate = useNavigate();
+
+  const { user } = useSelector((state: RootState) => state.auth);
+  const toast = useToast();
+  const [data, setData] = useState<ApplicationFormInterface>(
+    ApplicationFormInitialState
+  );
+  const fetchApplications = async () => {
+    console.log(user);
+
+    try {
+      const res = await getAllApplicationsByUserId(user?.data?.userId);
+      console.log(res);
+      if (res.success) {
+        if (res?.data?.applications?.length) {
+          setData(res?.data?.applications[0]);
+        } else {
+          setData(ApplicationFormInitialState);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+
+      showToast(
+        toast,
+        "Enroll AI",
+        "error",
+        "Accept terms and conditions before you proceed"
+      );
+    }
+  };
+  useEffect(() => {
+    if (user) fetchApplications();
+  }, [user]);
+
+  console.log(data, "dsdsds");
 
   const handleSubmit = async () => {
     navigate(HEALTHCARE_APPLICATIONS_CAHQPROFILE);
@@ -37,8 +78,8 @@ const Profile = () => {
           </p>
         </div>
         <div className="space-y-5">
-          <PersonalInformations form={form} />
-          <ProfessionalID form={form} />
+          <PersonalInformations form={data} />
+          {/* <ProfessionalID form={form} /> */}
         </div>
 
         <div className="py-5 space-y-2 ">

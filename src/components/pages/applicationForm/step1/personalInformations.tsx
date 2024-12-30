@@ -4,10 +4,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import PhoneInputField from "../Inputs/phoneInput";
 import TextInputField from "../Inputs/TextInput";
 import { ApplicationProps } from ".";
+import { ApplicationFormInitialState } from "@/constant/data/applicationsdata";
 
 const PersonalInformations = ({
-  form,
-  errors,
+  form = ApplicationFormInitialState,
+  errors = {},
   handleChange,
 }: ApplicationProps) => {
   const personalInfoFields = [
@@ -35,6 +36,8 @@ const PersonalInformations = ({
     { label: "CAHQ ID", name: "cahqID" },
     { label: "CAHQ Password", name: "cahqPassword" },
   ];
+
+  console.log(form, "formformform");
 
   return (
     <div className="border rounded-lg pt-5 px-3 xl:px-5 pb-10 space-y-5">
@@ -147,7 +150,7 @@ const PersonalInformations = ({
                   ? "number"
                   : "text"
               }
-              value={form.step1.personalInformation[field.name]}
+              value={form.step1.personalInformation[field.name] || ""}
               onChange={(e) =>
                 handleChange(
                   "step1",

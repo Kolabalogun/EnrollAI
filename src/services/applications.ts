@@ -60,6 +60,39 @@ export const getAllApplicationsByUserId = async (id: string) => {
   }
 };
 
+export const getUsersApplicationsByStatus = async (
+  userId: string,
+  status: string
+) => {
+  const token = localStorage.getItem("enrollai-user");
+
+  if (!token) {
+    throw new Error("Authentication token not found");
+  }
+
+  try {
+    const response = await axios.get(
+      `${VITE_API_BASE_URL}/application/user/status/${userId}`,
+      {
+        params: { status },
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return {
+      success: true,
+      data: response.data,
+      message: "",
+    };
+  } catch (error: any) {
+    return handleError(error);
+  }
+};
+
 export const getApplicationStatByUserId = async (id: string) => {
   const token = localStorage.getItem("enrollai-user");
 

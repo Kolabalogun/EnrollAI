@@ -1,15 +1,22 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Avatar } from "@/assets/img";
 import { SubmitButton } from "@/components/common";
 import SecondaryButton from "@/components/common/buttons/secondaryButton";
+import showToast from "@/components/common/showtoast";
 import ConfirmationModal from "@/components/modals/confirmationModal";
 import Education from "@/components/pages/profile/education";
 import License from "@/components/pages/profile/license";
 import PersonalInformations from "@/components/pages/profile/personalInformations";
 import PracticeLocation from "@/components/pages/profile/practicelocation";
 import Reference from "@/components/pages/profile/reference";
+import { ApplicationFormInitialState } from "@/constant/data/applicationsdata";
+import { ApplicationFormInterface } from "@/lib/types";
+
 import { updateCAHQForm } from "@/redux/features/caqhProfileFormSlice";
+import { RootState } from "@/redux/store";
 import { HEALTHCARE_APPLICATIONS_PROFILE } from "@/router/routes";
+import { getAllApplicationsByUserId } from "@/services/applications";
 import {
   Step,
   StepIndicator,
@@ -22,6 +29,7 @@ import {
   useDisclosure,
   StepIcon,
   StepNumber,
+  useToast,
 } from "@chakra-ui/react";
 import {
   Badge,
@@ -31,6 +39,7 @@ import {
   User2,
   Users,
 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -58,12 +67,46 @@ const steps = [
 ];
 
 const CAHQProfile = () => {
-  const { form } = useSelector((state: any) => state.cahqProfile);
+  const { user } = useSelector((state: RootState) => state.auth);
+  const [data, setData] = useState<ApplicationFormInterface>(
+    ApplicationFormInitialState
+  );
+  const [pageNo, setPageNo] = useState(1);
+  const toast = useToast();
+  const fetchApplications = async () => {
+    console.log(user);
+
+    try {
+      const res = await getAllApplicationsByUserId(user?.data?.userId);
+      console.log(res);
+      if (res.success) {
+        if (res?.data?.applications?.length) {
+          setData(res?.data?.applications[0]);
+        } else {
+          setData(ApplicationFormInitialState);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+
+      showToast(
+        toast,
+        "Enroll AI",
+        "error",
+        "Accept terms and conditions before you proceed"
+      );
+    }
+  };
+  useEffect(() => {
+    if (user) fetchApplications();
+  }, [user]);
+
+  console.log(data, "dsdsds");
   const { isOpen, onClose, onOpen } = useDisclosure();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { activeStep, setActiveStep } = useSteps({
-    index: form.pageNo || 1,
+    index: setPageNo || 1,
     count: steps.length,
   });
 
@@ -84,11 +127,11 @@ const CAHQProfile = () => {
 
   const handleNextStep = (e: any) => {
     e.preventDefault();
-    if (form.pageNo === 5) {
+    if (pageNo === 5) {
       onOpen();
     } else {
       setActiveStep(activeStep + 1);
-      dispatch(updateCAHQForm({ pageNo: form.pageNo + 1 }));
+      setPageNo(pageNo + 1);
     }
   };
 
@@ -107,7 +150,7 @@ const CAHQProfile = () => {
         className="bg-white rounded-lg flex-1 h-full w-full flex flex-col px-5 py-5 pb-20 space-y-9"
       >
         <div className="space-y-1">
-          <p className="font-semibold text-3xl">CAHQ Profile</p>
+          <p className="font-semibold text-3xl">Application Profile</p>
           <p className="text-[12px] font-semibold  text-[#667085]">
             CAQH ID: 121212222
           </p>
@@ -156,21 +199,21 @@ const CAHQProfile = () => {
           </div>
         </div>
         <div className="space-y-5">
-          {form.pageNo === 5 ? (
+          {pageNo === 5 ? (
             <Reference
-              form={form}
+              form={data}
               handleChange={handleChange}
               handlePhoneChange={handlePhoneChange}
             />
-          ) : form.pageNo === 2 ? (
-            <Education form={form} handleChange={handleChange} />
-          ) : form.pageNo === 3 ? (
-            <PracticeLocation form={form} handleChange={handleChange} />
-          ) : form.pageNo === 4 ? (
-            <License form={form} handleChange={handleChange} />
+          ) : pageNo === 2 ? (
+            <Education form={data} handleChange={handleChange} />
+          ) : pageNo === 3 ? (
+            <PracticeLocation form={data} handleChange={handleChange} />
+          ) : pageNo === 4 ? (
+            <License form={data} handleChange={handleChange} />
           ) : (
             <PersonalInformations
-              form={form}
+              form={data}
               handleChange={handleChange}
               handleDateChange={handleDateChange}
               handlePhoneChange={handlePhoneChange}
@@ -180,11 +223,11 @@ const CAHQProfile = () => {
 
         <div className="flex   gap-5   items-center">
           <SecondaryButton
-            title={form.pageNo === 1 ? "Cancel" : "Previous"}
+            title={pageNo === 1 ? "Cancel" : "Previous"}
             handleClick={() => {
-              if (form.pageNo > 1) {
+              if (pageNo > 1) {
                 setActiveStep(activeStep - 1);
-                dispatch(updateCAHQForm({ pageNo: form.pageNo - 1 }));
+                dispatch(updateCAHQForm({ pageNo: pageNo - 1 }));
               }
             }}
           />
@@ -194,9 +237,9 @@ const CAHQProfile = () => {
             className="py-2 flex gap-2  w-auto px-8 border rounded-md font-semibold text-xs"
           >
             <p className="font-bold text-xs">
-              {form.pageNo === 5 ? "Done" : "Next"}
+              {pageNo === 5 ? "Done" : "Next"}
             </p>
-            {form.pageNo !== 5 && <ChevronRightIcon size={16} />}
+            {pageNo !== 5 && <ChevronRightIcon size={16} />}
           </SubmitButton>
         </div>
       </form>

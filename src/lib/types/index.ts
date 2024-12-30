@@ -5,7 +5,7 @@ export interface ApplicationFormInterface {
   organizationApplicationId: string;
   applicationTitle: string;
   organizationName: string;
-  status: "pending" | "approved" | "declined";
+  status: string;
   updatedAt: string;
   userId: {
     _id: string;
@@ -37,7 +37,7 @@ export interface ApplicationFormInterface {
       email: string;
       birthdate: string | null;
       SSN: string;
-      gender: "Male" | "Female" | "Other";
+      gender: string;
       NPI: string;
       city: string;
       state: string;

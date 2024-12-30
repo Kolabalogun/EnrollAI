@@ -15,7 +15,7 @@ const TextInputField = ({
   value,
   onChange,
   type,
-  error,
+  error = false,
 }: InputFieldProps) => {
   return (
     <div className="raleway text-xs flex   flex-col w-full gap-2   font-medium">
