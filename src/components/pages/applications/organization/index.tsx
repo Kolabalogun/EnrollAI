@@ -10,15 +10,18 @@ import { deleteProviderApplication } from "@/services/applications";
 import showToast from "@/components/common/showtoast";
 import { useDisclosure, useToast } from "@chakra-ui/react";
 import ConfirmationModal from "@/components/modals/confirmationModal";
+import LoadingCarts from "../../dashboard/loadingarts";
 
 const OrganizationApplicationLists = ({
   full,
   data,
   fetchFunction,
+  isLoading,
 }: {
   full?: boolean;
   data?: ApplicationFormInterface[];
   fetchFunction: () => void;
+  isLoading?: boolean;
 }) => {
   const [activeMenu, setActiveMenu] = useState<string | number | null>(null);
   const navigate = useNavigate();
@@ -46,6 +49,7 @@ const OrganizationApplicationLists = ({
 
   const handleEdit = (row: ApplicationFormInterface) => {
     console.log(row);
+    navigate(`/dashboard/health-provider/applications/details/${row._id}`);
   };
 
   const handleDelete = (row: ApplicationFormInterface) => {
@@ -108,13 +112,23 @@ const OrganizationApplicationLists = ({
           if (selectedRow) handleDeleteApplication(selectedRow._id);
         }}
       />
-      {data?.length ? (
-        <div className="flex-1 w-full md:w-auto">
-          {/* Table */}
-          <TableComponent footerTxt={""} columns={columns} data={dataa || []} />
-        </div>
+      {isLoading ? (
+        <LoadingCarts />
       ) : (
-        <EmptyCarts />
+        <>
+          {data?.length ? (
+            <div className="flex-1 w-full md:w-auto">
+              {/* Table */}
+              <TableComponent
+                footerTxt={""}
+                columns={columns}
+                data={dataa || []}
+              />
+            </div>
+          ) : (
+            <EmptyCarts />
+          )}
+        </>
       )}
     </div>
   );

@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import showToast from "@/components/common/showtoast";
 import OrganizationApplicationLists from "@/components/pages/applications/organization";
+import { headers } from "@/constant/data/headers";
 import ApplicationsPageLayout from "@/layout/applicationsPage";
 import { RootState } from "@/redux/store";
 import { getUsersApplicationsByStatus } from "@/services/applications";
@@ -25,14 +27,13 @@ const CompletedApplications = () => {
       if (res.success) {
         setData(res?.data?.applications);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
-
       showToast(
         toast,
         "Enroll AI",
         "error",
-        "Accept terms and conditions before you proceed"
+        `${error.message || "Failed to fetch Application"}`
       );
     }
   };
@@ -40,7 +41,12 @@ const CompletedApplications = () => {
     if (user) fetchApplications();
   }, [user]);
   return (
-    <ApplicationsPageLayout title="Declined Applications">
+    <ApplicationsPageLayout
+      handleSearch={() => console.log("")}
+      headers={headers}
+      title="Declined Applications"
+      filteredData={data}
+    >
       <OrganizationApplicationLists
         data={data}
         fetchFunction={fetchApplications}

@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import showToast from "@/components/common/showtoast";
 import OrganizationApplicationLists from "@/components/pages/applications/organization";
+import { headers } from "@/constant/data/headers";
 import ApplicationsPageLayout from "@/layout/applicationsPage";
 import { RootState } from "@/redux/store";
 import { getUsersApplicationsByStatus } from "@/services/applications";
@@ -13,38 +15,61 @@ const DraftApplications = () => {
   const { user } = useSelector((state: RootState) => state.auth);
   const toast = useToast();
   const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const fetchApplications = async () => {
-    console.log(user);
-
+    setIsLoading(true);
     try {
       const res = await getUsersApplicationsByStatus(
         user?.data?.userId,
         "pending"
       );
-      console.log(res);
       if (res.success) {
         setData(res?.data?.applications);
+        setFilteredData(res?.data?.applications);
       }
-    } catch (error) {
-      console.log(error);
-
+    } catch (error: any) {
       showToast(
         toast,
         "Enroll AI",
         "error",
-        "Accept terms and conditions before you proceed"
+        `${error.message || "Failed to fetch Application"}`
       );
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  const handleSearch = (value: string) => {
+    const lowercasedValue = value.toLowerCase();
+
+    const filtered = data.filter((item: any) =>
+      [
+        "organizationName",
+        "applicationType",
+        "applicationTitle",
+        "status",
+      ].some((key) => item[key]?.toLowerCase().includes(lowercasedValue))
+    );
+
+    setFilteredData(filtered);
+  };
+
   useEffect(() => {
     if (user) fetchApplications();
   }, [user]);
 
   return (
-    <ApplicationsPageLayout title="Pending Applications">
+    <ApplicationsPageLayout
+      title="Pending Applications"
+      handleSearch={handleSearch}
+      headers={headers}
+      filteredData={filteredData}
+    >
       <OrganizationApplicationLists
-        data={data}
+        data={filteredData || []}
         fetchFunction={fetchApplications}
+        isLoading={isLoading}
       />
     </ApplicationsPageLayout>
   );

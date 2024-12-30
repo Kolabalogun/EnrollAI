@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import Step1 from "@/components/pages/applicationForm/step1";
 import { SubmitButton } from "@/components/common";
 import Step2 from "@/components/pages/applicationForm/step2";
-
 import Step3 from "@/components/pages/applicationForm/step3";
 import Review1 from "@/components/pages/applicationForm/reviews/review1";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,8 +20,11 @@ import { HEALTHCARE_APPLICATIONS } from "@/router/routes";
 import showToast from "@/components/common/showtoast";
 import { createProviderApplication } from "@/services/applications";
 import { RootState } from "@/redux/store";
+import { ApplicationFormInterface } from "@/lib/types";
 
-const validateForm = (form: any): Record<string, string> => {
+const validateForm = (
+  form: ApplicationFormInterface
+): Record<string, string> => {
   const errors: Record<string, string> = {};
 
   // Helper function to check if a field is empty

@@ -86,14 +86,13 @@ const CAHQProfile = () => {
           setData(ApplicationFormInitialState);
         }
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
-
       showToast(
         toast,
         "Enroll AI",
         "error",
-        "Accept terms and conditions before you proceed"
+        `${error.message || "Failed to fetch Application"}`
       );
     }
   };

@@ -107,7 +107,7 @@ const Dashboard = () => {
               }
               className="border-secondary text-secondary bg-transparent border-2 hover:bg-secondary transition duration-500 hover:text-white py-2 gap-3 px-10 cursor-pointer flex items-center justify-center rounded-lg"
             >
-              <p className="text-xs font-semibold">Review Draft </p>
+              <p className="text-xs font-semibold">Pending Applications</p>
               <Pen size={14} />
             </div>
           </div>

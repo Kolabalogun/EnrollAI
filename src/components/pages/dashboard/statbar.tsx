@@ -1,10 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ApplicationStatType } from "@/lib/types";
 import StatCard from "./statcard";
 import { RootState } from "@/redux/store";
 import { useSelector } from "react-redux";
 import { useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { getApplicationStatByUserId } from "@/services/applications";
+import { getApplicationStatBasedOnUserId } from "@/services/applications";
 import showToast from "@/components/common/showtoast";
 
 const StatBar = ({ applications }: { applications?: boolean }) => {
@@ -16,19 +18,18 @@ const StatBar = ({ applications }: { applications?: boolean }) => {
     console.log(user);
 
     try {
-      const res = await getApplicationStatByUserId(user?.data?.userId);
+      const res = await getApplicationStatBasedOnUserId(user?.data?.userId);
       console.log(res, "resres");
       if (res.success) {
         setProviderStatData(res?.data);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
-
       showToast(
         toast,
         "Enroll AI",
         "error",
-        "Accept terms and conditions before you proceed"
+        `${error.message || "Failed to fetch Application Stats"}`
       );
     }
   };

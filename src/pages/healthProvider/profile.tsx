@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { SubmitButton } from "@/components/common";
 import showToast from "@/components/common/showtoast";
 
 import ConfirmationModal from "@/components/modals/confirmationModal";
 import PersonalInformations from "@/components/pages/applicationForm/step1/personalInformations";
-import ProfessionalID from "@/components/pages/applicationForm/step1/professionalID";
+
 import { ApplicationFormInitialState } from "@/constant/data/applicationsdata";
 import { ApplicationFormInterface } from "@/lib/types";
 import { RootState } from "@/redux/store";
@@ -16,7 +17,6 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
-  const { form } = useSelector((state: RootState) => state.applicationForm);
   const { isOpen, onClose, onOpen } = useDisclosure();
   const navigate = useNavigate();
 
@@ -38,14 +38,13 @@ const Profile = () => {
           setData(ApplicationFormInitialState);
         }
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
-
       showToast(
         toast,
         "Enroll AI",
         "error",
-        "Accept terms and conditions before you proceed"
+        `${error.message || "Failed to fetch details"}`
       );
     }
   };

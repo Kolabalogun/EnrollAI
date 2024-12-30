@@ -10,6 +10,7 @@ const PersonalInformations = ({
   form = ApplicationFormInitialState,
   errors = {},
   handleChange,
+  id,
 }: ApplicationProps) => {
   const personalInfoFields = [
     { label: "Last Name", name: "lastName" },
@@ -43,7 +44,11 @@ const PersonalInformations = ({
     <div className="border rounded-lg pt-5 px-3 xl:px-5 pb-10 space-y-5">
       <p className="font-semibold text-base">Personal Information</p>
 
-      <div className="  grid xl:grid-cols-3 gap-5 md:grid-cols-2">
+      <div
+        className={`  grid ${
+          !id ? "xl:grid-cols-3" : "xl:grid-cols-4"
+        } gap-5 md:grid-cols-2`}
+      >
         {/* Personal Information Fields */}
         {personalInfoFields.map((field) => {
           if (field.isDate) {

@@ -19,20 +19,24 @@ export type ApplicationProps = {
   errors?: any;
   handleResidencyChange?: any;
   handleFileChange?: any;
+  id?: boolean;
 };
 
-const Step1 = ({ form, errors, handleChange }: ApplicationProps) => {
+const Step1 = ({ form, errors, handleChange, id }: ApplicationProps) => {
   console.log(errors, "errors errors");
 
   return (
-    <div className="bg-white rounded-lg px-3 py-5 xl:p-5 space-y-4">
-      <div className="space-y-1">
-        <p className="font-semibold text-base ">{form?.applicationType}</p>
-        <p className="text-[12px] font-medium text-[#667085]">
-          {form?.organizationName} - {form?.applicationTitle}
-        </p>
-      </div>
-
+    <div
+      className={`bg-white rounded-lg   ${!id && "xl:p-5 px-3 py-5"} space-y-4`}
+    >
+      {!id && (
+        <div className="space-y-1">
+          <p className="font-semibold text-base ">{form?.applicationType}</p>
+          <p className="text-[12px] font-medium text-[#667085]">
+            {form?.organizationName} - {form?.applicationTitle}
+          </p>
+        </div>
+      )}
       <div className="">
         <Progress
           value={30}
@@ -46,6 +50,7 @@ const Step1 = ({ form, errors, handleChange }: ApplicationProps) => {
         form={form}
         errors={errors}
         handleChange={handleChange}
+        id
       />
 
       <PracticeLocation
