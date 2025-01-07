@@ -149,11 +149,6 @@ const Review2 = ({ form, handleCheckBoxChange }: ApplicationProps) => {
     termsAndConditionsTwo,
   } = form;
 
-  console.log(
-    additionalBoardCertificationApplied,
-    "additionalBoardCertificationApplied"
-  );
-
   return (
     <div className="bg-white p-5 space-y-6">
       <div className="space-y-1">

@@ -73,7 +73,7 @@ const PersonalInformations = ({
                   </div>
                   <ReactDatePicker
                     maxDate={new Date(Date.now())}
-                    selected={form.step1.personalInformation[field.name]}
+                    selected={form.step1.personalInformation[field.name] || ""}
                     onChange={(date) =>
                       handleChange(
                         "step1",
@@ -96,7 +96,7 @@ const PersonalInformations = ({
                 key={field.name}
                 error={!!errors[field.name]}
                 label={field.label}
-                value={form.step1.personalInformation[field.name]}
+                value={form.step1.personalInformation[field.name] || ""}
                 onChange={(phone) =>
                   handleChange(
                     "step1",
@@ -123,7 +123,7 @@ const PersonalInformations = ({
                 </div>
                 <select
                   id={field.name}
-                  value={form.step1.personalInformation[field.name]}
+                  value={form.step1.personalInformation[field.name] || "Male"}
                   onChange={(e) =>
                     handleChange(
                       "step1",

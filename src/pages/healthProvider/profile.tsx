@@ -10,7 +10,7 @@ import { ApplicationFormInitialState } from "@/constant/data/applicationsdata";
 import { ApplicationFormInterface } from "@/lib/types";
 import { RootState } from "@/redux/store";
 import { HEALTHCARE_APPLICATIONS_CAHQPROFILE } from "@/router/routes";
-import { getAllApplicationsByUserId } from "@/services/applications";
+import { getProviderRecentApplication } from "@/services/applications";
 import { useDisclosure, useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -22,21 +22,21 @@ const Profile = () => {
 
   const { user } = useSelector((state: RootState) => state.auth);
   const toast = useToast();
-  const [data, setData] = useState<ApplicationFormInterface>(
+  const [data, setData] = useState<ApplicationFormInterface | null>(
     ApplicationFormInitialState
   );
+
   const fetchApplications = async () => {
     console.log(user);
 
     try {
-      const res = await getAllApplicationsByUserId(user?.data?.userId);
+      const res = await getProviderRecentApplication(user?.data?.userId);
+
       console.log(res);
       if (res.success) {
-        if (res?.data?.applications?.length) {
-          setData(res?.data?.applications[0]);
-        } else {
-          setData(ApplicationFormInitialState);
-        }
+        setData(res?.data?.applications);
+      } else {
+        setData(ApplicationFormInitialState as any);
       }
     } catch (error: any) {
       console.log(error);

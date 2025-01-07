@@ -170,6 +170,9 @@ export const createProviderApplication = async (
         },
       }
     );
+
+    console.log(response, "createProviderApplication response");
+
     return {
       success: true,
       data: response.data,
@@ -192,6 +195,33 @@ export const updateProviderApplication = async (
     const response = await axios.put(
       `${VITE_API_BASE_URL}/application/${formData._id}`,
       formData,
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return {
+      success: true,
+      data: response.data,
+      message: "",
+    };
+  } catch (error: any) {
+    return handleError(error);
+  }
+};
+
+export const getProviderRecentApplication = async (id: string) => {
+  const token = localStorage.getItem("enrollai-user");
+
+  if (!token) {
+    throw new Error("Authentication token not found");
+  }
+  try {
+    const response = await axios.get(
+      `${VITE_API_BASE_URL}/application/getrecentapplication/${id}`,
       {
         headers: {
           Accept: "application/json",

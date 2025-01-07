@@ -8,6 +8,7 @@ import { logout } from "@/redux/features/authSlice";
 
 import showToast from "@/components/common/showtoast";
 import ConfirmationModal from "@/components/modals/confirmationModal";
+import { resetForm } from "@/redux/features/applicationFormSlice";
 
 type LinksGroupType = {
   icon: any;
@@ -48,6 +49,7 @@ export function LinksGroup({
     setIsLoading(true);
     try {
       dispatch(logout());
+      dispatch(resetForm());
       localStorage.removeItem("enrollai-user");
 
       showToast(

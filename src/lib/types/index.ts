@@ -120,19 +120,47 @@ export interface ApplicationFormInterface {
     };
   };
   step2: {
-    residencies: Array<{
-      residency1Institution: string;
-      residency1ProgramDirector: string;
-      residency1MailingAddress: string;
-      residency1City: string;
-      residency1State: string;
-      residency1ZIP: string;
-      residency1Type: string;
-      residency1Specialty: string;
-      residency1FromDate: string | null;
-      residency1ToDate: string | null;
-      residency1Completed: boolean;
-    }>;
+    residencies: [
+      {
+        residency1Institution: string;
+        residency1ProgramDirector: string;
+        residency1MailingAddress: string;
+        residency1City: string;
+        residency1State: string;
+        residency1ZIP: string;
+        residency1Type: string;
+        residency1Specialty: string;
+        residency1FromDate: string | null;
+        residency1ToDate: string | null;
+        residency1Completed: boolean;
+      },
+      {
+        residency2Institution: string;
+        residency2ProgramDirector: string;
+        residency2MailingAddress: string;
+        residency2City: string;
+        residency2State: string;
+        residency2ZIP: string;
+        residency2Type: string;
+        residency2Specialty: string;
+        residency2FromDate: string | null;
+        residency2ToDate: string | null;
+        residency2Completed: boolean;
+      },
+      {
+        residency3Institution: string;
+        residency3ProgramDirector: string;
+        residency3MailingAddress: string;
+        residency3City: string;
+        residency3State: string;
+        residency3ZIP: string;
+        residency3Type: string;
+        residency3Specialty: string;
+        residency3FromDate: string | null;
+        residency3ToDate: string | null;
+        residency3Completed: boolean;
+      }
+    ];
     medicalLicenses: {
       deaRegistrationNumber: string;
       deaExpirationDate: string | null;

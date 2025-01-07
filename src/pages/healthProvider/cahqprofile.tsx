@@ -13,10 +13,9 @@ import Reference from "@/components/pages/profile/reference";
 import { ApplicationFormInitialState } from "@/constant/data/applicationsdata";
 import { ApplicationFormInterface } from "@/lib/types";
 
-import { updateCAHQForm } from "@/redux/features/caqhProfileFormSlice";
 import { RootState } from "@/redux/store";
 import { HEALTHCARE_APPLICATIONS_PROFILE } from "@/router/routes";
-import { getAllApplicationsByUserId } from "@/services/applications";
+import { getProviderRecentApplication } from "@/services/applications";
 import {
   Step,
   StepIndicator,
@@ -40,7 +39,7 @@ import {
   Users,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const steps = [
@@ -68,23 +67,23 @@ const steps = [
 
 const CAHQProfile = () => {
   const { user } = useSelector((state: RootState) => state.auth);
-  const [data, setData] = useState<ApplicationFormInterface>(
+  const [data, setData] = useState<ApplicationFormInterface | null>(
     ApplicationFormInitialState
   );
   const [pageNo, setPageNo] = useState(1);
   const toast = useToast();
+
   const fetchApplications = async () => {
     console.log(user);
 
     try {
-      const res = await getAllApplicationsByUserId(user?.data?.userId);
+      const res = await getProviderRecentApplication(user?.data?.userId);
+
       console.log(res);
       if (res.success) {
-        if (res?.data?.applications?.length) {
-          setData(res?.data?.applications[0]);
-        } else {
-          setData(ApplicationFormInitialState);
-        }
+        setData(res?.data?.applications);
+      } else {
+        setData(ApplicationFormInitialState as any);
       }
     } catch (error: any) {
       console.log(error);
@@ -102,10 +101,10 @@ const CAHQProfile = () => {
 
   console.log(data, "dsdsds");
   const { isOpen, onClose, onOpen } = useDisclosure();
-  const dispatch = useDispatch();
+
   const navigate = useNavigate();
   const { activeStep, setActiveStep } = useSteps({
-    index: setPageNo || 1,
+    // index: setPageNo || 1,
     count: steps.length,
   });
 
@@ -113,15 +112,17 @@ const CAHQProfile = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    dispatch(updateCAHQForm({ [name]: value }));
+    console.log(name, value);
+    // dispatch(updateCAHQForm({ [name]: value }));
   };
 
   const handleDateChange = (fieldName: string, date: Date | null) => {
-    dispatch(updateCAHQForm({ [fieldName]: date }));
+    console.log(fieldName, date);
   };
 
   const handlePhoneChange = (fieldName: string, phone: string) => {
-    dispatch(updateCAHQForm({ [fieldName]: phone }));
+    console.log(fieldName, phone);
+    // dispatch(updateCAHQForm({ [fieldName]: phone }));
   };
 
   const handleNextStep = (e: any) => {
@@ -226,7 +227,7 @@ const CAHQProfile = () => {
             handleClick={() => {
               if (pageNo > 1) {
                 setActiveStep(activeStep - 1);
-                dispatch(updateCAHQForm({ pageNo: pageNo - 1 }));
+                // dispatch(updateCAHQForm({ pageNo: pageNo - 1 }));
               }
             }}
           />

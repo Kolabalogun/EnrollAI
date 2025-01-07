@@ -18,7 +18,10 @@ import { useDisclosure, useToast } from "@chakra-ui/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { HEALTHCARE_APPLICATIONS } from "@/router/routes";
 import showToast from "@/components/common/showtoast";
-import { createProviderApplication } from "@/services/applications";
+import {
+  createProviderApplication,
+  getProviderRecentApplication,
+} from "@/services/applications";
 import { RootState } from "@/redux/store";
 import { ApplicationFormInterface } from "@/lib/types";
 
@@ -60,6 +63,7 @@ const ApplicationForm = () => {
   const [pageNo, setPageNo] = useState<number>(1);
   const { isOpen, onClose, onOpen } = useDisclosure();
   const { form } = useSelector((state: RootState) => state.applicationForm);
+  const { user } = useSelector((state: RootState) => state.auth);
 
   const dispatch = useDispatch();
   const toast = useToast();
@@ -68,28 +72,52 @@ const ApplicationForm = () => {
   const state = location.state || null;
   const [errors, setErrors] = useState({});
 
-  console.log(form);
-
-  console.log(errors);
+  // console.log(form, "717171717171771");
 
   useEffect(() => {
-    if (!state || (state && !JSON.parse(state)?.applicationName))
-      return navigate(-1);
-    if (state) {
-      const orgData = JSON.parse(state);
-      console.log(orgData);
-
-      const data = {
-        ...form,
-
-        applicationType: orgData?.applicationName || "",
-        organizationApplicationId: orgData?.organization?._id || "",
-        organizationName: orgData?.organization?.organizationName || "",
-        applicationTitle: orgData?.applicationTitle || "",
-      };
-
-      dispatch(updateForm(data));
+    if (!state || !JSON.parse(state)?.applicationName) {
+      navigate(-1);
+      return;
     }
+
+    const updateFormm = async () => {
+      try {
+        const orgData = JSON.parse(state);
+        const initialData = {
+          ...form,
+          applicationType: orgData?.applicationName || "",
+          organizationApplicationId: orgData?.organization?._id || "",
+          organizationName: orgData?.organization?.organizationName || "",
+          applicationTitle: orgData?.applicationTitle || "",
+        };
+
+        if (user?.data?.userId) {
+          const res = await getProviderRecentApplication(user?.data?.userId);
+
+          console.log(orgData, "orgData");
+
+          const newData = res.success
+            ? {
+                ...form,
+                ...res.data.application,
+                applicationType: orgData?.applicationName || "",
+                organizationApplicationId: orgData?.organization?._id || "",
+                organizationName: orgData?.organization?.organizationName || "",
+                applicationTitle: orgData?.applicationTitle || "",
+              }
+            : initialData;
+
+          dispatch(updateForm(newData));
+        } else {
+          dispatch(updateForm(initialData));
+        }
+      } catch (error) {
+        console.error("Error updating form:", error);
+        // Optionally, show an error notification here.
+      }
+    };
+
+    updateFormm();
   }, [state]);
 
   const handleChange = (
@@ -181,7 +209,9 @@ const ApplicationForm = () => {
         } else {
           // Filter out problematic fields
           const {
+            updatedAt,
             _id,
+            __v,
             status,
             organizationApplication,
             createdAt,
@@ -217,9 +247,12 @@ const ApplicationForm = () => {
           } = form;
 
           // Log for debugging
-          console.log(
+          console.warn(
+            updatedAt,
             status,
             _id,
+            __v,
+
             organizationApplication,
             createdAt,
             userId,
@@ -259,7 +292,12 @@ const ApplicationForm = () => {
           };
 
           try {
-            const res = await createProviderApplication(cleanedFormData);
+            console.log(
+              cleanedFormData,
+              "cleanedFormDatacleanedFormDatacleanedFormData"
+            );
+
+            const res = await createProviderApplication(cleanedFormData as any);
             console.log(res);
 
             if (res.success) {
@@ -267,16 +305,23 @@ const ApplicationForm = () => {
               showToast(
                 toast,
                 "Enroll AI",
-                "error",
+                "success",
                 `${res?.data?.message || "Application created successfully"}`
               );
             }
-          } catch (error) {
+          } catch (error: any) {
             console.log(error);
+            // onOpen();
+            showToast(
+              toast,
+              "Enroll AI",
+              "error",
+              `${error.message || "Failed to submit application"}`
+            );
           }
         }
       } else {
-        const validationErrors = validateForm(form);
+        const validationErrors = validateForm(form as any);
         if (Object.keys(validationErrors).length > 0) {
           showToast(
             toast,
@@ -314,7 +359,12 @@ const ApplicationForm = () => {
         }}
       />
       <div className="flex items-center gap-1">
-        <p className="text-[11px] font-semibold text-fade">Dashboard</p>
+        <p
+          onClick={() => dispatch(resetForm())}
+          className="text-[11px] font-semibold text-fade"
+        >
+          Dashboard
+        </p>
         <ChevronRight className="text-[#667085]" size={15} />
         <p className="text-[11px] font-semibold text-[#667085]">Application</p>
       </div>

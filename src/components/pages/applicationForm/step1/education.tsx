@@ -90,7 +90,7 @@ const Education = ({ form, errors, handleChange }: ApplicationProps) => {
                     label={field.label}
                     max
                     error={!!errors[field.name]}
-                    selected={form.step1.education[field.name]}
+                    selected={form.step1.education[field.name] || null}
                     onChange={(date) =>
                       handleChange("step1", "education", field.name, date)
                     }
@@ -101,7 +101,7 @@ const Education = ({ form, errors, handleChange }: ApplicationProps) => {
                     label={field.label}
                     error={errors[field.name]}
                     name={field.name}
-                    value={form.step1.education[field.name]}
+                    value={form.step1.education[field.name] || ""}
                     onChange={(e) =>
                       handleChange(
                         "step1",

@@ -103,13 +103,14 @@ const Profile = () => {
           organizationName: form.organizationName,
           administratorFullName: form.administratorFullName,
           workEmail: form.workEmail,
+          profilePicture: "",
         };
         const res = await updateProfileOrg(data);
-        console.log(res);
-
+ 
         const newUser = {
           ...res?.data?.organization,
         };
+ 
 
         dispatch(setCredentials(newUser));
 
