@@ -252,3 +252,19 @@ export type ApplicationStatType = {
   pendingApplications: number;
   totalApplications: number;
 };
+
+type Organization = {
+  _id: string;
+  organizationName: string;
+  administratorFullName: string;
+  workEmail: string;
+};
+
+export type CreatedApplicationType = {
+  _id: string;
+  organization: Organization;
+  applicationName: string;
+  applicationTitle: string;
+  createdAt: string;
+  __v: number;
+};

@@ -15,9 +15,11 @@ const ActiveApplications = () => {
   const { user } = useSelector((state: RootState) => state.auth);
   const toast = useToast();
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const fetchApplications = async () => {
+    if (!user) return;
     console.log(user);
-
+    setIsLoading(true);
     try {
       const res = await getUsersApplicationsByStatus(user?.userId, "approved");
       console.log(res);
@@ -32,6 +34,8 @@ const ActiveApplications = () => {
         "error",
         `${error.message || "Failed to fetch Application"}`
       );
+    } finally {
+      setIsLoading(false);
     }
   };
   useEffect(() => {
@@ -47,6 +51,7 @@ const ActiveApplications = () => {
       <OrganizationApplicationLists
         data={data}
         fetchFunction={fetchApplications}
+        isLoading={isLoading}
       />
     </ApplicationsPageLayout>
   );

@@ -152,3 +152,18 @@ export const headers = [
   { label: "Medical School State", key: "step1.education.medicalSchoolState" },
   { label: "Medical School ZIP", key: "step1.education.medicalSchoolZIP" },
 ];
+
+export const createdApplicationsHeader = [
+  {
+    label: "Application Title",
+    key: "applicationTitle",
+  },
+  {
+    label: "Application Type",
+    key: "applicationName",
+  },
+  {
+    label: "Created At",
+    key: "createdAt",
+  },
+];

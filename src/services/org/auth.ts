@@ -4,9 +4,6 @@ import { handleError } from "../error";
 
 const { VITE_API_BASE_URL } = import.meta.env;
 
-// Get Token
-const token = localStorage.getItem("enrollai-user");
-
 // Login Provider
 export const loginOrg = async (formData: any) => {
   try {
@@ -58,6 +55,8 @@ export const organizationRegisterProvider = async (formData: any) => {
 //  Update Org Profile
 
 export const updateProfileOrg = async (formData: any) => {
+  // Get Token
+  const token = localStorage.getItem("enrollai-user");
   if (!token) {
     throw new Error("Authentication token not found");
   }
@@ -84,6 +83,8 @@ export const updateProfileOrg = async (formData: any) => {
 };
 
 export const changePasswordOrg = async (formData: any) => {
+  // Get Token
+  const token = localStorage.getItem("enrollai-user");
   if (!token) {
     throw new Error("Authentication token not found");
   }

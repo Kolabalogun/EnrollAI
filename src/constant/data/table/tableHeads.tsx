@@ -6,6 +6,7 @@ import {
   Eye,
   Pen,
   Trash,
+  Trash2Icon,
   X,
 } from "lucide-react";
 
@@ -14,7 +15,7 @@ import { formatDateTime } from "@/utils/formatDateTime";
 import { HEALTHCARE_APPLICATIONS_DETALIS } from "@/router/routes";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { ApplicationFormInterface } from "@/lib/types";
+import { ApplicationFormInterface, CreatedApplicationType } from "@/lib/types";
 
 export const ActionCell = ({
   row,
@@ -286,6 +287,61 @@ export const OrganizationApplicationFormTableHeads = (
       />
     ),
     className: "p-2.5",
+    headClassName: "text-center",
+  },
+];
+
+export const CreatedApplicationsTableHeads = (
+  handleDelete: (row: CreatedApplicationType) => void
+): TableColumn<CreatedApplicationType>[] => [
+  {
+    header: "Application Title",
+    accessor: (row) => (
+      <div className="space-y-1 w-32 xl:w-full">
+        <p className="font-semibold capitalize text-xs">
+          {row?.applicationTitle ?? "N/A"}
+        </p>
+      </div>
+    ),
+    flex: 2,
+  },
+  {
+    header: "Application Type",
+    accessor: (row) => (
+      <div className="w-32 xl:w-full">
+        <p className="font-semibold capitalize text-xs">
+          {row?.applicationName ?? "N/A"}
+        </p>
+      </div>
+    ),
+    flex: 2,
+  },
+  {
+    header: "Created At",
+    accessor: (row) => (
+      <div className="space-y-1 w-32 xl:w-full">
+        <p className="font-semibold text-xs">
+          {formatDateTime(row?.createdAt)}
+        </p>
+      </div>
+    ),
+    flex: 2,
+  },
+  {
+    header: "Actions",
+    accessor: (row) => (
+      <div className="flex justify-center items-center space-x-2">
+        <button
+          onClick={() => handleDelete(row)}
+          className="text-red-500 hover:text-red-700 flex items-center"
+        >
+          <span className="text-sm ml-1">
+            <Trash2Icon />
+          </span>
+        </button>
+      </div>
+    ),
+    className: "p-2.5 text-center",
     headClassName: "text-center",
   },
 ];

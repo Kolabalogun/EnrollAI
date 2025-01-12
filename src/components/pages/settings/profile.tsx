@@ -7,11 +7,12 @@ import { useEffect, useState } from "react";
 import PasswordModal from "./passwordModal";
 import { useDispatch, useSelector } from "react-redux";
 import showToast from "@/components/common/showtoast";
-import { updateProfile } from "@/services/auth";
-import { setCredentials } from "@/redux/features/authSlice";
+import { deleteAccount, updateProfile } from "@/services/auth";
+import { logout, setCredentials } from "@/redux/features/authSlice";
 import React from "react";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { updateProfileOrg } from "@/services/org/auth";
+import { formatDateTime } from "@/utils/formatDateTime";
 
 type FormType = {
   fullName?: string;
@@ -49,7 +50,19 @@ const Profile = () => {
   const [passwordDialogOpen, setPasswordDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [profilePicture, setProfilePicture] = useState(
+    user?.accountType !== "provider" && !user?.profilePicture
+      ? `https://eu.ui-avatars.com/api/?name=${user?.administratorFullName}&size=200`
+      : user?.accountType !== "provider" && user?.profilePicture
+      ? user?.profilePicture
+      : !user?.profilePicture
+      ? `https://eu.ui-avatars.com/api/?name=${user?.fullName}&size=200`
+      : user?.profilePicture
+  );
+
   const [showPassword, setShowPassword] = useState(false);
+
+  const [pictureFile, setPictureFile] = useState<File | null>(null);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -78,12 +91,78 @@ const Profile = () => {
     }));
   };
 
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const imageData = reader.result as string;
+        setProfilePicture(imageData);
+        setPictureFile(file);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   console.log(user, "user");
+
+  const handleDeleteAccount = async () => {
+    try {
+      const res = await deleteAccount();
+
+      if (res.success) {
+        showToast(
+          toast,
+          "Enroll AI",
+          "success",
+          "Your account have been successfully deleted."
+        );
+        dispatch(logout());
+      }
+    } catch (error: any) {
+      console.log(error);
+      showToast(toast, "Error", "error", error.message || "An error occurred.");
+    }
+  };
+
+  const handleProfilePictureUpload = async () => {
+    if (!pictureFile) return null;
+
+    setIsLoading(true);
+
+    try {
+      // Upload image to Cloudinary
+      const data = new FormData();
+      data.append("file", pictureFile);
+      data.append("upload_preset", "ai_morgage");
+      data.append("cloud_name", "dd0qqm1dv");
+
+      const res = await fetch(
+        "https://api.cloudinary.com/v1_1/dd0qqm1dv/image/upload",
+        {
+          method: "POST",
+          body: data,
+        }
+      );
+
+      const uploadedImage = await res.json();
+
+      if (uploadedImage?.url) {
+        return uploadedImage?.url;
+      } else {
+        showToast(toast, "Error", "error", "Image upload failed.");
+        return null;
+      }
+    } catch (error: any) {
+      console.error(error);
+      showToast(toast, "Error", "error", error.message || "An error occurred.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleSubmit = async () => {
     setIsLoading(true);
-
-    console.log(form, "form");
 
     try {
       if (user?.accountType !== "provider") {
@@ -99,12 +178,22 @@ const Profile = () => {
             `Full Name and Email must be provided`
           );
 
-        const data = {
-          organizationName: form.organizationName,
-          administratorFullName: form.administratorFullName,
-          workEmail: form.workEmail,
-        };
-        const res = await updateProfileOrg(data);
+        const pic = await handleProfilePictureUpload();
+
+        const formData = new FormData();
+        formData.append("organizationName", form.organizationName);
+        formData.append("administratorFullName", form.administratorFullName);
+        formData.append("workEmail", form.workEmail);
+
+        if (pic) {
+          formData.append("profilePicture", pic);
+        }
+
+        console.log(formData);
+
+        const res = await updateProfileOrg(formData);
+
+        console.log(res, "resresresresresresresres");
 
         if (res.success) {
           const newUser = {
@@ -140,19 +229,24 @@ const Profile = () => {
             `Full Name and Email must be provided`
           );
 
-        const data = {
-          fullName: form.fullName,
-          email: form.email,
-        };
-        const res = await updateProfile(data);
+        const pic = await handleProfilePictureUpload();
+
+        const formData = new FormData();
+        formData.append("fullName", form.fullName);
+        formData.append("email", form.email);
+
+        if (pic) {
+          formData.append("profilePicture", pic);
+        }
+
+        const res = await updateProfile(formData);
+
         console.log(res, "resresresresresresresres");
 
         if (res.success) {
           const newUser = {
-            ...form,
-            fullName: form.fullName,
-            email: form.email,
-            profilePicture: "asas",
+            ...user,
+            ...res?.data?.user,
           };
 
           console.log(newUser, "newUsernewUser");
@@ -195,7 +289,7 @@ const Profile = () => {
         isOpen={isOpen}
         buttonText="Delete"
         message="Are you sure you want to delete your account? Once deleted, you will no longer have access to your account, and all the data will be permanently removed from our database."
-        onConfirm={() => console.log("")}
+        onConfirm={() => handleDeleteAccount()}
       />
       <ConfirmationModal
         onClose={saveOnClose}
@@ -212,11 +306,7 @@ const Profile = () => {
         <div className="flex xl:flex-row flex-col gap-4 xl:items-center justify-between">
           <div className="flex gap-5 items-center">
             <img
-              src={
-                user?.accountType !== "provider"
-                  ? `https://eu.ui-avatars.com/api/?name=${user?.administratorFullName}&size=200`
-                  : `https://eu.ui-avatars.com/api/?name=${user?.fullName}&size=200`
-              }
+              src={profilePicture}
               className="h-24 w-24 rounded-full"
               alt="profile picture"
             />
@@ -239,12 +329,21 @@ const Profile = () => {
           </div>
 
           <div className="">
-            <SubmitButton
-              type="button"
-              className="py-2 flex gap-2  w-auto px-8 border rounded-md font-semibold text-xs"
-            >
-              <p className="font-bold text-xs">Edit Photo</p>
-            </SubmitButton>
+            <div className="">
+              <label
+                htmlFor="uploadPhoto"
+                className="py-2 flex gap-2 w-auto px-8 border rounded-md font-semibold bg-secondary text-white text-xs cursor-pointer"
+              >
+                <p className="font-bold text-xs">Edit Photo</p>
+              </label>
+              <input
+                type="file"
+                id="uploadPhoto"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => handlePhotoChange(e)}
+              />
+            </div>
           </div>
         </div>
 
@@ -342,7 +441,8 @@ const Profile = () => {
       <section className="bg-white rounded-lg shadow flex-1 h-full w-full flex flex-col px-5 py-10  ">
         <div className="border-b">
           <p className="text-[#383838] font-semibold pb-5 text-xs ">
-            This account was created on January 5, 2024, 08:45:23 Am
+            This account was created on{" "}
+            {formatDateTime(user?.createdAt) ?? "N?A"}
           </p>
         </div>
         <div className="flex items-center justify-between pt-5">

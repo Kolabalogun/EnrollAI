@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { TableComponent } from "@/components/table";
-import { OrganizationApplicationFormTableHeads } from "@/constant/data/table/tableHeads";
+import {
+  CreatedApplicationsTableHeads,
+  OrganizationApplicationFormTableHeads,
+} from "@/constant/data/table/tableHeads";
 
 import { useState } from "react";
 import EmptyCarts from "../../dashboard/emptyCarts";
@@ -16,10 +19,12 @@ const OrganizationApplicationLists = ({
   data,
   fetchFunction,
   isLoading,
+  title,
 }: {
   data?: ApplicationFormInterface[];
   fetchFunction: () => void;
   isLoading?: boolean;
+  title?: string;
 }) => {
   const [activeMenu, setActiveMenu] = useState<string | number | null>(null);
   const navigate = useNavigate();
@@ -50,7 +55,7 @@ const OrganizationApplicationLists = ({
     navigate(`/dashboard/health-provider/applications/details/${row._id}`);
   };
 
-  const handleDelete = (row: ApplicationFormInterface) => {
+  const handleDelete = (row: any) => {
     console.log(row);
     setSelectedRow(row);
     onOpen();
@@ -64,12 +69,21 @@ const OrganizationApplicationLists = ({
 
       console.log(res);
 
-      showToast(
-        toast,
-        "Enroll AI",
-        "success",
-        "Application deleted successfully"
-      );
+      if (res.success) {
+        showToast(
+          toast,
+          "Enroll AI",
+          "success",
+          "Application deleted successfully"
+        );
+      } else {
+        showToast(
+          toast,
+          "Enroll AI",
+          "success",
+          `${res.message || "Failed the delete Application"}`
+        );
+      }
 
       fetchFunction();
     } catch (error: any) {
@@ -94,6 +108,11 @@ const OrganizationApplicationLists = ({
     toggleMenu
   );
 
+  const createdApplicationColumns = CreatedApplicationsTableHeads(handleDelete);
+
+  const parsedColumns =
+    title === "Created Applications" ? createdApplicationColumns : columns;
+
   return (
     <div>
       <ConfirmationModal
@@ -115,7 +134,7 @@ const OrganizationApplicationLists = ({
               {/* Table */}
               <TableComponent
                 footerTxt={""}
-                columns={columns}
+                columns={parsedColumns as any}
                 data={data || []}
               />
             </div>

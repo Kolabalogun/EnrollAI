@@ -31,7 +31,7 @@ const Notifications = () => {
         toast,
         "Enroll AI",
         "error",
-        `${error.message || "Failed to fetch Application"}`
+        `${error.message || "Failed to fetch notifications"}`
       );
     } finally {
       setIsLoading(false);

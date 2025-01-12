@@ -16,6 +16,7 @@ const CompletedApplications = () => {
   const toast = useToast();
   const [data, setData] = useState([]);
   const fetchApplications = async () => {
+    if (!user) return;
     console.log(user);
 
     try {

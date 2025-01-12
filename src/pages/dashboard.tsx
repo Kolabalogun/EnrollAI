@@ -1,4 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { SubmitButton } from "@/components/common";
+import showToast from "@/components/common/showtoast";
 
 import ApplicationsModal from "@/components/modals/applications";
 import CreateApplicationModal from "@/components/modals/createApplicationModal";
@@ -8,12 +11,15 @@ import Notifications from "@/components/pages/dashboard/notifications";
 import OrganizationStatBar from "@/components/pages/dashboard/organization/statbar";
 import StatBar from "@/components/pages/dashboard/statbar";
 import { Progress } from "@/components/ui/progress";
-import { notificationsData } from "@/constant/data/noticationdata";
 
 import { RootState } from "@/redux/store";
+import { SETTINGS_ROUTE } from "@/router/routes";
+import { getAllNotifications } from "@/services/notifications";
+import timeAgo from "@/utils/timeAgo";
 
-import { useDisclosure } from "@chakra-ui/react";
+import { useDisclosure, useToast } from "@chakra-ui/react";
 import { Pen, PlusIcon } from "lucide-react";
+import { useEffect, useState } from "react";
 
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -30,17 +36,49 @@ const Dashboard = () => {
   const { user } = useSelector((state: RootState) => state.auth);
   console.log(user);
 
-  const notifications = notificationsData.map((activity) => (
+  const toast = useToast();
+  const [data, setData] = useState([]);
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchNotifications = async () => {
+    setIsLoading(true);
+    try {
+      const res = await getAllNotifications();
+      if (res.success) {
+        console.log(res);
+
+        setData(res?.data?.activities);
+      }
+    } catch (error: any) {
+      showToast(
+        toast,
+        "Enroll AI",
+        "error",
+        `${error.message || "Failed to fetch notifications"}`
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchNotifications();
+  }, []);
+
+  console.log(isLoading);
+
+  const notifications = data?.slice(0, 4)?.map((activity: any) => (
     <div className="border-b space-x-5  flex items-center justify-between py-4">
       <div className="bg-secondary  rounded-full p-1 " />
 
-      <p className="font-semibold flex-1 px-4 text-[12px]">{activity.title}</p>
-
-      <p className="p-1 bg-[#ccf0eb] text-green font-semibold text-[10px] ">
-        Approved
+      <p className="font-semibold capitalize flex-1 px-4 text-[12px]">
+        {activity?.actionType}
       </p>
 
-      <p className="font-semibold text-fade text-xs">8:38 AM</p>
+      <p className="font-semibold text-fade text-xs">
+        {timeAgo(activity?.timestamp)}
+      </p>
     </div>
   ));
 
@@ -152,7 +190,10 @@ const Dashboard = () => {
             </div>
 
             <div className="">
-              <SubmitButton className=" border-0 px-6 py-4 rounded-lg">
+              <SubmitButton
+                handleSubmit={() => navigate(SETTINGS_ROUTE)}
+                className=" border-0 px-6 py-4 rounded-lg"
+              >
                 {user?.profileStatus === 100 ? "Review" : "Update"} Profile
               </SubmitButton>
             </div>

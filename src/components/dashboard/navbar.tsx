@@ -44,9 +44,13 @@ const Navbar = () => {
           <div className="rounded-full">
             <img
               src={
-                user?.accountType !== "provider"
+                user?.accountType !== "provider" && !user?.profilePicture
                   ? `https://eu.ui-avatars.com/api/?name=${user?.administratorFullName}&size=200`
-                  : `https://eu.ui-avatars.com/api/?name=${user?.fullName}&size=200`
+                  : user?.accountType !== "provider" && user?.profilePicture
+                  ? user?.profilePicture
+                  : !user?.profilePicture
+                  ? `https://eu.ui-avatars.com/api/?name=${user?.fullName}&size=200`
+                  : user?.profilePicture
               }
               className="h-8 rounded-full"
             ></img>
