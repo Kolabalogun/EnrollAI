@@ -17,7 +17,9 @@ const DraftApplications = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
   const fetchApplications = async () => {
+    if (!user) return;
     setIsLoading(true);
     try {
       const res = await getUsersApplicationsByStatus(user?.userId, "pending");

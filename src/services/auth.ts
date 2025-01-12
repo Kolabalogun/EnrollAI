@@ -4,9 +4,6 @@ import { handleError } from "./error";
 
 const { VITE_API_BASE_URL } = import.meta.env;
 
-// Get Token
-const token = localStorage.getItem("enrollai-user");
-
 // Login Provider
 export const loginUser = async (formData: any) => {
   try {

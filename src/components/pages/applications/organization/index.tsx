@@ -13,12 +13,10 @@ import ConfirmationModal from "@/components/modals/confirmationModal";
 import LoadingCarts from "../../dashboard/loadingarts";
 
 const OrganizationApplicationLists = ({
-  full,
   data,
   fetchFunction,
   isLoading,
 }: {
-  full?: boolean;
   data?: ApplicationFormInterface[];
   fetchFunction: () => void;
   isLoading?: boolean;
@@ -96,10 +94,6 @@ const OrganizationApplicationLists = ({
     toggleMenu
   );
 
-  const dataa = full ? data : data?.slice(0, 4) || [];
-
-  console.log(dataa, "dataa");
-
   return (
     <div>
       <ConfirmationModal
@@ -122,7 +116,7 @@ const OrganizationApplicationLists = ({
               <TableComponent
                 footerTxt={""}
                 columns={columns}
-                data={dataa || []}
+                data={data || []}
               />
             </div>
           ) : (

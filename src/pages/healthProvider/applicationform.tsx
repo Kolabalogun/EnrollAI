@@ -84,7 +84,7 @@ const ApplicationForm = () => {
         const initialData = {
           ...form,
           applicationType: orgData?.applicationName || "",
-          organizationApplicationId: orgData?.organization?._id || "",
+          organizationApplicationId: orgData?._id || "",
           organizationName: orgData?.organization?.organizationName || "",
           applicationTitle: orgData?.applicationTitle || "",
         };
@@ -101,7 +101,7 @@ const ApplicationForm = () => {
                 ...form,
                 ...res.data.application,
                 applicationType: orgData?.applicationName || "",
-                organizationApplicationId: orgData?.organization?._id || "",
+                organizationApplicationId: orgData?._id || "",
                 organizationName: orgData?.organization?.organizationName || "",
                 applicationTitle: orgData?.applicationTitle || "",
               }

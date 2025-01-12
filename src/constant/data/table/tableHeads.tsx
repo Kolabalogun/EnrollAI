@@ -215,7 +215,7 @@ export const OrganizationApplicationFormTableHeads = (
     accessor: (row) => (
       <div className="  w-32 xl:w-full">
         <p className="font-semibold text-xs">
-          {row?.organizationApplication?.organizationName ?? "N/A"}
+          {row?.organizationName ?? "N/A"}
         </p>
       </div>
     ),
