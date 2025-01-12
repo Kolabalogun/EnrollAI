@@ -45,3 +45,9 @@ export const ORGANIZATION_REGISTER_ROUTE =
 
 export const ORGANIZATION_CREATE_APPLICATION_FORM =
   "/dashboard/credentializing-organization/create-application-form";
+
+// Admin Route
+
+export const ADMIN_OVERVIEW = "/dashboard/admin/overview";
+
+export const ADMIN_PROVIDERS = "/admin/providers";

@@ -103,24 +103,34 @@ const Profile = () => {
           organizationName: form.organizationName,
           administratorFullName: form.administratorFullName,
           workEmail: form.workEmail,
-          profilePicture: "",
         };
         const res = await updateProfileOrg(data);
- 
-        const newUser = {
-          ...res?.data?.organization,
-        };
- 
 
-        dispatch(setCredentials(newUser));
+        if (res.success) {
+          const newUser = {
+            ...res?.data?.organization,
+          };
+
+          console.log(res);
+
+          dispatch(setCredentials(newUser));
+
+          showToast(
+            toast,
+            "Enroll AI",
+            "success",
+            `${res?.message || "Profile updated successfully"}`
+          );
+        } else {
+          showToast(
+            toast,
+            "Enroll AI",
+            "error",
+            `${res?.message || "Profile updated successfully"}`
+          );
+        }
 
         saveOnClose();
-        showToast(
-          toast,
-          "Enroll AI",
-          "success",
-          `${res?.message || "Profile updated successfully"}`
-        );
       } else {
         if (!form.fullName || !form.email)
           return showToast(
@@ -135,13 +145,14 @@ const Profile = () => {
           email: form.email,
         };
         const res = await updateProfile(data);
-        console.log(res);
+        console.log(res, "resresresresresresresres");
 
         if (res.success) {
           const newUser = {
             ...form,
             fullName: form.fullName,
             email: form.email,
+            profilePicture: "asas",
           };
 
           console.log(newUser, "newUsernewUser");
@@ -204,7 +215,7 @@ const Profile = () => {
               src={
                 user?.accountType !== "provider"
                   ? `https://eu.ui-avatars.com/api/?name=${user?.administratorFullName}&size=200`
-                  : `https://eu.ui-avatars.com/api/?name=${user?.data?.fullName}&size=200`
+                  : `https://eu.ui-avatars.com/api/?name=${user?.fullName}&size=200`
               }
               className="h-24 w-24 rounded-full"
               alt="profile picture"
@@ -214,7 +225,7 @@ const Profile = () => {
               <p className="font-bold text-base">
                 {user?.accountType !== "provider"
                   ? `${user?.administratorFullName || "N/A"}`
-                  : `${user?.data?.fullName || user?.fullName || "N/A"}`}
+                  : `${user?.fullName || user?.fullName || "N/A"}`}
               </p>
               <p className="font-semibold text-xs">
                 {user?.accountType !== "provider" &&
@@ -222,7 +233,7 @@ const Profile = () => {
               </p>
 
               <p className="font-semibold text-fade   text-sm">
-                {user?.data?.email || user?.email || user?.workEmail || "N/A"}
+                {user?.email || user?.email || user?.workEmail || "N/A"}
               </p>
             </div>
           </div>

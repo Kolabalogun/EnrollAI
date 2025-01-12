@@ -41,8 +41,10 @@ const Login = () => {
 
       const res = await loginUser({ email, password });
 
+      console.log(res.data, "res from login");
+
       if (res.success) {
-        dispatch(setCredentials(res));
+        dispatch(setCredentials(res.data));
         dispatch(setAccountType(res.accountType));
         localStorage.setItem("enrollai-user", res.token);
         dispatch(setIsAuthenticated(true));

@@ -19,10 +19,7 @@ const ActiveApplications = () => {
     console.log(user);
 
     try {
-      const res = await getUsersApplicationsByStatus(
-        user?.data?.userId,
-        "approved"
-      );
+      const res = await getUsersApplicationsByStatus(user?.userId, "approved");
       console.log(res);
       if (res.success) {
         setData(res?.data?.applications);

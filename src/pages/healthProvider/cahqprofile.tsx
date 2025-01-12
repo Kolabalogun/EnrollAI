@@ -77,7 +77,7 @@ const CAHQProfile = () => {
     console.log(user);
 
     try {
-      const res = await getProviderRecentApplication(user?.data?.userId);
+      const res = await getProviderRecentApplication(user?.userId);
 
       console.log(res);
       if (res.success) {

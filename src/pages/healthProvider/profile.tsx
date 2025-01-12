@@ -7,7 +7,7 @@ import ConfirmationModal from "@/components/modals/confirmationModal";
 import PersonalInformations from "@/components/pages/applicationForm/step1/personalInformations";
 
 import { ApplicationFormInitialState } from "@/constant/data/applicationsdata";
-import { ApplicationFormInterface } from "@/lib/types";
+
 import { RootState } from "@/redux/store";
 import { HEALTHCARE_APPLICATIONS_CAHQPROFILE } from "@/router/routes";
 import { getProviderRecentApplication } from "@/services/applications";
@@ -22,15 +22,15 @@ const Profile = () => {
 
   const { user } = useSelector((state: RootState) => state.auth);
   const toast = useToast();
-  const [data, setData] = useState<ApplicationFormInterface | null>(
-    ApplicationFormInitialState
-  );
+  const [data, setData] = useState<any>(ApplicationFormInitialState);
 
   const fetchApplications = async () => {
     console.log(user);
 
+    if (!user) return;
+
     try {
-      const res = await getProviderRecentApplication(user?.data?.userId);
+      const res = await getProviderRecentApplication(user?.userId);
 
       console.log(res);
       if (res.success) {

@@ -1,7 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { SubmitButton } from "@/components/common";
-import showToast from "@/components/common/showtoast";
+
 import ApplicationsModal from "@/components/modals/applications";
 import CreateApplicationModal from "@/components/modals/createApplicationModal";
 import ApplicationLists from "@/components/pages/applications";
@@ -56,7 +54,7 @@ const Dashboard = () => {
           Welcome back,{" "}
           {user?.accountType !== "provider"
             ? `${user?.organizationName || "N/A"}`
-            : `${user?.data?.fullName || "N/A"}`}
+            : `${user?.fullName || "N/A"}`}
         </p>
 
         <p className="font-medium text-fade text-xs">
@@ -119,37 +117,35 @@ const Dashboard = () => {
               Your CAQH Profile is:{" "}
               <span
                 className={` ${
-                  user?.data?.applicationSent
+                  user?.profileStatus === 100
                     ? "text-secondary "
                     : "text-[#ef8b66] "
                 } `}
               >
-                {user?.data?.profilePicture ? 50 : 30}% complete
+                {user?.profileStatus}% complete
               </span>{" "}
             </p>
 
             <div className="space-y-3">
               <p className="text-black text-xs  ">
-                {user?.data?.applicationSent
+                {user?.profileStatus === 100
                   ? "Great job! Your CAQH profile is 100% complete and up to date. Keeping your profile current helps streamline credentialing and    enrollment processes with health plans."
                   : "To ensure smooth credentialing and enrollment, please complete your profile as soon as possible."}
               </p>
 
               <div className="flex items-center gap-2">
                 <Progress
-                  color={user?.data?.applicationSent ? "green" : "orange"}
+                  color={user?.profileStatus === 100 ? "green" : "orange"}
                   className={`${
-                    user?.data?.applicationSent ? "bg-green" : "bg-[#ef8b66]"
+                    user?.profileStatus === 100 ? "bg-green" : "bg-[#ef8b66]"
                   }`}
-                  value={user?.data?.profilePicture ? 50 : 30}
+                  value={user?.profileStatus}
                 />
 
-                <p className="font-semibold">
-                  {user?.data?.profilePicture ? 50 : 30}%
-                </p>
+                <p className="font-semibold">{user?.profileStatus}%</p>
               </div>
               <p className="text-black text-xs italic">
-                {user?.data?.applicationSent
+                {user?.profileStatus === 100
                   ? "Consider reviewing your profile periodically to ensure all information remains accurate."
                   : "Complete the missing sections to keep your credentialing information up to date."}
               </p>
@@ -157,7 +153,7 @@ const Dashboard = () => {
 
             <div className="">
               <SubmitButton className=" border-0 px-6 py-4 rounded-lg">
-                {user?.data?.applicationSent ? "Review" : "Update"} Profile
+                {user?.profileStatus === 100 ? "Review" : "Update"} Profile
               </SubmitButton>
             </div>
           </div>
@@ -176,7 +172,9 @@ const Dashboard = () => {
           </p>
 
           {user?.accountType !== "provider" ? (
-            <OrganizationApplicationLists />
+            <OrganizationApplicationLists
+              fetchFunction={() => console.log("")}
+            />
           ) : (
             <ApplicationLists />
           )}

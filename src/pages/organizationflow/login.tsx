@@ -45,7 +45,7 @@ const OrganizationLogin = () => {
 
       const res = await loginOrg(data);
 
-      // console.log(res.data);
+      // console.log(res, "login");
 
       if (res.success) {
         const data = {

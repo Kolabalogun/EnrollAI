@@ -20,10 +20,7 @@ const DraftApplications = () => {
   const fetchApplications = async () => {
     setIsLoading(true);
     try {
-      const res = await getUsersApplicationsByStatus(
-        user?.data?.userId,
-        "pending"
-      );
+      const res = await getUsersApplicationsByStatus(user?.userId, "pending");
       if (res.success) {
         setData(res?.data?.applications);
         setFilteredData(res?.data?.applications);

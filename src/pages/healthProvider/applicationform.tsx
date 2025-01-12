@@ -72,8 +72,6 @@ const ApplicationForm = () => {
   const state = location.state || null;
   const [errors, setErrors] = useState({});
 
-  // console.log(form, "717171717171771");
-
   useEffect(() => {
     if (!state || !JSON.parse(state)?.applicationName) {
       navigate(-1);
@@ -91,8 +89,10 @@ const ApplicationForm = () => {
           applicationTitle: orgData?.applicationTitle || "",
         };
 
-        if (user?.data?.userId) {
-          const res = await getProviderRecentApplication(user?.data?.userId);
+        if (user?.userId) {
+          const res = await getProviderRecentApplication(user?.userId);
+
+          console.log(res, "application");
 
           console.log(orgData, "orgData");
 
@@ -335,8 +335,14 @@ const ApplicationForm = () => {
           setPageNo(pageNo + 1);
         }
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+      showToast(
+        toast,
+        "Enroll AI",
+        "error",
+        `${error.message || "Failed to submit application"}`
+      );
     } finally {
       setLoading(false);
     }

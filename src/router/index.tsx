@@ -44,6 +44,8 @@ import {
   ReportAndAnalytics,
 } from "@/pages/organizationflow";
 import CreatedApplications from "@/pages/organizationflow/createdapplications";
+import { ADMIN_PROVIDERS } from "./routes";
+import AdminProviders from "@/pages/admin/providers";
 
 // Lazy-loading components
 const Home = lazy(() => import("../pages/home"));
@@ -191,6 +193,24 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/credentializing-organization/report-analytics",
         element: <ReportAndAnalytics />,
+      },
+    ],
+  },
+  {
+    path: "/admin",
+    element: (
+      // Protected route for authenticated users
+      <Suspense fallback={<Loader />}>
+        <Protected>
+          <Root />
+        </Protected>
+      </Suspense>
+    ),
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: ADMIN_PROVIDERS,
+        element: <AdminProviders />,
       },
     ],
   },

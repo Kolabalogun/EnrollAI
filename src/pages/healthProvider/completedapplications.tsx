@@ -19,10 +19,7 @@ const CompletedApplications = () => {
     console.log(user);
 
     try {
-      const res = await getUsersApplicationsByStatus(
-        user?.data?.userId,
-        "declined"
-      );
+      const res = await getUsersApplicationsByStatus(user?.userId, "declined");
       console.log(res);
       if (res.success) {
         setData(res?.data?.applications);

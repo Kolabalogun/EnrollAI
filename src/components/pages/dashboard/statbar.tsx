@@ -17,9 +17,11 @@ const StatBar = ({ applications }: { applications?: boolean }) => {
   const fetchProviderStat = async () => {
     console.log(user);
 
+    if (!user) return;
+
     try {
-      const res = await getApplicationStatBasedOnUserId(user?.data?.userId);
-      console.log(res, "resres");
+      const res = await getApplicationStatBasedOnUserId(user?.userId);
+      // console.log(res, "resres");
       if (res.success) {
         setProviderStatData(res?.data);
       }

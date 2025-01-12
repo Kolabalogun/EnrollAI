@@ -175,6 +175,7 @@ export const updateProfile = async (formData: any) => {
 };
 
 export const changePassword = async (formData: any) => {
+  const token = localStorage.getItem("enrollai-user");
   if (!token) {
     throw new Error("Authentication token not found");
   }

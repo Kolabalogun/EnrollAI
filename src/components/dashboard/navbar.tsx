@@ -46,7 +46,7 @@ const Navbar = () => {
               src={
                 user?.accountType !== "provider"
                   ? `https://eu.ui-avatars.com/api/?name=${user?.administratorFullName}&size=200`
-                  : `https://eu.ui-avatars.com/api/?name=${user?.data?.fullName}&size=200`
+                  : `https://eu.ui-avatars.com/api/?name=${user?.fullName}&size=200`
               }
               className="h-8 rounded-full"
             ></img>
@@ -56,7 +56,7 @@ const Navbar = () => {
             <p className="text-xs font-semibold">
               {user?.accountType !== "provider"
                 ? `${user?.administratorFullName || "N/A"}`
-                : `${user?.data?.fullName || "N/A"}`}
+                : `${user?.fullName || "N/A"}`}
             </p>
             <p className="text-xs font-medium text-fade">
               {user?.accountType !== "provider"
