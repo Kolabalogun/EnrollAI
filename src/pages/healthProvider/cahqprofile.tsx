@@ -11,8 +11,6 @@ import PersonalInformations from "@/components/pages/profile/personalInformation
 import PracticeLocation from "@/components/pages/profile/practicelocation";
 import Reference from "@/components/pages/profile/reference";
 import { ApplicationFormInitialState } from "@/constant/data/applicationsdata";
-import { ApplicationFormInterface } from "@/lib/types";
-
 import { RootState } from "@/redux/store";
 import { HEALTHCARE_APPLICATIONS_PROFILE } from "@/router/routes";
 import { getProviderRecentApplication } from "@/services/applications";
@@ -67,13 +65,12 @@ const steps = [
 
 const CAHQProfile = () => {
   const { user } = useSelector((state: RootState) => state.auth);
-  const [data, setData] = useState<ApplicationFormInterface | null>(
-    ApplicationFormInitialState
-  );
+  const [data, setData] = useState<any>(ApplicationFormInitialState);
   const [pageNo, setPageNo] = useState(1);
   const toast = useToast();
 
   const fetchApplications = async () => {
+    if (!user) return;
     console.log(user);
 
     try {

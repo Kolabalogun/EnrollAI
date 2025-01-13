@@ -10,8 +10,8 @@ import showToast from "@/components/common/showtoast";
 import { deleteAccount, updateProfile } from "@/services/auth";
 import { logout, setCredentials } from "@/redux/features/authSlice";
 import React from "react";
-import { EyeIcon, EyeOffIcon } from "lucide-react";
-import { updateProfileOrg } from "@/services/org/auth";
+
+import { deleteOrgAccount, updateProfileOrg } from "@/services/org/auth";
 import { formatDateTime } from "@/utils/formatDateTime";
 
 type FormType = {
@@ -49,6 +49,7 @@ const Profile = () => {
 
   const [passwordDialogOpen, setPasswordDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [deleteIsLoading, setDeleteIsLoading] = useState(false);
 
   const [profilePicture, setProfilePicture] = useState(
     user?.accountType !== "provider" && !user?.profilePicture
@@ -60,13 +61,7 @@ const Profile = () => {
       : user?.profilePicture
   );
 
-  const [showPassword, setShowPassword] = useState(false);
-
   const [pictureFile, setPictureFile] = useState<File | null>(null);
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
 
   const [form, setForm] = useState<FormType>(
     user?.accountType !== "provider"
@@ -107,21 +102,28 @@ const Profile = () => {
   console.log(user, "user");
 
   const handleDeleteAccount = async () => {
+    setDeleteIsLoading(true);
     try {
-      const res = await deleteAccount();
-
-      if (res.success) {
-        showToast(
-          toast,
-          "Enroll AI",
-          "success",
-          "Your account have been successfully deleted."
-        );
-        dispatch(logout());
-      }
+      let res;
+      if (
+        user === "provider"
+          ? (res = await deleteAccount())
+          : (res = await deleteOrgAccount())
+      )
+        if (res.success) {
+          showToast(
+            toast,
+            "Enroll AI",
+            "success",
+            "Your account have been successfully deleted."
+          );
+          dispatch(logout());
+        }
     } catch (error: any) {
       console.log(error);
       showToast(toast, "Error", "error", error.message || "An error occurred.");
+    } finally {
+      setDeleteIsLoading(false);
     }
   };
 
@@ -287,6 +289,7 @@ const Profile = () => {
       <ConfirmationModal
         onClose={onClose}
         isOpen={isOpen}
+        isLoading={deleteIsLoading}
         buttonText="Delete"
         message="Are you sure you want to delete your account? Once deleted, you will no longer have access to your account, and all the data will be permanently removed from our database."
         onConfirm={() => handleDeleteAccount()}
@@ -401,39 +404,8 @@ const Profile = () => {
                 />
               </div>
             )}
-            {form?.password && (
-              <div className="raleway text-xs flex w-full flex-1 flex-col gap-1 font-medium">
-                <label className="font-semibold" htmlFor="password">
-                  Password
-                </label>
-                <div className="relative">
-                  <input
-                    id="password"
-                    name="password"
-                    type="Password"
-                    placeholder="Password"
-                    value={form.password}
-                    // onChange={handleChange}
-                    readOnly
-                    className="border rounded-md px-3 py-4 w-full outline-[0.5px] outline-secondary"
-                  />
-                  <button
-                    type="button"
-                    onClick={togglePasswordVisibility}
-                    className="absolute right-4 top-1/2 transform -translate-y-1/2"
-                  >
-                    {showPassword ? (
-                      <EyeOffIcon className="w-5 h-5 text-gray-500" />
-                    ) : (
-                      <EyeIcon className="w-5 h-5 text-gray-500" />
-                    )}
-                  </button>
-                </div>
-              </div>
-            )}
-            {(user?.accountType === "provider" || !form?.password) && (
-              <div className="flex-1"></div>
-            )}
+
+            <div className="flex-1"></div>
           </div>
         </div>
       </section>

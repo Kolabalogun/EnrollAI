@@ -109,3 +109,29 @@ export const changePasswordOrg = async (formData: any) => {
     return handleError(error);
   }
 };
+
+export const deleteOrgAccount = async () => {
+  const token = localStorage.getItem("enrollai-user");
+  if (!token) {
+    throw new Error("Authentication token not found");
+  }
+  try {
+    const response = await axios.delete(
+      `${VITE_API_BASE_URL}/organizations/delete`,
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return {
+      success: true,
+      data: response.data,
+      message: "",
+    };
+  } catch (error: any) {
+    return handleError(error);
+  }
+};

@@ -61,9 +61,7 @@ const ApplicationsDetails = () => {
   const { id } = useParams();
   const [errors, setErrors] = useState({});
 
-  const [form, setForm] = useState<ApplicationFormInterface>(
-    ApplicationFormInitialState
-  );
+  const [form, setForm] = useState<any>(ApplicationFormInitialState);
   const [isLoadingPage, setPageLoading] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(false);
   const [pageNo, setPageNo] = useState<number>(1);
@@ -75,13 +73,14 @@ const ApplicationsDetails = () => {
   } = useDisclosure();
 
   const getApplication = async (load?: boolean) => {
+    if (!id) return;
     load && setPageLoading(true);
     try {
       const res = await getApplicationsById(id);
       if (res.success) {
         setForm(res?.data?.application);
       } else {
-        setForm(ApplicationFormInitialState);
+        setForm(ApplicationFormInitialState as any);
       }
     } catch (error: any) {
       console.log(error);

@@ -3,9 +3,10 @@ import { useSelector } from "react-redux";
 import EmptyCarts from "../dashboard/emptyCarts";
 import { TableComponent } from "@/components/table";
 import { ApplicationFormTableHeads } from "@/constant/data/table/tableHeads";
-import { ApplicationFormInterface } from "@/lib/types/tables";
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ApplicationFormInterface } from "@/lib/types";
 
 const ApplicationLists = ({ full }: { full?: boolean }) => {
   const { lists } = useSelector((state: any) => state.applicationForm);
@@ -19,9 +20,9 @@ const ApplicationLists = ({ full }: { full?: boolean }) => {
 
   const toggleMenu = (id: string | number | null) => {
     if (activeMenu === id) {
-      setActiveMenu(null); // Close if it's already open
+      setActiveMenu(null);
     } else {
-      setActiveMenu(id); // Open the new menu
+      setActiveMenu(id);
     }
   };
 
