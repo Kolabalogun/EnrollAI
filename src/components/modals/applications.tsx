@@ -7,10 +7,10 @@ import {
   ModalContent,
   ModalBody,
   useToast,
+  Button,
 } from "@chakra-ui/react";
 import { Search } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
 import { useSelector } from "react-redux";
 import { getAllApplicationsForProviders } from "@/services/applications";
 import showToast from "../common/showtoast";
@@ -29,11 +29,14 @@ const ApplicationsModal = ({
   const navigate = useNavigate();
   const { accountType } = useSelector((state: any) => state.auth);
   const toast = useToast();
-  // State for search input and fetched applications
+
+  // State for search input, fetched applications, and pagination
   const [searchQuery, setSearchQuery] = useState("");
   const [applications, setApplications] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5; // Number of items per page
 
   // Fetch applications when the modal is opened
   useEffect(() => {
@@ -42,9 +45,7 @@ const ApplicationsModal = ({
       setError(null);
       try {
         const response = await getAllApplicationsForProviders();
-        setApplications(response?.data?.applications);
-        console.log(response);
-
+        setApplications(response?.data?.applications || []);
         if (!response.success)
           return showToast(
             toast,
@@ -80,6 +81,23 @@ const ApplicationsModal = ({
         .includes(searchQuery.toLowerCase())
   );
 
+  // Pagination logic
+  const totalPages = Math.ceil(filteredApplications.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedApplications = filteredApplications.slice(
+    startIndex,
+    endIndex
+  );
+
+  const handlePreviousPage = () => {
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  };
+
   return (
     <Modal
       blockScrollOnMount={false}
@@ -97,7 +115,7 @@ const ApplicationsModal = ({
         >
           {/* Modal body */}
           <div className="flex flex-col space-y-5 bg-white">
-            <div className="">
+            <div>
               <div className="bg-[#f9fafb] border-fade border items-center flex rounded-full w-96 py-2 px-4">
                 <Search className="text-fade" size={14} />
                 <input
@@ -105,7 +123,10 @@ const ApplicationsModal = ({
                   className="bg-transparent outline-none raleway text-xs px-2"
                   placeholder="Search Application..."
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    setCurrentPage(1); // Reset to the first page on search
+                  }}
                 />
               </div>
             </div>
@@ -116,8 +137,8 @@ const ApplicationsModal = ({
                 <p className="text-fade text-xs">Loading applications...</p>
               ) : error ? (
                 <p className="text-red-500 text-xs">{error}</p>
-              ) : filteredApplications?.length > 0 ? (
-                filteredApplications?.map((app) => (
+              ) : paginatedApplications?.length > 0 ? (
+                paginatedApplications.map((app) => (
                   <div
                     key={app._id}
                     onClick={
@@ -143,6 +164,29 @@ const ApplicationsModal = ({
                 <p className="text-fade text-xs">No applications found</p>
               )}
             </div>
+
+            {/* Pagination controls */}
+            {filteredApplications.length > itemsPerPage && (
+              <div className="flex justify-between items-center mt-5">
+                <Button
+                  size="sm"
+                  onClick={handlePreviousPage}
+                  isDisabled={currentPage === 1}
+                >
+                  Previous
+                </Button>
+                <p className="text-xs">
+                  Page {currentPage} of {totalPages}
+                </p>
+                <Button
+                  size="sm"
+                  onClick={handleNextPage}
+                  isDisabled={currentPage === totalPages}
+                >
+                  Next
+                </Button>
+              </div>
+            )}
           </div>
         </ModalBody>
       </ModalContent>

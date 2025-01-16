@@ -46,6 +46,7 @@ import {
 import CreatedApplications from "@/pages/organizationflow/createdapplications";
 import { ADMIN_PROVIDERS } from "./routes";
 import AdminProviders from "@/pages/admin/providers";
+import RoleProtected from "@/components/auth/roleProtected";
 
 // Lazy-loading components
 const Home = lazy(() => import("../pages/home"));
@@ -79,41 +80,77 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/health-provider/application-form",
-        element: <HealthProviderApplicationForm />,
+        element: (
+          <RoleProtected allowedRoles={["provider"]}>
+            <HealthProviderApplicationForm />{" "}
+          </RoleProtected>
+        ),
       },
       {
         path: "/dashboard/health-provider/applications",
-        element: <HealthProviderApplications />,
+        element: (
+          <RoleProtected allowedRoles={["provider"]}>
+            <HealthProviderApplications />{" "}
+          </RoleProtected>
+        ),
       },
       {
         path: "/dashboard/health-provider/approved-applications",
-        element: <HealthProviderActiveApplications />,
+        element: (
+          <RoleProtected allowedRoles={["provider"]}>
+            <HealthProviderActiveApplications />{" "}
+          </RoleProtected>
+        ),
       },
       {
         path: "/dashboard/health-provider/pending-applications",
-        element: <HealthProviderDraftApplications />,
+        element: (
+          <RoleProtected allowedRoles={["provider"]}>
+            <HealthProviderDraftApplications />{" "}
+          </RoleProtected>
+        ),
       },
 
       {
         path: "/dashboard/health-provider/declined-applications",
-        element: <HealthProviderCompletedApplications />,
+        element: (
+          <RoleProtected allowedRoles={["provider"]}>
+            <HealthProviderCompletedApplications />{" "}
+          </RoleProtected>
+        ),
       },
 
       {
         path: "/dashboard/health-provider/applications/full-list",
-        element: <HealthProviderApplicationsFullList />,
+        element: (
+          <RoleProtected allowedRoles={["provider"]}>
+            <HealthProviderApplicationsFullList />{" "}
+          </RoleProtected>
+        ),
       },
       {
         path: "/dashboard/health-provider/applications/details/:id",
-        element: <HealthProviderApplicationsDetails />,
+        element: (
+          <RoleProtected allowedRoles={["provider"]}>
+            <HealthProviderApplicationsDetails />{" "}
+          </RoleProtected>
+        ),
       },
       {
         path: "/dashboard/health-provider/profile",
-        element: <HealthProviderProfile />,
+        element: (
+          <RoleProtected allowedRoles={["provider"]}>
+            <HealthProviderProfile />{" "}
+          </RoleProtected>
+        ),
       },
       {
         path: "/dashboard/health-provider/profile/cahq",
-        element: <HealthProviderCAHQProfile />,
+        element: (
+          <RoleProtected allowedRoles={["provider"]}>
+            <HealthProviderCAHQProfile />{" "}
+          </RoleProtected>
+        ),
       },
       {
         path: "/dashboard/health-provider/notifications",
@@ -152,27 +189,51 @@ const router = createBrowserRouter([
 
       {
         path: "/dashboard/credentializing-organization/create-application-form",
-        element: <CreateApplicationForm />,
+        element: (
+          <RoleProtected allowedRoles={["organization"]}>
+            <CreateApplicationForm />
+          </RoleProtected>
+        ),
       },
       {
         path: "/dashboard/credentializing-organization/created-applications",
-        element: <CreatedApplications />,
+        element: (
+          <RoleProtected allowedRoles={["organization"]}>
+            <CreatedApplications />
+          </RoleProtected>
+        ),
       },
       {
         path: "/dashboard/credentializing-organization/incoming-applications",
-        element: <IncomingApplications />,
+        element: (
+          <RoleProtected allowedRoles={["organization"]}>
+            <IncomingApplications />
+          </RoleProtected>
+        ),
       },
       {
         path: "/dashboard/credentializing-organization/all-applications",
-        element: <AllApplications />,
+        element: (
+          <RoleProtected allowedRoles={["organization"]}>
+            <AllApplications />
+          </RoleProtected>
+        ),
       },
       {
         path: "/dashboard/credentializing-organization/approved-applications",
-        element: <ApprovedApplications />,
+        element: (
+          <RoleProtected allowedRoles={["organization"]}>
+            <ApprovedApplications />
+          </RoleProtected>
+        ),
       },
       {
         path: "/dashboard/credentializing-organization/providers",
-        element: <Providers />,
+        element: (
+          <RoleProtected allowedRoles={["organization"]}>
+            <Providers />
+          </RoleProtected>
+        ),
       },
       {
         path: "/dashboard/credentializing-organization/notifications",

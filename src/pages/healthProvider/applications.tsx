@@ -10,25 +10,24 @@ import { useDisclosure } from "@chakra-ui/react";
 import { Pen, PlusIcon } from "lucide-react";
 import { HEALTHCARE_APPLICATIONS_FULL_LIST } from "@/router/routes";
 import { useNavigate } from "react-router-dom";
-import { recentActivitiesData } from "@/constant/data/recentactivitiesdat";
 
 const Appications = () => {
   const navigate = useNavigate();
   const { isOpen, onClose, onOpen } = useDisclosure();
   const { lists } = useSelector((state: any) => state.applicationForm);
 
-  const recentActivities = recentActivitiesData.map((activity) => (
-    <div className="flex mb-4 justify-between cursor-pointer items-center">
-      <div className="space-y-2">
-        <p className="font-semibold text-[13px] ">{activity.title}</p>
-        <p className="text-[12px] font-medium text-[#667085]">
-          {activity.description}
-        </p>
-      </div>
+  // const recentActivities = recentActivitiesData.map((activity) => (
+  //   <div className="flex mb-4 justify-between cursor-pointer items-center">
+  //     <div className="space-y-2">
+  //       <p className="font-semibold text-[13px] ">{activity.title}</p>
+  //       <p className="text-[12px] font-medium text-[#667085]">
+  //         {activity.description}
+  //       </p>
+  //     </div>
 
-      <p className="text-[12px] font-medium text-[#667085]">{activity.date} </p>
-    </div>
-  ));
+  //     <p className="text-[12px] font-medium text-[#667085]">{activity.date} </p>
+  //   </div>
+  // ));
 
   return (
     <section className="flex space-y-6 mb-20 flex-col">
@@ -59,8 +58,13 @@ const Appications = () => {
             </SubmitButton>
           </div>
 
-          <div className="border-secondary text-secondary bg-transparent border-2 hover:bg-secondary transition duration-500 hover:text-white py-2 gap-3 px-10 cursor-pointer flex items-center justify-center rounded-lg">
-            <p className="text-xs font-semibold">Review Draft </p>
+          <div
+            onClick={() =>
+              navigate("/dashboard/health-provider/pending-applications")
+            }
+            className="border-secondary text-secondary bg-transparent border-2 hover:bg-secondary transition duration-500 hover:text-white py-2 gap-3 px-10 cursor-pointer flex items-center justify-center rounded-lg"
+          >
+            <p className="text-xs font-semibold">Pending Applications</p>
             <Pen size={14} />
           </div>
         </div>
@@ -86,7 +90,7 @@ const Appications = () => {
           </div>
 
           <div className="flex-1">
-            <Notifications title="Recent Activities" data={recentActivities} />
+            <Notifications />
           </div>
         </div>
       </div>
