@@ -101,7 +101,7 @@ const Education = ({ form, errors, handleChange }: ApplicationProps) => {
                     label={field.label}
                     error={errors[field.name]}
                     name={field.name}
-                    value={form.step1.education[field.name] || ""}
+                    value={form?.step1?.education[field.name] || ""}
                     onChange={(e) =>
                       handleChange(
                         "step1",

@@ -52,7 +52,7 @@ const Navbar = () => {
                   ? `https://eu.ui-avatars.com/api/?name=${user?.fullName}&size=200`
                   : user?.profilePicture
               }
-              className="h-8 rounded-full"
+              className="h-8 w-8 rounded-full"
             ></img>
           </div>
 

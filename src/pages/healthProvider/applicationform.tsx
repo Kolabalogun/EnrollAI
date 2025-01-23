@@ -113,7 +113,6 @@ const ApplicationForm = () => {
         }
       } catch (error) {
         console.error("Error updating form:", error);
-        // Optionally, show an error notification here.
       }
     };
 
@@ -307,6 +306,13 @@ const ApplicationForm = () => {
                 "Enroll AI",
                 "success",
                 `${res?.data?.message || "Application created successfully"}`
+              );
+            } else {
+              showToast(
+                toast,
+                "Enroll AI",
+                "error",
+                `${res?.message || "Failed to create Application"}`
               );
             }
           } catch (error: any) {

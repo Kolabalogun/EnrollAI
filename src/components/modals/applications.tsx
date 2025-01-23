@@ -98,6 +98,8 @@ const ApplicationsModal = ({
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   };
 
+  console.log(applications);
+
   return (
     <Modal
       blockScrollOnMount={false}

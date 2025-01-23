@@ -9,7 +9,7 @@ import { AuthLayout } from "@/layout";
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
-import { VERIFY_EMAIL_ROUTE } from "@/router/routes";
+import { ORG_LOGIN_ROUTE } from "@/router/routes";
 import showToast from "@/components/common/showtoast";
 import { organizationRegisterProvider } from "@/services/org/auth";
 
@@ -52,9 +52,10 @@ const Register = () => {
           "success",
           `${res.data.message}`
         );
-        setTimeout(() => {
-          navigate(VERIFY_EMAIL_ROUTE, { state: { email: values.email } });
-        }, 2000);
+        navigate(ORG_LOGIN_ROUTE);
+        // setTimeout(() => {
+        //   navigate(VERIFY_EMAIL_ROUTE, { state: { email: values.email } });
+        // }, 2000);
       } else {
         showToast(
           toast,

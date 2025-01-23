@@ -23,10 +23,8 @@ const Profile = () => {
   const { user } = useSelector((state: RootState) => state.auth);
   const toast = useToast();
   const [data, setData] = useState<any>(ApplicationFormInitialState);
-
+  console.log(data);
   const fetchApplications = async () => {
-    console.log(user);
-
     if (!user) return;
 
     try {
@@ -34,7 +32,7 @@ const Profile = () => {
 
       console.log(res);
       if (res.success) {
-        setData(res?.data?.applications);
+        setData(res?.data?.application);
       } else {
         setData(ApplicationFormInitialState as any);
       }
@@ -51,8 +49,6 @@ const Profile = () => {
   useEffect(() => {
     if (user) fetchApplications();
   }, [user]);
-
-  console.log(data, "dsdsds");
 
   const handleSubmit = async () => {
     navigate(HEALTHCARE_APPLICATIONS_CAHQPROFILE);
@@ -73,7 +69,7 @@ const Profile = () => {
         <div className="space-y-1">
           <p className="font-semibold text-base ">CAQH Credentialing</p>
           <p className="text-[12px] font-medium text-[#667085]">
-            CAQH ID: 121212222
+            CAQH ID: {data?.step1?.personalInformation?.cahqID}
           </p>
         </div>
         <div className="space-y-5">

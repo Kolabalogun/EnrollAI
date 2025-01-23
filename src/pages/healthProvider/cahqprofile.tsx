@@ -1,16 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Avatar } from "@/assets/img";
+
 import { SubmitButton } from "@/components/common";
 import SecondaryButton from "@/components/common/buttons/secondaryButton";
 import showToast from "@/components/common/showtoast";
 import ConfirmationModal from "@/components/modals/confirmationModal";
-import Education from "@/components/pages/profile/education";
-import License from "@/components/pages/profile/license";
-import PersonalInformations from "@/components/pages/profile/personalInformations";
-import PracticeLocation from "@/components/pages/profile/practicelocation";
-import Reference from "@/components/pages/profile/reference";
+import PersonalInformations from "@/components/pages/applicationForm/step1/personalInformations";
+import PracticeLocation from "@/components/pages/applicationForm/step1/practicelocation";
+
+import Education from "@/components/pages/applicationForm/step1/education";
+
 import { ApplicationFormInitialState } from "@/constant/data/applicationsdata";
+import { ApplicationFormInterface } from "@/lib/types";
 import { RootState } from "@/redux/store";
 import { HEALTHCARE_APPLICATIONS_PROFILE } from "@/router/routes";
 import { getProviderRecentApplication } from "@/services/applications";
@@ -40,6 +41,9 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+import Licensing from "@/components/pages/applicationForm/step2/licensing";
+import BoardCertification from "@/components/pages/applicationForm/step3/boardCertification";
+
 const steps = [
   {
     title: "Personal Information",
@@ -54,20 +58,23 @@ const steps = [
     icon: Badge,
   },
   {
-    title: "Licensure",
+    title: "Licensing",
     icon: IdCard,
   },
   {
-    title: "References",
+    title: "Certification",
     icon: Users,
   },
 ];
 
 const CAHQProfile = () => {
   const { user } = useSelector((state: RootState) => state.auth);
-  const [data, setData] = useState<any>(ApplicationFormInitialState);
+  const [data, setData] = useState<ApplicationFormInterface | any>(
+    ApplicationFormInitialState
+  );
   const [pageNo, setPageNo] = useState(1);
   const toast = useToast();
+  const [errors] = useState({});
 
   const fetchApplications = async () => {
     if (!user) return;
@@ -78,7 +85,7 @@ const CAHQProfile = () => {
 
       console.log(res);
       if (res.success) {
-        setData(res?.data?.applications);
+        setData(res?.data?.application);
       } else {
         setData(ApplicationFormInitialState as any);
       }
@@ -96,21 +103,32 @@ const CAHQProfile = () => {
     if (user) fetchApplications();
   }, [user]);
 
-  console.log(data, "dsdsds");
+  console.log(pageNo, "dsdsds");
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   const navigate = useNavigate();
   const { activeStep, setActiveStep } = useSteps({
-    // index: setPageNo || 1,
+    index: pageNo || 1,
     count: steps.length,
   });
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    step: string,
+    parentObject: string,
+    fieldName: string,
+    value: string
   ) => {
-    const { name, value } = e.target;
-    console.log(name, value);
-    // dispatch(updateCAHQForm({ [name]: value }));
+    const dataa = {
+      ...data,
+      [step]: {
+        ...data[step],
+        [parentObject]: {
+          ...data[step][parentObject],
+          [fieldName]: value,
+        },
+      },
+    };
+    setData(dataa as ApplicationFormInterface);
   };
 
   const handleDateChange = (fieldName: string, date: Date | null) => {
@@ -120,6 +138,35 @@ const CAHQProfile = () => {
   const handlePhoneChange = (fieldName: string, phone: string) => {
     console.log(fieldName, phone);
     // dispatch(updateCAHQForm({ [fieldName]: phone }));
+  };
+
+  const handleFileChange = (
+    step: string,
+    parentObject: string,
+    fieldName: string,
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64 = reader.result;
+
+        const dataa = {
+          ...data,
+          [step]: {
+            ...data[step],
+            [parentObject]: {
+              ...data[step][parentObject],
+              [fieldName]: base64,
+            },
+          },
+        };
+        setData(dataa as ApplicationFormInterface);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleNextStep = (e: any) => {
@@ -149,12 +196,16 @@ const CAHQProfile = () => {
         <div className="space-y-1">
           <p className="font-semibold text-3xl">Application Profile</p>
           <p className="text-[12px] font-semibold  text-[#667085]">
-            CAQH ID: 121212222
+            CAQH ID: {data?.step1?.personalInformation?.cahqID}
           </p>
         </div>
         <div className="">
           <img
-            src={Avatar}
+            src={
+              !user?.profilePicture
+                ? `https://eu.ui-avatars.com/api/?name=${user?.fullName}&size=200`
+                : user?.profilePicture
+            }
             className="h-20 lg:h-32 w-20 lg:w-32 rounded-full"
             alt="profile picture"
           />
@@ -197,17 +248,31 @@ const CAHQProfile = () => {
         </div>
         <div className="space-y-5">
           {pageNo === 5 ? (
-            <Reference
+            <BoardCertification
               form={data}
+              errors={errors}
               handleChange={handleChange}
-              handlePhoneChange={handlePhoneChange}
+              handleFileChange={handleFileChange}
             />
           ) : pageNo === 2 ? (
-            <Education form={data} handleChange={handleChange} />
+            <Education
+              errors={errors}
+              form={data}
+              handleChange={handleChange}
+            />
           ) : pageNo === 3 ? (
-            <PracticeLocation form={data} handleChange={handleChange} />
+            <PracticeLocation
+              form={data}
+              errors={errors}
+              handleChange={handleChange}
+            />
           ) : pageNo === 4 ? (
-            <License form={data} handleChange={handleChange} />
+            <Licensing
+              form={data}
+              errors={errors}
+              handleChange={handleChange}
+              handleFileChange={handleFileChange}
+            />
           ) : (
             <PersonalInformations
               form={data}
