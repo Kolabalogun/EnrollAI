@@ -59,3 +59,37 @@ export const getCreatedApplications = async () => {
     return handleError(error);
   }
 };
+
+export const getIncomingApplications = async (organization_name: string) => {
+  const token = localStorage.getItem("enrollai-user");
+
+  if (!token) {
+    throw new Error("Authentication token not found");
+  }
+
+  if (!organization_name) {
+    throw new Error("Organization ID is required");
+  }
+
+  try {
+    const response = await axios.get(
+      `${VITE_API_BASE_URL}/organizations/incoming-applications`,
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        params: { organization_name },
+      }
+    );
+    return {
+      success: true,
+      data: response.data,
+      message: "",
+    };
+  } catch (error: any) {
+    console.error(error);
+    return handleError(error);
+  }
+};

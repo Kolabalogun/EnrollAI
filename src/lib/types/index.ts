@@ -5,6 +5,7 @@ export interface ApplicationFormInterface {
   organizationApplicationId: string;
   applicationTitle: string;
   organizationName: string;
+  applicationName: string;
   status: string;
   updatedAt: string;
   userId: {

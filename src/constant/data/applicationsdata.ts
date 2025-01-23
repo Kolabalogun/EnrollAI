@@ -4,7 +4,7 @@ export const ApplicationFormInitialState = {
 
   applicationType: "",
   organizationApplicationId: "",
-
+  // applicationName: "",
   applicationTitle: "",
   organizationName: "",
   status: "pending",

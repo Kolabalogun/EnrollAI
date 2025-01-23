@@ -19,6 +19,7 @@ export type User = {
   profileStatus: number;
   organizationName: string;
   profilePicture: string;
+  id: string;
 };
 
 export interface AuthState {
