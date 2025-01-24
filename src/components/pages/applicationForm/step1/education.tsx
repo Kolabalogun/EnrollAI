@@ -1,8 +1,11 @@
+import { RootState } from "@/redux/store";
 import { ApplicationProps } from ".";
 import DateInputField from "../Inputs/dateInput";
 import TextInputField from "../Inputs/TextInput";
+import { useSelector } from "react-redux";
 
 const Education = ({ form, errors, handleChange }: ApplicationProps) => {
+  const { user } = useSelector((state: RootState) => state.auth);
   const educationData = [
     {
       title: "Premedical",
@@ -89,6 +92,9 @@ const Education = ({ form, errors, handleChange }: ApplicationProps) => {
                   <DateInputField
                     label={field.label}
                     max
+                    disabled={
+                      user?.accountType === "organization" ? true : false
+                    }
                     error={!!errors[field.name]}
                     selected={form.step1.education[field.name] || null}
                     onChange={(date) =>
@@ -100,6 +106,9 @@ const Education = ({ form, errors, handleChange }: ApplicationProps) => {
                     key={field.name}
                     label={field.label}
                     error={errors[field.name]}
+                    readOnly={
+                      user?.accountType === "organization" ? true : false
+                    }
                     name={field.name}
                     value={form?.step1?.education[field.name] || ""}
                     onChange={(e) =>

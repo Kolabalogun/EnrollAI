@@ -1,6 +1,8 @@
+import { useSelector } from "react-redux";
 import DateInputField from "../Inputs/dateInput";
 import TextInputField from "../Inputs/TextInput";
 import { ApplicationProps } from "../step1";
+import { RootState } from "@/redux/store";
 
 const mainLicenseRegistration = [
   {
@@ -137,6 +139,8 @@ const Licensing = ({
   handleChange,
   handleFileChange,
 }: ApplicationProps) => {
+  const { user } = useSelector((state: RootState) => state.auth);
+
   return (
     <div className="border rounded-lg pt-5 px-3 xl:px-5 pb-10 space-y-5">
       <div className="space-y-5">
@@ -165,6 +169,11 @@ const Licensing = ({
                             label={field.label}
                             selected={form.step2.medicalLicenses[field.name]}
                             error={!!errors[field.name]}
+                            disabled={
+                              user?.accountType === "organization"
+                                ? true
+                                : false
+                            }
                             onChange={(date) =>
                               handleChange(
                                 "step2",
@@ -179,6 +188,11 @@ const Licensing = ({
                             <input
                               type="file"
                               name={field.name}
+                              readOnly={
+                                user?.accountType === "organization"
+                                  ? true
+                                  : false
+                              }
                               onChange={(e) =>
                                 handleFileChange(
                                   "step2",
@@ -194,6 +208,11 @@ const Licensing = ({
                           <TextInputField
                             key={field.name}
                             label={field.label}
+                            readOnly={
+                              user?.accountType === "organization"
+                                ? true
+                                : false
+                            }
                             error={errors[field.name]}
                             name={field.name}
                             value={form.step2.medicalLicenses[field.name]}
@@ -234,6 +253,9 @@ const Licensing = ({
                   {field.type === "date" ? (
                     <DateInputField
                       label={field.label}
+                      disabled={
+                        user?.accountType === "organization" ? true : false
+                      }
                       selected={form.step2.otherMedLicenses[field.name]}
                       error={!!errors[field.name]}
                       onChange={(date) =>
@@ -250,6 +272,9 @@ const Licensing = ({
                       <input
                         type="file"
                         name={field.name}
+                        readOnly={
+                          user?.accountType === "organization" ? true : false
+                        }
                         onChange={(e) =>
                           handleFileChange(
                             "step2",
@@ -266,6 +291,9 @@ const Licensing = ({
                       key={field.name}
                       label={field.label}
                       error={errors[field.name]}
+                      readOnly={
+                        user?.accountType === "organization" ? true : false
+                      }
                       name={field.name}
                       value={form.step2.otherMedLicenses[field.name]}
                       onChange={(e) =>

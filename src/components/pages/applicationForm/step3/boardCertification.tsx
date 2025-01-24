@@ -1,6 +1,8 @@
+import { useSelector } from "react-redux";
 import DateInputField from "../Inputs/dateInput";
 import TextInputField from "../Inputs/TextInput";
 import { ApplicationProps } from "../step1";
+import { RootState } from "@/redux/store";
 
 const boardCertificationsData = [
   {
@@ -77,6 +79,8 @@ const BoardCertification = ({
   errors,
   handleFileChange,
 }: ApplicationProps) => {
+  const { user } = useSelector((state: RootState) => state.auth);
+
   return (
     <div className="border rounded-lg pt-5 px-3 xl:px-5 pb-10 space-y-5">
       .<p className="font-semibold text-base">Board Certifications</p>
@@ -96,6 +100,9 @@ const BoardCertification = ({
                   <DateInputField
                     label={field.label}
                     selected={form.step3.boards[field.name]}
+                    disabled={
+                      user?.accountType === "organization" ? true : false
+                    }
                     error={!!errors[field.name]}
                     onChange={(date) =>
                       handleChange("step3", "boards", field.name, date)
@@ -109,6 +116,9 @@ const BoardCertification = ({
                       onChange={(e) =>
                         handleFileChange("step3", "boards", field.name, e)
                       }
+                      readOnly={
+                        user?.accountType === "organization" ? true : false
+                      }
                       className="border rounded-md p-2 outline-[0.5px] outline-secondary flex-1"
                     />
                   </div>
@@ -116,6 +126,9 @@ const BoardCertification = ({
                   <TextInputField
                     key={field.name}
                     label={field.label}
+                    readOnly={
+                      user?.accountType === "organization" ? true : false
+                    }
                     error={errors[field.name]}
                     name={field.name}
                     value={form.step3.boards[field.name]}
@@ -143,6 +156,7 @@ const BoardCertification = ({
           </label>
           <input
             type="checkbox"
+            disabled={user?.accountType === "organization" ? true : false}
             checked={form.step3.boards.additionalBoardCertificationApplied}
             onChange={(e) =>
               handleChange(
@@ -158,6 +172,7 @@ const BoardCertification = ({
           <TextInputField
             label="If no, list the board and describe your intent for certification"
             name="additionalBoardCertificationIntent"
+            readOnly={user?.accountType === "organization" ? true : false}
             value={form.step3.boards.additionalBoardCertificationIntent || ""}
             onChange={(e) =>
               handleChange(

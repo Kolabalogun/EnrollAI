@@ -5,7 +5,6 @@ import {
   EllipsisVertical,
   Eye,
   Pen,
-  Trash,
   Trash2Icon,
   X,
 } from "lucide-react";
@@ -56,7 +55,7 @@ export const ActionCell = ({
   return (
     <div className="relative " ref={menuRef}>
       <div
-        onClick={() => toggleMenu(row._id)} // Pass row.id to toggleMenu
+        onClick={() => toggleMenu(row._id)}
         className="cursor-pointer flex items-center z-[1001] justify-center"
       >
         <EllipsisVertical size={18} className="text-text-primary" />
@@ -74,13 +73,17 @@ export const ActionCell = ({
               View Application
             </li>
             {accountType !== "provider" ? (
-              <li
-                onClick={() => handleEdit(row)}
-                className="cursor-pointer raleway text-xs font-semibold  px-4 py-3 hover:bg-gray-200 flex items-center gap-3"
-              >
-                <CheckCircle color="green" size={15} />
-                Approve Application
-              </li>
+              <>
+                {row?.status !== "approved" && (
+                  <li
+                    onClick={() => handleEdit(row)}
+                    className="cursor-pointer raleway text-xs font-semibold  px-4 py-3 hover:bg-gray-200 flex items-center gap-3"
+                  >
+                    <CheckCircle color="green" size={15} />
+                    Approve Application
+                  </li>
+                )}
+              </>
             ) : (
               <li
                 onClick={() => handleEdit(row)}
@@ -90,23 +93,14 @@ export const ActionCell = ({
                 Edit
               </li>
             )}
-            {accountType !== "provider" ? (
-              <li
-                onClick={() => handleDelete(row)}
-                className="cursor-pointer raleway text-xs font-semibold  px-4 py-3 flex items-center gap-3 hover:bg-gray-200"
-              >
-                <X color="red" size={15} />
-                Reject Application
-              </li>
-            ) : (
-              <li
-                onClick={() => handleDelete(row)}
-                className="cursor-pointer raleway text-xs font-semibold  px-4 py-3 flex items-center gap-3 hover:bg-gray-200"
-              >
-                <Trash color="red" size={15} />
-                Delete
-              </li>
-            )}
+
+            <li
+              onClick={() => handleDelete(row)}
+              className="cursor-pointer raleway text-xs font-semibold  px-4 py-3 flex items-center gap-3 hover:bg-gray-200"
+            >
+              <X color="red" size={15} />
+              Delete Application
+            </li>
           </ul>
         </div>
       )}
@@ -264,7 +258,7 @@ export const OrganizationApplicationFormTableHeads = (
             ? "border-[#21A0A0] text-[#21A0A0] bg-[#d3ecec] "
             : row?.status === "pending"
             ? "border-yellow-500 text-yellow-500 bg-yellow-500/10"
-            : "border-[#21A0A0] text-[#21A0A0]"
+            : "border-[#fb0000] text-[#fb0000]"
         } border `}
       >
         {row.status}
@@ -343,5 +337,82 @@ export const CreatedApplicationsTableHeads = (
     ),
     className: "p-2.5 text-center",
     headClassName: "text-center",
+  },
+];
+
+export const ProvidersTableHeads = (
+  handleViewDetails: (row: any) => void
+): TableColumn<any>[] => [
+  {
+    header: "Provider Name",
+    accessor: (row) => (
+      <div className="space-y-1 w-32 xl:w-full">
+        <p className="font-semibold capitalize text-xs">
+          {row?.user?.fullName ?? "N/A"}
+        </p>
+      </div>
+    ),
+    flex: 2,
+  },
+  {
+    header: "Email",
+    accessor: (row) => (
+      <div className="w-32 xl:w-full">
+        <p className="font-semibold  lowercase text-xs">
+          {row?.user.email ?? "N/A"}
+        </p>
+      </div>
+    ),
+    flex: 2,
+  },
+  {
+    header: "Professional Title",
+    accessor: (row) => (
+      <div className="w-32 xl:w-full">
+        <p className="font-semibold capitalize text-xs">
+          {row?.user?.professionalTitle ?? "N/A"}
+        </p>
+      </div>
+    ),
+    flex: 2,
+  },
+  {
+    header: "Date Applied",
+    accessor: (row) => (
+      <div className="space-y-1 w-32 xl:w-full">
+        <p className="font-semibold text-xs">
+          {formatDateTime(row?.applications[0]?.createdAt)}
+        </p>
+      </div>
+    ),
+    flex: 2,
+  },
+  {
+    header: "Status",
+    accessor: (row) => (
+      <div
+        className={`self-center text-xs   items-center justify-center flex gap-2 font-medium p-0.5 rounded-full capitalize  w-32 ${
+          row?.applications[0]?.status === "approved"
+            ? "border-[#21A0A0] text-[#21A0A0] bg-[#d3ecec] "
+            : row?.applications[0]?.status === "pending"
+            ? "border-yellow-500 text-yellow-500 bg-yellow-500/10"
+            : "border-[#fb0000] text-[#fb0000]"
+        } border `}
+      >
+        {row?.applications[0]?.status}
+      </div>
+    ),
+    className: "",
+    headClassName: "",
+  },
+  {
+    header: "View Details",
+    accessor: () => (
+      <div className="space-y-1 w-32 xl:w-full">
+        <p className="font-semibold cursor-pointer text-xs">View Details</p>
+      </div>
+    ),
+    className: "",
+    headClassName: "",
   },
 ];

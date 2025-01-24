@@ -131,7 +131,7 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/health-provider/applications/details/:id",
         element: (
-          <RoleProtected allowedRoles={["provider"]}>
+          <RoleProtected allowedRoles={["provider", "organization"]}>
             <HealthProviderApplicationsDetails />{" "}
           </RoleProtected>
         ),
@@ -203,6 +203,14 @@ const router = createBrowserRouter([
           </RoleProtected>
         ),
       },
+      // {
+      //   path: "/dashboard/credentializing-organization/applications/details/:id",
+      //   element: (
+      //     <RoleProtected allowedRoles={["provider"]}>
+      //       <HealthProviderApplicationsDetails />{" "}
+      //     </RoleProtected>
+      //   ),
+      // },
       {
         path: "/dashboard/credentializing-organization/incoming-applications",
         element: (

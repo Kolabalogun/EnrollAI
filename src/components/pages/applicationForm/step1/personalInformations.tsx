@@ -5,6 +5,8 @@ import PhoneInputField from "../Inputs/phoneInput";
 import TextInputField from "../Inputs/TextInput";
 import { ApplicationProps } from ".";
 import { ApplicationFormInitialState } from "@/constant/data/applicationsdata";
+import { RootState } from "@/redux/store";
+import { useSelector } from "react-redux";
 
 const PersonalInformations = ({
   form = ApplicationFormInitialState,
@@ -40,6 +42,8 @@ const PersonalInformations = ({
 
   console.log(form, "formformform");
 
+  const { user } = useSelector((state: RootState) => state.auth);
+
   return (
     <div className="border rounded-lg pt-5 px-3 xl:px-5 pb-10 space-y-5">
       <p className="font-semibold text-base">Personal Information</p>
@@ -74,6 +78,9 @@ const PersonalInformations = ({
                   <ReactDatePicker
                     maxDate={new Date(Date.now())}
                     selected={form.step1.personalInformation[field.name] || ""}
+                    disabled={
+                      user?.accountType === "organization" ? true : false
+                    }
                     onChange={(date) =>
                       handleChange(
                         "step1",
@@ -96,6 +103,7 @@ const PersonalInformations = ({
                 key={field.name}
                 error={!!errors[field.name]}
                 label={field.label}
+                readOnly={user?.accountType === "organization" ? true : false}
                 value={form.step1.personalInformation[field.name] || ""}
                 onChange={(phone) =>
                   handleChange(
@@ -123,6 +131,7 @@ const PersonalInformations = ({
                 </div>
                 <select
                   id={field.name}
+                  disabled={user?.accountType === "organization" ? true : false}
                   value={form.step1.personalInformation[field.name] || "Male"}
                   onChange={(e) =>
                     handleChange(
@@ -149,6 +158,7 @@ const PersonalInformations = ({
               key={field.name}
               label={field.label}
               name={field.name}
+              readOnly={user?.accountType === "organization" ? true : false}
               error={!!errors[field.name]}
               type={
                 field.name === "SSN" || field.name === "homeFax"

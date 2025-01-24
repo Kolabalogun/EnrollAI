@@ -6,6 +6,7 @@ interface PhoneInputFieldProps {
   value: E164Number | undefined;
   onChange: (phone: string) => void;
   error?: boolean;
+  readOnly?: boolean;
 }
 
 const PhoneInputField: React.FC<PhoneInputFieldProps> = ({
@@ -13,6 +14,7 @@ const PhoneInputField: React.FC<PhoneInputFieldProps> = ({
   value,
   onChange,
   error,
+  readOnly = false,
 }) => (
   <div className="raleway text-xs flex   flex-col w-full gap-2  font-medium">
     <div className="flex gap-1 items-center">
@@ -24,6 +26,7 @@ const PhoneInputField: React.FC<PhoneInputFieldProps> = ({
       placeholder="(000) - 123 - 4567"
       value={value as E164Number | undefined}
       onChange={onChange}
+      disabled={readOnly}
       buttonStyle={{ borderColor: error ? "#fb0000" : "#e2e8f0" }}
       dropdownStyle={{ fontSize: 13 }}
       inputStyle={{

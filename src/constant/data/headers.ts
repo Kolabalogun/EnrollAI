@@ -167,3 +167,26 @@ export const createdApplicationsHeader = [
     key: "createdAt",
   },
 ];
+
+export const providersHeaders = [
+  {
+    label: "Provider Name",
+    key: "user.fullName",
+  },
+  {
+    label: "Email",
+    key: "user.email",
+  },
+  {
+    label: "Application Name",
+    key: "user.professionalTitle",
+  },
+  {
+    label: "Date Applied",
+    key: "application.createdAt",
+  },
+  {
+    label: "Status",
+    key: "application.fullName",
+  },
+];

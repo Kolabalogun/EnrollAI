@@ -7,6 +7,7 @@ interface InputFieldProps {
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   type?: string;
   error?: boolean;
+  readOnly?: boolean;
 }
 
 const TextInputField = ({
@@ -16,6 +17,7 @@ const TextInputField = ({
   onChange,
   type,
   error = false,
+  readOnly = false,
 }: InputFieldProps) => {
   return (
     <div className="raleway text-xs flex   flex-col w-full gap-2   font-medium">
@@ -29,6 +31,7 @@ const TextInputField = ({
         type={type ?? "text"}
         placeholder={label}
         value={value}
+        readOnly={readOnly}
         onChange={onChange || (() => {})}
         className={`border rounded-md p-2 outline-[0.5px] outline-secondary flex-1 ${
           error ? "border-red-500 border-2" : ""

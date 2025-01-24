@@ -1,6 +1,8 @@
+import { RootState } from "@/redux/store";
 import { ApplicationProps } from ".";
 import PhoneInputField from "../Inputs/phoneInput";
 import TextInputField from "../Inputs/TextInput";
+import { useSelector } from "react-redux";
 
 const PracticeLocation = ({ form, errors, handleChange }: ApplicationProps) => {
   const officeSections = [
@@ -69,6 +71,8 @@ const PracticeLocation = ({ form, errors, handleChange }: ApplicationProps) => {
     },
   ];
 
+  const { user } = useSelector((state: RootState) => state.auth);
+
   return (
     <div className="border rounded-lg pt-5 px-3 xl:px-5 pb-10 space-y-9">
       <p className="font-semibold text-base">Practice Information</p>
@@ -80,6 +84,7 @@ const PracticeLocation = ({ form, errors, handleChange }: ApplicationProps) => {
             <input
               id="primaryOfficeName"
               name="primaryOfficeName"
+              readOnly={user?.accountType === "organization" ? true : false}
               type="text"
               placeholder="Practice Name"
               value={form.step1.practiceInformation.primaryOfficeName || ""}
@@ -103,6 +108,7 @@ const PracticeLocation = ({ form, errors, handleChange }: ApplicationProps) => {
               id="primaryDepartmentName"
               name="primaryDepartmentName"
               type="text"
+              readOnly={user?.accountType === "organization" ? true : false}
               placeholder="Department Name"
               value={form.step1.practiceInformation.primaryDepartmentName || ""}
               onChange={(e) =>
@@ -130,6 +136,7 @@ const PracticeLocation = ({ form, errors, handleChange }: ApplicationProps) => {
                 <PhoneInputField
                   key={field.name}
                   label={field.label}
+                  readOnly={user?.accountType === "organization" ? true : false}
                   error={!!errors[field.name]}
                   value={form.step1.practiceInformation[field.name]}
                   onChange={(phone) =>
@@ -145,6 +152,7 @@ const PracticeLocation = ({ form, errors, handleChange }: ApplicationProps) => {
                 <TextInputField
                   key={field.name}
                   label={field.label}
+                  readOnly={user?.accountType === "organization" ? true : false}
                   error={!!errors[field.name]}
                   name={field.name}
                   value={form.step1.practiceInformation[field.name]}

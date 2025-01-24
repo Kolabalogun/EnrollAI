@@ -1,6 +1,8 @@
 import { ApplicationProps } from "../step1";
 import TextInputField from "../Inputs/TextInput";
 import DateInputField from "../Inputs/dateInput";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 const professionalLiabilityData = [
   {
@@ -59,6 +61,8 @@ const ProfessionalLiability = ({
   handleChange,
   errors,
 }: ApplicationProps) => {
+  const { user } = useSelector((state: RootState) => state.auth);
+
   return (
     <div className="border rounded-lg pt-5 px-3 xl:px-5 pb-10 space-y-5">
       <p className="font-semibold text-base">Professional Liability</p>
@@ -75,6 +79,9 @@ const ProfessionalLiability = ({
                   <DateInputField
                     label={field.label}
                     selected={form.step3.carriers[field.name]}
+                    disabled={
+                      user?.accountType === "organization" ? true : false
+                    }
                     error={!!errors[field.name]}
                     onChange={(date) =>
                       handleChange("step3", "carriers", field.name, date)
@@ -83,6 +90,9 @@ const ProfessionalLiability = ({
                 ) : (
                   <TextInputField
                     key={field.name}
+                    readOnly={
+                      user?.accountType === "organization" ? true : false
+                    }
                     label={field.label}
                     error={errors[field.name]}
                     name={field.name}

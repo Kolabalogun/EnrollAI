@@ -3,6 +3,7 @@ import { TableComponent } from "@/components/table";
 import {
   CreatedApplicationsTableHeads,
   OrganizationApplicationFormTableHeads,
+  ProvidersTableHeads,
 } from "@/constant/data/table/tableHeads";
 
 import { useState } from "react";
@@ -110,8 +111,14 @@ const OrganizationApplicationLists = ({
 
   const createdApplicationColumns = CreatedApplicationsTableHeads(handleDelete);
 
+  const providersColumns = ProvidersTableHeads(handleViewDetails);
+
   const parsedColumns =
-    title === "Created Applications" ? createdApplicationColumns : columns;
+    title === "Created Applications"
+      ? createdApplicationColumns
+      : title === "Providers"
+      ? providersColumns
+      : columns;
 
   return (
     <div>

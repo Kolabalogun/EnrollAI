@@ -22,6 +22,12 @@ import Step3 from "@/components/pages/applicationForm/step3";
 import Step2 from "@/components/pages/applicationForm/step2";
 
 import ConfirmationModal from "@/components/modals/confirmationModal";
+import {
+  approveProviderApplication,
+  declineProviderApplication,
+} from "@/services/org/applications";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 const validateForm = (
   form: ApplicationFormInterface
@@ -60,7 +66,7 @@ const ApplicationsDetails = () => {
   const toast = useToast();
   const { id } = useParams();
   const [errors, setErrors] = useState({});
-
+  const { user } = useSelector((state: RootState) => state.auth);
   const [form, setForm] = useState<any>(ApplicationFormInitialState);
   const [isLoadingPage, setPageLoading] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -70,6 +76,18 @@ const ApplicationsDetails = () => {
     isOpen: deleteIsOpen,
     onClose: deleteOnClose,
     onOpen: deleteOnOpen,
+  } = useDisclosure();
+
+  const {
+    isOpen: approveIsOpen,
+    onClose: approveOnClose,
+    onOpen: approveOnOpen,
+  } = useDisclosure();
+
+  const {
+    isOpen: declineIsOpen,
+    onClose: declineOnClose,
+    onOpen: declineOnOpen,
   } = useDisclosure();
 
   const getApplication = async (load?: boolean) => {
@@ -323,6 +341,80 @@ const ApplicationsDetails = () => {
     }
   };
 
+  const handleApproveApplication = async (id: string) => {
+    setLoading(true);
+    try {
+      const res = await approveProviderApplication(id);
+
+      console.log(res);
+
+      if (res.success) {
+        setForm(res?.data?.application);
+        showToast(
+          toast,
+          "Enroll AI",
+          "success",
+          "Application approved successfully"
+        );
+      } else {
+        showToast(
+          toast,
+          "Enroll AI",
+          "error",
+          `${res.message || "Failed to approve Application. Please try later"} `
+        );
+      }
+    } catch (error: any) {
+      console.log(error);
+      showToast(
+        toast,
+        "Enroll AI",
+        "error",
+        `${error.message || "Failed to approve Application. Please try later"} `
+      );
+    } finally {
+      setLoading(false);
+      approveOnClose();
+    }
+  };
+
+  const handleDeclineApplication = async (id: string) => {
+    setLoading(true);
+    try {
+      const res = await declineProviderApplication(id);
+
+      console.log(res);
+
+      if (res.success) {
+        setForm(res?.data?.application);
+        showToast(
+          toast,
+          "Enroll AI",
+          "success",
+          "Application declined successfully"
+        );
+      } else {
+        showToast(
+          toast,
+          "Enroll AI",
+          "error",
+          `${res.message || "Failed to decline Application. Please try later"} `
+        );
+      }
+    } catch (error: any) {
+      console.log(error);
+      showToast(
+        toast,
+        "Enroll AI",
+        "error",
+        `${error.message || "Failed to approve Application. Please try later"} `
+      );
+    } finally {
+      setLoading(false);
+      declineOnClose();
+    }
+  };
+
   if (isLoadingPage)
     return (
       <div className="h-[80vh] bg-white/10 space-y-1  flex-col flex items-center justify-center ">
@@ -352,6 +444,26 @@ const ApplicationsDetails = () => {
           handleDeleteApplication(form._id);
         }}
       />
+      <ConfirmationModal
+        onClose={approveOnClose}
+        isOpen={approveIsOpen}
+        buttonText="Approve"
+        isLoading={isLoading}
+        message="Are you sure you want to approve your application? "
+        onConfirm={() => {
+          handleApproveApplication(form._id);
+        }}
+      />
+      <ConfirmationModal
+        onClose={declineOnClose}
+        isOpen={declineIsOpen}
+        buttonText="Decline"
+        isLoading={isLoading}
+        message="Are you sure you want to decline your application? "
+        onConfirm={() => {
+          handleDeclineApplication(form._id);
+        }}
+      />
       <div className="flex flex-col gap-4">
         <div onClick={() => navigate(-1)} className="flex gap-3 items-center">
           <ChevronLeft size={15} />
@@ -363,16 +475,16 @@ const ApplicationsDetails = () => {
       <div className="bg-white rounded-lg flex-1 h-full w-full flex flex-col p-3 md:p-5 space-y-10">
         <div className="space-y-2">
           <div className="space-y-1">
-            <p className="font-semibold text-base ">
+            <p className="font-semibold capitalize text-base ">
               {form?.applicationType || "N/A"}
             </p>
-            <p className="text-[12px] font-medium text-[#667085]">
+            <p className="text-[12px] capitalize font-medium text-[#667085]">
               {form?.organizationApplication?.organizationName ||
                 form?.organizationName ||
                 "N/A"}
             </p>
           </div>
-          <p className="text-[12px] font-medium text-[#667085]">
+          <p className="text-[12px] capitalize font-medium text-[#667085]">
             {form?.applicationTitle || "N?A"}
           </p>
         </div>
@@ -467,13 +579,27 @@ const ApplicationsDetails = () => {
                 deleteOnOpen();
               }}
             />
+            {user?.accountType === "organization" && (
+              <>
+                {form?.status !== "approved" && (
+                  <SubmitButton
+                    // isLoading={isLoading}
+                    handleSubmit={approveOnOpen}
+                    className="py-2 flex gap-2  w-auto px-8 border rounded-md bg-green font-semibold text-xs"
+                  >
+                    Approve Application
+                  </SubmitButton>
+                )}
 
-            <SubmitButton
-              // isLoading={isLoading}
-              className="py-2 flex gap-2  w-auto px-8 border rounded-md font-semibold text-xs"
-            >
-              Send Message
-            </SubmitButton>
+                <SubmitButton
+                  // isLoading={isLoading}
+                  handleSubmit={declineOnOpen}
+                  className="py-2 bg-red-500 flex gap-2  w-auto px-8 border rounded-md font-semibold text-xs"
+                >
+                  Decline Application
+                </SubmitButton>
+              </>
+            )}
           </div>
         </div>
       </div>

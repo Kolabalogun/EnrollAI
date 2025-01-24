@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import showToast from "@/components/common/showtoast";
 import OrganizationApplicationLists from "@/components/pages/applications/organization";
@@ -48,21 +49,32 @@ const IncomingApplications = () => {
     const filtered = data.filter(
       (item: ApplicationFormInterface) =>
         item.applicationTitle.toLowerCase().includes(lowercasedValue) ||
-        item.applicationName.toLowerCase().includes(lowercasedValue)
+        item.applicationName.toLowerCase().includes(lowercasedValue) ||
+        item.step1.personalInformation.firstName
+          .toLowerCase()
+          .includes(lowercasedValue) ||
+        item.step1.personalInformation.lastName
+          .toLowerCase()
+          .includes(lowercasedValue) ||
+        item.step1.personalInformation.email
+          .toLowerCase()
+          .includes(lowercasedValue)
     );
 
     setFilteredData(filtered);
   };
   return (
     <ApplicationsPageLayout
-      handleSearch={() => console.log("")}
+      handleSearch={handleSearch}
       headers={headers}
       filteredData={filteredData || []}
       title="Incoming Applications"
     >
       <OrganizationApplicationLists
         data={filteredData || []}
-        fetchFunction={() => console.log("")}
+        fetchFunction={fetchApplications}
+        title="Incoming Applications"
+        isLoading={isLoading}
       />
     </ApplicationsPageLayout>
   );
