@@ -43,6 +43,13 @@ const OrganizationApplicationLists = ({
     navigate(`/dashboard/health-provider/applications/details/${row._id}`);
   };
 
+  const handleProviderDetails = (row: any) => {
+    console.log(row);
+    navigate(`/dashboard/credentializing-organization/providers/details`, {
+      state: JSON.stringify(row),
+    });
+  };
+
   const toggleMenu = (id: string | number | null) => {
     if (activeMenu === id) {
       setActiveMenu(null);
@@ -111,7 +118,7 @@ const OrganizationApplicationLists = ({
 
   const createdApplicationColumns = CreatedApplicationsTableHeads(handleDelete);
 
-  const providersColumns = ProvidersTableHeads(handleViewDetails);
+  const providersColumns = ProvidersTableHeads(handleProviderDetails);
 
   const parsedColumns =
     title === "Created Applications"

@@ -341,7 +341,7 @@ export const CreatedApplicationsTableHeads = (
 ];
 
 export const ProvidersTableHeads = (
-  handleViewDetails: (row: any) => void
+  handleProviderDetails: (row: any) => void
 ): TableColumn<any>[] => [
   {
     header: "Provider Name",
@@ -407,8 +407,11 @@ export const ProvidersTableHeads = (
   },
   {
     header: "View Details",
-    accessor: () => (
-      <div className="space-y-1 w-32 xl:w-full">
+    accessor: (row) => (
+      <div
+        onClick={() => handleProviderDetails(row)}
+        className="space-y-1 w-32 xl:w-full"
+      >
         <p className="font-semibold cursor-pointer text-xs">View Details</p>
       </div>
     ),

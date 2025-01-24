@@ -47,6 +47,7 @@ import CreatedApplications from "@/pages/organizationflow/createdapplications";
 import { ADMIN_PROVIDERS } from "./routes";
 import AdminProviders from "@/pages/admin/providers";
 import RoleProtected from "@/components/auth/roleProtected";
+import ProvidersDetails from "@/pages/organizationflow/providersDetails";
 
 // Lazy-loading components
 const Home = lazy(() => import("../pages/home"));
@@ -240,6 +241,14 @@ const router = createBrowserRouter([
         element: (
           <RoleProtected allowedRoles={["organization"]}>
             <Providers />
+          </RoleProtected>
+        ),
+      },
+      {
+        path: "/dashboard/credentializing-organization/providers/details",
+        element: (
+          <RoleProtected allowedRoles={["organization"]}>
+            <ProvidersDetails />
           </RoleProtected>
         ),
       },
