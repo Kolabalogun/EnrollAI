@@ -294,6 +294,19 @@ export type ProviderAndApplications = {
   applications: ApplicationFormInterface[];
 };
 
+export type Admin = {
+  _id: string;
+  accountType: "super_admin" | string;
+  fullName: string;
+  email: string;
+  isVerified: boolean;
+  profileStatus: number;
+  deleted: boolean;
+  createdAt: string;
+  __v: number;
+  profilePicture: string;
+};
+
 export type CreatedApplicationType = {
   _id: string;
   organization: Organization;

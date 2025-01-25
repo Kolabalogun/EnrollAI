@@ -235,3 +235,29 @@ export const providerHeader = [
     key: "createdAt",
   },
 ];
+
+export const adminHeader = [
+  {
+    label: "Full Name",
+    key: "fullName",
+  },
+  {
+    label: "Email",
+    key: "email",
+  },
+
+  {
+    label: "Profile Status",
+    key: "profileStatus",
+  },
+
+  {
+    label: "Profile Picture",
+    key: "profilePicture",
+  },
+
+  {
+    label: "Created At",
+    key: "createdAt",
+  },
+];

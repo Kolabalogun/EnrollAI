@@ -51,7 +51,7 @@ const PasswordModal = ({ dialogOpen, setDialogOpen }: Props) => {
       };
 
       let response;
-      if (user?.accountType !== "provider") {
+      if (user?.accountType === "organization") {
         response = await changePasswordOrg(formData);
       } else {
         response = await changePassword(formData);

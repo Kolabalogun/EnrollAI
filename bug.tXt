@@ -1,6 +1,6 @@
 1. OTP not working
-2. Organization Update API
-3. Update Profile needs Profile Picture 
+2.  Revoke user access for all 3
+3.  Delete Org and User Account
 4. Forget Password not working for Org
 5. Update Profile not working for Org
 

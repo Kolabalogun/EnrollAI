@@ -158,6 +158,34 @@ export const getApplicationStats = async () => {
   }
 };
 
+export const getAllAdmins = async () => {
+  const token = localStorage.getItem("enrollai-user");
+
+  if (!token) {
+    throw new Error("Authentication token not found");
+  }
+  try {
+    const response = await axios.get(
+      `${VITE_API_BASE_URL}/admin/all`,
+
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return {
+      success: true,
+      data: response.data,
+      message: "",
+    };
+  } catch (error: any) {
+    return handleError(error);
+  }
+};
+
 export const getAllOrganizations = async () => {
   const token = localStorage.getItem("enrollai-user");
 

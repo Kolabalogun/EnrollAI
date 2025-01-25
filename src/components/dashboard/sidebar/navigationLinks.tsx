@@ -12,6 +12,7 @@ import {
   Square,
   Hexagon,
   Pen,
+  UserCog,
 } from "lucide-react";
 
 export const healthProviderLinks = [
@@ -248,6 +249,13 @@ export const adminLinks = [
     iconWhite: <UserRoundCheck size={20} className="text-[#667085] " />,
     title: "Menu",
     buttonLink: "/dashboard/admin/providers",
+  },
+  {
+    label: "Admins",
+    icon: <UserCog size={20} className="text-secondary " />,
+    iconWhite: <UserCog size={20} className="text-[#667085] " />,
+    title: "Menu",
+    buttonLink: "/dashboard/admin/all",
   },
 
   {

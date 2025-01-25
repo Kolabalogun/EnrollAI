@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { TableComponent } from "@/components/table";
 import {
+  AdminsTableHeads,
   AllProvidersTableHeads,
   CreatedApplicationsTableHeads,
   OrganizationApplicationFormTableHeads,
@@ -55,6 +56,12 @@ const OrganizationApplicationLists = ({
   const handleOrganizationDetails = (row: any) => {
     console.log(row);
     navigate(`/dashboard/admin/organizations/details`, {
+      state: JSON.stringify(row),
+    });
+  };
+  const handleAdminDetails = (row: any) => {
+    console.log(row);
+    navigate(`/dashboard/admin/details`, {
       state: JSON.stringify(row),
     });
   };
@@ -134,6 +141,8 @@ const OrganizationApplicationLists = ({
 
   const orgColumns = OrganizationsTableHeads(handleOrganizationDetails);
 
+  const adminColumns = AdminsTableHeads(handleAdminDetails);
+
   const parsedColumns =
     title === "Created Applications"
       ? createdApplicationColumns
@@ -143,6 +152,8 @@ const OrganizationApplicationLists = ({
       ? allProvidersColumns
       : title === "Organizations"
       ? orgColumns
+      : title === "Admins"
+      ? adminColumns
       : columns;
 
   return (

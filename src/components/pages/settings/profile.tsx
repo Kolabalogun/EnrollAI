@@ -13,6 +13,7 @@ import React from "react";
 
 import { deleteOrgAccount, updateProfileOrg } from "@/services/org/auth";
 import { formatDateTime } from "@/utils/formatDateTime";
+import { deleteAdminAccount } from "@/services/admin/auth";
 
 type FormType = {
   fullName?: string;
@@ -64,7 +65,7 @@ const Profile = () => {
   const [pictureFile, setPictureFile] = useState<File | null>(null);
 
   const [form, setForm] = useState<FormType>(
-    user?.accountType !== "provider"
+    user?.accountType === "organization"
       ? organizationInitialState
       : providerInitialState
   );
@@ -74,6 +75,8 @@ const Profile = () => {
       setForm(user.data || user);
     }
   }, [user]);
+
+  console.log(form);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -106,8 +109,10 @@ const Profile = () => {
     try {
       let res;
       if (
-        user === "provider"
+        user?.accountType === "provider"
           ? (res = await deleteAccount())
+          : user?.accountType === "super_admin"
+          ? (res = await deleteAdminAccount())
           : (res = await deleteOrgAccount())
       )
         if (res.success) {
@@ -167,7 +172,7 @@ const Profile = () => {
     setIsLoading(true);
 
     try {
-      if (user?.accountType !== "provider") {
+      if (user?.accountType === "organization") {
         if (
           !form.organizationName ||
           !form.administratorFullName ||
@@ -245,7 +250,7 @@ const Profile = () => {
 
         console.log(res, "resresresresresresresres");
 
-        if (res.success) {
+        if (res?.success) {
           const newUser = {
             ...user,
             ...res?.data?.user,
@@ -362,7 +367,7 @@ const Profile = () => {
               <input
                 id="fullName"
                 name={
-                  user?.accountType !== "provider"
+                  user?.accountType === "organization"
                     ? "administratorFullName"
                     : "fullName"
                 }
@@ -380,11 +385,14 @@ const Profile = () => {
               </label>
               <input
                 id="email"
-                name={user?.accountType !== "provider" ? "workEmail" : "email"}
+                name={
+                  user?.accountType === "organization" ? "workEmail" : "email"
+                }
                 type="text"
+                readOnly
                 placeholder="Email Address"
                 value={form.email ?? form.workEmail}
-                onChange={handleChange}
+                // onChange={handleChange}
                 className="border rounded-md px-3 py-4 outline-[0.5px] outline-secondary"
               />
             </div>

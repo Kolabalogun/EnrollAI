@@ -52,6 +52,8 @@ import Organizations from "@/pages/admin/organizations";
 import OrganizationDetails from "@/pages/admin/organizationDetails";
 import AdminProviders from "@/pages/admin/providers";
 import DeclinedApplications from "@/pages/admin/declinedApplications";
+import Admins from "@/pages/admin/admins";
+import AdminDetails from "@/pages/admin/adminDetails";
 
 // Lazy-loading components
 const Home = lazy(() => import("../pages/home"));
@@ -317,6 +319,14 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "/dashboard/admin/all",
+        element: (
+          <RoleProtected allowedRoles={["super_admin"]}>
+            <Admins />
+          </RoleProtected>
+        ),
+      },
+      {
         path: "/dashboard/admin/pending-applications",
         element: (
           <RoleProtected allowedRoles={["super_admin"]}>
@@ -337,6 +347,14 @@ const router = createBrowserRouter([
         element: (
           <RoleProtected allowedRoles={["super_admin"]}>
             <OrganizationDetails />
+          </RoleProtected>
+        ),
+      },
+      {
+        path: "/dashboard/admin/details",
+        element: (
+          <RoleProtected allowedRoles={["super_admin"]}>
+            <AdminDetails />
           </RoleProtected>
         ),
       },
