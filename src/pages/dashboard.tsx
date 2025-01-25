@@ -8,10 +8,8 @@ import Notifications from "@/components/pages/dashboard/notifications";
 import OrganizationStatBar from "@/components/pages/dashboard/organization/statbar";
 import StatBar from "@/components/pages/dashboard/statbar";
 import { Progress } from "@/components/ui/progress";
-
 import { RootState } from "@/redux/store";
 import { SETTINGS_ROUTE } from "@/router/routes";
-
 import { useDisclosure } from "@chakra-ui/react";
 import { Pen, PlusIcon } from "lucide-react";
 
@@ -159,9 +157,9 @@ const Dashboard = () => {
           className="bg-white rounded-lg flex-1 h-full w-full flex  flex-col p-5 space-y-8"
         >
           <p className="font-semibold text-base">
-            {user?.accountType !== "provider"
+            {user?.accountType === "organization"
               ? "Incoming Applications"
-              : "Tasks and Activities"}
+              : "Pending Applications"}
           </p>
 
           {user?.accountType !== "provider" ? (

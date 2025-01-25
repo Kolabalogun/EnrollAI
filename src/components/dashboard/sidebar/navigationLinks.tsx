@@ -199,7 +199,7 @@ export const adminLinks = [
     icon: <Send size={20} className="text-secondary" />,
     iconWhite: <Send size={20} className="text-[#667085]" />,
     title: "Menu",
-    buttonLink: "/dashboard/admin/pending-applications",
+    buttonLink: "/dashboard/admin/all-applications",
 
     subLinks: [
       {

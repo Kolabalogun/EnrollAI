@@ -36,6 +36,8 @@ export const notificationColumns: ColumnDef<NotificationType>[] = [
             ? "text-[#fd9a56] bg-[#ffebdd]"
             : row.getValue("actionType") === "profile-update"
             ? "text-[#d456fd] bg-[#f6ddff]"
+            : row.getValue("actionType") === "delete-application"
+            ? "text-[#fb0000] bg-red-500/30"
             : "text-[#5a8cff] bg-[#dee8ff]"
         } font-semibold text-[11px] text-center rounded-md w-20 `}
       >

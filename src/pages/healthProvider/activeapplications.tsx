@@ -15,6 +15,7 @@ const ActiveApplications = () => {
   const { user } = useSelector((state: RootState) => state.auth);
   const toast = useToast();
   const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const fetchApplications = async () => {
     if (!user) return;
@@ -25,6 +26,7 @@ const ActiveApplications = () => {
       console.log(res);
       if (res.success) {
         setData(res?.data?.applications);
+        setFilteredData(res?.data?.applications);
       }
     } catch (error: any) {
       console.log(error);
@@ -41,15 +43,38 @@ const ActiveApplications = () => {
   useEffect(() => {
     if (user) fetchApplications();
   }, [user]);
+  const handleSearch = (value: string) => {
+    const lowercasedValue = value.toLowerCase();
+
+    const filtered = data.filter((item: any) =>
+      [
+        "organizationName",
+        "applicationType",
+        "applicationTitle",
+        "status",
+      ].some(
+        (key) =>
+          item[key]?.toLowerCase().includes(lowercasedValue) ||
+          item?.step1?.personalInformation?.firstName
+            ?.toLowerCase()
+            .includes(lowercasedValue) ||
+          item?.step1?.personalInformation?.lastName
+            ?.toLowerCase()
+            .includes(lowercasedValue)
+      )
+    );
+
+    setFilteredData(filtered);
+  };
   return (
     <ApplicationsPageLayout
-      handleSearch={() => console.log("")}
+      handleSearch={handleSearch}
       headers={headers}
-      filteredData={data}
+      filteredData={filteredData || []}
       title="Approved Applications"
     >
       <OrganizationApplicationLists
-        data={data}
+        data={filteredData || []}
         fetchFunction={fetchApplications}
         isLoading={isLoading}
       />

@@ -13,7 +13,7 @@ import {
 } from "@tanstack/react-table";
 
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+// import { Checkbox } from "@/components/ui/checkbox";
 
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 
@@ -62,12 +62,12 @@ export function ReusableTable<T>({ data, columns }: ReusableTableProps<T>) {
                   key={row.id || `row-${index}`}
                   data-state={row.getIsSelected() && "selected"}
                 >
-                  <TableCell className="py-4">
+                  {/* <TableCell className="py-4">
                     <Checkbox
                       checked={row.getIsSelected()}
                       onCheckedChange={(value) => row.toggleSelected(!!value)}
                     />
-                  </TableCell>
+                  </TableCell> */}
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={`${row.id}-${cell.column.id}`}>
                       {flexRender(

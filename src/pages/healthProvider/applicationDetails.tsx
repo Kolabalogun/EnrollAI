@@ -573,12 +573,14 @@ const ApplicationsDetails = () => {
           </div>
 
           <div className="flex flex-col lg:flex-row gap-5 lg:items-center py-10">
-            <SecondaryButton
-              title={"Delete Application"}
-              handleClick={() => {
-                deleteOnOpen();
-              }}
-            />
+            {form?.status !== "approved" && (
+              <SecondaryButton
+                title={"Delete Application"}
+                handleClick={() => {
+                  deleteOnOpen();
+                }}
+              />
+            )}
             {user?.accountType === "organization" && (
               <>
                 {form?.status !== "approved" && (

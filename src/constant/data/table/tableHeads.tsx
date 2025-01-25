@@ -21,6 +21,7 @@ import {
   Organization,
   ProviderAndApplications,
 } from "@/lib/types";
+import { RootState } from "@/redux/store";
 
 export const ActionCell = ({
   row,
@@ -39,7 +40,7 @@ export const ActionCell = ({
 }) => {
   const menuRef = useRef<HTMLDivElement>(null);
 
-  const { accountType } = useSelector((state: any) => state.auth);
+  const { accountType } = useSelector((state: RootState) => state.auth);
 
   // Close menu on outside click
   useEffect(() => {
@@ -91,22 +92,28 @@ export const ActionCell = ({
                 )}
               </>
             ) : (
-              <li
-                onClick={() => handleEdit(row)}
-                className="cursor-pointer raleway text-xs font-semibold  px-4 py-3 hover:bg-gray-200 flex items-center gap-3"
-              >
-                <Pen color="blue" size={15} />
-                Edit
-              </li>
+              <>
+                {accountType === "provider" && row?.status === "pending" && (
+                  <li
+                    onClick={() => handleEdit(row)}
+                    className="cursor-pointer raleway text-xs font-semibold  px-4 py-3 hover:bg-gray-200 flex items-center gap-3"
+                  >
+                    <Pen color="blue" size={15} />
+                    Edit
+                  </li>
+                )}
+              </>
             )}
 
-            <li
-              onClick={() => handleDelete(row)}
-              className="cursor-pointer raleway text-xs font-semibold  px-4 py-3 flex items-center gap-3 hover:bg-gray-200"
-            >
-              <X color="red" size={15} />
-              Delete Application
-            </li>
+            {accountType === "provider" && row?.status === "pending" && (
+              <li
+                onClick={() => handleDelete(row)}
+                className="cursor-pointer raleway text-xs font-semibold  px-4 py-3 flex items-center gap-3 hover:bg-gray-200"
+              >
+                <X color="red" size={15} />
+                Delete Application
+              </li>
+            )}
           </ul>
         </div>
       )}

@@ -1,6 +1,0 @@
-
-Organization
-
-1. Delete Created Applications
-2. Statistics
-3. Incoming Applications not working
