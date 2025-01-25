@@ -52,6 +52,93 @@ export const organizationRegisterProvider = async (formData: any) => {
   }
 };
 
+export const verifyOrganizationsOTP = async (formData: any) => {
+  try {
+    const response = await axios.post(
+      `${VITE_API_BASE_URL}/organizations/verify-otp`,
+      formData,
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return {
+      success: true,
+      data: response.data,
+      message: "You have been verified",
+    };
+  } catch (error: any) {
+    return handleError(error);
+  }
+};
+
+export const resendOrganizationOTP = async (email: string) => {
+  try {
+    const response = await axios.get(
+      `${VITE_API_BASE_URL}/organizations/resend-otp/${email}`,
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return {
+      success: true,
+      data: response.data,
+      message: "OTP resent successfully",
+    };
+  } catch (error: any) {
+    console.log(error);
+
+    return handleError(error);
+  }
+};
+export const resetOrganizationPasswordApi = async (formData: any) => {
+  try {
+    const response = await axios.post(
+      `${VITE_API_BASE_URL}/organizations/reset-password`,
+      formData,
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return {
+      success: true,
+      data: response.data,
+      message: "You've successfully reset your password.",
+    };
+  } catch (error: any) {
+    return handleError(error);
+  }
+};
+export const forgotOrganizationPasswordApi = async (formData: any) => {
+  try {
+    const response = await axios.post(
+      `${VITE_API_BASE_URL}/organizations/forgot-password`,
+      formData,
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return {
+      success: true,
+      data: response.data,
+      message: "OTP has been sent to your mail.",
+    };
+  } catch (error: any) {
+    return handleError(error);
+  }
+};
+
 //  Update Org Profile
 
 export const updateProfileOrg = async (formData: any) => {

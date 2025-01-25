@@ -5,7 +5,7 @@ import { z } from "zod";
 import { ForgetPasswordCodeFormValidation } from "@/lib/validation";
 import { AuthLayout } from "@/layout";
 import { useLocation, useNavigate } from "react-router-dom";
-import { GET_STARTED_ROUTE, LOGIN_ROUTE } from "@/router/routes";
+import { LOGIN_ROUTE, ORG_LOGIN_ROUTE } from "@/router/routes";
 import {
   PinInput,
   PinInputField,
@@ -16,6 +16,10 @@ import { useEffect, useState } from "react";
 import showToast from "@/components/common/showtoast";
 import SuccessModal from "@/components/modals/success";
 import { resendOTP, verifyOTP } from "@/services/auth";
+import {
+  resendOrganizationOTP,
+  verifyOrganizationsOTP,
+} from "@/services/org/auth";
 
 const VerifyEmail = () => {
   const navigate = useNavigate();
@@ -23,7 +27,7 @@ const VerifyEmail = () => {
   const [resendLoading, setResendLoading] = useState(false);
   const toast = useToast();
   const location = useLocation();
-  const { email } = location.state || {};
+  const { email, type } = location.state || {};
 
   const [timeLeft, setTimeLeft] = useState(10);
   const [isResendEnabled, setIsResendEnabled] = useState(false);
@@ -67,10 +71,18 @@ const VerifyEmail = () => {
     try {
       const payload = {
         email: email,
+        workEmail: email,
         otp: values.code,
       };
 
-      const res = await verifyOTP(payload);
+      let res;
+
+      if (type === "organization") {
+        res = await verifyOrganizationsOTP(payload);
+      } else {
+        res = await verifyOTP(payload);
+      }
+
       console.log(res);
       if (res.success) {
         showToast(toast, "Enroll AI", "success", `${res.data.msg}`);
@@ -99,7 +111,15 @@ const VerifyEmail = () => {
     try {
       console.log(email);
 
-      const res = await resendOTP(email);
+      let res;
+
+      if (type === "organization") {
+        const workEmail = email.trim();
+        res = await resendOrganizationOTP(workEmail);
+      } else {
+        res = await resendOTP(email);
+      }
+
       console.log(res);
 
       if (res.success) {
@@ -159,8 +179,10 @@ const VerifyEmail = () => {
         onClose={onClose}
         isOpen={isOpen}
         title="Verification Successful"
-        desc="Click Continue to setup-up your profile."
-        handleClick={() => navigate(GET_STARTED_ROUTE)}
+        desc="Click Continue to login to your account."
+        handleClick={() =>
+          navigate(type === "organization" ? ORG_LOGIN_ROUTE : LOGIN_ROUTE)
+        }
       />
       <div className="flex my-10 items-center justify-center gap-3">
         <PinInput

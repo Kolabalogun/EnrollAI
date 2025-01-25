@@ -75,7 +75,7 @@ const OrganizationLogin = () => {
           `${res.message || "An error occurred."} `
         );
 
-        if (res.message === "Account not verified") {
+        if (res.message === "Account not verified. Please verify your email.") {
           showToast(
             toast,
             "Enroll AI",
@@ -83,7 +83,9 @@ const OrganizationLogin = () => {
             "Please verify your email to continue"
           );
           setTimeout(() => {
-            navigate(VERIFY_EMAIL_ROUTE, { state: { email: values.email } });
+            navigate(VERIFY_EMAIL_ROUTE, {
+              state: { email: values.email, type: "organization" },
+            });
           }, 2000);
         }
       }

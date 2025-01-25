@@ -9,7 +9,7 @@ import { AuthLayout } from "@/layout";
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
-import { ORG_LOGIN_ROUTE } from "@/router/routes";
+import { VERIFY_EMAIL_ROUTE } from "@/router/routes";
 import showToast from "@/components/common/showtoast";
 import { organizationRegisterProvider } from "@/services/org/auth";
 
@@ -34,11 +34,11 @@ const Register = () => {
     console.log(values);
 
     const payload = {
-      organizationName: values.organizationName,
-      administratorFullName: values.adminFullName,
-      workEmail: values.email,
+      organizationName: values.organizationName.trim(),
+      administratorFullName: values.adminFullName.trim(),
+      workEmail: values.email.trim(),
       password: values.password,
-      accountType: "credentialing_organization",
+      accountType: "organization",
     };
 
     try {
@@ -50,12 +50,14 @@ const Register = () => {
           toast,
           "Registration successful!",
           "success",
-          `${res.data.message}`
+          `${res?.data?.msg || "Registration successful!"}`
         );
-        navigate(ORG_LOGIN_ROUTE);
-        // setTimeout(() => {
-        //   navigate(VERIFY_EMAIL_ROUTE, { state: { email: values.email } });
-        // }, 2000);
+        // navigate(ORG_LOGIN_ROUTE);
+        setTimeout(() => {
+          navigate(VERIFY_EMAIL_ROUTE, {
+            state: { email: values.email, type: "organization" },
+          });
+        }, 2000);
       } else {
         showToast(
           toast,

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -12,6 +13,7 @@ import { useDisclosure, useToast } from "@chakra-ui/react";
 import showToast from "@/components/common/showtoast";
 import SuccessModal from "@/components/modals/success";
 import { resetPasswordApi } from "@/services/auth";
+import { useEffect } from "react";
 
 const CreateNewPassword = () => {
   const navigate = useNavigate();
@@ -19,6 +21,10 @@ const CreateNewPassword = () => {
   const location = useLocation();
   const { email, otp } = location.state || {};
   const { onOpen, onClose, isOpen } = useDisclosure();
+
+  useEffect(() => {
+    if (!email || !otp) navigate(-1);
+  }, [email]);
 
   const form = useForm<z.infer<typeof CreateNewPasswordFormValidation>>({
     resolver: zodResolver(CreateNewPasswordFormValidation),

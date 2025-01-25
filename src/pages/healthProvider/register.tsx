@@ -48,7 +48,7 @@ const Register = () => {
           toast,
           "Registration successful!",
           "success",
-          `${res.data.message}`
+          `${res?.data?.msg || "Registration successful!"}`
         );
         setTimeout(() => {
           navigate(VERIFY_EMAIL_ROUTE, { state: { email: values.email } });
