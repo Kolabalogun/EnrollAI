@@ -35,6 +35,7 @@ const ApplicationsPageLayout = ({
               <Search className="text-fade" size={14} />
               <input
                 type="text"
+                disabled={!filteredData.length}
                 className="bg-transparent outline-none py-1 raleway text-xs w-full px-2"
                 placeholder="Search..."
                 onChange={(e) => handleSearch(e.target.value)}

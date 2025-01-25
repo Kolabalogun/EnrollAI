@@ -253,9 +253,7 @@ const Licensing = ({
                   {field.type === "date" ? (
                     <DateInputField
                       label={field.label}
-                      disabled={
-                        user?.accountType === "organization" ? true : false
-                      }
+                      disabled={user?.accountType !== "provider" ? true : false}
                       selected={form.step2.otherMedLicenses[field.name]}
                       error={!!errors[field.name]}
                       onChange={(date) =>
@@ -273,7 +271,7 @@ const Licensing = ({
                         type="file"
                         name={field.name}
                         readOnly={
-                          user?.accountType === "organization" ? true : false
+                          user?.accountType !== "provider" ? true : false
                         }
                         onChange={(e) =>
                           handleFileChange(
@@ -291,9 +289,7 @@ const Licensing = ({
                       key={field.name}
                       label={field.label}
                       error={errors[field.name]}
-                      readOnly={
-                        user?.accountType === "organization" ? true : false
-                      }
+                      readOnly={user?.accountType !== "provider" ? true : false}
                       name={field.name}
                       value={form.step2.otherMedLicenses[field.name]}
                       onChange={(e) =>

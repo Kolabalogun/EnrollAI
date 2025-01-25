@@ -41,8 +41,11 @@ const Providers = () => {
       setIsLoading(false);
     }
   };
+
   useEffect(() => {
-    fetchProviders();
+    if (user?.accountType === "organization") {
+      fetchProviders();
+    }
   }, []);
 
   const handleSearch = (value: string) => {
@@ -50,8 +53,8 @@ const Providers = () => {
 
     const filtered = data.filter(
       (item: any) =>
-        item.user.fullName.toLowerCase().includes(lowercasedValue) ||
-        item.user.email.toLowerCase().includes(lowercasedValue)
+        item.provider.fullName.toLowerCase().includes(lowercasedValue) ||
+        item.provider.email.toLowerCase().includes(lowercasedValue)
     );
 
     setFilteredData(filtered);

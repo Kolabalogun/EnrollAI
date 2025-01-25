@@ -272,6 +272,28 @@ export type Organization = {
   profilePicture: string;
 };
 
+export type Provider = {
+  _id: string;
+  accountType: "provider" | string;
+  fullName: string;
+  professionalTitle: string;
+  email: string;
+  isVerified: boolean;
+  groups: any[];
+  __v: number;
+  otp: string;
+  otpCreatedAt: string;
+  profilePicture: string;
+  profileStatus: number;
+  deleted: boolean;
+  createdAt: string;
+};
+
+export type ProviderAndApplications = {
+  provider: Provider;
+  applications: ApplicationFormInterface[];
+};
+
 export type CreatedApplicationType = {
   _id: string;
   organization: Organization;

@@ -92,9 +92,7 @@ const Education = ({ form, errors, handleChange }: ApplicationProps) => {
                   <DateInputField
                     label={field.label}
                     max
-                    disabled={
-                      user?.accountType === "organization" ? true : false
-                    }
+                    disabled={user?.accountType !== "provider" ? true : false}
                     error={!!errors[field.name]}
                     selected={form.step1.education[field.name] || null}
                     onChange={(date) =>
@@ -106,9 +104,7 @@ const Education = ({ form, errors, handleChange }: ApplicationProps) => {
                     key={field.name}
                     label={field.label}
                     error={errors[field.name]}
-                    readOnly={
-                      user?.accountType === "organization" ? true : false
-                    }
+                    readOnly={user?.accountType !== "provider" ? true : false}
                     name={field.name}
                     value={form?.step1?.education[field.name] || ""}
                     onChange={(e) =>

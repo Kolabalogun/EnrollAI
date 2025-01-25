@@ -18,6 +18,7 @@ import {
   ApplicationFormInterface,
   CreatedApplicationType,
   Organization,
+  ProviderAndApplications,
 } from "@/lib/types";
 
 export const ActionCell = ({
@@ -352,7 +353,7 @@ export const ProvidersTableHeads = (
     accessor: (row) => (
       <div className="space-y-1 w-32 xl:w-full">
         <p className="font-semibold capitalize text-xs">
-          {row?.user?.fullName ?? "N/A"}
+          {row?.provider?.fullName ?? "N/A"}
         </p>
       </div>
     ),
@@ -363,7 +364,7 @@ export const ProvidersTableHeads = (
     accessor: (row) => (
       <div className="w-32 xl:w-full">
         <p className="font-semibold  lowercase text-xs">
-          {row?.user.email ?? "N/A"}
+          {row?.provider?.email ?? "N/A"}
         </p>
       </div>
     ),
@@ -374,7 +375,7 @@ export const ProvidersTableHeads = (
     accessor: (row) => (
       <div className="w-32 xl:w-full">
         <p className="font-semibold capitalize text-xs">
-          {row?.user?.professionalTitle ?? "N/A"}
+          {row?.provider?.professionalTitle ?? "N/A"}
         </p>
       </div>
     ),
@@ -475,7 +476,7 @@ export const OrganizationsTableHeads = (
     header: "Profile Status",
     accessor: (row) => (
       <div className="space-y-1 w-32 xl:w-full">
-        <p className="font-semibold text-xs">{row.profileStatus ?? "N/A"}</p>
+        <p className="font-semibold text-xs">{row.profileStatus ?? "0"}%</p>
       </div>
     ),
     flex: 2,
@@ -496,6 +497,80 @@ export const OrganizationsTableHeads = (
     accessor: (row) => (
       <div
         onClick={() => handleOrganizationDetails(row)}
+        className="space-y-1 w-32 xl:w-full"
+      >
+        <p className="font-semibold cursor-pointer text-xs">View Details</p>
+      </div>
+    ),
+    className: "",
+    headClassName: "",
+  },
+];
+
+export const AllProvidersTableHeads = (
+  handleProviderDetails: (row: ProviderAndApplications) => void
+): TableColumn<ProviderAndApplications>[] => [
+  {
+    header: "Full Name",
+    accessor: (row) => (
+      <div className="space-y-1 w-32 xl:w-full">
+        <p className="font-semibold capitalize text-xs">
+          {row.provider.fullName ?? "N/A"}
+        </p>
+      </div>
+    ),
+    flex: 2,
+  },
+  {
+    header: "Professional Title",
+    accessor: (row) => (
+      <div className="w-32 xl:w-full">
+        <p className="font-semibold capitalize text-xs">
+          {row.provider.professionalTitle ?? "N/A"}
+        </p>
+      </div>
+    ),
+    flex: 2,
+  },
+  {
+    header: "Email",
+    accessor: (row) => (
+      <div className="w-32 xl:w-full">
+        <p className="font-semibold lowercase text-xs">
+          {row.provider.email ?? "N/A"}
+        </p>
+      </div>
+    ),
+    flex: 2,
+  },
+
+  {
+    header: "Profile Status",
+    accessor: (row) => (
+      <div className="space-y-1 w-32 xl:w-full">
+        <p className="font-semibold text-xs">
+          {row.provider.profileStatus ?? "0"}%
+        </p>
+      </div>
+    ),
+    flex: 2,
+  },
+  {
+    header: "Date Created",
+    accessor: (row) => (
+      <div className="space-y-1 w-32 xl:w-full">
+        <p className="font-semibold text-xs">
+          {formatDateTime(row.provider.createdAt) ?? "N/A"}
+        </p>
+      </div>
+    ),
+    flex: 2,
+  },
+  {
+    header: "View Details",
+    accessor: (row) => (
+      <div
+        onClick={() => handleProviderDetails(row)}
         className="space-y-1 w-32 xl:w-full"
       >
         <p className="font-semibold cursor-pointer text-xs">View Details</p>

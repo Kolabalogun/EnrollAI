@@ -78,9 +78,7 @@ const PersonalInformations = ({
                   <ReactDatePicker
                     maxDate={new Date(Date.now())}
                     selected={form.step1.personalInformation[field.name] || ""}
-                    disabled={
-                      user?.accountType === "organization" ? true : false
-                    }
+                    disabled={user?.accountType !== "provider" ? true : false}
                     onChange={(date) =>
                       handleChange(
                         "step1",
@@ -103,7 +101,7 @@ const PersonalInformations = ({
                 key={field.name}
                 error={!!errors[field.name]}
                 label={field.label}
-                readOnly={user?.accountType === "organization" ? true : false}
+                readOnly={user?.accountType !== "provider" ? true : false}
                 value={form.step1.personalInformation[field.name] || ""}
                 onChange={(phone) =>
                   handleChange(
@@ -131,7 +129,7 @@ const PersonalInformations = ({
                 </div>
                 <select
                   id={field.name}
-                  disabled={user?.accountType === "organization" ? true : false}
+                  disabled={user?.accountType !== "provider" ? true : false}
                   value={form.step1.personalInformation[field.name] || "Male"}
                   onChange={(e) =>
                     handleChange(
@@ -158,7 +156,7 @@ const PersonalInformations = ({
               key={field.name}
               label={field.label}
               name={field.name}
-              readOnly={user?.accountType === "organization" ? true : false}
+              readOnly={user?.accountType !== "provider" ? true : false}
               error={!!errors[field.name]}
               type={
                 field.name === "SSN" || field.name === "homeFax"

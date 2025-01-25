@@ -97,9 +97,7 @@ const ResidenciesFellowships = ({
                   <DateInputField
                     label={field.label}
                     max
-                    disabled={
-                      user?.accountType === "organization" ? true : false
-                    }
+                    disabled={user?.accountType !== "provider" ? true : false}
                     error={!!errors[field.name]}
                     selected={form.step2.residencies[index][field.name]}
                     onChange={(date) =>
@@ -111,9 +109,7 @@ const ResidenciesFellowships = ({
                     type="checkbox"
                     id={field.name}
                     name={field.name}
-                    readOnly={
-                      user?.accountType === "organization" ? true : false
-                    }
+                    readOnly={user?.accountType !== "provider" ? true : false}
                     checked={form.step2.residencies[index][field.name]}
                     value={form.step2.residencies[index][field.name]}
                     onChange={(e) =>
@@ -124,9 +120,7 @@ const ResidenciesFellowships = ({
                   <TextInputField
                     key={field.name}
                     label={field.label}
-                    readOnly={
-                      user?.accountType === "organization" ? true : false
-                    }
+                    readOnly={user?.accountType !== "provider" ? true : false}
                     name={field.name}
                     value={form.step2.residencies[index][field.name]}
                     onChange={(e) =>

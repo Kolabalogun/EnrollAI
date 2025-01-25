@@ -20,6 +20,7 @@ export type User = {
   organizationName: string;
   profilePicture: string;
   id: string;
+  administratorFullName: string;
 };
 
 export interface AuthState {

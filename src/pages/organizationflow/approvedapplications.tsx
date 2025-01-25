@@ -6,6 +6,7 @@ import { headers } from "@/constant/data/headers";
 import ApplicationsPageLayout from "@/layout/applicationsPage";
 import { ApplicationFormInterface } from "@/lib/types";
 import { RootState } from "@/redux/store";
+import { getAllApplicationsBasedOnStatus } from "@/services/admin/applications";
 import { getApprovedProviderApplications } from "@/services/org/applications";
 import { useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
@@ -21,7 +22,14 @@ const ApprovedApplications = () => {
     if (!user) return;
     setIsLoading(true);
     try {
-      const res = await getApprovedProviderApplications(user?.organizationName);
+      let res;
+
+      if (user?.accountType === "organization") {
+        res = await getApprovedProviderApplications(user?.organizationName);
+      } else {
+        res = await getAllApplicationsBasedOnStatus("approved");
+      }
+
       console.log(res);
       if (res.success) {
         setData(res?.data?.applications);

@@ -5,7 +5,9 @@ import showToast from "@/components/common/showtoast";
 import OrganizationApplicationLists from "@/components/pages/applications/organization";
 import { headers } from "@/constant/data/headers";
 import ApplicationsPageLayout from "@/layout/applicationsPage";
+
 import { RootState } from "@/redux/store";
+import { getAllApplicationsBasedOnStatus } from "@/services/admin/applications";
 import { getUsersApplicationsByStatus } from "@/services/applications";
 import { useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
@@ -22,7 +24,14 @@ const DraftApplications = () => {
     if (!user) return;
     setIsLoading(true);
     try {
-      const res = await getUsersApplicationsByStatus(user?.userId, "pending");
+      let res;
+
+      if (user?.accountType === "provider") {
+        res = await getUsersApplicationsByStatus(user?.userId, "pending");
+      } else {
+        res = await getAllApplicationsBasedOnStatus("pending");
+      }
+
       if (res.success) {
         setData(res?.data?.applications);
         setFilteredData(res?.data?.applications);
@@ -48,7 +57,16 @@ const DraftApplications = () => {
         "applicationType",
         "applicationTitle",
         "status",
-      ].some((key) => item[key]?.toLowerCase().includes(lowercasedValue))
+      ].some(
+        (key) =>
+          item[key]?.toLowerCase().includes(lowercasedValue) ||
+          item?.step1?.personalInformation?.firstName
+            ?.toLowerCase()
+            .includes(lowercasedValue) ||
+          item?.step1?.personalInformation?.lastName
+            ?.toLowerCase()
+            .includes(lowercasedValue)
+      )
     );
 
     setFilteredData(filtered);
@@ -63,7 +81,7 @@ const DraftApplications = () => {
       title="Pending Applications"
       handleSearch={handleSearch}
       headers={headers}
-      filteredData={filteredData}
+      filteredData={filteredData || []}
     >
       <OrganizationApplicationLists
         data={filteredData || []}

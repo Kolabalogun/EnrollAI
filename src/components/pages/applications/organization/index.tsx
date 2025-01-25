@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { TableComponent } from "@/components/table";
 import {
+  AllProvidersTableHeads,
   CreatedApplicationsTableHeads,
   OrganizationApplicationFormTableHeads,
   OrganizationsTableHeads,
@@ -128,6 +129,9 @@ const OrganizationApplicationLists = ({
 
   const providersColumns = ProvidersTableHeads(handleProviderDetails);
 
+  // Admin Providers Page Column
+  const allProvidersColumns = AllProvidersTableHeads(handleProviderDetails);
+
   const orgColumns = OrganizationsTableHeads(handleOrganizationDetails);
 
   const parsedColumns =
@@ -135,6 +139,8 @@ const OrganizationApplicationLists = ({
       ? createdApplicationColumns
       : title === "Providers"
       ? providersColumns
+      : title === "All Providers"
+      ? allProvidersColumns
       : title === "Organizations"
       ? orgColumns
       : columns;

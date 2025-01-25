@@ -24,8 +24,8 @@ const IncomingApplications = () => {
       const res = await getIncomingApplications(user?.organizationName);
       console.log(res);
       if (res.success) {
-        setData(res?.data?.pendingApplications);
-        setFilteredData(res?.data?.pendingApplications);
+        setData(res?.data?.applications);
+        setFilteredData(res?.data?.applications);
       }
     } catch (error: any) {
       console.log(error);

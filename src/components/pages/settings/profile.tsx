@@ -52,9 +52,9 @@ const Profile = () => {
   const [deleteIsLoading, setDeleteIsLoading] = useState(false);
 
   const [profilePicture, setProfilePicture] = useState(
-    user?.accountType !== "provider" && !user?.profilePicture
+    user?.accountType === "organization" && !user?.profilePicture
       ? `https://eu.ui-avatars.com/api/?name=${user?.administratorFullName}&size=200`
-      : user?.accountType !== "provider" && user?.profilePicture
+      : user?.accountType === "organization" && user?.profilePicture
       ? user?.profilePicture
       : !user?.profilePicture
       ? `https://eu.ui-avatars.com/api/?name=${user?.fullName}&size=200`
@@ -316,13 +316,16 @@ const Profile = () => {
 
             <div className="space-y-2">
               <p className="font-bold text-base">
-                {user?.accountType !== "provider"
+                {user?.accountType === "organization"
                   ? `${user?.administratorFullName || "N/A"}`
                   : `${user?.fullName || user?.fullName || "N/A"}`}
               </p>
               <p className="font-semibold text-xs">
-                {user?.accountType !== "provider" &&
+                {user?.accountType === "organization" &&
                   `${user?.organizationName || "N/A"}`}
+              </p>
+              <p className="font-semibold text-xs">
+                {user?.accountType === "super_admin" && "Administrator"}
               </p>
 
               <p className="font-semibold text-fade   text-sm">
@@ -335,7 +338,7 @@ const Profile = () => {
             <div className="">
               <label
                 htmlFor="uploadPhoto"
-                className="py-2 flex gap-2 w-auto px-8 border rounded-md font-semibold bg-secondary text-white text-xs cursor-pointer"
+                className="py-2 flex gap-2  w-32 px-8 border rounded-md font-semibold bg-secondary text-white text-xs cursor-pointer"
               >
                 <p className="font-bold text-xs">Edit Photo</p>
               </label>
@@ -388,7 +391,7 @@ const Profile = () => {
           </div>
 
           <div className="flex xl:flex-row w-full flex-col justify-between gap-8">
-            {user?.accountType !== "provider" && (
+            {user?.accountType === "organization" && (
               <div className="raleway text-xs flex w-full flex-1 flex-col gap-1 font-medium">
                 <label className="font-semibold" htmlFor="organizationName">
                   Company Name

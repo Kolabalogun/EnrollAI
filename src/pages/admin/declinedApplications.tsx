@@ -6,25 +6,28 @@ import OrganizationApplicationLists from "@/components/pages/applications/organi
 import { headers } from "@/constant/data/headers";
 import ApplicationsPageLayout from "@/layout/applicationsPage";
 import { RootState } from "@/redux/store";
-import { getUsersApplicationsByStatus } from "@/services/applications";
+import { getAllApplicationsBasedOnStatus } from "@/services/admin/applications";
+
 import { useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-const ActiveApplications = () => {
+const DeclinedApplications = () => {
   const { user } = useSelector((state: RootState) => state.auth);
   const toast = useToast();
   const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const fetchApplications = async () => {
     if (!user) return;
     console.log(user);
     setIsLoading(true);
     try {
-      const res = await getUsersApplicationsByStatus(user?.userId, "approved");
+      const res = await getAllApplicationsBasedOnStatus("declined");
       console.log(res);
       if (res.success) {
         setData(res?.data?.applications);
+        setFilteredData(res?.data?.applications);
       }
     } catch (error: any) {
       console.log(error);
@@ -41,15 +44,38 @@ const ActiveApplications = () => {
   useEffect(() => {
     if (user) fetchApplications();
   }, [user]);
+  const handleSearch = (value: string) => {
+    const lowercasedValue = value.toLowerCase();
+
+    const filtered = data.filter((item: any) =>
+      [
+        "organizationName",
+        "applicationType",
+        "applicationTitle",
+        "status",
+      ].some(
+        (key) =>
+          item[key]?.toLowerCase().includes(lowercasedValue) ||
+          item?.step1?.personalInformation?.firstName
+            ?.toLowerCase()
+            .includes(lowercasedValue) ||
+          item?.step1?.personalInformation?.lastName
+            ?.toLowerCase()
+            .includes(lowercasedValue)
+      )
+    );
+
+    setFilteredData(filtered);
+  };
   return (
     <ApplicationsPageLayout
-      handleSearch={() => console.log("")}
+      handleSearch={handleSearch}
       headers={headers}
-      filteredData={data}
-      title="Approved Applications"
+      filteredData={filteredData || []}
+      title="Declined Applications"
     >
       <OrganizationApplicationLists
-        data={data}
+        data={filteredData || []}
         fetchFunction={fetchApplications}
         isLoading={isLoading}
       />
@@ -57,4 +83,4 @@ const ActiveApplications = () => {
   );
 };
 
-export default ActiveApplications;
+export default DeclinedApplications;

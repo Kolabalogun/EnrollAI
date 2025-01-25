@@ -50,6 +50,8 @@ import ProvidersDetails from "@/pages/organizationflow/providersDetails";
 import DraftApplications from "@/pages/healthProvider/draftapplications";
 import Organizations from "@/pages/admin/organizations";
 import OrganizationDetails from "@/pages/admin/organizationDetails";
+import AdminProviders from "@/pages/admin/providers";
+import DeclinedApplications from "@/pages/admin/declinedApplications";
 
 // Lazy-loading components
 const Home = lazy(() => import("../pages/home"));
@@ -134,7 +136,9 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/health-provider/applications/details/:id",
         element: (
-          <RoleProtected allowedRoles={["provider", "organization"]}>
+          <RoleProtected
+            allowedRoles={["provider", "organization", "super_admin"]}
+          >
             <HealthProviderApplicationsDetails />{" "}
           </RoleProtected>
         ),
@@ -249,7 +253,7 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/credentializing-organization/providers/details",
         element: (
-          <RoleProtected allowedRoles={["organization"]}>
+          <RoleProtected allowedRoles={["organization", "super_admin"]}>
             <ProvidersDetails />
           </RoleProtected>
         ),
@@ -305,10 +309,10 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/dashboard/admin/approved-applications",
+        path: "/dashboard/admin/declined-applications",
         element: (
           <RoleProtected allowedRoles={["super_admin"]}>
-            <ApprovedApplications />
+            <DeclinedApplications />
           </RoleProtected>
         ),
       },
@@ -340,14 +344,14 @@ const router = createBrowserRouter([
         path: "/dashboard/admin/providers",
         element: (
           <RoleProtected allowedRoles={["super_admin"]}>
-            <Providers />
+            <AdminProviders />
           </RoleProtected>
         ),
       },
       {
         path: "/dashboard/admin/providers/details",
         element: (
-          <RoleProtected allowedRoles={["organization"]}>
+          <RoleProtected allowedRoles={["organization", "super_admin"]}>
             <ProvidersDetails />
           </RoleProtected>
         ),

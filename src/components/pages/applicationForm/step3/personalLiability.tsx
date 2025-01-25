@@ -79,9 +79,7 @@ const ProfessionalLiability = ({
                   <DateInputField
                     label={field.label}
                     selected={form.step3.carriers[field.name]}
-                    disabled={
-                      user?.accountType === "organization" ? true : false
-                    }
+                    disabled={user?.accountType !== "provider" ? true : false}
                     error={!!errors[field.name]}
                     onChange={(date) =>
                       handleChange("step3", "carriers", field.name, date)
@@ -90,9 +88,7 @@ const ProfessionalLiability = ({
                 ) : (
                   <TextInputField
                     key={field.name}
-                    readOnly={
-                      user?.accountType === "organization" ? true : false
-                    }
+                    readOnly={user?.accountType !== "provider" ? true : false}
                     label={field.label}
                     error={errors[field.name]}
                     name={field.name}

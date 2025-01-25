@@ -2,38 +2,33 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import showToast from "@/components/common/showtoast";
 import OrganizationApplicationLists from "@/components/pages/applications/organization";
-import { headers } from "@/constant/data/headers";
+import { providerHeader } from "@/constant/data/headers";
+
 import ApplicationsPageLayout from "@/layout/applicationsPage";
-import { ApplicationFormInterface } from "@/lib/types";
 import { RootState } from "@/redux/store";
-import { getAllApplications } from "@/services/admin/applications";
-import { getAllOrgApplications } from "@/services/org/applications";
+import { getAllProviders } from "@/services/admin/applications";
+
 import { useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-const AllApplications = () => {
+const AdminProviders = () => {
   const { user } = useSelector((state: RootState) => state.auth);
   const toast = useToast();
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const fetchApplications = async () => {
+  console.log(filteredData);
+
+  const fetchProviders = async () => {
     if (!user) return;
     setIsLoading(true);
     try {
-      let res;
+      const res = await getAllProviders();
 
-      if (user?.accountType === "organization") {
-        res = await getAllOrgApplications(user?.organizationName);
-      } else {
-        res = await getAllApplications();
-      }
-
-      console.log(res);
       if (res.success) {
-        setData(res?.data?.allApplications);
-        setFilteredData(res?.data?.allApplications);
+        setData(res?.data?.data);
+        setFilteredData(res?.data?.data);
       }
     } catch (error: any) {
       console.log(error);
@@ -47,26 +42,20 @@ const AllApplications = () => {
       setIsLoading(false);
     }
   };
+
   useEffect(() => {
-    fetchApplications();
+    if (user?.accountType === "super_admin") {
+      fetchProviders();
+    }
   }, []);
 
   const handleSearch = (value: string) => {
     const lowercasedValue = value.toLowerCase();
 
     const filtered = data.filter(
-      (item: ApplicationFormInterface) =>
-        item.applicationTitle.toLowerCase().includes(lowercasedValue) ||
-        item.applicationName.toLowerCase().includes(lowercasedValue) ||
-        item.step1.personalInformation.firstName
-          .toLowerCase()
-          .includes(lowercasedValue) ||
-        item.step1.personalInformation.lastName
-          .toLowerCase()
-          .includes(lowercasedValue) ||
-        item.step1.personalInformation.email
-          .toLowerCase()
-          .includes(lowercasedValue)
+      (item: any) =>
+        item.provider.fullName.toLowerCase().includes(lowercasedValue) ||
+        item.provider.email.toLowerCase().includes(lowercasedValue)
     );
 
     setFilteredData(filtered);
@@ -74,17 +63,18 @@ const AllApplications = () => {
   return (
     <ApplicationsPageLayout
       handleSearch={handleSearch}
-      headers={headers}
+      headers={providerHeader}
       filteredData={filteredData || []}
-      title="All Applications"
+      title="All Providers"
     >
       <OrganizationApplicationLists
         data={filteredData || []}
-        fetchFunction={fetchApplications}
+        fetchFunction={fetchProviders}
         isLoading={isLoading}
+        title="All Providers"
       />
     </ApplicationsPageLayout>
   );
 };
 
-export default AllApplications;
+export default AdminProviders;

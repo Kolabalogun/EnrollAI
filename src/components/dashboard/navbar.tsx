@@ -1,16 +1,15 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { Bell, Hexagon, Menu } from "lucide-react";
 import SidebarDrawer from "./sidebar/drawer";
 import { useDisclosure } from "@chakra-ui/react";
 import { SETTINGS_ROUTE } from "@/router/routes";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const { onClose, isOpen, onOpen } = useDisclosure();
-  const { user } = useSelector((state: any) => state.auth);
+  const { user } = useSelector((state: RootState) => state.auth);
 
   return (
     <div className="xl:px-6 my-5 mx-3 xl:m-5 rounded-md px-3 bg-white py-5 flex justify-between  ">
@@ -31,11 +30,15 @@ const Navbar = () => {
       </div>
 
       <div className="flex gap-4 items-center">
-        <div className="">
-          <Bell className="text-[#667085] " size={20} />
-        </div>
+        {user?.accountType !== "super_admin" && (
+          <>
+            <div className="">
+              <Bell className="text-[#667085] " size={20} />
+            </div>
 
-        <div className="h-full w-[1.3px] bg-[#667085] " />
+            <div className="h-full w-[1.3px] bg-[#667085] " />
+          </>
+        )}
 
         <div
           onClick={() => navigate(SETTINGS_ROUTE)}
@@ -44,9 +47,9 @@ const Navbar = () => {
           <div className="rounded-full">
             <img
               src={
-                user?.accountType !== "provider" && !user?.profilePicture
+                user?.accountType === "organization" && !user?.profilePicture
                   ? `https://eu.ui-avatars.com/api/?name=${user?.administratorFullName}&size=200`
-                  : user?.accountType !== "provider" && user?.profilePicture
+                  : user?.accountType === "organization" && user?.profilePicture
                   ? user?.profilePicture
                   : !user?.profilePicture
                   ? `https://eu.ui-avatars.com/api/?name=${user?.fullName}&size=200`
@@ -58,13 +61,15 @@ const Navbar = () => {
 
           <div className="hidden xl:flex flex-col gap-!">
             <p className="text-xs font-semibold">
-              {user?.accountType !== "provider"
+              {user?.accountType === "organization"
                 ? `${user?.administratorFullName || "N/A"}`
                 : `${user?.fullName || "N/A"}`}
             </p>
             <p className="text-xs font-medium text-fade">
-              {user?.accountType !== "provider"
+              {user?.accountType === "organization"
                 ? "Organization"
+                : user?.accountType === "super_admin"
+                ? "Administrator"
                 : "Health Provider"}
             </p>
           </div>

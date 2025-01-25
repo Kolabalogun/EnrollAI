@@ -6,7 +6,7 @@ import OrganizationApplicationLists from "@/components/pages/applications/organi
 import { organizationHeader } from "@/constant/data/headers";
 import ApplicationsPageLayout from "@/layout/applicationsPage";
 import { Organization } from "@/lib/types";
-import { getAOrganizations } from "@/services/admin/applications";
+import { getAllOrganizations } from "@/services/admin/applications";
 import { useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
@@ -18,7 +18,7 @@ const Organizations = () => {
   const fetchApplications = async () => {
     setIsLoading(true);
     try {
-      const res = await getAOrganizations();
+      const res = await getAllOrganizations();
       console.log(res);
       if (res.success) {
         setData(res?.data?.data);

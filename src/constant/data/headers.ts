@@ -210,3 +210,28 @@ export const organizationHeader = [
     key: "createdAt",
   },
 ];
+
+export const providerHeader = [
+  {
+    label: "Full Name",
+    key: "fullName",
+  },
+  {
+    label: "Email",
+    key: "email",
+  },
+  {
+    label: "Professional Title",
+    key: "professionalTitle",
+  },
+
+  {
+    label: "Profile Status",
+    key: "profileStatus",
+  },
+
+  {
+    label: "Created At",
+    key: "createdAt",
+  },
+];
