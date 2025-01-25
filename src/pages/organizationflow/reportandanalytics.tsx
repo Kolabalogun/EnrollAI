@@ -1,11 +1,49 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import PieTrendChart from "@/components/pages/applicationForm/reportandanalytics/piechart";
 import ReportStatBar from "@/components/pages/applicationForm/reportandanalytics/statbar";
 import ApplicationTrendsChart from "@/components/pages/applicationForm/reportandanalytics/trendchart";
 import { Calendar, Kanban, UploadCloud } from "lucide-react";
-import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useToast } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { getOrgApplicationStats } from "@/services/org/applications";
+import showToast from "@/components/common/showtoast";
 import DatePicker, { DateObject } from "react-multi-date-picker";
+import { RootState } from "@/redux/store";
+import { ApplicationStatType } from "@/lib/types";
 
 const ReportAndAnalytics = () => {
+  const { user } = useSelector((state: RootState) => state.auth);
+  const toast = useToast();
+
+  const [providerStatData, setProviderStatData] =
+    useState<ApplicationStatType | null>(null);
+
+  const fetchStat = async () => {
+    if (!user) return;
+
+    try {
+      const res = await getOrgApplicationStats(user?.organizationName);
+      if (res.success) {
+        setProviderStatData(res?.data?.stats);
+      }
+    } catch (error: any) {
+      console.log(error);
+      showToast(
+        toast,
+        "Enroll AI",
+        "error",
+        `${error.message || "Failed to fetch Application Stats"}`
+      );
+    }
+  };
+  useEffect(() => {
+    if (user && user?.accountType !== "provider") fetchStat();
+  }, [user]);
+
+  console.log(providerStatData);
+
   const [selectedDates, setSelectedDates] = useState<DateObject[]>([]);
 
   // Helper function to format the date range
@@ -75,7 +113,7 @@ const ReportAndAnalytics = () => {
 
       <div className="flex flex-col w-full flex-1 space-y-9">
         <div className="">
-          <ReportStatBar />
+          <ReportStatBar providerStatData={providerStatData} />
         </div>
       </div>
 
@@ -133,7 +171,7 @@ const ReportAndAnalytics = () => {
           </div>
 
           <div className="  ">
-            <PieTrendChart />
+            <PieTrendChart providerStatData={providerStatData} />
           </div>
 
           <div className="p-3 shadow-xl px-8 justify-between rounded-xl flex">
@@ -141,21 +179,35 @@ const ReportAndAnalytics = () => {
               <div className="flex items-center gap-2">
                 <div className="h-2 w-2 rounded-full bg-[#0088FE] " />
                 <p className="text-text-primary font-semibold text-xs">
-                  Completed
+                  Pending
                 </p>
               </div>
 
-              <p className="text-[#2b3674] font-bold plus-jakarta ">53%</p>
+              <p className="text-[#2b3674] font-bold plus-jakarta ">
+                {(Number(providerStatData?.pending) /
+                  (Number(providerStatData?.pending) +
+                    Number(providerStatData?.approved) +
+                    Number(providerStatData?.declined))) *
+                  100 || 0}{" "}
+                %
+              </p>
             </div>
             <div className="flex items-center flex-col space-y-1">
               <div className="flex items-center gap-2">
                 <div className="h-2 w-2 rounded-full bg-[#00C49F] " />
                 <p className="text-text-primary font-semibold text-xs">
-                  Processing
+                  Approved
                 </p>
               </div>
 
-              <p className="text-[#00C49F] font-bold plus-jakarta ">33%</p>
+              <p className="text-[#00C49F] font-bold plus-jakarta ">
+                {(Number(providerStatData?.approved) /
+                  (Number(providerStatData?.pending) +
+                    Number(providerStatData?.approved) +
+                    Number(providerStatData?.declined))) *
+                  100 || 0}{" "}
+                %
+              </p>
             </div>
             <div className="flex items-center flex-col space-y-1">
               <div className="flex items-center gap-2">
@@ -165,7 +217,15 @@ const ReportAndAnalytics = () => {
                 </p>
               </div>
 
-              <p className="text-[#FF8042] font-bold plus-jakarta ">14%</p>
+              <p className="text-[#FF8042] font-bold plus-jakarta ">
+                {" "}
+                {(Number(providerStatData?.declined) /
+                  (Number(providerStatData?.pending) +
+                    Number(providerStatData?.approved) +
+                    Number(providerStatData?.declined))) *
+                  100 || 0}{" "}
+                %
+              </p>
             </div>
           </div>
         </div>

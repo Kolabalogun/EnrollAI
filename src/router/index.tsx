@@ -44,10 +44,12 @@ import {
   ReportAndAnalytics,
 } from "@/pages/organizationflow";
 import CreatedApplications from "@/pages/organizationflow/createdapplications";
-import { ADMIN_PROVIDERS } from "./routes";
-import AdminProviders from "@/pages/admin/providers";
+
 import RoleProtected from "@/components/auth/roleProtected";
 import ProvidersDetails from "@/pages/organizationflow/providersDetails";
+import DraftApplications from "@/pages/healthProvider/draftapplications";
+import Organizations from "@/pages/admin/organizations";
+import OrganizationDetails from "@/pages/admin/organizationDetails";
 
 // Lazy-loading components
 const Home = lazy(() => import("../pages/home"));
@@ -275,7 +277,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/admin",
+    path: "/dashboard",
     element: (
       // Protected route for authenticated users
       <Suspense fallback={<Loader />}>
@@ -287,8 +289,72 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: ADMIN_PROVIDERS,
-        element: <AdminProviders />,
+        path: "/dashboard/admin/all-applications",
+        element: (
+          <RoleProtected allowedRoles={["super_admin"]}>
+            <AllApplications />
+          </RoleProtected>
+        ),
+      },
+      {
+        path: "/dashboard/admin/approved-applications",
+        element: (
+          <RoleProtected allowedRoles={["super_admin"]}>
+            <ApprovedApplications />
+          </RoleProtected>
+        ),
+      },
+      {
+        path: "/dashboard/admin/approved-applications",
+        element: (
+          <RoleProtected allowedRoles={["super_admin"]}>
+            <ApprovedApplications />
+          </RoleProtected>
+        ),
+      },
+      {
+        path: "/dashboard/admin/pending-applications",
+        element: (
+          <RoleProtected allowedRoles={["super_admin"]}>
+            <DraftApplications />
+          </RoleProtected>
+        ),
+      },
+      {
+        path: "/dashboard/admin/organizations",
+        element: (
+          <RoleProtected allowedRoles={["super_admin"]}>
+            <Organizations />
+          </RoleProtected>
+        ),
+      },
+      {
+        path: "/dashboard/admin/organizations/details",
+        element: (
+          <RoleProtected allowedRoles={["super_admin"]}>
+            <OrganizationDetails />
+          </RoleProtected>
+        ),
+      },
+      {
+        path: "/dashboard/admin/providers",
+        element: (
+          <RoleProtected allowedRoles={["super_admin"]}>
+            <Providers />
+          </RoleProtected>
+        ),
+      },
+      {
+        path: "/dashboard/admin/providers/details",
+        element: (
+          <RoleProtected allowedRoles={["organization"]}>
+            <ProvidersDetails />
+          </RoleProtected>
+        ),
+      },
+      {
+        path: "/dashboard/admin/report-analytics",
+        element: <ReportAndAnalytics />,
       },
     ],
   },

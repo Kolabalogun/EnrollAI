@@ -3,6 +3,7 @@ import { TableComponent } from "@/components/table";
 import {
   CreatedApplicationsTableHeads,
   OrganizationApplicationFormTableHeads,
+  OrganizationsTableHeads,
   ProvidersTableHeads,
 } from "@/constant/data/table/tableHeads";
 
@@ -46,6 +47,13 @@ const OrganizationApplicationLists = ({
   const handleProviderDetails = (row: any) => {
     console.log(row);
     navigate(`/dashboard/credentializing-organization/providers/details`, {
+      state: JSON.stringify(row),
+    });
+  };
+
+  const handleOrganizationDetails = (row: any) => {
+    console.log(row);
+    navigate(`/dashboard/admin/organizations/details`, {
       state: JSON.stringify(row),
     });
   };
@@ -120,11 +128,15 @@ const OrganizationApplicationLists = ({
 
   const providersColumns = ProvidersTableHeads(handleProviderDetails);
 
+  const orgColumns = OrganizationsTableHeads(handleOrganizationDetails);
+
   const parsedColumns =
     title === "Created Applications"
       ? createdApplicationColumns
       : title === "Providers"
       ? providersColumns
+      : title === "Organizations"
+      ? orgColumns
       : columns;
 
   return (

@@ -1,14 +1,18 @@
+import { ApplicationStatType } from "@/lib/types";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 
-const data = [
-  { name: "Group A", value: 400 },
-  { name: "Group B", value: 300 },
-  { name: "Group C", value: 300 },
-];
+const COLORS = ["#00C49F", "#0088FE", "#FF8042"];
 
-const COLORS = ["#0088FE", "#00C49F", "#FF8042"];
-
-const PieTrendChart = () => {
+const PieTrendChart = ({
+  providerStatData,
+}: {
+  providerStatData: ApplicationStatType | null;
+}) => {
+  const data = [
+    { name: "Approved", value: providerStatData?.approved },
+    { name: "Pending", value: providerStatData?.pending },
+    { name: "Declined", value: providerStatData?.declined },
+  ];
   return (
     <ResponsiveContainer width="100%" height={300}>
       <PieChart>
@@ -27,7 +31,6 @@ const PieTrendChart = () => {
           ))}
         </Pie>
         <Tooltip />
-        {/* <Legend /> */}
       </PieChart>
     </ResponsiveContainer>
   );

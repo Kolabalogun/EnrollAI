@@ -190,3 +190,23 @@ export const providersHeaders = [
     key: "application.fullName",
   },
 ];
+
+export const organizationHeader = [
+  {
+    label: "Organization Name",
+    key: "organizationName",
+  },
+  {
+    label: "Email",
+    key: "workEmail",
+  },
+  {
+    label: "Administrator Full Name",
+    key: "administratorFullName",
+  },
+
+  {
+    label: "Created At",
+    key: "createdAt",
+  },
+];

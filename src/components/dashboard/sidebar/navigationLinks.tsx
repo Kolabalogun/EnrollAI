@@ -198,7 +198,7 @@ export const adminLinks = [
     icon: <Send size={20} className="text-secondary" />,
     iconWhite: <Send size={20} className="text-[#667085]" />,
     title: "Menu",
-    buttonLink: "/dashboard/credentializing-organization/incoming-applications",
+    buttonLink: "/dashboard/admin/pending-applications",
 
     subLinks: [
       {
@@ -206,7 +206,7 @@ export const adminLinks = [
         icon: <Square size={16} className="rotate-45 text-secondary" />,
         iconWhite: <Square size={16} className="rotate-45 text-[#667085]" />,
         title: "Menu",
-        buttonLink: "/dashboard/credentializing-organization/all-applications",
+        buttonLink: "/dashboard/admin/all-applications",
       },
 
       {
@@ -214,8 +214,7 @@ export const adminLinks = [
         icon: <Triangle size={16} className="text-secondary" />,
         iconWhite: <Triangle size={16} className="text-[#667085]" />,
         title: "Menu",
-        buttonLink:
-          "/dashboard/credentializing-organization/incoming-applications",
+        buttonLink: "/dashboard/admin/pending-applications",
       },
 
       {
@@ -223,16 +222,14 @@ export const adminLinks = [
         icon: <Hexagon size={18} className=" text-secondary" />,
         iconWhite: <Hexagon size={18} className=" text-[#667085]" />,
         title: "Menu",
-        buttonLink:
-          "/dashboard/credentializing-organization/approved-applications",
+        buttonLink: "/dashboard/admin/approved-applications",
       },
       {
         label: "Declined",
         icon: <Hexagon size={18} className=" text-secondary" />,
         iconWhite: <Hexagon size={18} className=" text-[#667085]" />,
         title: "Menu",
-        buttonLink:
-          "/dashboard/credentializing-organization/approved-applications",
+        buttonLink: "/dashboard/admin/declined-applications",
       },
     ],
   },
@@ -243,14 +240,14 @@ export const adminLinks = [
       <SquareKanban size={20} className="text-[#667085] rotate-180 " />
     ),
     title: "Menu",
-    buttonLink: "/dashboard/credentializing-organization/report-analytics",
+    buttonLink: "/dashboard/admin/organizations",
   },
   {
     label: "Providers",
     icon: <UserRoundCheck size={20} className="text-secondary " />,
     iconWhite: <UserRoundCheck size={20} className="text-[#667085] " />,
     title: "Menu",
-    buttonLink: "/dashboard/credentializing-organization/providers",
+    buttonLink: "/dashboard/admin/providers",
   },
 
   {

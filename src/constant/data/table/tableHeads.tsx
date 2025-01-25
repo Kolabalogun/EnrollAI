@@ -14,7 +14,11 @@ import { formatDateTime } from "@/utils/formatDateTime";
 import { HEALTHCARE_APPLICATIONS_DETALIS } from "@/router/routes";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { ApplicationFormInterface, CreatedApplicationType } from "@/lib/types";
+import {
+  ApplicationFormInterface,
+  CreatedApplicationType,
+  Organization,
+} from "@/lib/types";
 
 export const ActionCell = ({
   row,
@@ -410,6 +414,88 @@ export const ProvidersTableHeads = (
     accessor: (row) => (
       <div
         onClick={() => handleProviderDetails(row)}
+        className="space-y-1 w-32 xl:w-full"
+      >
+        <p className="font-semibold cursor-pointer text-xs">View Details</p>
+      </div>
+    ),
+    className: "",
+    headClassName: "",
+  },
+];
+
+export const OrganizationsTableHeads = (
+  handleOrganizationDetails: (row: Organization) => void
+): TableColumn<Organization>[] => [
+  {
+    header: "Organization Name",
+    accessor: (row) => (
+      <div className="space-y-1 w-32 xl:w-full">
+        <p className="font-semibold capitalize text-xs">
+          {row.organizationName ?? "N/A"}
+        </p>
+      </div>
+    ),
+    flex: 2,
+  },
+  {
+    header: "Administrator",
+    accessor: (row) => (
+      <div className="w-32 xl:w-full">
+        <p className="font-semibold capitalize text-xs">
+          {row.administratorFullName ?? "N/A"}
+        </p>
+      </div>
+    ),
+    flex: 2,
+  },
+  {
+    header: "Email",
+    accessor: (row) => (
+      <div className="w-32 xl:w-full">
+        <p className="font-semibold lowercase text-xs">
+          {row.workEmail ?? "N/A"}
+        </p>
+      </div>
+    ),
+    flex: 2,
+  },
+  {
+    header: "Account Type",
+    accessor: (row) => (
+      <div className="w-32 xl:w-full">
+        <p className="font-semibold capitalize text-xs">
+          {row.accountType ?? "N/A"}
+        </p>
+      </div>
+    ),
+    flex: 2,
+  },
+  {
+    header: "Profile Status",
+    accessor: (row) => (
+      <div className="space-y-1 w-32 xl:w-full">
+        <p className="font-semibold text-xs">{row.profileStatus ?? "N/A"}</p>
+      </div>
+    ),
+    flex: 2,
+  },
+  {
+    header: "Date Created",
+    accessor: (row) => (
+      <div className="space-y-1 w-32 xl:w-full">
+        <p className="font-semibold text-xs">
+          {formatDateTime(row.createdAt) ?? "N/A"}
+        </p>
+      </div>
+    ),
+    flex: 2,
+  },
+  {
+    header: "View Details",
+    accessor: (row) => (
+      <div
+        onClick={() => handleOrganizationDetails(row)}
         className="space-y-1 w-32 xl:w-full"
       >
         <p className="font-semibold cursor-pointer text-xs">View Details</p>

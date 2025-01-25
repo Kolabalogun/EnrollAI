@@ -4,7 +4,11 @@ import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { Logo } from "@/assets/img";
 import { close, open } from "@/redux/features/toggleSidebarSlice";
-import { healthProviderLinks, organizationLinks } from "./navigationLinks";
+import {
+  adminLinks,
+  healthProviderLinks,
+  organizationLinks,
+} from "./navigationLinks";
 import { LinksGroup } from "./linksGroup";
 
 const Sidebar = () => {
@@ -29,6 +33,28 @@ const Sidebar = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, [dispatch]);
+
+  const getAdminLinks = () => {
+    const groupedUserLinks: Record<string, any[]> = {};
+
+    adminLinks.forEach((link: any) => {
+      if (link.title) {
+        if (!groupedUserLinks[link.title]) {
+          groupedUserLinks[link.title] = [];
+        }
+        groupedUserLinks[link.title].push(link);
+      }
+    });
+
+    return Object.keys(groupedUserLinks).map((title) => (
+      <div key={title} className="flex raleway flex-col gap-3 mb-8">
+        <p className="text-[#4b4b4b] font-semibold text-xs">{title}</p>
+        {groupedUserLinks[title].map((item) => (
+          <LinksGroup {...item} key={item.label} />
+        ))}
+      </div>
+    ));
+  };
 
   const getOrganizationLinks = () => {
     const groupedUserLinks: Record<string, any[]> = {};
@@ -76,7 +102,11 @@ const Sidebar = () => {
   };
 
   const links =
-    accountType !== "provider" ? getOrganizationLinks() : getProviderLinks();
+    accountType === "organization"
+      ? getOrganizationLinks()
+      : accountType === "super_admin"
+      ? getAdminLinks()
+      : getProviderLinks();
 
   return (
     <div

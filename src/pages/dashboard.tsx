@@ -38,13 +38,15 @@ const Dashboard = () => {
       <div className="flex flex-col gap-1">
         <p className="font-semibold text-lg">
           Welcome back,{" "}
-          {user?.accountType !== "provider"
+          {user?.accountType === "organization"
             ? `${user?.organizationName || "N/A"}`
             : `${user?.fullName || "N/A"}`}
         </p>
 
         <p className="font-medium text-fade text-xs">
-          {`Start a new application now.`}
+          {user?.accountType !== "super_admin"
+            ? `Start a new application now.`
+            : "Manage Admin Dashboard"}
         </p>
       </div>
 
@@ -60,44 +62,46 @@ const Dashboard = () => {
               <StatBar />
             )}
           </div>
-          <div className="flex xl:flex-row flex-col gap-5 xl:gap-8">
-            <div
-              onClick={
-                user?.accountType !== "provider"
-                  ? () => orgOnOpen()
-                  : () => onOpen()
-              }
-            >
-              <SubmitButton
-                type="button"
-                className=" border-0 px-6 py-4 rounded-lg"
+          {user?.accountType !== "super_admin" && (
+            <div className="flex xl:flex-row flex-col gap-5 xl:gap-8">
+              <div
+                onClick={
+                  user?.accountType !== "provider"
+                    ? () => orgOnOpen()
+                    : () => onOpen()
+                }
               >
-                <div
-                  className="flex items-center
-                 gap-4"
+                <SubmitButton
+                  type="button"
+                  className=" border-0 px-6 py-4 rounded-lg"
                 >
-                  <p className="text-xs font-semibold">
-                    {user?.accountType !== "provider" ? "Create" : "Start"} New
-                    Application
-                  </p>
-                  <PlusIcon size={16} />
-                </div>
-              </SubmitButton>
-            </div>
+                  <div
+                    className="flex items-center
+                 gap-4"
+                  >
+                    <p className="text-xs font-semibold">
+                      {user?.accountType !== "provider" ? "Create" : "Start"}{" "}
+                      New Application
+                    </p>
+                    <PlusIcon size={16} />
+                  </div>
+                </SubmitButton>
+              </div>
 
-            <div
-              onClick={() =>
-                navigate("/dashboard/health-provider/pending-applications")
-              }
-              className="border-secondary text-secondary bg-transparent border-2 hover:bg-secondary transition duration-500 hover:text-white py-2 gap-3 px-10 cursor-pointer flex items-center justify-center rounded-lg"
-            >
-              <p className="text-xs font-semibold">Pending Applications</p>
-              <Pen size={14} />
+              <div
+                onClick={() =>
+                  navigate("/dashboard/health-provider/pending-applications")
+                }
+                className="border-secondary text-secondary bg-transparent border-2 hover:bg-secondary transition duration-500 hover:text-white py-2 gap-3 px-10 cursor-pointer flex items-center justify-center rounded-lg"
+              >
+                <p className="text-xs font-semibold">Pending Applications</p>
+                <Pen size={14} />
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
-        {user?.accountType !== "Organization" && (
+        {user?.accountType === "provider" && (
           <div className="p-5 bg-white flex-1 rounded-lg space-y-5">
             <p className="font-semibold text-sm">
               Your CAQH Profile is:{" "}

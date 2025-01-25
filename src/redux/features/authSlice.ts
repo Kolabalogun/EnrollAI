@@ -12,7 +12,7 @@ export type User = {
   isVerified: boolean;
   professionalTitle: string;
   password: string;
-  accountType: string;
+  accountType: "super_admin" | "organization" | "provider";
   organization?: any;
   data: any;
   userId: string;

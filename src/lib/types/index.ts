@@ -252,13 +252,24 @@ export type ApplicationStatType = {
   activeApplications: number;
   pendingApplications: number;
   totalApplications: number;
+  pending: number;
+  approved: number;
+  declined: number;
 };
 
-type Organization = {
+export type Organization = {
   _id: string;
+  accountType:
+    | "credentialing_organization"
+    | "organization"
+    | "credential specialist";
   organizationName: string;
   administratorFullName: string;
   workEmail: string;
+  profileStatus: number;
+  createdAt: string;
+  __v: number;
+  profilePicture: string;
 };
 
 export type CreatedApplicationType = {
