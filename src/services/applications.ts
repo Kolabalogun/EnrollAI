@@ -5,7 +5,7 @@ import { ApplicationFormInterface } from "@/lib/types";
 
 const { VITE_API_BASE_URL } = import.meta.env;
 
-export const getAllApplicationsForProviders = async (page = 1, size = 5) => {
+export const getAllApplicationsForProviders = async (page = 1, size = 10) => {
   const token = localStorage.getItem("enrollai-user");
 
   if (!token) {
@@ -92,7 +92,9 @@ export const getApplicationsById = async (id: string) => {
 
 export const getUsersApplicationsByStatus = async (
   userId: string,
-  status: string
+  status: string,
+  page = 1,
+  size = 10
 ) => {
   const token = localStorage.getItem("enrollai-user");
 
@@ -104,7 +106,7 @@ export const getUsersApplicationsByStatus = async (
     const response = await axios.get(
       `${VITE_API_BASE_URL}/application/user/status/${userId}`,
       {
-        params: { status },
+        params: { status, page, size, order_by: "desc" },
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",

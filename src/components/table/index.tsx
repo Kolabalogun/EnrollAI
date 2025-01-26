@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from "react";
+import React from "react";
 import {
   Table,
   TableBody,
@@ -25,7 +25,10 @@ interface TableComponentProps<T> {
   data: T[];
   footerOnSubmit?: () => void;
   emptyMessage?: string;
-  rowsPerPage?: number; // Option to set rows per page for pagination
+  rowsPerPage?: number;
+  currentPage?: number;
+  setCurrentPage?: React.Dispatch<React.SetStateAction<number>>;
+  totalPages?: number;
 }
 
 export function TableComponent<T>({
@@ -34,18 +37,11 @@ export function TableComponent<T>({
   data,
   footerOnSubmit,
   emptyMessage = "No data available",
-  rowsPerPage = 10, // Default rows per page
+
+  currentPage,
+  setCurrentPage,
+  totalPages,
 }: TableComponentProps<T>) {
-  // Pagination state
-  const [currentPage, setCurrentPage] = useState(0);
-  const totalPages = Math.ceil(data.length / rowsPerPage);
-
-  // Get paginated data
-  const paginatedData = data.slice(
-    currentPage * rowsPerPage,
-    (currentPage + 1) * rowsPerPage
-  );
-
   // Type guard to ensure the value is a valid ReactNode
   const isReactNode = (value: any): value is React.ReactNode => {
     return (
@@ -56,11 +52,20 @@ export function TableComponent<T>({
     );
   };
 
+  console.log(totalPages);
+  console.log(currentPage);
+
   // Handle page navigation
-  const goToPreviousPage = () =>
-    setCurrentPage((prev) => Math.max(prev - 1, 0));
-  const goToNextPage = () =>
-    setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1));
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
 
   return (
     <div className="mt-3 flex-1">
@@ -87,7 +92,7 @@ export function TableComponent<T>({
           </TableRow>
         </TableHeader>
         <TableBody className="[&_tr:last-child]:border-b-[1px] mb-10 remove-scrollbar">
-          {paginatedData.length === 0 ? (
+          {data.length === 0 ? (
             <TableRow>
               <TableCell
                 colSpan={columns.length}
@@ -97,7 +102,7 @@ export function TableComponent<T>({
               </TableCell>
             </TableRow>
           ) : (
-            paginatedData.map((row, rowIndex) => {
+            data.map((row, rowIndex) => {
               // Ensure row is correctly typed as T
               const typedRow = row as T & { level?: string };
 
@@ -142,7 +147,7 @@ export function TableComponent<T>({
             variant="outline"
             size="sm"
             onClick={goToPreviousPage}
-            disabled={currentPage === 0}
+            disabled={currentPage === 1}
           >
             Previous
           </Button>
@@ -150,7 +155,7 @@ export function TableComponent<T>({
             variant="outline"
             size="sm"
             onClick={goToNextPage}
-            disabled={currentPage === totalPages - 1}
+            disabled={currentPage === totalPages}
           >
             Next
           </Button>

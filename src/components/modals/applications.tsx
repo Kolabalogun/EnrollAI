@@ -18,6 +18,7 @@ import {
   HEALTHCARE_APPLICATION_FORM,
   ORGANIZATION_CREATE_APPLICATION_FORM,
 } from "@/router/routes";
+import { RootState } from "@/redux/store";
 
 const ApplicationsModal = ({
   onClose,
@@ -27,7 +28,7 @@ const ApplicationsModal = ({
   isOpen: boolean;
 }) => {
   const navigate = useNavigate();
-  const { accountType } = useSelector((state: any) => state.auth);
+  const { user } = useSelector((state: RootState) => state.auth);
   const toast = useToast();
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -37,8 +38,6 @@ const ApplicationsModal = ({
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const [totalPages, setTotalPages] = useState(1);
-
-  console.log(totalPages, "totalPages");
 
   // Fetch applications when the modal is opened
   useEffect(() => {
@@ -71,7 +70,7 @@ const ApplicationsModal = ({
       }
     };
 
-    if (isOpen) {
+    if (isOpen && user) {
       fetchApplications(currentPage, itemsPerPage);
     }
   }, [isOpen, currentPage]);
@@ -144,7 +143,7 @@ const ApplicationsModal = ({
                   <div
                     key={app._id}
                     onClick={
-                      accountType !== "provider"
+                      user?.accountType !== "provider"
                         ? () => navigate(ORGANIZATION_CREATE_APPLICATION_FORM)
                         : () =>
                             navigate(HEALTHCARE_APPLICATION_FORM, {

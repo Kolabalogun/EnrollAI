@@ -33,7 +33,7 @@ export const createApplicationOrg = async (formData: any) => {
 };
 
 // Get Applications created for Providers
-export const getCreatedApplications = async () => {
+export const getCreatedApplications = async (page = 1, size = 10) => {
   const token = localStorage.getItem("enrollai-org-user");
 
   if (!token) {
@@ -48,6 +48,7 @@ export const getCreatedApplications = async () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
+        params: { page, size, order_by: "desc" },
       }
     );
     return {
@@ -65,8 +66,6 @@ export const getCreatedApplications = async () => {
 // Toggle Created Application Status
 export const toggleCreatedApplicationStatus = async (id: string) => {
   const token = localStorage.getItem("enrollai-org-user");
-
-  console.log(token);
 
   if (!token) {
     throw new Error("Authentication token not found");

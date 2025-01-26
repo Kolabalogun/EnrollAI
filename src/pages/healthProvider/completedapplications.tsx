@@ -14,17 +14,29 @@ import { useSelector } from "react-redux";
 const CompletedApplications = () => {
   const { user } = useSelector((state: RootState) => state.auth);
   const toast = useToast();
-  const [data, setData] = useState([]);
-  const fetchApplications = async () => {
-    if (!user) return;
-    console.log(user);
+  const [isLoading, setIsLoading] = useState(false);
 
+  const [data, setData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const [totalPages, setTotalPages] = useState(1);
+  const fetchApplications = async (page: number = 1, size: number = 10) => {
+    if (!user) return;
+
+    setIsLoading(true);
     try {
-      const res = await getUsersApplicationsByStatus(user?.userId, "declined");
+      const res = await getUsersApplicationsByStatus(
+        user?.userId,
+        "declined",
+        page,
+        size
+      );
       console.log(res);
       if (res.success) {
         setData(res?.data?.applications);
+        setTotalPages(res?.data?.pagination?.totalPages);
       }
+      setIsLoading(false);
     } catch (error: any) {
       console.log(error);
       showToast(
@@ -33,11 +45,12 @@ const CompletedApplications = () => {
         "error",
         `${error.message || "Failed to fetch Application"}`
       );
+      setIsLoading(false);
     }
   };
   useEffect(() => {
-    if (user) fetchApplications();
-  }, [user]);
+    if (user) fetchApplications(currentPage, itemsPerPage);
+  }, [user, currentPage]);
   return (
     <ApplicationsPageLayout
       handleSearch={() => console.log("")}
@@ -48,6 +61,10 @@ const CompletedApplications = () => {
       <OrganizationApplicationLists
         data={data}
         fetchFunction={fetchApplications}
+        isLoading={isLoading}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
       />
     </ApplicationsPageLayout>
   );

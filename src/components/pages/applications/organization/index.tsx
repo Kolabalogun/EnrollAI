@@ -27,11 +27,17 @@ const OrganizationApplicationLists = ({
   fetchFunction,
   isLoading,
   title,
+  currentPage,
+  setCurrentPage,
+  totalPages,
 }: {
   data?: ApplicationFormInterface[];
   fetchFunction: () => void;
   isLoading?: boolean;
   title?: string;
+  currentPage?: number;
+  setCurrentPage?: React.Dispatch<React.SetStateAction<number>>;
+  totalPages?: number;
 }) => {
   const [activeMenu, setActiveMenu] = useState<string | number | null>(null);
   const navigate = useNavigate();
@@ -295,6 +301,9 @@ const OrganizationApplicationLists = ({
                 footerTxt={""}
                 columns={parsedColumns as any}
                 data={data || []}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                totalPages={totalPages}
               />
             </div>
           ) : (

@@ -20,14 +20,23 @@ const DraftApplications = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchApplications = async () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const [totalPages, setTotalPages] = useState(1);
+
+  const fetchApplications = async (page: number = 1, size: number = 10) => {
     if (!user) return;
     setIsLoading(true);
     try {
       let res;
 
       if (user?.accountType === "provider") {
-        res = await getUsersApplicationsByStatus(user?.userId, "pending");
+        res = await getUsersApplicationsByStatus(
+          user?.userId,
+          "pending",
+          page,
+          size
+        );
       } else {
         res = await getAllApplicationsBasedOnStatus("pending");
       }
@@ -35,6 +44,7 @@ const DraftApplications = () => {
       if (res.success) {
         setData(res?.data?.applications);
         setFilteredData(res?.data?.applications);
+        setTotalPages(res?.data?.pagination?.totalPages);
       }
     } catch (error: any) {
       showToast(
@@ -73,8 +83,8 @@ const DraftApplications = () => {
   };
 
   useEffect(() => {
-    if (user) fetchApplications();
-  }, [user]);
+    if (user) fetchApplications(currentPage, itemsPerPage);
+  }, [user, currentPage]);
 
   return (
     <ApplicationsPageLayout
@@ -87,6 +97,9 @@ const DraftApplications = () => {
         data={filteredData || []}
         fetchFunction={fetchApplications}
         isLoading={isLoading}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
       />
     </ApplicationsPageLayout>
   );
