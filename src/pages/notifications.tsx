@@ -18,6 +18,8 @@ const Notifications = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { accountType } = useSelector((state: any) => state.auth);
 
+  console.log(accountType);
+
   const fetchNotifications = async () => {
     setIsLoading(true);
     try {

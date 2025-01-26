@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useRef } from "react";
 import {
+  BadgeCheck,
   CheckCircle,
   EllipsisVertical,
   Eye,
@@ -299,7 +300,8 @@ export const OrganizationApplicationFormTableHeads = (
 ];
 
 export const CreatedApplicationsTableHeads = (
-  handleDelete: (row: CreatedApplicationType) => void
+  handleDelete: (row: CreatedApplicationType) => void,
+  handleChangeApplicationStatus: (row: CreatedApplicationType) => void
 ): TableColumn<CreatedApplicationType>[] => [
   {
     header: "Application Title",
@@ -324,6 +326,22 @@ export const CreatedApplicationsTableHeads = (
     flex: 2,
   },
   {
+    header: "Status",
+    accessor: (row) => (
+      <div
+        className={`self-center text-xs  text-center items-center justify-center flex gap-2 font-medium border p-0.5 rounded-full  w-32 ${
+          row?.status
+            ? "border-[#21A0A0] text-[#21A0A0] border bg-[#d3ecec]"
+            : "border-[#fb0000] text-[#fb0000] bg-[#ecd3d3]"
+        } `}
+      >
+        {row?.status ? "Active" : "Disabled"}
+      </div>
+    ),
+    className: "",
+    headClassName: "",
+  },
+  {
     header: "Created At",
     accessor: (row) => (
       <div className="space-y-1 w-32 xl:w-full">
@@ -338,6 +356,18 @@ export const CreatedApplicationsTableHeads = (
     header: "Actions",
     accessor: (row) => (
       <div className="flex justify-center items-center space-x-2">
+        <button
+          onClick={() => handleChangeApplicationStatus(row)}
+          className={`${
+            row?.status
+              ? "text-red-500 hover:text-red-700"
+              : "text-[#21A0A0] hover:text-[#21A0A0] "
+          } flex items-center`}
+        >
+          <span className="text-sm ml-1">
+            <BadgeCheck />
+          </span>
+        </button>
         <button
           onClick={() => handleDelete(row)}
           className="text-red-500 hover:text-red-700 flex items-center"

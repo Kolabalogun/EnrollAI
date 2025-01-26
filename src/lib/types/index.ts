@@ -313,5 +313,6 @@ export type CreatedApplicationType = {
   applicationName: string;
   applicationTitle: string;
   createdAt: string;
+  status: boolean;
   __v: number;
 };

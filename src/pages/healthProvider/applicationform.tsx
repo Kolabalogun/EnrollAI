@@ -1,8 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { ChevronRight, ChevronRightIcon } from "lucide-react";
-
 import "react-phone-input-2/lib/style.css";
 import { useEffect, useState } from "react";
 import Step1 from "@/components/pages/applicationForm/step1";
@@ -85,6 +83,7 @@ const ApplicationForm = () => {
           ...form,
           applicationType: orgData?.applicationName || "",
           organizationApplicationId: orgData?._id || "",
+          organizationId: orgData?.organization?._id || "",
           organizationName: orgData?.organization?.organizationName || "",
           applicationTitle: orgData?.applicationTitle || "",
         };
@@ -101,6 +100,7 @@ const ApplicationForm = () => {
                 ...form,
                 ...res.data.application,
                 applicationType: orgData?.applicationName || "",
+                organizationId: orgData?.organization?._id || "",
                 organizationApplicationId: orgData?._id || "",
                 organizationName: orgData?.organization?.organizationName || "",
                 applicationTitle: orgData?.applicationTitle || "",
@@ -202,7 +202,7 @@ const ApplicationForm = () => {
 
       if (pageNo === 5) {
         if (isOpen) {
-          dispatch(resetForm());
+          // dispatch(resetForm());
 
           navigate(HEALTHCARE_APPLICATIONS);
         } else {
@@ -359,24 +359,19 @@ const ApplicationForm = () => {
       <ApplicationSuccessModal
         onClose={() => {
           onClose();
-          dispatch(resetForm());
+          // dispatch(resetForm());
 
           navigate(HEALTHCARE_APPLICATIONS);
         }}
         isOpen={isOpen}
         handleClick={() => {
-          dispatch(resetForm());
+          // dispatch(resetForm());
 
           navigate(HEALTHCARE_APPLICATIONS);
         }}
       />
       <div className="flex items-center gap-1">
-        <p
-          onClick={() => dispatch(resetForm())}
-          className="text-[11px] font-semibold text-fade"
-        >
-          Dashboard
-        </p>
+        <p className="text-[11px] font-semibold text-fade">Dashboard</p>
         <ChevronRight className="text-[#667085]" size={15} />
         <p className="text-[11px] font-semibold text-[#667085]">Application</p>
       </div>

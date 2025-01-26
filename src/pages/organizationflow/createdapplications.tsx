@@ -13,14 +13,15 @@ const CreatedApplications = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
   const fetchApplications = async () => {
     setIsLoading(true);
     try {
       const res = await getCreatedApplications();
       console.log(res);
       if (res.success) {
-        setData(res?.data?.applications);
-        setFilteredData(res?.data?.applications);
+        setData(res?.data?.applications || []);
+        setFilteredData(res?.data?.applications || []);
       }
     } catch (error: any) {
       console.log(error);

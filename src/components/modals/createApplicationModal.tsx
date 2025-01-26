@@ -32,21 +32,20 @@ const CreateApplicationModal = ({
   const toast = useToast();
 
   const handleCreateApplication = async () => {
-    if (!applicationName || !applicationTitle) {
-      toast({
-        title: "Validation Error",
-        description: "Both fields are required.",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+    if (!applicationName.trim() || !applicationTitle.trim()) {
+      showToast(
+        toast,
+        "Validation Error",
+        "error",
+        "Both fields are required."
+      );
       return;
     }
 
     setIsLoading(true);
     const data = {
       applicationName,
-      applicationTitle,
+      applicationTitle: applicationTitle.trim(),
     };
     try {
       const response = await createApplicationOrg(data);

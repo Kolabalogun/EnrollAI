@@ -153,8 +153,10 @@ const ApplicationsModal = ({
                     }
                     className="flex flex-col cursor-pointer gap-2 hover:bg-primary p-2"
                   >
-                    <p className="font-semibold">{app?.applicationName}</p>
-                    <p className="font-semibold text-sm text-gray-600">
+                    <p className="font-semibold capitalize">
+                      {app?.applicationName}
+                    </p>
+                    <p className="font-semibold capitalize text-sm text-gray-600">
                       {app?.applicationTitle}
                     </p>
                     <p className="font-medium capitalize text-fade text-xs">

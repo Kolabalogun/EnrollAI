@@ -8,7 +8,6 @@ import {
   OrganizationsTableHeads,
   ProvidersTableHeads,
 } from "@/constant/data/table/tableHeads";
-
 import { useState } from "react";
 import EmptyCarts from "../../dashboard/emptyCarts";
 import { useNavigate } from "react-router-dom";
@@ -18,6 +17,10 @@ import showToast from "@/components/common/showtoast";
 import { useDisclosure, useToast } from "@chakra-ui/react";
 import ConfirmationModal from "@/components/modals/confirmationModal";
 import LoadingCarts from "../../dashboard/loadingarts";
+import {
+  deleteCreatedApplications,
+  toggleCreatedApplicationStatus,
+} from "@/services/org/applications";
 
 const OrganizationApplicationLists = ({
   data,
@@ -34,6 +37,12 @@ const OrganizationApplicationLists = ({
   const navigate = useNavigate();
   const toast = useToast();
   const { isOpen, onClose, onOpen } = useDisclosure();
+
+  const {
+    isOpen: statusIsOpen,
+    onClose: statusOnClose,
+    onOpen: statusOnOpen,
+  } = useDisclosure();
 
   const [selectedRow, setSelectedRow] =
     useState<ApplicationFormInterface | null>(null);
@@ -86,10 +95,52 @@ const OrganizationApplicationLists = ({
     setActiveMenu(null);
   };
 
+  const handleChangeApplicationStatus = (row: any) => {
+    console.log(row);
+    setSelectedRow(row);
+    statusOnOpen();
+  };
+
   const handleDeleteApplication = async (id: string) => {
     setLoading(true);
     try {
       const res = await deleteProviderApplication(id);
+
+      if (res.success) {
+        showToast(
+          toast,
+          "Enroll AI",
+          "success",
+          "Application deleted successfully"
+        );
+      } else {
+        showToast(
+          toast,
+          "Enroll AI",
+          "error",
+          `${res?.message || "Failed the delete Application"}`
+        );
+      }
+
+      fetchFunction();
+    } catch (error: any) {
+      console.log(error);
+      showToast(
+        toast,
+        "Enroll AI",
+        "error",
+        `${error.message || "Failed to delete Application. Please try later"} `
+      );
+    } finally {
+      setLoading(false);
+      onClose();
+    }
+  };
+
+  const handleDeleteCreatedApplication = async (id: string) => {
+    setLoading(true);
+    try {
+      const res = await deleteCreatedApplications(id);
 
       console.log(res);
 
@@ -104,7 +155,7 @@ const OrganizationApplicationLists = ({
         showToast(
           toast,
           "Enroll AI",
-          "success",
+          "error",
           `${res.message || "Failed the delete Application"}`
         );
       }
@@ -124,6 +175,40 @@ const OrganizationApplicationLists = ({
     }
   };
 
+  const handleChangeApplicationStatusF = async (id: string) => {
+    try {
+      const res = await toggleCreatedApplicationStatus(id);
+
+      if (res.success) {
+        showToast(
+          toast,
+          "Enroll AI",
+          "success",
+          "Application updated successfully"
+        );
+        fetchFunction();
+      } else {
+        showToast(
+          toast,
+          "Enroll AI",
+          "error",
+          `${res.message || "Failed the delete Application"}`
+        );
+      }
+    } catch (error: any) {
+      console.log(error);
+      showToast(
+        toast,
+        "Enroll AI",
+        "error",
+        `${error.message || "Failed to delete Application. Please try later"} `
+      );
+    } finally {
+      setLoading(false);
+      statusOnClose();
+    }
+  };
+
   const columns = OrganizationApplicationFormTableHeads(
     handleViewDetails,
     handleEdit,
@@ -132,7 +217,10 @@ const OrganizationApplicationLists = ({
     toggleMenu
   );
 
-  const createdApplicationColumns = CreatedApplicationsTableHeads(handleDelete);
+  const createdApplicationColumns = CreatedApplicationsTableHeads(
+    handleDelete,
+    handleChangeApplicationStatus
+  );
 
   const providersColumns = ProvidersTableHeads(handleProviderDetails);
 
@@ -163,9 +251,37 @@ const OrganizationApplicationLists = ({
         isOpen={isOpen}
         buttonText="Delete"
         isLoading={loading}
-        message="Are you sure you want to delete your application? Once deleted, it will be permanently removed from our database."
+        message={`Are you sure you want to delete your application? Once deleted, it will be permanently removed from our database. ${
+          title === "Created Applications" &&
+          'Additionally, all provider applications associated with this application will also be deleted. If you wish to retain provider applications but stop further submissions, you can change the application status to "Active" or "Disabled" instead.'
+        } `}
         onConfirm={() => {
-          if (selectedRow) handleDeleteApplication(selectedRow._id);
+          if (selectedRow) {
+            if (title === "Created Applications") {
+              handleDeleteCreatedApplication(selectedRow._id);
+            } else {
+              handleDeleteApplication(selectedRow._id);
+            }
+          }
+        }}
+      />
+
+      <ConfirmationModal
+        onClose={statusOnClose}
+        isOpen={statusIsOpen}
+        buttonText="Change"
+        isLoading={loading}
+        message={`Are you sure you want to ${
+          selectedRow?.status ? "Disable" : "Activate"
+        } this application? Once ${
+          selectedRow?.status ? "Disabled" : "Activated"
+        }, Providers ${
+          selectedRow?.status ? "won't" : "will"
+        } be able to see the application. `}
+        onConfirm={() => {
+          if (selectedRow) {
+            handleChangeApplicationStatusF(selectedRow?._id);
+          }
         }}
       />
       {isLoading ? (

@@ -8,9 +8,9 @@ export const getAllNotifications = async (org?: boolean) => {
   let token;
 
   if (org) {
-    localStorage.getItem("enrollai-org-user");
+    token = localStorage.getItem("enrollai-org-user");
   } else {
-    localStorage.getItem("enrollai-user");
+    token = localStorage.getItem("enrollai-user");
   }
 
   if (!token) {

@@ -62,6 +62,74 @@ export const getCreatedApplications = async () => {
   }
 };
 
+// Toggle Created Application Status
+export const toggleCreatedApplicationStatus = async (id: string) => {
+  const token = localStorage.getItem("enrollai-org-user");
+
+  console.log(token);
+
+  if (!token) {
+    throw new Error("Authentication token not found");
+  }
+
+  if (!id) {
+    throw new Error("ID is required");
+  }
+
+  try {
+    const response = await axios.put(
+      `${VITE_API_BASE_URL}/organizations/toggle-organization-application-status/${id}`,
+      {},
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return {
+      success: true,
+      data: response.data,
+      message: "",
+    };
+  } catch (error: any) {
+    console.log(error);
+
+    return handleError(error);
+  }
+};
+
+// Delete Created Applications
+export const deleteCreatedApplications = async (id: string) => {
+  const token = localStorage.getItem("enrollai-org-user");
+
+  if (!token) {
+    throw new Error("Authentication token not found");
+  }
+  try {
+    const response = await axios.delete(
+      `${VITE_API_BASE_URL}/organizations/delete/${id}`,
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return {
+      success: true,
+      data: response.data,
+      message: "",
+    };
+  } catch (error: any) {
+    console.log(error);
+
+    return handleError(error);
+  }
+};
+
 export const getAllOrgApplications = async (organization_name: string) => {
   const token = localStorage.getItem("enrollai-org-user");
 
