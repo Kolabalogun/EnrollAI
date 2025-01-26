@@ -4,10 +4,14 @@ import { handleError } from "./error";
 
 const { VITE_API_BASE_URL } = import.meta.env;
 
-export const getAllNotifications = async () => {
-  const token =
-    localStorage.getItem("enrollai-user") ||
+export const getAllNotifications = async (org?: boolean) => {
+  let token;
+
+  if (org) {
     localStorage.getItem("enrollai-org-user");
+  } else {
+    localStorage.getItem("enrollai-user");
+  }
 
   if (!token) {
     throw new Error("Authentication token not found");

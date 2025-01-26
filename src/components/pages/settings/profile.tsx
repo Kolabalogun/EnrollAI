@@ -428,7 +428,7 @@ const Profile = () => {
         <div className="border-b">
           <p className="text-[#383838] font-semibold pb-5 text-xs ">
             This account was created on{" "}
-            {formatDateTime(user?.createdAt) ?? "N?A"}
+            {(user && formatDateTime(user?.createdAt)) ?? "N?A"}
           </p>
         </div>
         <div className="flex items-center justify-between pt-5">

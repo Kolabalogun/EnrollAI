@@ -6,8 +6,10 @@ import timeAgo from "@/utils/timeAgo";
 import { useToast } from "@chakra-ui/react";
 import { EllipsisVertical } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const Notifications = () => {
+  const { accountType } = useSelector((state: any) => state.auth);
   const toast = useToast();
   const [data, setData] = useState([]);
 
@@ -16,7 +18,14 @@ const Notifications = () => {
   const fetchNotifications = async () => {
     setIsLoading(true);
     try {
-      const res = await getAllNotifications();
+      let res;
+
+      if (accountType === "organization") {
+        res = await getAllNotifications(true);
+      } else {
+        res = await getAllNotifications();
+      }
+
       if (res.success) {
         console.log(res);
 
