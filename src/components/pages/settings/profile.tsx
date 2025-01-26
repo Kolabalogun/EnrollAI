@@ -14,6 +14,7 @@ import React from "react";
 import { deleteOrgAccount, updateProfileOrg } from "@/services/org/auth";
 import { formatDateTime } from "@/utils/formatDateTime";
 import { deleteAdminAccount } from "@/services/admin/auth";
+import { RootState } from "@/redux/store";
 
 type FormType = {
   fullName?: string;
@@ -38,7 +39,7 @@ const organizationInitialState = {
 };
 
 const Profile = () => {
-  const { user } = useSelector((state: any) => state.auth);
+  const { user } = useSelector((state: RootState) => state.auth);
   const { isOpen, onClose, onOpen } = useDisclosure();
   const {
     isOpen: saveIsOpen,
@@ -103,6 +104,8 @@ const Profile = () => {
   };
 
   console.log(user, "user");
+
+  console.log(form, "form");
 
   const handleDeleteAccount = async () => {
     setDeleteIsLoading(true);

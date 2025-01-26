@@ -4,15 +4,16 @@ import { handleError } from "../error";
 
 const { VITE_API_BASE_URL } = import.meta.env;
 
+// Create Application for Providers to fill
 export const createApplicationOrg = async (formData: any) => {
-  const token = localStorage.getItem("enrollai-user");
+  const token = localStorage.getItem("enrollai-org-user");
 
   if (!token) {
     throw new Error("Authentication token not found");
   }
   try {
     const response = await axios.post(
-      `${VITE_API_BASE_URL}/organizations/application`,
+      `${VITE_API_BASE_URL}/organizations/create-application`,
       formData,
       {
         headers: {
@@ -31,15 +32,16 @@ export const createApplicationOrg = async (formData: any) => {
   }
 };
 
+// Get Applications created for Providers
 export const getCreatedApplications = async () => {
-  const token = localStorage.getItem("enrollai-user");
+  const token = localStorage.getItem("enrollai-org-user");
 
   if (!token) {
     throw new Error("Authentication token not found");
   }
   try {
     const response = await axios.get(
-      `${VITE_API_BASE_URL}/organizations/orgapplications`,
+      `${VITE_API_BASE_URL}/organizations/created-applications`,
       {
         headers: {
           Accept: "application/json",
@@ -61,7 +63,7 @@ export const getCreatedApplications = async () => {
 };
 
 export const getAllOrgApplications = async (organization_name: string) => {
-  const token = localStorage.getItem("enrollai-user");
+  const token = localStorage.getItem("enrollai-org-user");
 
   if (!token) {
     throw new Error("Authentication token not found");
@@ -95,7 +97,7 @@ export const getAllOrgApplications = async (organization_name: string) => {
 };
 
 export const getIncomingApplications = async (organization_name: string) => {
-  const token = localStorage.getItem("enrollai-user");
+  const token = localStorage.getItem("enrollai-org-user");
 
   if (!token) {
     throw new Error("Authentication token not found");
@@ -129,7 +131,7 @@ export const getIncomingApplications = async (organization_name: string) => {
 };
 
 export const getApprovedProviderApplications = async (id: string) => {
-  const token = localStorage.getItem("enrollai-user");
+  const token = localStorage.getItem("enrollai-org-user");
 
   if (!token) {
     throw new Error("Authentication token not found");
@@ -162,7 +164,7 @@ export const getApprovedProviderApplications = async (id: string) => {
   }
 };
 export const getOrgApplicationStats = async (id: string) => {
-  const token = localStorage.getItem("enrollai-user");
+  const token = localStorage.getItem("enrollai-org-user");
 
   if (!token) {
     throw new Error("Authentication token not found");
@@ -190,7 +192,7 @@ export const getOrgApplicationStats = async (id: string) => {
 };
 
 export const getApprovedProviders = async (id: string) => {
-  const token = localStorage.getItem("enrollai-user");
+  const token = localStorage.getItem("enrollai-org-user");
 
   if (!token) {
     throw new Error("Authentication token not found");
@@ -219,7 +221,7 @@ export const getApprovedProviders = async (id: string) => {
 };
 
 export const approveProviderApplication = async (id: string) => {
-  const token = localStorage.getItem("enrollai-user");
+  const token = localStorage.getItem("enrollai-org-user");
 
   if (!token) {
     throw new Error("Authentication token not found");
@@ -247,7 +249,7 @@ export const approveProviderApplication = async (id: string) => {
 };
 
 export const declineProviderApplication = async (id: string) => {
-  const token = localStorage.getItem("enrollai-user");
+  const token = localStorage.getItem("enrollai-org-user");
 
   if (!token) {
     throw new Error("Authentication token not found");

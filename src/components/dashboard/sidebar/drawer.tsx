@@ -20,6 +20,7 @@ import { LogOut } from "lucide-react";
 import showToast from "@/components/common/showtoast";
 import { logout } from "@/redux/features/authSlice";
 import { resetForm } from "@/redux/features/applicationFormSlice";
+import { ORG_LOGIN_ROUTE } from "@/router/routes";
 
 const SidebarDrawer = ({
   onClose,
@@ -93,6 +94,7 @@ const SidebarDrawer = ({
       dispatch(logout());
       dispatch(resetForm());
       localStorage.removeItem("enrollai-user");
+      localStorage.removeItem("enrollai-org-user");
 
       showToast(
         toast,
@@ -100,7 +102,12 @@ const SidebarDrawer = ({
         "warning",
         "You've successfully logged out"
       );
-      navigate("/login");
+      if (accountType === "organization") {
+        navigate(ORG_LOGIN_ROUTE);
+      } else {
+        navigate("/login");
+      }
+
       setIsLoading(false);
     } catch (error) {
       console.error("Logout error:", error);

@@ -593,13 +593,15 @@ const ApplicationsDetails = () => {
                   </SubmitButton>
                 )}
 
-                <SubmitButton
-                  // isLoading={isLoading}
-                  handleSubmit={declineOnOpen}
-                  className="py-2 bg-red-500 flex gap-2  w-auto px-8 border rounded-md font-semibold text-xs"
-                >
-                  Decline Application
-                </SubmitButton>
+                {form?.status !== "declined" && (
+                  <SubmitButton
+                    // isLoading={isLoading}
+                    handleSubmit={declineOnOpen}
+                    className="py-2 bg-red-500 flex gap-2  w-auto px-8 border rounded-md font-semibold text-xs"
+                  >
+                    Decline Application
+                  </SubmitButton>
+                )}
               </>
             )}
           </div>

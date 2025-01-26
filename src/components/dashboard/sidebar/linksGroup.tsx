@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useToast } from "@chakra-ui/react";
 import { logout } from "@/redux/features/authSlice";
@@ -9,6 +9,7 @@ import { logout } from "@/redux/features/authSlice";
 import showToast from "@/components/common/showtoast";
 import ConfirmationModal from "@/components/modals/confirmationModal";
 import { resetForm } from "@/redux/features/applicationFormSlice";
+import { ORG_LOGIN_ROUTE } from "@/router/routes";
 
 type LinksGroupType = {
   icon: any;
@@ -36,7 +37,7 @@ export function LinksGroup({
   const [dialogModal, setDialogModal] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+  const { accountType } = useSelector((state: any) => state.auth);
   const dispatch = useDispatch();
 
   // Check if the current path matches the buttonLink or any of the subLinks' buttonLinks
@@ -51,6 +52,7 @@ export function LinksGroup({
       dispatch(logout());
       dispatch(resetForm());
       localStorage.removeItem("enrollai-user");
+      localStorage.removeItem("enrollai-org-user");
 
       showToast(
         toast,
@@ -58,7 +60,11 @@ export function LinksGroup({
         "warning",
         "You've successfully logged out"
       );
-      navigate("/login");
+      if (accountType === "organization") {
+        navigate(ORG_LOGIN_ROUTE);
+      } else {
+        navigate("/login");
+      }
       setIsLoading(false);
     } catch (error) {
       console.error("Logout error:", error);

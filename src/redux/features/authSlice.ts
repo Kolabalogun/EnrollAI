@@ -9,6 +9,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export type User = {
   fullName: string;
   email: string;
+  workEmail: string;
   isVerified: boolean;
   professionalTitle: string;
   password: string;
@@ -21,6 +22,7 @@ export type User = {
   profilePicture: string;
   id: string;
   administratorFullName: string;
+  createdAt: string;
 };
 
 export interface AuthState {

@@ -32,8 +32,8 @@ const AllApplications = () => {
 
       console.log(res);
       if (res.success) {
-        setData(res?.data?.allApplications);
-        setFilteredData(res?.data?.allApplications);
+        setData(res?.data?.allAppllications);
+        setFilteredData(res?.data?.allAppllications);
       }
     } catch (error: any) {
       console.log(error);
@@ -50,6 +50,8 @@ const AllApplications = () => {
   useEffect(() => {
     fetchApplications();
   }, []);
+
+  console.log(filteredData);
 
   const handleSearch = (value: string) => {
     const lowercasedValue = value.toLowerCase();
