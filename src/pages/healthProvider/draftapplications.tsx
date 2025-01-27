@@ -38,7 +38,7 @@ const DraftApplications = () => {
           size
         );
       } else {
-        res = await getAllApplicationsBasedOnStatus("pending");
+        res = await getAllApplicationsBasedOnStatus(page, size, "pending");
       }
 
       if (res.success) {

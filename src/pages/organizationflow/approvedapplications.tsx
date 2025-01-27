@@ -7,7 +7,7 @@ import ApplicationsPageLayout from "@/layout/applicationsPage";
 import { ApplicationFormInterface } from "@/lib/types";
 import { RootState } from "@/redux/store";
 import { getAllApplicationsBasedOnStatus } from "@/services/admin/applications";
-import { getApprovedProviderApplications } from "@/services/org/applications";
+import { getApplicationsFromProvidersBaseonStatus } from "@/services/org/applications";
 import { useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -18,22 +18,32 @@ const ApprovedApplications = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const fetchApplications = async () => {
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const [totalPages, setTotalPages] = useState(1);
+  const fetchApplications = async (page: number = 1, size: number = 10) => {
     if (!user) return;
     setIsLoading(true);
     try {
       let res;
 
       if (user?.accountType === "organization") {
-        res = await getApprovedProviderApplications(user?.organizationName);
+        res = await getApplicationsFromProvidersBaseonStatus(
+          user?.id,
+          "approved",
+          page,
+          size
+        );
       } else {
-        res = await getAllApplicationsBasedOnStatus("approved");
+        res = await getAllApplicationsBasedOnStatus(page, size, "approved");
       }
 
       console.log(res);
       if (res.success) {
         setData(res?.data?.applications);
         setFilteredData(res?.data?.applications);
+        setTotalPages(res?.data?.pagination?.totalPages);
       }
     } catch (error: any) {
       console.log(error);
@@ -48,9 +58,8 @@ const ApprovedApplications = () => {
     }
   };
   useEffect(() => {
-    fetchApplications();
-  }, []);
-
+    if (user) fetchApplications(currentPage, itemsPerPage);
+  }, [user, currentPage]);
   const handleSearch = (value: string) => {
     const lowercasedValue = value.toLowerCase();
 
@@ -83,6 +92,9 @@ const ApprovedApplications = () => {
         data={filteredData || []}
         fetchFunction={fetchApplications}
         isLoading={isLoading}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
       />
     </ApplicationsPageLayout>
   );

@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { ApplicationStatType } from "@/lib/types";
-import { getOrgApplicationStats } from "@/services/org/applications";
+import { getOrganizationApplicationStats } from "@/services/org/applications";
 import showToast from "@/components/common/showtoast";
 import { getApplicationStats } from "@/services/admin/applications";
 
@@ -20,7 +20,7 @@ const OrganizationStatBar = () => {
     if (!user) return;
 
     try {
-      const res = await getOrgApplicationStats(user?.organizationName);
+      const res = await getOrganizationApplicationStats(user?.id);
       if (res.success) {
         setProviderStatData(res?.data?.stats);
       }

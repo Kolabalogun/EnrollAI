@@ -129,75 +129,16 @@ export const deleteCreatedApplications = async (id: string) => {
   }
 };
 
-export const getAllOrgApplications = async (organization_name: string) => {
-  const token = localStorage.getItem("enrollai-org-user");
+// Applications (Providers)
 
-  if (!token) {
-    throw new Error("Authentication token not found");
-  }
+// Get (All, Imcoming, Declined & Approved) Applications from Providers Based on their Status
 
-  if (!organization_name) {
-    throw new Error("Organization ID is required");
-  }
-
-  try {
-    const response = await axios.get(
-      `${VITE_API_BASE_URL}/organizations/applications`,
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        params: { organization_name },
-      }
-    );
-    return {
-      success: true,
-      data: response.data,
-      message: "",
-    };
-  } catch (error: any) {
-    console.error(error);
-    return handleError(error);
-  }
-};
-
-export const getIncomingApplications = async (organization_name: string) => {
-  const token = localStorage.getItem("enrollai-org-user");
-
-  if (!token) {
-    throw new Error("Authentication token not found");
-  }
-
-  if (!organization_name) {
-    throw new Error("Organization ID is required");
-  }
-
-  try {
-    const response = await axios.get(
-      `${VITE_API_BASE_URL}/organizations/incoming-applications`,
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        params: { organization_name },
-      }
-    );
-    return {
-      success: true,
-      data: response.data,
-      message: "",
-    };
-  } catch (error: any) {
-    console.error(error);
-    return handleError(error);
-  }
-};
-
-export const getApprovedProviderApplications = async (id: string) => {
+export const getApplicationsFromProvidersBaseonStatus = async (
+  id: string,
+  status: string,
+  page = 1,
+  size = 10
+) => {
   const token = localStorage.getItem("enrollai-org-user");
 
   if (!token) {
@@ -210,14 +151,14 @@ export const getApprovedProviderApplications = async (id: string) => {
 
   try {
     const response = await axios.get(
-      `${VITE_API_BASE_URL}/organizations/approved-applications/${id}`,
+      `${VITE_API_BASE_URL}/organizations/applications`,
       {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        params: { id },
+        params: { id, status, page, size, order_by: "desc" },
       }
     );
     return {
@@ -230,15 +171,23 @@ export const getApprovedProviderApplications = async (id: string) => {
     return handleError(error);
   }
 };
-export const getOrgApplicationStats = async (id: string) => {
+
+// Get Stats of Providers Applications in Organizations Dashboard
+export const getOrganizationApplicationStats = async (
+  organizationId: string
+) => {
   const token = localStorage.getItem("enrollai-org-user");
 
   if (!token) {
     throw new Error("Authentication token not found");
   }
+
+  if (!organizationId) {
+    throw new Error("Organization Id not found");
+  }
   try {
     const response = await axios.get(
-      `${VITE_API_BASE_URL}/organizations/${id}/application-stats`,
+      `${VITE_API_BASE_URL}/organizations/${organizationId}/application-stats`,
 
       {
         headers: {
@@ -258,7 +207,45 @@ export const getOrgApplicationStats = async (id: string) => {
   }
 };
 
-export const getApprovedProviders = async (id: string) => {
+// Update (Providers) Filled Applications Based On The Status Passed
+export const updateProviderApplicationByOrg = async (
+  id: string,
+  status: string
+) => {
+  const token = localStorage.getItem("enrollai-org-user");
+
+  console.log(status, "status,statusstatus");
+
+  if (!token) {
+    throw new Error("Authentication token not found");
+  }
+  try {
+    const response = await axios.put(
+      `${VITE_API_BASE_URL}/organizations/update-application/${id}`,
+      {},
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        params: { status },
+      }
+    );
+    return {
+      success: true,
+      data: response.data,
+      message: "",
+    };
+  } catch (error: any) {
+    return handleError(error);
+  }
+};
+
+// Providers
+
+// Get Applications of Providers which their Applications have been Approved
+export const getApprovedProviders = async (id: string, page = 1, size = 10) => {
   const token = localStorage.getItem("enrollai-org-user");
 
   if (!token) {
@@ -274,6 +261,7 @@ export const getApprovedProviders = async (id: string) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
+        params: { page, size, order_by: "desc" },
       }
     );
     return {
@@ -283,62 +271,6 @@ export const getApprovedProviders = async (id: string) => {
     };
   } catch (error: any) {
     console.error(error);
-    return handleError(error);
-  }
-};
-
-export const approveProviderApplication = async (id: string) => {
-  const token = localStorage.getItem("enrollai-org-user");
-
-  if (!token) {
-    throw new Error("Authentication token not found");
-  }
-  try {
-    const response = await axios.put(
-      `${VITE_API_BASE_URL}/organizations/approve/${id}`,
-
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    return {
-      success: true,
-      data: response.data,
-      message: "",
-    };
-  } catch (error: any) {
-    return handleError(error);
-  }
-};
-
-export const declineProviderApplication = async (id: string) => {
-  const token = localStorage.getItem("enrollai-org-user");
-
-  if (!token) {
-    throw new Error("Authentication token not found");
-  }
-  try {
-    const response = await axios.put(
-      `${VITE_API_BASE_URL}/organizations/decline/${id}`,
-
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    return {
-      success: true,
-      data: response.data,
-      message: "",
-    };
-  } catch (error: any) {
     return handleError(error);
   }
 };

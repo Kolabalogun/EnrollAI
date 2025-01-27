@@ -63,7 +63,9 @@ export const getAllApplicationsByUserId = async (id: string) => {
 };
 
 export const getApplicationsById = async (id: string) => {
-  const token = localStorage.getItem("enrollai-user");
+  const token =
+    localStorage.getItem("enrollai-user") ||
+    localStorage.getItem("enrollai-org-user");
 
   if (!token) {
     throw new Error("Authentication token not found");

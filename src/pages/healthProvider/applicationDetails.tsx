@@ -22,10 +22,7 @@ import Step3 from "@/components/pages/applicationForm/step3";
 import Step2 from "@/components/pages/applicationForm/step2";
 
 import ConfirmationModal from "@/components/modals/confirmationModal";
-import {
-  approveProviderApplication,
-  declineProviderApplication,
-} from "@/services/org/applications";
+import { updateProviderApplicationByOrg } from "@/services/org/applications";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 
@@ -341,10 +338,10 @@ const ApplicationsDetails = () => {
     }
   };
 
-  const handleApproveApplication = async (id: string) => {
+  const handleUpdateApplication = async (id: string, status: string) => {
     setLoading(true);
     try {
-      const res = await approveProviderApplication(id);
+      const res = await updateProviderApplicationByOrg(id, status);
 
       console.log(res);
 
@@ -354,7 +351,7 @@ const ApplicationsDetails = () => {
           toast,
           "Enroll AI",
           "success",
-          "Application approved successfully"
+          `${res.data.message || "Application updated successfully"}`
         );
       } else {
         showToast(
@@ -375,42 +372,6 @@ const ApplicationsDetails = () => {
     } finally {
       setLoading(false);
       approveOnClose();
-    }
-  };
-
-  const handleDeclineApplication = async (id: string) => {
-    setLoading(true);
-    try {
-      const res = await declineProviderApplication(id);
-
-      console.log(res);
-
-      if (res.success) {
-        setForm(res?.data?.application);
-        showToast(
-          toast,
-          "Enroll AI",
-          "success",
-          "Application declined successfully"
-        );
-      } else {
-        showToast(
-          toast,
-          "Enroll AI",
-          "error",
-          `${res.message || "Failed to decline Application. Please try later"} `
-        );
-      }
-    } catch (error: any) {
-      console.log(error);
-      showToast(
-        toast,
-        "Enroll AI",
-        "error",
-        `${error.message || "Failed to approve Application. Please try later"} `
-      );
-    } finally {
-      setLoading(false);
       declineOnClose();
     }
   };
@@ -451,7 +412,7 @@ const ApplicationsDetails = () => {
         isLoading={isLoading}
         message="Are you sure you want to approve your application? "
         onConfirm={() => {
-          handleApproveApplication(form._id);
+          handleUpdateApplication(form._id, "approved");
         }}
       />
       <ConfirmationModal
@@ -461,7 +422,7 @@ const ApplicationsDetails = () => {
         isLoading={isLoading}
         message="Are you sure you want to decline your application? "
         onConfirm={() => {
-          handleDeclineApplication(form._id);
+          handleUpdateApplication(form._id, "declined");
         }}
       />
       <div className="flex flex-col gap-4">

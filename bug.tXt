@@ -1,9 +1,11 @@
-1. OTP not working
+1. 
 2.  Revoke user access for all 3
 3.  Delete Org and User Account
-4. Forget Password not working for Org
-5. Update Profile not working for Org
+4.  
+5.  
 6. Fetch Based on Pagination
+7. Notification Pagination
+8. Pagination for Details Page
 
 
  

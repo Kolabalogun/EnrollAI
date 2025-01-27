@@ -32,7 +32,10 @@ const ProvidersDetails = () => {
           <div className="flex xl:flex-row flex-col gap-4 xl:items-center justify-between">
             <div className="flex gap-5 items-center">
               <img
-                src={state?.provider?.profilePicture}
+                src={
+                  state?.provider?.profilePicture ||
+                  `https://eu.ui-avatars.com/api/?name=${state?.provider?.fullName}&size=200`
+                }
                 className="h-24 w-24 rounded-full"
                 alt="profile picture"
               />

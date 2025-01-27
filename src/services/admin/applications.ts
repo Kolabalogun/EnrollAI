@@ -4,11 +4,21 @@ import { handleError } from "../error";
 
 const { VITE_API_BASE_URL } = import.meta.env;
 
-export const getAllApplications = async () => {
+// Get (All, Imcoming, Declined & Approved) Applications from Providers Based on their Status (Admin Route)
+
+export const getAllApplicationsBasedOnStatus = async (
+  page = 1,
+  size = 10,
+  status: string
+) => {
   const token = localStorage.getItem("enrollai-user");
 
   if (!token) {
     throw new Error("Authentication token not found");
+  }
+
+  if (!status) {
+    throw new Error("Status is required");
   }
 
   try {
@@ -20,6 +30,7 @@ export const getAllApplications = async () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
+        params: { status, page, size, order_by: "desc" },
       }
     );
     return {
@@ -33,103 +44,7 @@ export const getAllApplications = async () => {
   }
 };
 
-export const getAllApplicationsBasedOnStatus = async (status: string) => {
-  console.log(status);
-
-  const token = localStorage.getItem("enrollai-user");
-
-  if (!token) {
-    throw new Error("Authentication token not found");
-  }
-
-  if (!status) {
-    throw new Error("Organization ID is required");
-  }
-
-  try {
-    const response = await axios.get(
-      `${VITE_API_BASE_URL}/admin/applications-status`,
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        params: { status },
-      }
-    );
-    return {
-      success: true,
-      data: response.data,
-      message: "",
-    };
-  } catch (error: any) {
-    console.error(error);
-    return handleError(error);
-  }
-};
-
-export const getApprovedApplications = async (id: string) => {
-  const token = localStorage.getItem("enrollai-user");
-
-  if (!token) {
-    throw new Error("Authentication token not found");
-  }
-
-  if (!id) {
-    throw new Error("Organization ID is required");
-  }
-
-  try {
-    const response = await axios.get(
-      `${VITE_API_BASE_URL}/organizations/approved-applications/${id}`,
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        params: { id },
-      }
-    );
-    return {
-      success: true,
-      data: response.data,
-      message: "",
-    };
-  } catch (error: any) {
-    console.error(error);
-    return handleError(error);
-  }
-};
-export const getDeclinedApplications = async (id: string) => {
-  const token = localStorage.getItem("enrollai-user");
-
-  if (!token) {
-    throw new Error("Authentication token not found");
-  }
-  try {
-    const response = await axios.put(
-      `${VITE_API_BASE_URL}/organizations/decline/${id}`,
-
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    return {
-      success: true,
-      data: response.data,
-      message: "",
-    };
-  } catch (error: any) {
-    return handleError(error);
-  }
-};
-
+// Get Stats of Providers Applications in Admin Dashboard
 export const getApplicationStats = async () => {
   const token = localStorage.getItem("enrollai-user");
 
@@ -158,7 +73,7 @@ export const getApplicationStats = async () => {
   }
 };
 
-export const getAllAdmins = async () => {
+export const getAllAdmins = async (page = 1, size = 10) => {
   const token = localStorage.getItem("enrollai-user");
 
   if (!token) {
@@ -174,6 +89,7 @@ export const getAllAdmins = async () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
+        params: { page, size, order_by: "desc" },
       }
     );
     return {

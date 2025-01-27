@@ -7,7 +7,7 @@ import { Calendar, Kanban, UploadCloud } from "lucide-react";
 import { useSelector } from "react-redux";
 import { useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { getOrgApplicationStats } from "@/services/org/applications";
+import { getOrganizationApplicationStats } from "@/services/org/applications";
 import showToast from "@/components/common/showtoast";
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import { RootState } from "@/redux/store";
@@ -24,7 +24,7 @@ const ReportAndAnalytics = () => {
     if (!user) return;
 
     try {
-      const res = await getOrgApplicationStats(user?.organizationName);
+      const res = await getOrganizationApplicationStats(user?.id);
       if (res.success) {
         setProviderStatData(res?.data?.stats);
       }
@@ -183,12 +183,14 @@ const ReportAndAnalytics = () => {
                 </p>
               </div>
 
-              <p className="text-[#2b3674] font-bold plus-jakarta ">
-                {(Number(providerStatData?.pending) /
-                  (Number(providerStatData?.pending) +
-                    Number(providerStatData?.approved) +
-                    Number(providerStatData?.declined))) *
-                  100 || 0}{" "}
+              <p className="text-[#2b3674] font-bold plus-jakarta">
+                {(
+                  (Number(providerStatData?.pending) /
+                    (Number(providerStatData?.pending) +
+                      Number(providerStatData?.approved) +
+                      Number(providerStatData?.declined))) *
+                  100
+                ).toFixed(2) || 0}{" "}
                 %
               </p>
             </div>
@@ -201,11 +203,13 @@ const ReportAndAnalytics = () => {
               </div>
 
               <p className="text-[#00C49F] font-bold plus-jakarta ">
-                {(Number(providerStatData?.approved) /
-                  (Number(providerStatData?.pending) +
-                    Number(providerStatData?.approved) +
-                    Number(providerStatData?.declined))) *
-                  100 || 0}{" "}
+                {(
+                  (Number(providerStatData?.approved) /
+                    (Number(providerStatData?.pending) +
+                      Number(providerStatData?.approved) +
+                      Number(providerStatData?.declined))) *
+                  100
+                ).toFixed(2) || 0}{" "}
                 %
               </p>
             </div>
@@ -218,12 +222,13 @@ const ReportAndAnalytics = () => {
               </div>
 
               <p className="text-[#FF8042] font-bold plus-jakarta ">
-                {" "}
-                {(Number(providerStatData?.declined) /
-                  (Number(providerStatData?.pending) +
-                    Number(providerStatData?.approved) +
-                    Number(providerStatData?.declined))) *
-                  100 || 0}{" "}
+                {(
+                  (Number(providerStatData?.declined) /
+                    (Number(providerStatData?.pending) +
+                      Number(providerStatData?.approved) +
+                      Number(providerStatData?.declined))) *
+                  100
+                ).toFixed(2) || 0}{" "}
                 %
               </p>
             </div>

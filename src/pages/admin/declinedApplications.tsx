@@ -18,16 +18,21 @@ const DeclinedApplications = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const fetchApplications = async () => {
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const [totalPages, setTotalPages] = useState(1);
+  const fetchApplications = async (page: number = 1, size: number = 10) => {
     if (!user) return;
     console.log(user);
     setIsLoading(true);
     try {
-      const res = await getAllApplicationsBasedOnStatus("declined");
+      const res = await getAllApplicationsBasedOnStatus(page, size, "declined");
       console.log(res);
       if (res.success) {
         setData(res?.data?.applications);
         setFilteredData(res?.data?.applications);
+        setTotalPages(res?.data?.pagination?.totalPages);
       }
     } catch (error: any) {
       console.log(error);
@@ -42,8 +47,9 @@ const DeclinedApplications = () => {
     }
   };
   useEffect(() => {
-    if (user) fetchApplications();
-  }, [user]);
+    if (user) fetchApplications(currentPage, itemsPerPage);
+  }, [user, currentPage]);
+
   const handleSearch = (value: string) => {
     const lowercasedValue = value.toLowerCase();
 
@@ -78,6 +84,9 @@ const DeclinedApplications = () => {
         data={filteredData || []}
         fetchFunction={fetchApplications}
         isLoading={isLoading}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
       />
     </ApplicationsPageLayout>
   );

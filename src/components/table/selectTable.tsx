@@ -13,7 +13,6 @@ import {
 } from "@tanstack/react-table";
 
 import { Button } from "@/components/ui/button";
-// import { Checkbox } from "@/components/ui/checkbox";
 
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 

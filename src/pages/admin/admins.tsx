@@ -21,16 +21,21 @@ const Admins = () => {
   const [isLoading, setIsLoading] = useState(false);
   console.log(filteredData);
 
-  const fetchAdmins = async () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const [totalPages, setTotalPages] = useState(1);
+
+  const fetchAdmins = async (page: number = 1, size: number = 10) => {
     if (!user) return;
     setIsLoading(true);
     try {
-      const res = await getAllAdmins();
+      const res = await getAllAdmins(page, size);
       console.log(res);
 
       if (res.success) {
         setData(res?.data?.data);
         setFilteredData(res?.data?.data);
+        setTotalPages(res?.data?.pagination?.totalPages);
       }
     } catch (error: any) {
       console.log(error);
@@ -47,9 +52,9 @@ const Admins = () => {
 
   useEffect(() => {
     if (user?.accountType === "super_admin") {
-      fetchAdmins();
+      fetchAdmins(currentPage, itemsPerPage);
     }
-  }, []);
+  }, [user, currentPage]);
 
   const handleSearch = (value: string) => {
     const lowercasedValue = value.toLowerCase();
@@ -74,6 +79,9 @@ const Admins = () => {
         fetchFunction={fetchAdmins}
         isLoading={isLoading}
         title="Admins"
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
       />
     </ApplicationsPageLayout>
   );
