@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useSelector } from "react-redux";
 import DateInputField from "../Inputs/dateInput";
 import TextInputField from "../Inputs/TextInput";
 import { ApplicationProps } from "../step1";
 import { RootState } from "@/redux/store";
+import { Eye, FileBox, Pencil } from "lucide-react";
+import { useRef } from "react";
 
 const mainLicenseRegistration = [
   {
@@ -141,6 +144,14 @@ const Licensing = ({
 }: ApplicationProps) => {
   const { user } = useSelector((state: RootState) => state.auth);
 
+  const fileInputRef = useRef<any>(null);
+
+  const handleFileClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
   return (
     <div className="border rounded-lg pt-5 px-3 xl:px-5 pb-10 space-y-5">
       <div className="space-y-5">
@@ -184,25 +195,127 @@ const Licensing = ({
                             }
                           />
                         ) : field.type === "file" ? (
-                          <div className="flex gap-2 items-center">
-                            <input
-                              type="file"
-                              name={field.name}
-                              readOnly={
-                                user?.accountType === "organization"
-                                  ? true
-                                  : false
-                              }
-                              onChange={(e) =>
-                                handleFileChange(
-                                  "step2",
-                                  "medicalLicenses",
-                                  field.name,
-                                  e
-                                )
-                              }
-                              className="border rounded-md p-2 outline-[0.5px] outline-secondary flex-1"
-                            />
+                          <div className="flex gap-2 items-center ">
+                            {form.step2.medicalLicenses[field.name] &&
+                            (form.step2.medicalLicenses[field.name] instanceof
+                              File ||
+                              typeof form.step2.medicalLicenses[field.name] ===
+                                "string") ? (
+                              <>
+                                <div className="flex gap-2 items-center justify-between w-full border rounded py-2 px-2">
+                                  <div className="">
+                                    <FileBox
+                                      className="text-gray-600  "
+                                      size={18}
+                                    />
+                                  </div>
+                                  <p className="flex flex-1 text-xs font-semibold">
+                                    {form.step2.medicalLicenses[field.name]
+                                      ?.name || "File Uploaded"}
+                                  </p>
+
+                                  <div className="flex items-center gap-1">
+                                    {user?.accountType !== "provider" &&
+                                      form.step2.medicalLicenses[field.name] &&
+                                      typeof form.step2.medicalLicenses[
+                                        field.name
+                                      ] === "string" && (
+                                        <Eye
+                                          className="text-secondary cursor-pointer "
+                                          size={16}
+                                          onClick={() => {
+                                            if (
+                                              typeof form.step2.medicalLicenses[
+                                                field.name
+                                              ] === "string"
+                                            ) {
+                                              const fileURL =
+                                                form.step2.medicalLicenses[
+                                                  field.name
+                                                ];
+                                              window.open(fileURL, "_blank");
+                                            }
+                                          }}
+                                        />
+                                      )}
+
+                                    {user?.accountType === "provider" && (
+                                      <Pencil
+                                        className="text-secondary cursor-pointer "
+                                        size={16}
+                                        onClick={handleFileClick}
+                                      />
+                                    )}
+
+                                    {user?.accountType === "provider" &&
+                                      form.step2.medicalLicenses[field.name] &&
+                                      typeof form.step2.medicalLicenses[
+                                        field.name
+                                      ] === "string" &&
+                                      form.step2.medicalLicenses[field.name] &&
+                                      typeof form.step2.medicalLicenses[
+                                        field.name
+                                      ] === "string" && (
+                                        <Eye
+                                          className="text-secondary cursor-pointer "
+                                          size={16}
+                                          onClick={() => {
+                                            if (
+                                              typeof form.step2.medicalLicenses[
+                                                field.name
+                                              ] === "string"
+                                            ) {
+                                              const fileURL =
+                                                form.step2.medicalLicenses[
+                                                  field.name
+                                                ];
+                                              window.open(fileURL, "_blank");
+                                            }
+                                          }}
+                                        />
+                                      )}
+                                  </div>
+                                </div>
+
+                                {/* Hidden file input for Pencil Icon */}
+                                <input
+                                  type="file"
+                                  ref={fileInputRef}
+                                  name={field.name}
+                                  style={{ display: "none" }}
+                                  readOnly={
+                                    user?.accountType === "organization"
+                                  }
+                                  onChange={(e) =>
+                                    handleFileChange(
+                                      "step2",
+                                      "medicalLicenses",
+                                      field.name,
+                                      e
+                                    )
+                                  }
+                                />
+                              </>
+                            ) : (
+                              <input
+                                type="file"
+                                name={field.name}
+                                readOnly={
+                                  user?.accountType === "organization"
+                                    ? true
+                                    : false
+                                }
+                                onChange={(e) =>
+                                  handleFileChange(
+                                    "step2",
+                                    "medicalLicenses",
+                                    field.name,
+                                    e
+                                  )
+                                }
+                                className="border rounded-md p-2 outline-[0.5px] outline-secondary flex-1"
+                              />
+                            )}
                           </div>
                         ) : (
                           <TextInputField
@@ -245,10 +358,10 @@ const Licensing = ({
               {section.fields.map((field, fieldIndex) => (
                 <div
                   key={fieldIndex}
-                  className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium"
+                  className="raleway text-xs flex   flex-col w-full flex-1 gap-2   font-medium"
                 >
                   {field.type === "file" && (
-                    <p className="text-xs   w-24 font-medium">{field.label}:</p>
+                    <p className="text-xs      font-medium ">{field.label}:</p>
                   )}
                   {field.type === "date" ? (
                     <DateInputField
@@ -266,23 +379,120 @@ const Licensing = ({
                       }
                     />
                   ) : field.type === "file" ? (
-                    <div className="flex gap-2 items-center w-full">
-                      <input
-                        type="file"
-                        name={field.name}
-                        readOnly={
-                          user?.accountType !== "provider" ? true : false
-                        }
-                        onChange={(e) =>
-                          handleFileChange(
-                            "step2",
-                            "otherMedLicenses",
-                            field.name,
-                            e
-                          )
-                        }
-                        className="border rounded-md p-2 outline-[0.5px] outline-secondary flex-1"
-                      />
+                    <div className="flex gap-2 items-center ">
+                      {form.step2.otherMedLicenses[field.name] &&
+                      (form.step2.otherMedLicenses[field.name] instanceof
+                        File ||
+                        typeof form.step2.otherMedLicenses[field.name] ===
+                          "string") ? (
+                        <>
+                          <div className="flex gap-2 items-center justify-between w-full border rounded py-2 px-2">
+                            <div className="">
+                              <FileBox className="text-gray-600  " size={18} />
+                            </div>
+                            <p className="flex flex-1 text-xs font-semibold">
+                              {form.step2.otherMedLicenses[field.name]?.name ||
+                                "File Uploaded"}
+                            </p>
+
+                            <div className="flex items-center gap-1">
+                              {user?.accountType !== "provider" &&
+                                form.step2.otherMedLicenses[field.name] &&
+                                typeof form.step2.otherMedLicenses[
+                                  field.name
+                                ] === "string" && (
+                                  <Eye
+                                    className="text-secondary cursor-pointer "
+                                    size={16}
+                                    onClick={() => {
+                                      if (
+                                        typeof form.step2.otherMedLicenses[
+                                          field.name
+                                        ] === "string"
+                                      ) {
+                                        const fileURL =
+                                          form.step2.otherMedLicenses[
+                                            field.name
+                                          ];
+                                        window.open(fileURL, "_blank");
+                                      }
+                                    }}
+                                  />
+                                )}
+
+                              {user?.accountType === "provider" && (
+                                <Pencil
+                                  className="text-secondary cursor-pointer "
+                                  size={16}
+                                  onClick={handleFileClick}
+                                />
+                              )}
+
+                              {user?.accountType === "provider" &&
+                                form.step2.otherMedLicenses[field.name] &&
+                                typeof form.step2.otherMedLicenses[
+                                  field.name
+                                ] === "string" &&
+                                form.step2.otherMedLicenses[field.name] &&
+                                typeof form.step2.otherMedLicenses[
+                                  field.name
+                                ] === "string" && (
+                                  <Eye
+                                    className="text-secondary cursor-pointer "
+                                    size={16}
+                                    onClick={() => {
+                                      if (
+                                        typeof form.step2.otherMedLicenses[
+                                          field.name
+                                        ] === "string"
+                                      ) {
+                                        const fileURL =
+                                          form.step2.otherMedLicenses[
+                                            field.name
+                                          ];
+                                        window.open(fileURL, "_blank");
+                                      }
+                                    }}
+                                  />
+                                )}
+                            </div>
+                          </div>
+
+                          {/* Hidden file input for Pencil Icon */}
+                          <input
+                            type="file"
+                            ref={fileInputRef}
+                            name={field.name}
+                            style={{ display: "none" }}
+                            readOnly={user?.accountType === "organization"}
+                            onChange={(e) =>
+                              handleFileChange(
+                                "step2",
+                                "otherMedLicenses",
+                                field.name,
+                                e
+                              )
+                            }
+                          />
+                        </>
+                      ) : (
+                        <input
+                          type="file"
+                          name={field.name}
+                          readOnly={
+                            user?.accountType === "organization" ? true : false
+                          }
+                          onChange={(e) =>
+                            handleFileChange(
+                              "step2",
+                              "otherMedLicenses",
+                              field.name,
+                              e
+                            )
+                          }
+                          className="border rounded-md p-2 outline-[0.5px] outline-secondary flex-1"
+                        />
+                      )}
                     </div>
                   ) : (
                     <TextInputField

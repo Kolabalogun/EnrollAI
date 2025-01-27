@@ -40,8 +40,6 @@ const PersonalInformations = ({
     { label: "CAHQ Password", name: "cahqPassword" },
   ];
 
-  console.log(form, "formformform");
-
   const { user } = useSelector((state: RootState) => state.auth);
 
   return (

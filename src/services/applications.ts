@@ -155,9 +155,7 @@ export const getApplicationStatBasedOnUserId = async (id: string) => {
   }
 };
 
-export const createProviderApplication = async (
-  formData: ApplicationFormInterface
-) => {
+export const createProviderApplication = async (formData: FormData) => {
   const token = localStorage.getItem("enrollai-user");
 
   if (!token) {
@@ -170,7 +168,7 @@ export const createProviderApplication = async (
       {
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
         },
       }
@@ -188,14 +186,13 @@ export const createProviderApplication = async (
   }
 };
 
-export const updateProviderApplication = async (
-  formData: ApplicationFormInterface
-) => {
+export const updateProviderApplication = async (formData: any) => {
   const token = localStorage.getItem("enrollai-user");
 
   if (!token) {
     throw new Error("Authentication token not found");
   }
+
   try {
     const response = await axios.put(
       `${VITE_API_BASE_URL}/application/${formData._id}`,
@@ -203,11 +200,12 @@ export const updateProviderApplication = async (
       {
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data", // Use multipart/form-data for file uploads
           Authorization: `Bearer ${token}`,
         },
       }
     );
+
     return {
       success: true,
       data: response.data,

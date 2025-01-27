@@ -1,20 +1,26 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { SubmitButton } from "@/components/common";
-
 import ApplicationsModal from "@/components/modals/applications";
 import CreateApplicationModal from "@/components/modals/createApplicationModal";
-import ApplicationLists from "@/components/pages/applications";
 import OrganizationApplicationLists from "@/components/pages/applications/organization";
 import Notifications from "@/components/pages/dashboard/notifications";
 import OrganizationStatBar from "@/components/pages/dashboard/organization/statbar";
 import StatBar from "@/components/pages/dashboard/statbar";
 import { Progress } from "@/components/ui/progress";
 import { RootState } from "@/redux/store";
+import { getAllApplicationsBasedOnStatus } from "@/services/admin/applications";
+import { getUsersApplicationsByStatus } from "@/services/applications";
+import { useToast } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { SETTINGS_ROUTE } from "@/router/routes";
 import { useDisclosure } from "@chakra-ui/react";
 import { Pen, PlusIcon } from "lucide-react";
 
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import showToast from "@/components/common/showtoast";
+import { getApplicationsFromProvidersBaseonStatus } from "@/services/org/applications";
 
 const Dashboard = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -27,6 +33,60 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state: RootState) => state.auth);
   console.log(user);
+
+  const [data, setData] = useState([]);
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+  const [totalPages, setTotalPages] = useState(1);
+  const toast = useToast();
+
+  const fetchApplications = async (page: number = 1, size: number = 5) => {
+    if (!user) return;
+    setIsLoading(true);
+    try {
+      let res;
+
+      if (user?.accountType === "provider") {
+        res = await getUsersApplicationsByStatus(
+          user?.userId,
+          "pending",
+          page,
+          size
+        );
+      } else if (user?.accountType === "organization") {
+        res = await getApplicationsFromProvidersBaseonStatus(
+          user?.id,
+          "pending",
+          page,
+          size
+        );
+      } else {
+        res = await getAllApplicationsBasedOnStatus(page, size, "pending");
+      }
+
+      if (res.success) {
+        setData(res?.data?.applications);
+
+        setTotalPages(res?.data?.pagination?.totalPages);
+      }
+    } catch (error: any) {
+      showToast(
+        toast,
+        "Enroll AI",
+        "error",
+        `${error.message || "Failed to fetch Application"}`
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (user) fetchApplications(currentPage, itemsPerPage);
+  }, [user, currentPage]);
 
   return (
     <section className="flex space-y-6 mb-20 flex-col">
@@ -162,13 +222,14 @@ const Dashboard = () => {
               : "Pending Applications"}
           </p>
 
-          {user?.accountType !== "provider" ? (
-            <OrganizationApplicationLists
-              fetchFunction={() => console.log("")}
-            />
-          ) : (
-            <ApplicationLists />
-          )}
+          <OrganizationApplicationLists
+            data={data || []}
+            fetchFunction={fetchApplications}
+            isLoading={isLoading}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalPages={totalPages}
+          />
         </div>
 
         <div className="flex-1">

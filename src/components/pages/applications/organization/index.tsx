@@ -35,9 +35,9 @@ const OrganizationApplicationLists = ({
   fetchFunction: () => void;
   isLoading?: boolean;
   title?: string;
-  currentPage?: number;
-  setCurrentPage?: React.Dispatch<React.SetStateAction<number>>;
-  totalPages?: number;
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  totalPages: number;
 }) => {
   const [activeMenu, setActiveMenu] = useState<string | number | null>(null);
   const navigate = useNavigate();

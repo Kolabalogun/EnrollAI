@@ -110,6 +110,9 @@ const ProvidersDetails = () => {
             title="Approved Applications"
             data={state?.applications || []}
             fetchFunction={() => console.log("")}
+            currentPage={1}
+            setCurrentPage={() => console.log("")}
+            totalPages={1}
           />
         </section>
       </div>

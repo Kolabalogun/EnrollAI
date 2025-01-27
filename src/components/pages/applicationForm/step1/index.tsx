@@ -23,8 +23,6 @@ export type ApplicationProps = {
 };
 
 const Step1 = ({ form, errors, handleChange, id }: ApplicationProps) => {
-  console.log(errors, "errors errors");
-
   return (
     <div
       className={`bg-white rounded-lg   ${!id && "xl:p-5 px-3 py-5"} space-y-4`}

@@ -14,6 +14,10 @@ const Billing = () => {
   //   const { billingsInfos } = useSelector((state: any) => state.billingInfo);
   const [activeMenu, setActiveMenu] = useState<string | number | null>(null);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  // const itemsPerPage = 10;
+  const [totalPages] = useState(1);
+
   const handleViewDetails = (row: BillingTransactionsType) => {
     console.log(row);
   };
@@ -108,6 +112,9 @@ const Billing = () => {
               footerTxt={""}
               columns={columns}
               data={BillingTransactions || []}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              totalPages={totalPages}
             />
           </div>
         </div>

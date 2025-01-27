@@ -137,7 +137,7 @@ const ApplicationForm = () => {
     };
     dispatch(updateForm(data));
   };
-
+  console.log(form);
   const handleFileChange = (
     step: string,
     parentObject: string,
@@ -147,9 +147,22 @@ const ApplicationForm = () => {
     const file = event.target.files?.[0];
 
     if (file) {
+      const maxSize = 3 * 1024 * 1024; // 3 MB in bytes
+      if (file.size > maxSize) {
+        showToast(
+          toast,
+          "Enroll AI",
+          "error",
+          "File size exceeds the limit of 3 MB"
+        );
+        return;
+      }
+
       const reader = new FileReader();
       reader.onload = () => {
         const base64 = reader.result;
+
+        console.log(base64);
 
         const data = {
           ...form,
@@ -157,7 +170,7 @@ const ApplicationForm = () => {
             ...form[step],
             [parentObject]: {
               ...form[step][parentObject],
-              [fieldName]: base64,
+              [fieldName]: file,
             },
           },
         };
@@ -194,6 +207,7 @@ const ApplicationForm = () => {
   const handleCheckBoxChange = (fieldName: string, value: any) => {
     dispatch(updateForm({ [fieldName]: value }));
   };
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
@@ -202,11 +216,8 @@ const ApplicationForm = () => {
 
       if (pageNo === 5) {
         if (isOpen) {
-          // dispatch(resetForm());
-
           navigate(HEALTHCARE_APPLICATIONS);
         } else {
-          // Filter out problematic fields
           const {
             updatedAt,
             _id,
@@ -245,26 +256,14 @@ const ApplicationForm = () => {
             ...data
           } = form;
 
-          // Log for debugging
           console.warn(
             updatedAt,
             status,
             _id,
             __v,
-
             organizationApplication,
             createdAt,
-            userId,
-            medicaidCertificate,
-            ECFMGFile,
-            controlledSubstanceExpirationFile,
-            deaExpirationFile,
-            stateMedicalLicensefile1,
-            stateMedicalLicensefile2,
-            stateMedicalLicensefile3,
-            certificationfile1,
-            certificationfile2,
-            certificationfile3
+            userId
           );
 
           if (!termsAndConditionsTwo || !termsAndConditionsOne) {
@@ -276,28 +275,76 @@ const ApplicationForm = () => {
             );
           }
 
-          // Construct the new form data without the problematic fields
-          const cleanedFormData = {
-            ...data,
-            step2: {
+          // Create a new FormData instance
+          const formData = new FormData();
+
+          // Append non-file fields
+          formData.append("applicationType", data.applicationType);
+          formData.append(
+            "organizationApplicationId",
+            data.organizationApplicationId
+          );
+          formData.append("applicationTitle", data.applicationTitle);
+          formData.append("organizationName", data.organizationName);
+          formData.append("organizationId", data.organizationId);
+          formData.append("step1", JSON.stringify(data.step1));
+          formData.append(
+            "step2",
+            JSON.stringify({
               ...restStep2,
               medicalLicenses: medicalLicensesRest,
               otherMedLicenses: otherMedLicensesRest,
-            },
-            step3: {
+            })
+          );
+          formData.append(
+            "step3",
+            JSON.stringify({
               ...step3Rest,
               boards: boardRest,
-            },
-          };
+            })
+          );
+
+          // Append files
+          if (medicaidCertificate)
+            formData.append("medicaidCertificate", medicaidCertificate);
+          if (ECFMGFile) formData.append("ECFMGFile", ECFMGFile);
+          if (controlledSubstanceExpirationFile)
+            formData.append(
+              "controlledSubstanceExpirationFile",
+              controlledSubstanceExpirationFile
+            );
+          if (deaExpirationFile)
+            formData.append("deaExpirationFile", deaExpirationFile);
+          if (stateMedicalLicensefile1)
+            formData.append(
+              "stateMedicalLicensefile1",
+              stateMedicalLicensefile1
+            );
+          if (stateMedicalLicensefile2)
+            formData.append(
+              "stateMedicalLicensefile2",
+              stateMedicalLicensefile2
+            );
+          if (stateMedicalLicensefile3)
+            formData.append(
+              "stateMedicalLicensefile3",
+              stateMedicalLicensefile3
+            );
+          if (certificationfile1)
+            formData.append("certificationfile1", certificationfile1);
+          if (certificationfile2)
+            formData.append("certificationfile2", certificationfile2);
+          if (certificationfile3)
+            formData.append("certificationfile3", certificationfile3);
+
+          // Debugging: Log the FormData entries
+          for (const [key, value] of formData.entries()) {
+            console.log(key, value);
+          }
 
           try {
-            console.log(
-              cleanedFormData,
-              "cleanedFormDatacleanedFormDatacleanedFormData"
-            );
-
-            const res = await createProviderApplication(cleanedFormData as any);
-            console.log(res);
+            const res = await createProviderApplication(formData);
+            console.log(res, "Response from createProviderApplication");
 
             if (res.success) {
               onOpen();
@@ -316,8 +363,7 @@ const ApplicationForm = () => {
               );
             }
           } catch (error: any) {
-            console.log(error);
-            // onOpen();
+            console.log(error, "Error in createProviderApplication");
             showToast(
               toast,
               "Enroll AI",
@@ -327,6 +373,18 @@ const ApplicationForm = () => {
           }
         }
       } else {
+        if (
+          new Date(form.step1.education?.internshipFromDate) >
+          new Date(form.step1.education?.internshipToDate)
+        ) {
+          return showToast(
+            toast,
+            "Enroll AI",
+            "error",
+            `Internship Start Date cannot be after End Date`
+          );
+        }
+
         const validationErrors = validateForm(form as any);
         if (Object.keys(validationErrors).length > 0) {
           showToast(
@@ -335,6 +393,7 @@ const ApplicationForm = () => {
             "error",
             `Please fill all required fields.`
           );
+
           setErrors(validationErrors);
         } else {
           setErrors({});
@@ -342,7 +401,7 @@ const ApplicationForm = () => {
         }
       }
     } catch (error: any) {
-      console.log(error);
+      console.log(error, "Error in handleSubmit");
       showToast(
         toast,
         "Enroll AI",
@@ -353,25 +412,29 @@ const ApplicationForm = () => {
       setLoading(false);
     }
   };
-
   return (
     <div className="space-y-5 remove-scrollbar">
       <ApplicationSuccessModal
         onClose={() => {
           onClose();
-          // dispatch(resetForm());
+          dispatch(resetForm());
 
           navigate(HEALTHCARE_APPLICATIONS);
         }}
         isOpen={isOpen}
         handleClick={() => {
-          // dispatch(resetForm());
+          dispatch(resetForm());
 
           navigate(HEALTHCARE_APPLICATIONS);
         }}
       />
       <div className="flex items-center gap-1">
-        <p className="text-[11px] font-semibold text-fade">Dashboard</p>
+        <p
+          onClick={() => dispatch(resetForm())}
+          className="text-[11px] font-semibold text-fade"
+        >
+          Dashboard
+        </p>
         <ChevronRight className="text-[#667085]" size={15} />
         <p className="text-[11px] font-semibold text-[#667085]">Application</p>
       </div>

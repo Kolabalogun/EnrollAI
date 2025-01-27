@@ -279,7 +279,7 @@ export type Provider = {
   professionalTitle: string;
   email: string;
   isVerified: boolean;
-  groups: any[];
+ 
   __v: number;
   otp: string;
   otpCreatedAt: string;

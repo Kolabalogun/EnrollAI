@@ -474,8 +474,13 @@ const Review2 = ({ form, handleCheckBoxChange }: ApplicationProps) => {
               <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                 <p className="font-semibold text-xs text-black">DEA File:</p>
                 <p
-                  onClick={() => window.open(deaExpirationFile, "_blank")}
-                  className="text-xs underline text-secondary cursor-pointer  font-medium   "
+                  onClick={() => {
+                    if (deaExpirationFile instanceof File) {
+                      const fileURL = URL.createObjectURL(deaExpirationFile);
+                      window.open(fileURL, "_blank");
+                    }
+                  }}
+                  className="text-xs underline text-secondary cursor-pointer font-medium"
                 >
                   Preview
                 </p>
@@ -508,15 +513,20 @@ const Review2 = ({ form, handleCheckBoxChange }: ApplicationProps) => {
                 </p>
               </div>
               <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
-                <p
-                  onClick={() =>
-                    window.open(controlledSubstanceExpirationFile, "_blank")
-                  }
-                  className="font-semibold text-xs text-black"
-                >
-                  DEA File:
+                <p className="font-semibold text-xs text-black">
+                  Controlled Substance Expiration File:
                 </p>
-                <p className="text-xs underline text-secondary cursor-pointer  font-medium   ">
+                <p
+                  onClick={() => {
+                    if (controlledSubstanceExpirationFile instanceof File) {
+                      const fileURL = URL.createObjectURL(
+                        controlledSubstanceExpirationFile
+                      );
+                      window.open(fileURL, "_blank");
+                    }
+                  }}
+                  className="text-xs underline text-secondary cursor-pointer  font-medium   "
+                >
                   Preview
                 </p>
               </div>
@@ -553,7 +563,12 @@ const Review2 = ({ form, handleCheckBoxChange }: ApplicationProps) => {
               <div className="flex xl:space-x-2 space-y-1 flex-col xl:flex-row xl:items-center">
                 <p className="font-semibold text-xs text-black">ECFMG File:</p>
                 <p
-                  onClick={() => window.open(ECFMGFile, "_blank")}
+                  onClick={() => {
+                    if (ECFMGFile instanceof File) {
+                      const fileURL = URL.createObjectURL(ECFMGFile);
+                      window.open(fileURL, "_blank");
+                    }
+                  }}
                   className="text-xs underline text-secondary cursor-pointer  font-medium   "
                 >
                   Preview
@@ -581,7 +596,12 @@ const Review2 = ({ form, handleCheckBoxChange }: ApplicationProps) => {
                   Medicaid Certificate:
                 </p>
                 <p
-                  onClick={() => window.open(medicaidCertificate, "_blank")}
+                  onClick={() => {
+                    if (medicaidCertificate instanceof File) {
+                      const fileURL = URL.createObjectURL(medicaidCertificate);
+                      window.open(fileURL, "_blank");
+                    }
+                  }}
                   className="text-xs underline text-secondary cursor-pointer  font-medium   "
                 >
                   Preview
@@ -630,9 +650,14 @@ const Review2 = ({ form, handleCheckBoxChange }: ApplicationProps) => {
                   Certificate File:
                 </p>
                 <p
-                  onClick={() =>
-                    window.open(stateMedicalLicensefile1, "_blank")
-                  }
+                  onClick={() => {
+                    if (stateMedicalLicensefile1 instanceof File) {
+                      const fileURL = URL.createObjectURL(
+                        stateMedicalLicensefile1
+                      );
+                      window.open(fileURL, "_blank");
+                    }
+                  }}
                   className="text-xs underline text-secondary cursor-pointer  font-medium   "
                 >
                   Preview
@@ -678,9 +703,14 @@ const Review2 = ({ form, handleCheckBoxChange }: ApplicationProps) => {
                   Certificate File:
                 </p>
                 <p
-                  onClick={() =>
-                    window.open(stateMedicalLicensefile2, "_blank")
-                  }
+                  onClick={() => {
+                    if (stateMedicalLicensefile2 instanceof File) {
+                      const fileURL = URL.createObjectURL(
+                        stateMedicalLicensefile2
+                      );
+                      window.open(fileURL, "_blank");
+                    }
+                  }}
                   className="text-xs underline text-secondary cursor-pointer  font-medium   "
                 >
                   Preview
@@ -726,9 +756,14 @@ const Review2 = ({ form, handleCheckBoxChange }: ApplicationProps) => {
                   Certificate File:
                 </p>
                 <p
-                  onClick={() =>
-                    window.open(stateMedicalLicensefile3, "_blank")
-                  }
+                  onClick={() => {
+                    if (stateMedicalLicensefile3 instanceof File) {
+                      const fileURL = URL.createObjectURL(
+                        stateMedicalLicensefile3
+                      );
+                      window.open(fileURL, "_blank");
+                    }
+                  }}
                   className="text-xs underline text-secondary cursor-pointer  font-medium   "
                 >
                   Preview
@@ -1060,7 +1095,12 @@ const Review2 = ({ form, handleCheckBoxChange }: ApplicationProps) => {
                   Certification File:
                 </p>
                 <p
-                  onClick={() => window.open(certificationfile1, "_blank")}
+                  onClick={() => {
+                    if (certificationfile1 instanceof File) {
+                      const fileURL = URL.createObjectURL(certificationfile1);
+                      window.open(fileURL, "_blank");
+                    }
+                  }}
                   className="text-xs underline text-secondary cursor-pointer  font-medium   "
                 >
                   Preview
@@ -1115,7 +1155,12 @@ const Review2 = ({ form, handleCheckBoxChange }: ApplicationProps) => {
                   Certification File:
                 </p>
                 <p
-                  onClick={() => window.open(certificationfile2, "_blank")}
+                  onClick={() => {
+                    if (certificationfile2 instanceof File) {
+                      const fileURL = URL.createObjectURL(certificationfile2);
+                      window.open(fileURL, "_blank");
+                    }
+                  }}
                   className="text-xs underline text-secondary cursor-pointer  font-medium   "
                 >
                   Preview
@@ -1170,7 +1215,12 @@ const Review2 = ({ form, handleCheckBoxChange }: ApplicationProps) => {
                   Certification File:
                 </p>
                 <p
-                  onClick={() => window.open(certificationfile3, "_blank")}
+                  onClick={() => {
+                    if (certificationfile3 instanceof File) {
+                      const fileURL = URL.createObjectURL(certificationfile3);
+                      window.open(fileURL, "_blank");
+                    }
+                  }}
                   className="text-xs underline text-secondary cursor-pointer  font-medium   "
                 >
                   Preview
