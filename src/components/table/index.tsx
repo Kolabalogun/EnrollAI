@@ -26,9 +26,9 @@ interface TableComponentProps<T> {
   footerOnSubmit?: () => void;
   emptyMessage?: string;
   rowsPerPage?: number;
-  currentPage?: number;
-  setCurrentPage?: React.Dispatch<React.SetStateAction<number>>;
-  totalPages?: number;
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  totalPages: number;
 }
 
 export function TableComponent<T>({

@@ -7,6 +7,7 @@ import showToast from "@/components/common/showtoast";
 import { changePassword } from "@/services/auth";
 import { changePasswordOrg } from "@/services/org/auth";
 import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 type Props = {
   dialogOpen: boolean;
@@ -16,7 +17,7 @@ type Props = {
 const PasswordModal = ({ dialogOpen, setDialogOpen }: Props) => {
   const toast = useToast();
   const [currentPassword, setCurrentPassword] = useState("");
-  const { user } = useSelector((state: any) => state.auth);
+  const { user } = useSelector((state: RootState) => state.auth);
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);

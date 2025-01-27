@@ -143,7 +143,7 @@ export const forgotOrganizationPasswordApi = async (formData: any) => {
 
 export const updateProfileOrg = async (formData: any) => {
   // Get Token
-  const token = localStorage.getItem("enrollai-user");
+  const token = localStorage.getItem("enrollai-org-user");
   if (!token) {
     throw new Error("Authentication token not found");
   }
@@ -170,8 +170,7 @@ export const updateProfileOrg = async (formData: any) => {
 };
 
 export const changePasswordOrg = async (formData: any) => {
-  // Get Token
-  const token = localStorage.getItem("enrollai-user");
+  const token = localStorage.getItem("enrollai-org-user");
   if (!token) {
     throw new Error("Authentication token not found");
   }
@@ -198,7 +197,7 @@ export const changePasswordOrg = async (formData: any) => {
 };
 
 export const deleteOrgAccount = async () => {
-  const token = localStorage.getItem("enrollai-user");
+  const token = localStorage.getItem("enrollai-org-user");
   if (!token) {
     throw new Error("Authentication token not found");
   }

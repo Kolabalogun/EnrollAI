@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { SubmitButton } from "@/components/common";
 import showToast from "@/components/common/showtoast";
 import OrganizationApplicationLists from "@/components/pages/applications/organization";
 import { adminHeader } from "@/constant/data/headers";
@@ -12,10 +13,12 @@ import { getAllAdmins } from "@/services/admin/applications";
 import { useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Admins = () => {
   const { user } = useSelector((state: RootState) => state.auth);
   const toast = useToast();
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -74,6 +77,14 @@ const Admins = () => {
       filteredData={filteredData || []}
       title="Admins"
     >
+      <div className=" flex justify-end w-full mb-5">
+        <SubmitButton
+          handleSubmit={() => navigate("/dashboard/admin/add")}
+          className="w-auto py-3 rounded-md"
+        >
+          Add Admin
+        </SubmitButton>
+      </div>
       <OrganizationApplicationLists
         data={filteredData || []}
         fetchFunction={fetchAdmins}

@@ -5,24 +5,32 @@ import { handleError } from "../error";
 const { VITE_API_BASE_URL } = import.meta.env;
 
 export const adminRegister = async (formData: any) => {
+  const token = localStorage.getItem("enrollai-user");
+  if (!token) {
+    throw new Error("Authentication token not found");
+  }
   try {
     const response = await axios.post(
-      `${VITE_API_BASE_URL}/organizations/register`,
+      `${VITE_API_BASE_URL}/admin/create`,
       formData,
       {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       }
     );
     return {
       success: true,
       data: response.data,
-      message: "You have been registered successfully.",
+      message: "You have successfully registered a new account.",
     };
   } catch (error: any) {
-    return handleError(error);
+    return {
+      success: false,
+      message: error.response?.data?.message || "An error occurred.",
+    };
   }
 };
 

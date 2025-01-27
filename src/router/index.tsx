@@ -54,6 +54,7 @@ import AdminProviders from "@/pages/admin/providers";
 import DeclinedApplications from "@/pages/admin/declinedApplications";
 import Admins from "@/pages/admin/admins";
 import AdminDetails from "@/pages/admin/adminDetails";
+import AddAdmin from "@/pages/admin/addAdmin";
 
 // Lazy-loading components
 const Home = lazy(() => import("../pages/home"));
@@ -323,6 +324,14 @@ const router = createBrowserRouter([
         element: (
           <RoleProtected allowedRoles={["super_admin"]}>
             <Admins />
+          </RoleProtected>
+        ),
+      },
+      {
+        path: "/dashboard/admin/add",
+        element: (
+          <RoleProtected allowedRoles={["super_admin"]}>
+            <AddAdmin />
           </RoleProtected>
         ),
       },
