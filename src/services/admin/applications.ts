@@ -102,7 +102,7 @@ export const getAllAdmins = async (page = 1, size = 10) => {
   }
 };
 
-export const getAllOrganizations = async () => {
+export const getAllOrganizations = async (page = 1, size = 10) => {
   const token = localStorage.getItem("enrollai-user");
 
   if (!token) {
@@ -118,6 +118,7 @@ export const getAllOrganizations = async () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
+        params: { page, size, order_by: "desc" },
       }
     );
     return {
@@ -130,7 +131,7 @@ export const getAllOrganizations = async () => {
   }
 };
 
-export const getAllProviders = async () => {
+export const getAllProviders = async (page = 1, size = 10) => {
   const token = localStorage.getItem("enrollai-user");
 
   if (!token) {
@@ -144,6 +145,7 @@ export const getAllProviders = async () => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      params: { page, size, order_by: "desc" },
     });
     return {
       success: true,

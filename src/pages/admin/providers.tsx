@@ -20,15 +20,20 @@ const AdminProviders = () => {
   const [isLoading, setIsLoading] = useState(false);
   console.log(filteredData);
 
-  const fetchProviders = async () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const [totalPages, setTotalPages] = useState(1);
+
+  const fetchProviders = async (page: number = 1, size: number = 10) => {
     if (!user) return;
     setIsLoading(true);
     try {
-      const res = await getAllProviders();
+      const res = await getAllProviders(page, size);
 
       if (res.success) {
         setData(res?.data?.data);
         setFilteredData(res?.data?.data);
+        setTotalPages(res?.data?.pagination?.totalPages);
       }
     } catch (error: any) {
       console.log(error);
@@ -45,9 +50,9 @@ const AdminProviders = () => {
 
   useEffect(() => {
     if (user?.accountType === "super_admin") {
-      fetchProviders();
+      fetchProviders(currentPage, itemsPerPage);
     }
-  }, []);
+  }, [user, currentPage]);
 
   const handleSearch = (value: string) => {
     const lowercasedValue = value.toLowerCase();
@@ -72,6 +77,9 @@ const AdminProviders = () => {
         fetchFunction={fetchProviders}
         isLoading={isLoading}
         title="All Providers"
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
       />
     </ApplicationsPageLayout>
   );
