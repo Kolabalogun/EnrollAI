@@ -134,6 +134,7 @@ const ApplicationsDetails = () => {
     };
     setForm(data);
   };
+  console.log(form, "formDataformDataformDataformData");
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -143,10 +144,24 @@ const ApplicationsDetails = () => {
 
       if (pageNo === 3) {
         if (isOpen) {
+          if (
+            new Date(form.step1.education?.internshipFromDate) >
+            new Date(form.step1.education?.internshipToDate)
+          ) {
+            return showToast(
+              toast,
+              "Enroll AI",
+              "error",
+              `Internship Start Date cannot be after End Date`
+            );
+          }
           // Filter out problematic fields
           const {
+            updatedAt,
+            _id,
+            __v,
             status,
-            organizationApplication,
+
             createdAt,
             userId,
             termsAndConditionsOne,
@@ -179,55 +194,112 @@ const ApplicationsDetails = () => {
             ...data
           } = form;
 
-          // Log for debugging
-          console.log(
+          console.warn(
+            updatedAt,
             status,
-            termsAndConditionsOne,
-            termsAndConditionsTwo,
-            organizationApplication,
+            _id,
+            __v,
+
             createdAt,
             userId,
-            medicaidCertificate,
-            ECFMGFile,
-            controlledSubstanceExpirationFile,
-            deaExpirationFile,
-            stateMedicalLicensefile1,
-            stateMedicalLicensefile2,
-            stateMedicalLicensefile3,
-            certificationfile1,
-            certificationfile2,
-            certificationfile3
+            termsAndConditionsOne,
+            termsAndConditionsTwo
           );
 
-          // Construct the new form data without the problematic fields
-          const cleanedFormData = {
-            ...data,
-            step2: {
+          // Create a new FormData instance
+          const formData = new FormData();
+
+          // Append non-file fields
+          formData.append("applicationType", data.applicationType);
+          formData.append(
+            "organizationApplicationId",
+            data.organizationApplication
+          );
+          formData.append("applicationTitle", data.applicationTitle);
+          formData.append("organizationName", data.organizationName);
+          formData.append("organizationId", data.organizationId);
+          formData.append("step1", JSON.stringify(data.step1));
+          formData.append(
+            "step2",
+            JSON.stringify({
               ...restStep2,
               medicalLicenses: medicalLicensesRest,
               otherMedLicenses: otherMedLicensesRest,
-            },
-            step3: {
+            })
+          );
+          formData.append(
+            "step3",
+            JSON.stringify({
               ...step3Rest,
               boards: boardRest,
-            },
-          };
+            })
+          );
+
+          // Append files
+          if (medicaidCertificate)
+            formData.append("medicaidCertificate", medicaidCertificate);
+          if (ECFMGFile) formData.append("ECFMGFile", ECFMGFile);
+          if (controlledSubstanceExpirationFile)
+            formData.append(
+              "controlledSubstanceExpirationFile",
+              controlledSubstanceExpirationFile
+            );
+          if (deaExpirationFile)
+            formData.append("deaExpirationFile", deaExpirationFile);
+          if (stateMedicalLicensefile1)
+            formData.append(
+              "stateMedicalLicensefile1",
+              stateMedicalLicensefile1
+            );
+          if (stateMedicalLicensefile2)
+            formData.append(
+              "stateMedicalLicensefile2",
+              stateMedicalLicensefile2
+            );
+          if (stateMedicalLicensefile3)
+            formData.append(
+              "stateMedicalLicensefile3",
+              stateMedicalLicensefile3
+            );
+          if (certificationfile1)
+            formData.append("certificationfile1", certificationfile1);
+          if (certificationfile2)
+            formData.append("certificationfile2", certificationfile2);
+          if (certificationfile3)
+            formData.append("certificationfile3", certificationfile3);
+
+          // Debugging: Log the FormData entries
+          for (const [key, value] of formData.entries()) {
+            console.log(key, value);
+          }
 
           try {
-            const res = await updateProviderApplication(cleanedFormData);
-            console.log(res, "resresresres");
-            getApplication();
+            const res = await updateProviderApplication(formData, form._id);
+            console.log(res, "Response from updateProviderApplication");
+
             if (res.success) {
-              onOpen();
               showToast(
                 toast,
                 "Enroll AI",
                 "success",
-                `${res?.data?.message || "Application created successfully"}`
+                `${res?.data?.message || "Application updated successfully"}`
+              );
+            } else {
+              showToast(
+                toast,
+                "Enroll AI",
+                "error",
+                `${res?.message || "Failed to update Application"}`
               );
             }
-          } catch (error) {
-            console.log(error);
+          } catch (error: any) {
+            console.log(error, "Error in updateProviderApplication");
+            showToast(
+              toast,
+              "Enroll AI",
+              "error",
+              `${error.message || "Failed to update application"}`
+            );
           } finally {
             onClose();
           }
@@ -249,8 +321,14 @@ const ApplicationsDetails = () => {
           setPageNo(pageNo + 1);
         }
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      console.log(error, "Error in handleUpdate");
+      showToast(
+        toast,
+        "Enroll AI",
+        "error",
+        `${error.message || "Failed to update application"}`
+      );
     } finally {
       setLoading(false);
     }
@@ -260,28 +338,52 @@ const ApplicationsDetails = () => {
     step: string,
     parentObject: string,
     fieldName: string,
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement> | null
   ) => {
-    const file = event.target.files?.[0];
+    let file;
+
+    if (event === null) {
+      // Reset the field and remove any previously associated file
+      const data = {
+        ...form,
+        [step]: {
+          ...form[step],
+          [parentObject]: {
+            ...form[step][parentObject],
+            [fieldName]: "", // Reset the field to an empty string
+          },
+        },
+      };
+      setForm(data);
+      return;
+    } else {
+      file = event.target.files?.[0];
+    }
 
     if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const base64 = reader.result;
+      const maxSize = 3 * 1024 * 1024; // 3 MB in bytes
+      if (file.size > maxSize) {
+        showToast(
+          toast,
+          "Enroll AI",
+          "error",
+          "File size exceeds the limit of 3 MB"
+        );
+        return;
+      }
 
-        const data = {
-          ...form,
-          [step]: {
-            ...form[step],
-            [parentObject]: {
-              ...form[step][parentObject],
-              [fieldName]: base64,
-            },
+      // Update the field with the new file
+      const data = {
+        ...form,
+        [step]: {
+          ...form[step],
+          [parentObject]: {
+            ...form[step][parentObject],
+            [fieldName]: file,
           },
-        };
-        setForm(data);
+        },
       };
-      reader.readAsDataURL(file);
+      setForm(data);
     }
   };
 

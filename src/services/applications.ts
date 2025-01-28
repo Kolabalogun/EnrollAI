@@ -154,6 +154,7 @@ export const getApplicationStatBasedOnUserId = async (id: string) => {
   }
 };
 
+// Function to Create an Application By the Provider (FE: Provider)
 export const createProviderApplication = async (formData: FormData) => {
   const token = localStorage.getItem("enrollai-user");
 
@@ -184,8 +185,8 @@ export const createProviderApplication = async (formData: FormData) => {
     return handleError(error);
   }
 };
-
-export const updateProviderApplication = async (formData: any) => {
+// Function to Update an Application By the Provider (FE: Provider)
+export const updateProviderApplication = async (formData: any, id: string) => {
   const token = localStorage.getItem("enrollai-user");
 
   if (!token) {
@@ -194,12 +195,12 @@ export const updateProviderApplication = async (formData: any) => {
 
   try {
     const response = await axios.put(
-      `${VITE_API_BASE_URL}/application/${formData._id}`,
+      `${VITE_API_BASE_URL}/application/${id}`,
       formData,
       {
         headers: {
           Accept: "application/json",
-          "Content-Type": "multipart/form-data", // Use multipart/form-data for file uploads
+          "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
         },
       }
