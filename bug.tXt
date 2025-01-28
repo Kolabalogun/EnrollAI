@@ -1,9 +1,9 @@
-1. User, Organization, Admin Table should have is verified
+1.  
 2.  Revoke user access for all 3
 3.  
 4.  
-5.  Delete user and associated applications
-6. Delete organization and associated applications
+5.   
+6.  
 7. Notification Pagination
 8. Pagination for Details Page
 

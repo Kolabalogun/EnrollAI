@@ -500,16 +500,31 @@ const ApplicationsDetails = () => {
                   </button>
                 )}
 
-                <SubmitButton
-                  isLoading={isLoading}
-                  className="py-2 flex gap-2  w-auto px-8 border rounded-md font-semibold text-xs"
-                >
-                  <p className="font-bold text-xs">
-                    {pageNo === 3 ? "Update Application" : "Next"}
-                  </p>
+                {form?.status !== "pending" ? (
+                  <>
+                    {pageNo !== 3 && (
+                      <SubmitButton
+                        isLoading={isLoading}
+                        className="py-2 flex gap-2  w-auto px-8 border rounded-md font-semibold text-xs"
+                      >
+                        <p className="font-bold text-xs">Next</p>
 
-                  {pageNo !== 3 && <ChevronRightIcon size={15} />}
-                </SubmitButton>
+                        <ChevronRightIcon size={15} />
+                      </SubmitButton>
+                    )}
+                  </>
+                ) : (
+                  <SubmitButton
+                    isLoading={isLoading}
+                    className="py-2 flex gap-2  w-auto px-8 border rounded-md font-semibold text-xs"
+                  >
+                    <p className="font-bold text-xs">
+                      {pageNo === 3 ? "Update Application" : "Next"}
+                    </p>
+
+                    {pageNo !== 3 && <ChevronRightIcon size={15} />}
+                  </SubmitButton>
+                )}
               </div>
             )}
           </form>
@@ -546,7 +561,7 @@ const ApplicationsDetails = () => {
               <>
                 {form?.status !== "approved" && (
                   <SubmitButton
-                    // isLoading={isLoading}
+                    isLoading={isLoading}
                     handleSubmit={approveOnOpen}
                     className="py-2 flex gap-2  w-auto px-8 border rounded-md bg-green font-semibold text-xs"
                   >
@@ -556,7 +571,7 @@ const ApplicationsDetails = () => {
 
                 {form?.status !== "declined" && (
                   <SubmitButton
-                    // isLoading={isLoading}
+                    isLoading={isLoading}
                     handleSubmit={declineOnOpen}
                     className="py-2 bg-red-500 flex gap-2  w-auto px-8 border rounded-md font-semibold text-xs"
                   >

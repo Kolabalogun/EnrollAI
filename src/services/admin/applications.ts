@@ -73,6 +73,7 @@ export const getApplicationStats = async () => {
   }
 };
 
+// Get All Admin Users   (FE: Admin Route)
 export const getAllAdmins = async (page = 1, size = 10) => {
   const token = localStorage.getItem("enrollai-user");
 
@@ -102,6 +103,7 @@ export const getAllAdmins = async (page = 1, size = 10) => {
   }
 };
 
+// Get All Organizations Users   (FE: Admin Route)
 export const getAllOrganizations = async (page = 1, size = 10) => {
   const token = localStorage.getItem("enrollai-user");
 
@@ -131,6 +133,7 @@ export const getAllOrganizations = async (page = 1, size = 10) => {
   }
 };
 
+// Get All Providers Users   (FE: Admin Route)
 export const getAllProviders = async (page = 1, size = 10) => {
   const token = localStorage.getItem("enrollai-user");
 
@@ -154,6 +157,73 @@ export const getAllProviders = async (page = 1, size = 10) => {
     };
   } catch (error: any) {
     console.error(error);
+    return handleError(error);
+  }
+};
+
+// Change Status of a Provider or Organization Account (FE: Admin Route)
+export const changeAccountStatus = async (
+  id: string,
+  type: string,
+  status: string
+) => {
+  const token = localStorage.getItem("enrollai-user");
+
+  if (!token) {
+    throw new Error("Authentication token not found");
+  }
+  try {
+    const response = await axios.put(
+      `${VITE_API_BASE_URL}/admin/change-account-status`,
+      {},
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        params: { id, type, status },
+      }
+    );
+    return {
+      success: true,
+      data: response.data,
+      message: "",
+    };
+  } catch (error: any) {
+    console.error(error);
+    return handleError(error);
+  }
+};
+
+// Delete Provider Or Organization Account Along side all thier Applications  (FE: Admin Route)
+
+export const deleteProviderOrOrganization = async (
+  id: string,
+  type: string
+) => {
+  const token = localStorage.getItem("enrollai-user");
+  if (!token) {
+    throw new Error("Authentication token not found");
+  }
+  try {
+    const response = await axios.delete(
+      `${VITE_API_BASE_URL}/admin/delete-provider-or-organization`,
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        params: { id, type },
+      }
+    );
+    return {
+      success: true,
+      data: response.data,
+      message: "",
+    };
+  } catch (error: any) {
     return handleError(error);
   }
 };

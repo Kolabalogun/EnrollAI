@@ -249,7 +249,7 @@ export interface ApplicationFormInterface {
 }
 
 export type ApplicationStatType = {
-  activeApplications: number;
+  approvedApplications: number;
   pendingApplications: number;
   totalApplications: number;
   pending: number;
@@ -266,7 +266,9 @@ export type Organization = {
   organizationName: string;
   administratorFullName: string;
   workEmail: string;
+  isVerified: boolean;
   profileStatus: number;
+  status: "active" | "suspended";
   createdAt: string;
   __v: number;
   profilePicture: string;
@@ -279,7 +281,7 @@ export type Provider = {
   professionalTitle: string;
   email: string;
   isVerified: boolean;
- 
+  status: "active" | "suspended";
   __v: number;
   otp: string;
   otpCreatedAt: string;

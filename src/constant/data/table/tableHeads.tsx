@@ -499,13 +499,31 @@ export const OrganizationsTableHeads = (
     ),
     flex: 2,
   },
+
   {
-    header: "Account Type",
+    header: "Status",
     accessor: (row) => (
-      <div className="w-32 xl:w-full">
-        <p className="font-semibold capitalize text-xs">
-          {row?.accountType ?? "N/A"}
-        </p>
+      <div
+        className={`space-y-1   xl:w-full self-center    text-center items-center justify-center flex gap-2 font- p-0.5 rounded-full font-semibold capitalize text-xs w-32 ${
+          row?.status === "active"
+            ? "border-[#21A0A0] text-[#21A0A0] bg-[#d3ecec] "
+            : "border-[#fb0000] text-[#fb0000]"
+        } border `}
+      >
+        {row?.status ?? "N/A"}
+      </div>
+    ),
+    flex: 2,
+  },
+  {
+    header: "Verified",
+    accessor: (row) => (
+      <div
+        className={`space-y-1   xl:w-full self-center    text-center items-center justify-center flex gap-2 p-0.5   font-semibold capitalize text-xs   ${
+          row?.isVerified ? "  text-[#21A0A0]   " : " text-[#fb0000]"
+        }   `}
+      >
+        {row?.isVerified ? "True" : "False"}
       </div>
     ),
     flex: 2,
@@ -577,6 +595,34 @@ export const AllProvidersTableHeads = (
         <p className="font-semibold lowercase text-xs">
           {row?.provider.email ?? "N/A"}
         </p>
+      </div>
+    ),
+    flex: 2,
+  },
+  {
+    header: "Verified",
+    accessor: (row) => (
+      <div
+        className={`space-y-1   xl:w-full self-center    text-center items-center justify-center flex gap-2 font- p-0.5  font-semibold capitalize text-xs   ${
+          row?.provider?.isVerified ? " text-[#21A0A0]  " : "  text-[#fb0000]"
+        }   `}
+      >
+        {row?.provider?.isVerified ? "True" : "False"}
+      </div>
+    ),
+    flex: 2,
+  },
+  {
+    header: "Status",
+    accessor: (row) => (
+      <div
+        className={`space-y-1   xl:w-full self-center    text-center items-center justify-center flex gap-2 font- p-0.5 rounded-full font-semibold capitalize text-xs w-32 ${
+          row?.provider?.status === "active"
+            ? "border-[#21A0A0] text-[#21A0A0] bg-[#d3ecec] "
+            : "border-[#fb0000] text-[#fb0000]"
+        } border `}
+      >
+        {row?.provider?.status ?? "N/A"}
       </div>
     ),
     flex: 2,

@@ -1,6 +1,6 @@
 import { HEALTHCARE_APPLICATIONS } from "@/router/routes";
 import { useNavigate } from "react-router-dom";
-import ApplicationLists from ".";
+// import ApplicationLists from ".";
 import { ChevronLeft } from "lucide-react";
 
 const ApplicationsFullList = () => {
@@ -23,7 +23,7 @@ const ApplicationsFullList = () => {
           <p className="font-semibold text-base">Active Applications</p>
         </div>
 
-        <ApplicationLists full />
+        {/* <ApplicationLists full /> */}
       </div>
     </section>
   );

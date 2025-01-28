@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import { handleError } from "./error";
-import { ApplicationFormInterface } from "@/lib/types";
 
 const { VITE_API_BASE_URL } = import.meta.env;
 

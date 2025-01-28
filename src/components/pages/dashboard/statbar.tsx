@@ -21,7 +21,7 @@ const StatBar = ({ applications }: { applications?: boolean }) => {
 
     try {
       const res = await getApplicationStatBasedOnUserId(user?.userId);
-      // console.log(res, "resres");
+      console.log(res, "resres");
       if (res.success) {
         setProviderStatData(res?.data);
       }
@@ -47,9 +47,9 @@ const StatBar = ({ applications }: { applications?: boolean }) => {
         status={"All"}
       />
       <StatCard
-        title="Active Applications"
-        value={providerStatData?.activeApplications || 0}
-        status={"Active"}
+        title="Approved Applications"
+        value={providerStatData?.approvedApplications || 0}
+        status={"Approved"}
       />
       <StatCard
         title={"Pending Applications"}

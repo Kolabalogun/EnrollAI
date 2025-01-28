@@ -1,23 +1,143 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-
+import { SubmitButton } from "@/components/common";
+import showToast from "@/components/common/showtoast";
+import ConfirmationModal from "@/components/modals/confirmationModal";
 import { Organization } from "@/lib/types";
+import {
+  changeAccountStatus,
+  deleteProviderOrOrganization,
+} from "@/services/admin/applications";
 import { formatDateTime } from "@/utils/formatDateTime";
-import { useEffect } from "react";
+import { useDisclosure, useToast } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const OrganizationDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState("");
+  const toast = useToast();
+
+  console.log(status);
+
+  const { isOpen, onClose, onOpen } = useDisclosure();
+
+  const {
+    isOpen: deleteIsOpen,
+    onClose: deleteOnClose,
+    onOpen: deleteOnOpen,
+  } = useDisclosure();
 
   const state = (JSON.parse(location.state) as Organization) || null;
   console.log(state);
 
   useEffect(() => {
     if (!state) navigate(-1);
+    else setStatus(state.status);
   }, [state]);
+
+  const handleChangeStatus = async (newStatus: "active" | "suspended") => {
+    try {
+      setLoading(true);
+      const response = await changeAccountStatus(
+        state?._id,
+        "organization",
+        newStatus
+      );
+      if (response.success) {
+        setStatus(newStatus);
+        showToast(
+          toast,
+          "Enroll AI",
+          "success",
+          `Account status updated successfully`
+        );
+        navigate("/dashboard/admin/organizations");
+      } else {
+        showToast(
+          toast,
+          "Enroll AI",
+          "error",
+          `Failed to update account status`
+        );
+      }
+    } catch (error: any) {
+      console.error("Error changing account status:", error);
+
+      showToast(
+        toast,
+        "Enroll AI",
+        "error",
+        `${error.message || "An error occurred while updating account status"}`
+      );
+    } finally {
+      setLoading(false);
+      onClose();
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    if (
+      window.confirm(
+        "Are you sure you want to delete this account? This action cannot be undone."
+      )
+    ) {
+      try {
+        setLoading(true);
+        const response = await deleteProviderOrOrganization(
+          state?._id,
+          "organization"
+        );
+        if (response.success) {
+          showToast(
+            toast,
+            "Enroll AI",
+            "success",
+            `Account deleted successfully`
+          );
+          navigate("/dashboard/admin/organizations");
+        } else {
+          showToast(toast, "Enroll AI", "error", `Failed to delete account`);
+        }
+      } catch (error) {
+        console.error("Error deleting account:", error);
+        showToast(
+          toast,
+          "Enroll AI",
+          "error",
+          `An error occurred while deleting the account`
+        );
+      } finally {
+        setLoading(false);
+        deleteOnClose();
+      }
+    }
+  };
 
   return (
     <section className="flex space-y-9 mb-20 flex-col">
+      <ConfirmationModal
+        onClose={onClose}
+        isOpen={isOpen}
+        buttonText="Change"
+        isLoading={loading}
+        message="Are you sure you want to the status of this User? "
+        onConfirm={() => {
+          handleChangeStatus(status === "active" ? "suspended" : "active");
+        }}
+      />
+
+      <ConfirmationModal
+        onClose={deleteOnClose}
+        isOpen={deleteIsOpen}
+        buttonText="Delete"
+        isLoading={loading}
+        message="Are you sure you want to delete user account? Note that all the applications this user created or submitted will be deleted. "
+        onConfirm={handleDeleteAccount}
+      />
+
       <div className="flex lg:flex-row flex-col justify-between xl:items-center gap-4">
         <p className="font-semibold text-3xl">Organization Details</p>
       </div>
@@ -94,6 +214,28 @@ const OrganizationDetails = () => {
                 />
               </div>
             </div>
+          </div>
+
+          <div className="flex gap-4">
+            <SubmitButton
+              isLoading={loading}
+              handleSubmit={onOpen}
+              className={`py-2 ${
+                status === "active"
+                  ? "bg-red-500 border-red-500"
+                  : "bg-green border-green"
+              } flex gap-2  w-auto px-8 border rounded-md font-semibold text-xs`}
+            >
+              {status === "active" ? "Suspend Account" : "Activate Account"}
+            </SubmitButton>
+
+            <SubmitButton
+              isLoading={loading}
+              handleSubmit={deleteOnOpen}
+              className="py-2 bg-red-500 border-red-500 flex gap-2  w-auto px-8 border rounded-md font-semibold text-xs"
+            >
+              Delete Account
+            </SubmitButton>
           </div>
         </section>
       </div>

@@ -30,7 +30,7 @@ const StatCard = ({ title, value, status }: Props) => {
               className={`p-1 ${
                 status === "All"
                   ? "bg-secondary"
-                  : status === "Active"
+                  : status === "Approved"
                   ? "bg-green "
                   : status === "Completed"
                   ? "#32ADe6"
