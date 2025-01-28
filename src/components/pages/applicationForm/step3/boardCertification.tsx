@@ -4,7 +4,7 @@ import DateInputField from "../Inputs/dateInput";
 import TextInputField from "../Inputs/TextInput";
 import { ApplicationProps } from "../step1";
 import { RootState } from "@/redux/store";
-import { Eye, FileBox, Pencil } from "lucide-react";
+import { Eye, FileBox, Pencil, X } from "lucide-react";
 import { useRef } from "react";
 
 const boardCertificationsData = [
@@ -86,12 +86,6 @@ const BoardCertification = ({
 
   const fileInputRef = useRef<any>(null);
 
-  const handleFileClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
-
   return (
     <div className="border rounded-lg pt-5 px-3 xl:px-5 pb-10 space-y-5">
       .<p className="font-semibold text-base">Board Certifications</p>
@@ -154,20 +148,42 @@ const BoardCertification = ({
                               )}
 
                             {user?.accountType === "provider" && (
-                              <Pencil
-                                className="text-secondary cursor-pointer "
-                                size={16}
-                                onClick={handleFileClick}
-                              />
+                              <>
+                                {form.step3.boards[field.name] &&
+                                (form.step3.boards[field.name] instanceof
+                                  File ||
+                                  typeof form.step3.boards[field.name] ===
+                                    "string") ? (
+                                  <X
+                                    className="text-red-500 cursor-pointer"
+                                    size={16}
+                                    onClick={() => {
+                                      handleFileChange(
+                                        "step3",
+                                        "boards",
+                                        field.name,
+                                        null
+                                      );
+                                    }}
+                                  />
+                                ) : (
+                                  <Pencil
+                                    className="text-secondary cursor-pointer"
+                                    size={16}
+                                    onClick={() => {
+                                      fileInputRef.current?.click();
+                                    }}
+                                  />
+                                )}
+                              </>
                             )}
 
                             {user?.accountType === "provider" &&
                               form.step3.boards[field.name] &&
-                              typeof form.step3.boards[field.name] ===
-                                "string" &&
-                              form.step3.boards[field.name] &&
-                              typeof form.step3.boards[field.name] ===
-                                "string" && (
+                              (typeof form.step3.boards[field.name] ===
+                                "string" ||
+                                form.step3.boards[field.name] instanceof
+                                  File) && (
                                 <Eye
                                   className="text-secondary cursor-pointer "
                                   size={16}
@@ -178,6 +194,14 @@ const BoardCertification = ({
                                     ) {
                                       const fileURL =
                                         form.step3.boards[field.name];
+                                      window.open(fileURL, "_blank");
+                                    } else if (
+                                      form.step3.boards[field.name] instanceof
+                                      File
+                                    ) {
+                                      const fileURL = URL.createObjectURL(
+                                        form.step3.boards[field.name]
+                                      );
                                       window.open(fileURL, "_blank");
                                     }
                                   }}

@@ -142,9 +142,27 @@ const ApplicationForm = () => {
     step: string,
     parentObject: string,
     fieldName: string,
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement> | null
   ) => {
-    const file = event.target.files?.[0];
+    let file;
+
+    if (event === null) {
+      // Reset the field and remove any previously associated file
+      const data = {
+        ...form,
+        [step]: {
+          ...form[step],
+          [parentObject]: {
+            ...form[step][parentObject],
+            [fieldName]: "", // Reset the field to an empty string
+          },
+        },
+      };
+      dispatch(updateForm(data));
+      return;
+    } else {
+      file = event.target.files?.[0];
+    }
 
     if (file) {
       const maxSize = 3 * 1024 * 1024; // 3 MB in bytes
@@ -158,25 +176,18 @@ const ApplicationForm = () => {
         return;
       }
 
-      const reader = new FileReader();
-      reader.onload = () => {
-        const base64 = reader.result;
-
-        console.log(base64);
-
-        const data = {
-          ...form,
-          [step]: {
-            ...form[step],
-            [parentObject]: {
-              ...form[step][parentObject],
-              [fieldName]: file,
-            },
+      // Update the field with the new file
+      const data = {
+        ...form,
+        [step]: {
+          ...form[step],
+          [parentObject]: {
+            ...form[step][parentObject],
+            [fieldName]: file,
           },
-        };
-        dispatch(updateForm(data));
+        },
       };
-      reader.readAsDataURL(file);
+      dispatch(updateForm(data));
     }
   };
 

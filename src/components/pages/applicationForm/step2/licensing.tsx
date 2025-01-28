@@ -4,7 +4,7 @@ import DateInputField from "../Inputs/dateInput";
 import TextInputField from "../Inputs/TextInput";
 import { ApplicationProps } from "../step1";
 import { RootState } from "@/redux/store";
-import { Eye, FileBox, Pencil } from "lucide-react";
+import { Eye, FileBox, Pencil, X } from "lucide-react";
 import { useRef } from "react";
 
 const mainLicenseRegistration = [
@@ -146,12 +146,6 @@ const Licensing = ({
 
   const fileInputRef = useRef<any>(null);
 
-  const handleFileClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
-
   return (
     <div className="border rounded-lg pt-5 px-3 xl:px-5 pb-10 space-y-5">
       <div className="space-y-5">
@@ -240,22 +234,48 @@ const Licensing = ({
                                       )}
 
                                     {user?.accountType === "provider" && (
-                                      <Pencil
-                                        className="text-secondary cursor-pointer "
-                                        size={16}
-                                        onClick={handleFileClick}
-                                      />
+                                      <>
+                                        {form.step2.medicalLicenses[
+                                          field.name
+                                        ] &&
+                                        (form.step2.medicalLicenses[
+                                          field.name
+                                        ] instanceof File ||
+                                          typeof form.step2.medicalLicenses[
+                                            field.name
+                                          ] === "string") ? (
+                                          <X
+                                            className="text-red-500 cursor-pointer"
+                                            size={16}
+                                            onClick={() => {
+                                              handleFileChange(
+                                                "step2",
+                                                "medicalLicenses",
+                                                field.name,
+                                                null
+                                              );
+                                            }}
+                                          />
+                                        ) : (
+                                          <Pencil
+                                            className="text-secondary cursor-pointer"
+                                            size={16}
+                                            onClick={() => {
+                                              fileInputRef.current?.click();
+                                            }}
+                                          />
+                                        )}
+                                      </>
                                     )}
 
                                     {user?.accountType === "provider" &&
                                       form.step2.medicalLicenses[field.name] &&
-                                      typeof form.step2.medicalLicenses[
+                                      (typeof form.step2.medicalLicenses[
                                         field.name
-                                      ] === "string" &&
-                                      form.step2.medicalLicenses[field.name] &&
-                                      typeof form.step2.medicalLicenses[
-                                        field.name
-                                      ] === "string" && (
+                                      ] === "string" ||
+                                        form.step2.medicalLicenses[
+                                          field.name
+                                        ] instanceof File) && (
                                         <Eye
                                           className="text-secondary cursor-pointer "
                                           size={16}
@@ -269,6 +289,18 @@ const Licensing = ({
                                                 form.step2.medicalLicenses[
                                                   field.name
                                                 ];
+                                              window.open(fileURL, "_blank");
+                                            } else if (
+                                              form.step2.medicalLicenses[
+                                                field.name
+                                              ] instanceof File
+                                            ) {
+                                              const fileURL =
+                                                URL.createObjectURL(
+                                                  form.step2.medicalLicenses[
+                                                    field.name
+                                                  ]
+                                                );
                                               window.open(fileURL, "_blank");
                                             }
                                           }}
@@ -421,22 +453,46 @@ const Licensing = ({
                                 )}
 
                               {user?.accountType === "provider" && (
-                                <Pencil
-                                  className="text-secondary cursor-pointer "
-                                  size={16}
-                                  onClick={handleFileClick}
-                                />
+                                <>
+                                  {form.step2.otherMedLicenses[field.name] &&
+                                  (form.step2.otherMedLicenses[
+                                    field.name
+                                  ] instanceof File ||
+                                    typeof form.step2.otherMedLicenses[
+                                      field.name
+                                    ] === "string") ? (
+                                    <X
+                                      className="text-red-500 cursor-pointer"
+                                      size={16}
+                                      onClick={() => {
+                                        handleFileChange(
+                                          "step2",
+                                          "otherMedLicenses",
+                                          field.name,
+                                          null
+                                        );
+                                      }}
+                                    />
+                                  ) : (
+                                    <Pencil
+                                      className="text-secondary cursor-pointer"
+                                      size={16}
+                                      onClick={() => {
+                                        fileInputRef.current?.click();
+                                      }}
+                                    />
+                                  )}
+                                </>
                               )}
 
                               {user?.accountType === "provider" &&
                                 form.step2.otherMedLicenses[field.name] &&
-                                typeof form.step2.otherMedLicenses[
+                                (typeof form.step2.otherMedLicenses[
                                   field.name
-                                ] === "string" &&
-                                form.step2.otherMedLicenses[field.name] &&
-                                typeof form.step2.otherMedLicenses[
-                                  field.name
-                                ] === "string" && (
+                                ] === "string" ||
+                                  form.step2.otherMedLicenses[
+                                    field.name
+                                  ] instanceof File) && (
                                   <Eye
                                     className="text-secondary cursor-pointer "
                                     size={16}
@@ -450,6 +506,17 @@ const Licensing = ({
                                           form.step2.otherMedLicenses[
                                             field.name
                                           ];
+                                        window.open(fileURL, "_blank");
+                                      } else if (
+                                        form.step2.otherMedLicenses[
+                                          field.name
+                                        ] instanceof File
+                                      ) {
+                                        const fileURL = URL.createObjectURL(
+                                          form.step2.otherMedLicenses[
+                                            field.name
+                                          ]
+                                        );
                                         window.open(fileURL, "_blank");
                                       }
                                     }}
