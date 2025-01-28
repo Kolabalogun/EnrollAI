@@ -127,7 +127,7 @@ const PracticeLocation = ({ form, errors, handleChange }: ApplicationProps) => {
         </div>
       </div>
 
-      <div className="flex gap-5">
+      <div className="flex xl:flex-row flex-col gap-5">
         {officeSections.map((section, index) => (
           <div key={index} className="flex-1 space-y-5">
             <p className="font-semibold">{section.label}</p>

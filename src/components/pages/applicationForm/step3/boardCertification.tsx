@@ -89,7 +89,7 @@ const BoardCertification = ({
   return (
     <div className="border rounded-lg pt-5 px-3 xl:px-5 pb-10 space-y-5">
       .<p className="font-semibold text-base">Board Certifications</p>
-      <div className="grid grid-cols-3 gap-10">
+      <div className="grid  lg:grid-cols-2 xl:grid-cols-3 gap-10">
         {boardCertificationsData.map((section, index) => (
           <div key={index} className="flex flex-col gap-3">
             <p className="font-semibold">{section.title}</p>
@@ -261,7 +261,7 @@ const BoardCertification = ({
       </div>
       <div className="flex flex-col gap-3 pt-6">
         <p className="font-semibold">Additional Board Certification</p>
-        <div className="raleway text-xs flex xl:flex-row flex-col w-full flex-1 gap-2 xl:items-center font-medium">
+        <div className="raleway text-xs flex  flex-row    flex-1 gap-2  items-center font-medium">
           <label className="   ">
             Have you applied for board certification other than those indicated
             above?

@@ -39,7 +39,12 @@ const Login = () => {
     try {
       const { email, password } = values;
 
-      const res = await loginUser({ email, password });
+      const data = {
+        email: email.toLowerCase().trim(),
+        password,
+      };
+
+      const res = await loginUser(data);
 
       console.log(res.data, "res from login");
 

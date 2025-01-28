@@ -1,33 +1,83 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useSelector } from "react-redux";
 import { SubmitButton } from "@/components/common";
 import ApplicationsModal from "@/components/modals/applications";
-import ApplicationLists from "@/components/pages/applications";
+
 import Notifications from "@/components/pages/dashboard/notifications";
 import StatBar from "@/components/pages/dashboard/statbar";
-import { useDisclosure } from "@chakra-ui/react";
+import { useDisclosure, useToast } from "@chakra-ui/react";
 
 import { Pen, PlusIcon } from "lucide-react";
-import { HEALTHCARE_APPLICATIONS_FULL_LIST } from "@/router/routes";
+
 import { useNavigate } from "react-router-dom";
+import { getApplicationsFromProvidersBaseonStatus } from "@/services/org/applications";
+import { getAllApplicationsBasedOnStatus } from "@/services/admin/applications";
+import showToast from "@/components/common/showtoast";
+import { useEffect, useState } from "react";
+import { RootState } from "@/redux/store";
+import OrganizationApplicationLists from "@/components/pages/applications/organization";
+import { getUsersApplicationsByStatus } from "@/services/applications";
 
 const Appications = () => {
   const navigate = useNavigate();
   const { isOpen, onClose, onOpen } = useDisclosure();
-  const { lists } = useSelector((state: any) => state.applicationForm);
+  const { user } = useSelector((state: RootState) => state.auth);
+  console.log(user);
 
-  // const recentActivities = recentActivitiesData.map((activity) => (
-  //   <div className="flex mb-4 justify-between cursor-pointer items-center">
-  //     <div className="space-y-2">
-  //       <p className="font-semibold text-[13px] ">{activity.title}</p>
-  //       <p className="text-[12px] font-medium text-[#667085]">
-  //         {activity.description}
-  //       </p>
-  //     </div>
+  const [data, setData] = useState([]);
 
-  //     <p className="text-[12px] font-medium text-[#667085]">{activity.date} </p>
-  //   </div>
-  // ));
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+  const [totalPages, setTotalPages] = useState(1);
+  const toast = useToast();
+
+  const fetchApplications = async (page: number = 1, size: number = 5) => {
+    if (!user) return;
+    setIsLoading(true);
+    try {
+      let res;
+
+      if (user?.accountType === "provider") {
+        res = await getUsersApplicationsByStatus(
+          user?.userId,
+          "pending",
+          page,
+          size
+        );
+      } else if (user?.accountType === "organization") {
+        res = await getApplicationsFromProvidersBaseonStatus(
+          user?.id,
+          "pending",
+          page,
+          size
+        );
+      } else {
+        res = await getAllApplicationsBasedOnStatus(page, size, "pending");
+      }
+
+      if (res.success) {
+        setData(res?.data?.applications);
+
+        setTotalPages(res?.data?.pagination?.totalPages);
+      }
+    } catch (error: any) {
+      showToast(
+        toast,
+        "Enroll AI",
+        "error",
+        `${error.message || "Failed to fetch Application"}`
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (user) fetchApplications(currentPage, itemsPerPage);
+  }, [user, currentPage]);
 
   return (
     <section className="flex space-y-6 mb-20 flex-col">
@@ -75,18 +125,29 @@ const Appications = () => {
             className="bg-white rounded-lg flex-1 h-full w-full flex flex-col p-5 space-y-3"
           >
             <div className="flex justify-between items-center">
-              <p className="font-semibold text-base">Active Applications</p>
-              {lists?.length > 3 && (
+              <p className="font-semibold text-base">
+                {user?.accountType === "organization"
+                  ? "Incoming Applications"
+                  : "Pending Applications"}
+              </p>
+              {/* {data?.length > 3 && (
                 <p
                   onClick={() => navigate(HEALTHCARE_APPLICATIONS_FULL_LIST)}
                   className="font-semibold cursor-pointer text-xs text-fade"
                 >
                   View All
                 </p>
-              )}
+              )} */}
             </div>
 
-            <ApplicationLists />
+            <OrganizationApplicationLists
+              data={data || []}
+              fetchFunction={fetchApplications}
+              isLoading={isLoading}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              totalPages={totalPages}
+            />
           </div>
 
           <div className="flex-1">

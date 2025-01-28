@@ -159,7 +159,7 @@ const Licensing = ({
                   <p className="text-sm font-semibold text-gray-600 mb-3">
                     {subSection.subField}
                   </p>
-                  <div className="grid grid-cols-3 w-full gap-5">
+                  <div className="grid  lg:grid-cols-2 xl:grid-cols-3 w-full gap-5">
                     {subSection.fields.map((field, fieldIndex) => (
                       <div
                         key={fieldIndex}
@@ -383,7 +383,7 @@ const Licensing = ({
 
       <div className="space-y-5">
         <p className="font-semibold text-base">Other Licenses</p>
-        <div className="grid grid-cols-3 gap-10">
+        <div className="grid  lg:grid-cols-2 xl:grid-cols-3 gap-10">
           {medicalLicensesData.map((section, index) => (
             <div key={index} className="flex flex-col gap-3">
               <p className="font-semibold">{section.title}</p>

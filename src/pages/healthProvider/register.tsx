@@ -32,7 +32,7 @@ const Register = () => {
 
     const payload = {
       fullName: values.name,
-      email: values.email,
+      email: values.email.toLowerCase().trim(),
       password: values.password,
       confirmPassword: values.confirmPassword,
       accountType: "provider",

@@ -76,7 +76,7 @@ const ResidenciesFellowships = ({
   return (
     <div className="border rounded-lg pt-5 px-3 xl:px-5 pb-10 space-y-5">
       <p className="font-semibold text-base">Residency / Fellowship</p>
-      <div className="grid grid-cols-3 gap-10">
+      <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-10">
         {residenciesFellowshipsData.map((section, index) => (
           <div key={index} className="flex flex-col gap-3">
             <p className="font-semibold">{section.title}</p>

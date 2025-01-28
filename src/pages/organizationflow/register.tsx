@@ -36,7 +36,7 @@ const Register = () => {
     const payload = {
       organizationName: values.organizationName.trim(),
       administratorFullName: values.adminFullName.trim(),
-      workEmail: values.email.trim(),
+      workEmail: values.email.toLowerCase().trim(),
       password: values.password,
       accountType: "organization",
     };

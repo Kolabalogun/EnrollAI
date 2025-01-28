@@ -39,7 +39,7 @@ const OrganizationLogin = () => {
       const { email, password } = values;
 
       const data = {
-        workEmail: email,
+        workEmail: email.toLowerCase().trim(),
         password,
       };
 
