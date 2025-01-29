@@ -14,9 +14,13 @@ import { AuthLayout } from "@/layout";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
 import showToast from "@/components/common/showtoast";
-
 import { CREATE_NEW_PASSWORD_ROUTE } from "@/router/routes";
 import { forgotPasswordApi, resendOTP, verifyOTP } from "@/services/auth";
+import {
+  verifyOrganizationsOTP,
+  resendOrganizationOTP,
+  forgotOrganizationPasswordApi,
+} from "@/services/org/auth";
 
 const ForgetPassword = () => {
   const navigate = useNavigate();
@@ -25,6 +29,9 @@ const ForgetPassword = () => {
   const [timeLeft, setTimeLeft] = useState(10);
   const [isResendEnabled, setIsResendEnabled] = useState(false);
   const [resendLoading, setResendLoading] = useState(false);
+  const [userType, setUserType] = useState<
+    "provider" | "organization" | string
+  >("provider");
 
   const form = useForm<z.infer<typeof ForgetPasswordUnionValidation>>({
     resolver: zodResolver(
@@ -34,6 +41,7 @@ const ForgetPassword = () => {
     ),
     defaultValues: emailIsPresent ? { code: "" } : { email: "" },
   });
+
   useEffect(() => {
     if (timeLeft > 0) {
       const timerId = setInterval(() => {
@@ -59,19 +67,19 @@ const ForgetPassword = () => {
   ) {
     try {
       console.log(values);
-      // Perform actions based on whether email or code is present
       if ("email" in values) {
-        // Handle email submission
-
         const payload = {
-          email: values.email,
+          email: values.email.toLowerCase().trim(),
         };
 
-        const res = await forgotPasswordApi(payload);
+        let res;
+        if (userType === "provider") {
+          res = await forgotPasswordApi(payload);
+        } else {
+          res = await forgotOrganizationPasswordApi(payload);
+        }
 
         if (res.success) {
-          console.log(res);
-
           showToast(
             toast,
             "Enroll AI",
@@ -81,7 +89,7 @@ const ForgetPassword = () => {
             } `
           );
 
-          setEmailIsPresent(values.email);
+          setEmailIsPresent(values.email.toLowerCase().trim());
         } else {
           showToast(
             toast,
@@ -93,29 +101,34 @@ const ForgetPassword = () => {
 
         form.reset();
       } else if ("code" in values) {
-        // Handle code submission
-
         const payload = {
-          email: emailIsPresent,
+          email: emailIsPresent.toLowerCase().trim(),
           otp: values.code,
         };
 
-        const res = await verifyOTP(payload);
-
-        console.log(res);
+        let res;
+        if (userType === "provider") {
+          res = await verifyOTP(payload);
+        } else {
+          res = await verifyOrganizationsOTP(payload);
+        }
 
         if (res.success) {
           showToast(
             toast,
             "Enroll AI",
             "success",
-            `${res.data.msg || res.message || "OTP resent successfully"} `
+            `${res.data.msg || res.message || "OTP verified successfully"} `
           );
 
           setEmailIsPresent("");
 
           navigate(CREATE_NEW_PASSWORD_ROUTE, {
-            state: { email: emailIsPresent, otp: values.code },
+            state: {
+              email: emailIsPresent.toLowerCase().trim(),
+              otp: values.code,
+              userType,
+            },
           });
         } else {
           showToast(
@@ -143,11 +156,16 @@ const ForgetPassword = () => {
     setResendLoading(true);
     try {
       if (emailIsPresent) {
-        const res = await resendOTP(emailIsPresent);
-        console.log(res);
+        let res;
+        if (userType === "provider") {
+          res = await resendOTP(emailIsPresent.toLowerCase().trim());
+        } else {
+          res = await resendOrganizationOTP(
+            emailIsPresent.toLowerCase().trim()
+          );
+        }
 
         if (res.success) {
-          console.log("OTP resent successfully:", res.data);
           showToast(
             toast,
             "Enroll AI",
@@ -203,13 +221,30 @@ const ForgetPassword = () => {
           placeholder="Enter the code"
         />
       ) : (
-        <CustomFormField
-          control={form.control}
-          fieldType={FormFieldType.INPUT}
-          name="email"
-          label="Email"
-          placeholder="Enter your email address"
-        />
+        <div className="space-y-3">
+          <div className="flex flex-col space-y-1">
+            <p className="checkbox-label text-[#344054] font-medium plus-jakarta text-[13px]  ">
+              Select Provider or Organization Account
+            </p>
+
+            <select
+              name="userType"
+              value={userType}
+              onChange={(e) => setUserType(e.target.value)}
+              className="py-3.5 px-2 outline-none text-[13px] bg-transparent  rounded-lg plus-jakarta placeholder:text-gray-300 placeholder:text-[13px] border border-[#d9d9d9]"
+            >
+              <option value="provider">Provider</option>
+              <option value="organization">Organization</option>
+            </select>
+          </div>
+          <CustomFormField
+            control={form.control}
+            fieldType={FormFieldType.INPUT}
+            name="email"
+            label="Email"
+            placeholder="Enter your email address"
+          />
+        </div>
       )}
     </AuthLayout>
   );

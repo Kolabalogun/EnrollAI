@@ -1,7 +1,7 @@
 import { Bell, Hexagon, Menu } from "lucide-react";
 import SidebarDrawer from "./sidebar/drawer";
 import { useDisclosure } from "@chakra-ui/react";
-import { SETTINGS_ROUTE } from "@/router/routes";
+import { HEALTHCARE_NOTIFICATIONS, SETTINGS_ROUTE } from "@/router/routes";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
@@ -32,7 +32,10 @@ const Navbar = () => {
       <div className="flex gap-4 items-center">
         {user?.accountType !== "super_admin" && (
           <>
-            <div className="">
+            <div
+              onClick={() => navigate(HEALTHCARE_NOTIFICATIONS)}
+              className="cursor-pointer"
+            >
               <Bell className="text-[#667085] " size={20} />
             </div>
 

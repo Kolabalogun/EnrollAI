@@ -96,27 +96,7 @@ export const resendOrganizationOTP = async (email: string) => {
     return handleError(error);
   }
 };
-export const resetOrganizationPasswordApi = async (formData: any) => {
-  try {
-    const response = await axios.post(
-      `${VITE_API_BASE_URL}/organizations/reset-password`,
-      formData,
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    return {
-      success: true,
-      data: response.data,
-      message: "You've successfully reset your password.",
-    };
-  } catch (error: any) {
-    return handleError(error);
-  }
-};
+
 export const forgotOrganizationPasswordApi = async (formData: any) => {
   try {
     const response = await axios.post(
@@ -133,6 +113,27 @@ export const forgotOrganizationPasswordApi = async (formData: any) => {
       success: true,
       data: response.data,
       message: "OTP has been sent to your mail.",
+    };
+  } catch (error: any) {
+    return handleError(error);
+  }
+};
+export const resetOrganizationPasswordApi = async (formData: any) => {
+  try {
+    const response = await axios.post(
+      `${VITE_API_BASE_URL}/organizations/reset-password`,
+      formData,
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return {
+      success: true,
+      data: response.data,
+      message: "You've successfully reset your password.",
     };
   } catch (error: any) {
     return handleError(error);

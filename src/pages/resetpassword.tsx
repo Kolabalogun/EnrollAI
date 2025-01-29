@@ -14,16 +14,17 @@ import showToast from "@/components/common/showtoast";
 import SuccessModal from "@/components/modals/success";
 import { resetPasswordApi } from "@/services/auth";
 import { useEffect } from "react";
+import { resetOrganizationPasswordApi } from "@/services/org/auth";
 
 const CreateNewPassword = () => {
   const navigate = useNavigate();
   const toast = useToast();
   const location = useLocation();
-  const { email, otp } = location.state || {};
+  const { email, otp, userType } = location.state || {};
   const { onOpen, onClose, isOpen } = useDisclosure();
 
   useEffect(() => {
-    if (!email || !otp) navigate(-1);
+    if (!email || !otp || !userType) navigate(-1);
   }, [email]);
 
   const form = useForm<z.infer<typeof CreateNewPasswordFormValidation>>({
@@ -46,7 +47,14 @@ const CreateNewPassword = () => {
     try {
       console.log(values);
 
-      const res = await resetPasswordApi(payload);
+      let res;
+
+      if (userType === "provider") {
+        res = await resetPasswordApi(payload);
+      } else {
+        res = await resetOrganizationPasswordApi(payload);
+      }
+
       console.log(res);
 
       if (res.success) {
