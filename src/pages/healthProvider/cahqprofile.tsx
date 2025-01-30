@@ -84,7 +84,7 @@ const CAHQProfile = () => {
       const res = await getProviderRecentApplication(user?.userId);
 
       console.log(res);
-      if (res.success) {
+      if (res.data?.application) {
         setData(res?.data?.application);
       } else {
         setData(ApplicationFormInitialState as any);

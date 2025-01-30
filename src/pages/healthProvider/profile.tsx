@@ -23,6 +23,8 @@ const Profile = () => {
   const { user } = useSelector((state: RootState) => state.auth);
   const toast = useToast();
   const [data, setData] = useState<any>(ApplicationFormInitialState);
+
+  const [dataState, setDataState] = useState<boolean>(true);
   console.log(data);
   const fetchApplications = async () => {
     if (!user) return;
@@ -31,10 +33,12 @@ const Profile = () => {
       const res = await getProviderRecentApplication(user?.userId);
 
       console.log(res);
-      if (res.success) {
+      if (res.data?.application) {
         setData(res?.data?.application);
+        setDataState(true);
       } else {
         setData(ApplicationFormInitialState as any);
+        setDataState(false);
       }
     } catch (error: any) {
       console.log(error);
@@ -51,7 +55,16 @@ const Profile = () => {
   }, [user]);
 
   const handleSubmit = async () => {
-    navigate(HEALTHCARE_APPLICATIONS_CAHQPROFILE);
+    if (dataState) {
+      navigate(HEALTHCARE_APPLICATIONS_CAHQPROFILE);
+    } else {
+      showToast(
+        toast,
+        "Enroll AI",
+        "info",
+        `Your Profile contains your most recent application. You need to have filled or sent an application to a Credentializing Organization for your data to be verified.`
+      );
+    }
   };
 
   return (

@@ -443,6 +443,8 @@ const ApplicationsDetails = () => {
   const handleUpdateApplication = async (id: string, status: string) => {
     setLoading(true);
     try {
+      console.log(id, status);
+
       const res = await updateProviderApplicationByOrg(id, status);
 
       console.log(res);
@@ -642,7 +644,7 @@ const ApplicationsDetails = () => {
                     ? "border-[#21A0A0] text-[#21A0A0] bg-[#d3ecec] "
                     : form?.status === "pending"
                     ? "border-yellow-500 text-yellow-500 bg-yellow-500/10"
-                    : "border-[#21A0A0] text-[#21A0A0]"
+                    : "border-[#fb0000] text-[#fb0000]"
                 } border `}
               >
                 {form?.status}
@@ -661,7 +663,7 @@ const ApplicationsDetails = () => {
             )}
             {user?.accountType === "organization" && (
               <>
-                {form?.status !== "approved" && (
+                {form?.status === "pending" && (
                   <SubmitButton
                     isLoading={isLoading}
                     handleSubmit={approveOnOpen}

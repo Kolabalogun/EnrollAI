@@ -39,6 +39,8 @@ const Register = () => {
       professionalTitle: values.professionalTitle,
     };
 
+    console.log(payload);
+
     try {
       const res = await registerProvider(payload);
 
@@ -95,7 +97,7 @@ const Register = () => {
       <CustomFormField
         fieldType={FormFieldType.INPUT}
         control={form.control}
-        name="professionalTitle "
+        name="professionalTitle"
         label="Professional Title (Optional)"
         placeholder="Example (Dr.)"
       />
