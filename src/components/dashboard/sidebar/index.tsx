@@ -110,7 +110,7 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`  border-r-fade bg-primary border-r-[2px] pb-5 p-6  h-screen overflow-y-auto z-50 scrollbar-y remove-scrollbar transition lg:flex flex-col justify-between ease-in-out w-[250px]   hidden `}
+      className={`  border-r-fade bg-primary border-r-[2px] pb-5 p-6  h-screen overflow-y-auto z-50 scrollbar-y custom-scrollbar transition lg:flex flex-col justify-between ease-in-out w-[250px]   hidden `}
     >
       <div className="flex flex-col">
         {/* Logo */}

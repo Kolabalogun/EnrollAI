@@ -99,7 +99,7 @@ const CreateApplicationForm = () => {
   };
 
   return (
-    <div className="space-y-5 remove-scrollbar">
+    <div className="space-y-5 custom-scrollbar">
       <ApplicationSuccessModal
         onClose={onClose}
         isOpen={isOpen}

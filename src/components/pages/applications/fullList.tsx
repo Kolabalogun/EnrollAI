@@ -6,7 +6,7 @@ import { ChevronLeft } from "lucide-react";
 const ApplicationsFullList = () => {
   const navigate = useNavigate();
   return (
-    <section className="space-y-5 remove-scrollbar flex mb-20 flex-col">
+    <section className="space-y-5 custom-scrollbar flex mb-20 flex-col">
       <div className="flex flex-col gap-4">
         <div
           onClick={() => navigate(HEALTHCARE_APPLICATIONS)}

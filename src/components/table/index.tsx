@@ -91,7 +91,7 @@ export function TableComponent<T>({
             ))}
           </TableRow>
         </TableHeader>
-        <TableBody className="[&_tr:last-child]:border-b-[1px] mb-10 remove-scrollbar">
+        <TableBody className="[&_tr:last-child]:border-b-[1px] mb-10 custom-scrollbar">
           {data.length === 0 ? (
             <TableRow>
               <TableCell

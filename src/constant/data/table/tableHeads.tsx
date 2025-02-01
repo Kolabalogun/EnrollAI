@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useRef } from "react";
 import {
-  BadgeCheck,
+  Lock,
   CheckCircle,
   EllipsisVertical,
   Eye,
   Pen,
   Trash2Icon,
   X,
+  LockOpen,
 } from "lucide-react";
 
 import { TableColumn } from "@/components/table";
@@ -136,11 +137,7 @@ export const DetailsCell = ({ row }: { row: ApplicationFormInterface }) => {
 
 // Table column definition
 export const ApplicationFormTableHeads = (
-  handleViewDetails: (row: ApplicationFormInterface) => void,
-  handleEdit: (row: ApplicationFormInterface) => void,
-  handleDelete: (row: ApplicationFormInterface) => void,
-  activeMenu: string | number | null,
-  toggleMenu: (id: string | number | null) => void
+  handleViewDetails: (row: ApplicationFormInterface) => void
 ): TableColumn<ApplicationFormInterface>[] => [
   {
     header: "Application",
@@ -185,14 +182,12 @@ export const ApplicationFormTableHeads = (
   {
     header: "Actions",
     accessor: (row) => (
-      <ActionCell
-        row={row}
-        handleEdit={handleEdit}
-        handleViewDetails={handleViewDetails}
-        handleDelete={handleDelete}
-        isMenuVisible={activeMenu === row?._id}
-        toggleMenu={toggleMenu}
-      />
+      <div
+        onClick={() => handleViewDetails(row)}
+        className="  text-xs  text-center items-center justify-center flex font-medium cursor-pointer  "
+      >
+        View
+      </div>
     ),
     className: "p-2.5",
     headClassName: "text-center",
@@ -201,11 +196,7 @@ export const ApplicationFormTableHeads = (
 
 // Table column definition
 export const OrganizationApplicationFormTableHeads = (
-  handleViewDetails: (row: ApplicationFormInterface) => void,
-  handleEdit: (row: ApplicationFormInterface) => void,
-  handleDelete: (row: ApplicationFormInterface) => void,
-  activeMenu: string | number | null,
-  toggleMenu: (id: string | number | null) => void
+  handleViewDetails: (row: ApplicationFormInterface) => void
 ): TableColumn<ApplicationFormInterface>[] => [
   {
     header: "Provider Name",
@@ -220,7 +211,7 @@ export const OrganizationApplicationFormTableHeads = (
     flex: 2,
   },
   {
-    header: "Organzation Name",
+    header: "Organization Name",
     accessor: (row) => (
       <div className="  w-32 xl:w-full">
         <p className="font-semibold text-xs">
@@ -285,14 +276,12 @@ export const OrganizationApplicationFormTableHeads = (
   {
     header: "Actions",
     accessor: (row) => (
-      <ActionCell
-        row={row}
-        handleEdit={handleEdit}
-        handleViewDetails={handleViewDetails}
-        handleDelete={handleDelete}
-        isMenuVisible={activeMenu === row?._id}
-        toggleMenu={toggleMenu}
-      />
+      <div
+        onClick={() => handleViewDetails(row)}
+        className="  text-xs  text-center items-center justify-center flex font-medium cursor-pointer  "
+      >
+        View
+      </div>
     ),
     className: "p-2.5",
     headClassName: "text-center",
@@ -365,7 +354,7 @@ export const CreatedApplicationsTableHeads = (
           } flex items-center`}
         >
           <span className="text-sm ml-1">
-            <BadgeCheck />
+            {row?.status ? <Lock size={18} /> : <LockOpen size={18} />}
           </span>
         </button>
         <button
@@ -373,7 +362,7 @@ export const CreatedApplicationsTableHeads = (
           className="text-red-500 hover:text-red-700 flex items-center"
         >
           <span className="text-sm ml-1">
-            <Trash2Icon />
+            <Trash2Icon size={18} />
           </span>
         </button>
       </div>
@@ -449,13 +438,13 @@ export const ProvidersTableHeads = (
     headClassName: "",
   },
   {
-    header: "View Details",
+    header: "Action",
     accessor: (row) => (
       <div
         onClick={() => handleProviderDetails(row)}
         className="space-y-1 w-32 xl:w-full"
       >
-        <p className="font-semibold cursor-pointer text-xs">View Details</p>
+        <p className="font-semibold cursor-pointer text-xs">View</p>
       </div>
     ),
     className: "",
@@ -549,13 +538,13 @@ export const OrganizationsTableHeads = (
     flex: 2,
   },
   {
-    header: "View Details",
+    header: "Action",
     accessor: (row) => (
       <div
         onClick={() => handleOrganizationDetails(row)}
         className="space-y-1 w-32 xl:w-full"
       >
-        <p className="font-semibold cursor-pointer text-xs">View Details</p>
+        <p className="font-semibold cursor-pointer text-xs">View</p>
       </div>
     ),
     className: "",
@@ -651,13 +640,13 @@ export const AllProvidersTableHeads = (
     flex: 2,
   },
   {
-    header: "View Details",
+    header: "Action",
     accessor: (row) => (
       <div
         onClick={() => handleProviderDetails(row)}
         className="space-y-1 w-32 xl:w-full"
       >
-        <p className="font-semibold cursor-pointer text-xs">View Details</p>
+        <p className="font-semibold cursor-pointer text-xs">View</p>
       </div>
     ),
     className: "",
@@ -720,13 +709,13 @@ export const AdminsTableHeads = (
     flex: 2,
   },
   {
-    header: "View Details",
+    header: "Action",
     accessor: (row) => (
       <div
         onClick={() => handleAdminDetails(row)}
         className="space-y-1 w-32 xl:w-full"
       >
-        <p className="font-semibold cursor-pointer text-xs">View Details</p>
+        <p className="font-semibold cursor-pointer text-xs">View</p>
       </div>
     ),
     className: "",

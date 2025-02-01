@@ -6,16 +6,12 @@ import { BillingTransactionsType } from "@/lib/types/tables";
 import { HEALTHCARE_BILLING_ADD } from "@/router/routes";
 import { DownloadIcon } from "lucide-react";
 import { useState } from "react";
-// import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const Billing = () => {
   const navigate = useNavigate();
-  //   const { billingsInfos } = useSelector((state: any) => state.billingInfo);
   const [activeMenu, setActiveMenu] = useState<string | number | null>(null);
-
   const [currentPage, setCurrentPage] = useState(1);
-  // const itemsPerPage = 10;
   const [totalPages] = useState(1);
 
   const handleViewDetails = (row: BillingTransactionsType) => {
@@ -24,9 +20,9 @@ const Billing = () => {
 
   const toggleMenu = (id: string | number | null) => {
     if (activeMenu === id) {
-      setActiveMenu(null); // Close if it's already open
+      setActiveMenu(null);
     } else {
-      setActiveMenu(id); // Open the new menu
+      setActiveMenu(id);
     }
   };
 
@@ -47,20 +43,23 @@ const Billing = () => {
   );
 
   return (
-    <section className="  flex-1 h-full w-full flex flex-col xl:px-5 py-5 pb-10 space-y-12">
-      <section className="bg-white rounded-lg shadow flex-1 h-full w-full flex xl:flex-row flex-col  justify-between px-5 py-5  ">
+    <section className="flex-1 h-full w-full flex flex-col xl:px-5 py-5 pb-10 space-y-12">
+      {/* Notification Bar */}
+      <div className="bg-yellow-100 text-yellow-800 p-3 rounded-lg text-sm text-center">
+        Note: This page contains dummy data and is currently under development.
+      </div>
+
+      <section className="bg-white rounded-lg shadow flex-1 h-full w-full flex xl:flex-row flex-col justify-between px-5 py-5">
         <div className="flex flex-col justify-between gap-10">
           <div className="space-y-3">
-            <p className="text-dark-200 font-semibold  ">Subscription</p>
-            <p className="text-xs text-dark-200 ">Monthly Plan</p>
+            <p className="text-dark-200 font-semibold">Subscription</p>
+            <p className="text-xs text-dark-200">Monthly Plan</p>
           </div>
-
-          <p className="text-dark-200   ">
+          <p className="text-dark-200">
             Next payment is to be charged on{" "}
             <span className="font-semibold">September 08, 2024</span>
           </p>
         </div>
-
         <div className="flex gap-5 items-center">
           <button className="font-semibold text-sm w-full text-red-500">
             Cancel Subscription
@@ -68,16 +67,16 @@ const Billing = () => {
           <SubmitButton type="button">Renew Subscription</SubmitButton>
         </div>
       </section>
-      <section className="bg-white rounded-lg shadow flex-1 h-full w-full flex xl:flex-row flex-col gap-4 xl:items-center justify-between px-5 py-5  ">
+
+      <section className="bg-white rounded-lg shadow flex-1 h-full w-full flex xl:flex-row flex-col gap-4 xl:items-center justify-between px-5 py-5">
         <div className="flex flex-col justify-between gap-10">
           <div className="space-y-3">
-            <p className="text-dark-200 font-semibold  ">Payment Method</p>
-            <p className="text-sm text-dark-200 ">
+            <p className="text-dark-200 font-semibold">Payment Method</p>
+            <p className="text-sm text-dark-200">
               Choose your preferred payment method for making future payments.
             </p>
           </div>
         </div>
-
         <div className="flex gap-5 items-center">
           <SubmitButton
             handleSubmit={() => navigate(HEALTHCARE_BILLING_ADD)}
@@ -89,25 +88,22 @@ const Billing = () => {
         </div>
       </section>
 
-      <section className="  space-y-3   py-5  ">
+      <section className="space-y-3 py-5">
         <div className="flex items-center justify-between gap-10">
-          <p className="text-dark-200 font-semibold text-xl  xl:text-2xl  ">
+          <p className="text-dark-200 font-semibold text-xl xl:text-2xl">
             Latest Transaction
           </p>
-
-          <div className="">
+          <div>
             <button className="flex gap-2 text-fade p-3 border-2 rounded-lg raleway font-semibold text-[13px]">
               <div className="hidden xl:flex">
                 <DownloadIcon size={18} />
               </div>
-              Download CSV{" "}
+              Download CSV
             </button>
           </div>
         </div>
-
         <div className="flex gap-5 items-center">
           <div className="flex-1 bg-white rounded-lg p-3 xl:p-5 w-full md:w-auto">
-            {/* Table */}
             <TableComponent
               footerTxt={""}
               columns={columns}

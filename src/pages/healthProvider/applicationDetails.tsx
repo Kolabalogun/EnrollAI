@@ -489,7 +489,7 @@ const ApplicationsDetails = () => {
     );
 
   return (
-    <section className="space-y-5 remove-scrollbar flex mb-20 flex-col">
+    <section className="space-y-5 custom-scrollbar flex mb-20 flex-col">
       <ConfirmationModal
         isOpen={isOpen}
         onClose={onClose}
@@ -673,7 +673,7 @@ const ApplicationsDetails = () => {
                   </SubmitButton>
                 )}
 
-                {form?.status !== "declined" && (
+                {form?.status === "pending" && (
                   <SubmitButton
                     isLoading={isLoading}
                     handleSubmit={declineOnOpen}

@@ -95,7 +95,7 @@ const ApplicationForm = () => {
 
           console.log(orgData, "orgData");
 
-          const newData = res.success
+          const newData = res?.data?.application
             ? {
                 ...form,
                 ...res.data.application,
@@ -424,7 +424,7 @@ const ApplicationForm = () => {
     }
   };
   return (
-    <div className="space-y-5 remove-scrollbar">
+    <div className="space-y-5 custom-scrollbar">
       <ApplicationSuccessModal
         onClose={() => {
           onClose();

@@ -1,4 +1,4 @@
-import { EllipsisVertical } from "lucide-react";
+// import { EllipsisVertical } from "lucide-react";
 
 type Props = {
   title: string;
@@ -12,9 +12,9 @@ const StatCard = ({ title, value, status }: Props) => {
       <div className="flex justify-between items-center">
         <p className="font-semibold text-[13px]">{title} </p>
 
-        <div className="cursor-pointer">
+        {/* <div className="cursor-pointer">
           <EllipsisVertical className="text-[#667085] " size={16} />
-        </div>
+        </div> */}
       </div>
 
       <div className="space-y-3">

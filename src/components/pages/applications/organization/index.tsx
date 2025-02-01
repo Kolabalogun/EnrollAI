@@ -39,7 +39,6 @@ const OrganizationApplicationLists = ({
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
   totalPages: number;
 }) => {
-  const [activeMenu, setActiveMenu] = useState<string | number | null>(null);
   const navigate = useNavigate();
   const toast = useToast();
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -81,24 +80,10 @@ const OrganizationApplicationLists = ({
     });
   };
 
-  const toggleMenu = (id: string | number | null) => {
-    if (activeMenu === id) {
-      setActiveMenu(null);
-    } else {
-      setActiveMenu(id);
-    }
-  };
-
-  const handleEdit = (row: ApplicationFormInterface) => {
-    console.log(row);
-    navigate(`/dashboard/health-provider/applications/details/${row._id}`);
-  };
-
   const handleDelete = (row: any) => {
     console.log(row);
     setSelectedRow(row);
     onOpen();
-    setActiveMenu(null);
   };
 
   const handleChangeApplicationStatus = (row: any) => {
@@ -181,16 +166,22 @@ const OrganizationApplicationLists = ({
     }
   };
 
-  const handleChangeApplicationStatusF = async (id: string) => {
+  const handleChangeApplicationStatusF = async (data: any) => {
     try {
-      const res = await toggleCreatedApplicationStatus(id);
+      const res = await toggleCreatedApplicationStatus(data._id);
+
+      console.log(res);
 
       if (res.success) {
         showToast(
           toast,
           "Enroll AI",
           "success",
-          "Application updated successfully"
+          `${
+            data?.status
+              ? "Application disabled successfully"
+              : "Application has been activated successfully"
+          } `
         );
         fetchFunction();
       } else {
@@ -215,13 +206,7 @@ const OrganizationApplicationLists = ({
     }
   };
 
-  const columns = OrganizationApplicationFormTableHeads(
-    handleViewDetails,
-    handleEdit,
-    handleDelete,
-    activeMenu,
-    toggleMenu
-  );
+  const columns = OrganizationApplicationFormTableHeads(handleViewDetails);
 
   const createdApplicationColumns = CreatedApplicationsTableHeads(
     handleDelete,
@@ -286,7 +271,7 @@ const OrganizationApplicationLists = ({
         } be able to see the application. `}
         onConfirm={() => {
           if (selectedRow) {
-            handleChangeApplicationStatusF(selectedRow?._id);
+            handleChangeApplicationStatusF(selectedRow);
           }
         }}
       />

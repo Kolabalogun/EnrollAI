@@ -1,4 +1,4 @@
-import { Bell, Hexagon, Menu } from "lucide-react";
+import { Bell, Menu } from "lucide-react";
 import SidebarDrawer from "./sidebar/drawer";
 import { useDisclosure } from "@chakra-ui/react";
 import { HEALTHCARE_NOTIFICATIONS, SETTINGS_ROUTE } from "@/router/routes";
@@ -19,14 +19,14 @@ const Navbar = () => {
         <div onClick={onOpen} className="cursor-pointer block lg:hidden">
           <Menu />
         </div>
-        <div className="bg-[#f9fafb] border-fade border items-center flex rounded-full xl:w-96 py-2 px-4">
+        {/* <div className="bg-[#f9fafb] border-fade border items-center flex rounded-full xl:w-96 py-2 px-4">
           <Hexagon className="text-fade" size={14} />
           <input
             type="text"
             className="bg-transparent outline-none raleway text-xs px-2"
             placeholder="Search Health Plan here..."
           />
-        </div>
+        </div> */}
       </div>
 
       <div className="flex gap-4 items-center">

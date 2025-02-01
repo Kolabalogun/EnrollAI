@@ -42,7 +42,7 @@ export const CreateNewPasswordFormValidation = z
         "Password must contain at least one number"
       ) // Number
       .refine(
-        (password) => /[@$!%*?&]/.test(password),
+        (password) => /[!@#$%^&*()[\]_+\-=\\|;:',.<>/?`~]/.test(password),
         "Password must contain at least one special character"
       ), // Special character
     confirmPassword: z
@@ -87,7 +87,7 @@ export const RegisterFormValidation = z
         "Password must contain at least one number"
       ) // Number
       .refine(
-        (password) => /[@$!%*?&]/.test(password),
+        (password) => /[!@#$%^&*()[\]_+\-=\\|;:',.<>/?`~]/.test(password),
         "Password must contain at least one special character"
       ), // Special character
 
@@ -155,7 +155,7 @@ export const OrganizationRegisterFormValidation = z
         "Password must contain at least one number"
       ) // Number
       .refine(
-        (password) => /[@$!%*?&]/.test(password),
+        (password) => /[!@#$%^&*()[\]_+\-=\\|;:',.<>/?`~]/.test(password),
         "Password must contain at least one special character"
       ), // Special character
 
