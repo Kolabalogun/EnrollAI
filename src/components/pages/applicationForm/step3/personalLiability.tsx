@@ -78,6 +78,7 @@ const ProfessionalLiability = ({
                 {field.type === "date" ? (
                   <DateInputField
                     label={field.label}
+                    name={field.name}
                     selected={form.step3.carriers[field.name]}
                     disabled={user?.accountType !== "provider" ? true : false}
                     error={!!errors[field.name]}

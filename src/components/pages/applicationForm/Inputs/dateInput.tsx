@@ -11,6 +11,7 @@ interface DateInputFieldProps {
   disabled?: boolean;
   max?: boolean;
   error?: boolean;
+  name?: string;
 }
 
 const DateInputField: React.FC<DateInputFieldProps> = ({
@@ -18,9 +19,13 @@ const DateInputField: React.FC<DateInputFieldProps> = ({
   selected,
   onChange,
   disabled = false,
+  name,
   max,
   error = false,
 }) => {
+  // Create a unique ID for the input field
+  const inputId = `date-input-${name}`;
+
   return (
     <div className="raleway text-xs flex w-full flex-1 flex-col gap-1 font-medium">
       <div className="flex gap-1 items-center">
@@ -34,15 +39,36 @@ const DateInputField: React.FC<DateInputFieldProps> = ({
           disabled ? "opacity-50" : ""
         }`}
       >
-        <Calendar size={15} />
+        <div
+          className="cursor-pointer"
+          onClick={() => {
+            // Trigger the date picker when the icon is clicked
+            const dateInput = document.getElementById(
+              inputId
+            ) as HTMLInputElement;
+            if (dateInput) {
+              dateInput.focus();
+            }
+          }}
+        >
+          <Calendar size={15} />
+        </div>
         <div className="w-full">
           <ReactDatePicker
             selected={selected}
+            minDate={new Date("1900-01-01")}
             onChange={onChange}
             maxDate={max ? new Date() : undefined}
             dateFormat="dd/MM/yyyy"
             disabled={disabled}
             className="w-full outline-none"
+            placeholderText="Select or type a date"
+            showYearDropdown
+            showMonthDropdown
+            dropdownMode="select"
+            allowSameDay
+            wrapperClassName="date-picker"
+            id={inputId} // Assign the unique ID to the input field
           />
         </div>
       </div>

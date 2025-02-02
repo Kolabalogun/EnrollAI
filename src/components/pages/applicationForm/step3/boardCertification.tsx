@@ -104,6 +104,7 @@ const BoardCertification = ({
                 {field.type === "date" ? (
                   <DateInputField
                     label={field.label}
+                    name={field.name}
                     selected={form.step3.boards[field.name]}
                     disabled={user?.accountType !== "provider" ? true : false}
                     error={!!errors[field.name]}
@@ -123,7 +124,7 @@ const BoardCertification = ({
                           </div>
                           <p className="flex flex-1 text-xs font-semibold">
                             {form.step3.boards[field.name]?.name ||
-                              "File Uploaded"}
+                              `${field.name} File`}
                           </p>
 
                           <div className="flex items-center gap-1">
@@ -216,6 +217,7 @@ const BoardCertification = ({
                           ref={fileInputRef}
                           name={field.name}
                           style={{ display: "none" }}
+                          disabled={user?.accountType !== "provider"}
                           readOnly={user?.accountType === "organization"}
                           onChange={(e) =>
                             handleFileChange("step3", "boards", field.name, e)
@@ -229,6 +231,7 @@ const BoardCertification = ({
                         readOnly={
                           user?.accountType === "organization" ? true : false
                         }
+                        disabled={user?.accountType !== "provider"}
                         onChange={(e) =>
                           handleFileChange("step3", "boards", field.name, e)
                         }

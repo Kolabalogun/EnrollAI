@@ -172,6 +172,7 @@ const Licensing = ({
                         {field.type === "date" ? (
                           <DateInputField
                             label={field.label}
+                            name={field.name}
                             selected={form.step2.medicalLicenses[field.name]}
                             error={!!errors[field.name]}
                             disabled={
@@ -318,6 +319,7 @@ const Licensing = ({
                                   readOnly={
                                     user?.accountType === "organization"
                                   }
+                                  disabled={user?.accountType !== "provider"}
                                   onChange={(e) =>
                                     handleFileChange(
                                       "step2",
@@ -337,6 +339,7 @@ const Licensing = ({
                                     ? true
                                     : false
                                 }
+                                disabled={user?.accountType !== "provider"}
                                 onChange={(e) =>
                                   handleFileChange(
                                     "step2",
@@ -424,7 +427,7 @@ const Licensing = ({
                             </div>
                             <p className="flex flex-1 text-xs font-semibold">
                               {form.step2.otherMedLicenses[field.name]?.name ||
-                                "File Uploaded"}
+                                `${field.name} File`}
                             </p>
 
                             <div className="flex items-center gap-1">
@@ -532,6 +535,7 @@ const Licensing = ({
                             name={field.name}
                             style={{ display: "none" }}
                             readOnly={user?.accountType === "organization"}
+                            disabled={user?.accountType !== "provider"}
                             onChange={(e) =>
                               handleFileChange(
                                 "step2",
@@ -549,6 +553,7 @@ const Licensing = ({
                           readOnly={
                             user?.accountType === "organization" ? true : false
                           }
+                          disabled={user?.accountType !== "provider"}
                           onChange={(e) =>
                             handleFileChange(
                               "step2",

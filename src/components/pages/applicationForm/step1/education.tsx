@@ -91,6 +91,7 @@ const Education = ({ form, errors, handleChange }: ApplicationProps) => {
                 {field.type === "date" ? (
                   <DateInputField
                     label={field.label}
+                    name={field.name}
                     max
                     disabled={user?.accountType !== "provider" ? true : false}
                     error={!!errors[field.name]}

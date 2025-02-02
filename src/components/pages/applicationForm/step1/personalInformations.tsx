@@ -66,17 +66,29 @@ const PersonalInformations = ({
                   )}
                 </div>
                 <div
-                  className={` ${
+                  className={`${
                     errors[field.name] ? "border-red-500 border-2" : ""
                   } border flex items-center gap-3 rounded-md p-2 outline-[0.5px] outline-secondary w-full`}
                 >
-                  <div className="ml-2">
+                  <div
+                    className="ml-2 cursor-pointer"
+                    onClick={() => {
+                      // Trigger the date picker when the icon is clicked
+                      const dateInput = document.querySelector(
+                        `.date-picker input[name="${field.name}"]`
+                      ) as HTMLInputElement;
+                      if (dateInput) {
+                        dateInput.focus();
+                      }
+                    }}
+                  >
                     <Calendar size={15} />
                   </div>
                   <ReactDatePicker
-                    maxDate={new Date(Date.now())}
+                    maxDate={new Date()}
+                    minDate={new Date("1900-01-01")}
                     selected={form.step1.personalInformation[field.name] || ""}
-                    disabled={user?.accountType !== "provider" ? true : false}
+                    disabled={user?.accountType !== "provider"}
                     onChange={(date) =>
                       handleChange(
                         "step1",
@@ -87,6 +99,12 @@ const PersonalInformations = ({
                     }
                     dateFormat={"dd/MM/yyyy"}
                     wrapperClassName="date-picker"
+                    name={field.name}
+                    placeholderText="Select or type a date"
+                    showYearDropdown
+                    showMonthDropdown
+                    dropdownMode="select"
+                    allowSameDay
                   />
                 </div>
               </div>
