@@ -22,7 +22,7 @@ const StatBar = ({ applications }: { applications?: boolean }) => {
     try {
       const res = await getApplicationStatBasedOnUserId(user?.userId);
       console.log(res, "resres");
-      if (res.success) {
+      if (res?.success) {
         setProviderStatData(res?.data);
       }
     } catch (error: any) {

@@ -50,8 +50,12 @@ const Login = () => {
 
       if (res.success) {
         dispatch(setCredentials(res.data));
-        dispatch(setAccountType(res.accountType));
-        localStorage.setItem("enrollai-user", res.token);
+        dispatch(setAccountType(res.data.accountType));
+        localStorage.setItem("enrollai-user", res.data.accessToken);
+        localStorage.setItem(
+          "enrollai-user-refresh-token",
+          res.data.refreshToken
+        );
         dispatch(setIsAuthenticated(true));
         showToast(
           toast,

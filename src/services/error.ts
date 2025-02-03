@@ -1,44 +1,49 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AxiosError } from "axios";
+import { store } from "@/redux/store"; // Import your Redux store
+import { logout } from "@/redux/features/authSlice";
 
 interface ErrorResponse {
   success: boolean;
   message: string;
   status?: number;
   data?: any;
-  token?: string;
   accountType?: string;
-  organization?: any;
+
+  accessToken?: string;
+
+  refreshToken?: string;
 }
 
 export const handleError = (error: AxiosError): ErrorResponse => {
   if (error.response) {
     const status = error.response.status;
-    if (status === 400) {
+    const message = (error.response.data as { msg?: string })?.msg;
+
+    console.log(error);
+
+    console.log("Error Message:", message);
+
+    if (status === 401 || status === 403) {
+      // Log out the user and clear local storage
+      store.dispatch(logout());
+      localStorage.removeItem("enrollai-user");
+      localStorage.removeItem("enrollai-org-user");
+      localStorage.removeItem("enrollai-user-refresh-token");
+
       return {
         success: false,
-        message:
-          (error.response.data as any).msg ||
-          (error.response.data as any).message ||
-          "Validation error.",
-        status,
-      };
-    } else if (status === 500) {
-      return {
-        success: false,
-        message: "Server error, please try again later.",
-        status,
-      };
-    } else {
-      return {
-        success: false,
-        message:
-          (error.response.data as any).msg ||
-          (error.response.data as any).message ||
-          "Something went wrong.",
+        message: message || "Session expired. Please log in again.",
         status,
       };
     }
+
+    // Handle other errors
+    return {
+      success: false,
+      message: message || "An error occurred.",
+      status,
+    };
   } else if (error.request) {
     return {
       success: false,

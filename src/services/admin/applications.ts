@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios from "axios";
-import { handleError } from "../error";
 
-const { VITE_API_BASE_URL } = import.meta.env;
+import { handleError } from "../error";
+import axiosInstance from "..";
 
 // Get (All, Imcoming, Declined & Approved) Applications from Providers Based on their Status (Admin Route)
 
@@ -11,28 +10,14 @@ export const getAllApplicationsBasedOnStatus = async (
   size = 10,
   status: string
 ) => {
-  const token = localStorage.getItem("enrollai-user");
-
-  if (!token) {
-    throw new Error("Authentication token not found");
-  }
-
   if (!status) {
     throw new Error("Status is required");
   }
 
   try {
-    const response = await axios.get(
-      `${VITE_API_BASE_URL}/admin/applications/all`,
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        params: { status, page, size, order_by: "desc" },
-      }
-    );
+    const response = await axiosInstance.get(`/admin/applications/all`, {
+      params: { status, page, size, order_by: "desc" },
+    });
     return {
       success: true,
       data: response.data,
@@ -46,22 +31,11 @@ export const getAllApplicationsBasedOnStatus = async (
 
 // Get Stats of Providers Applications in Admin Dashboard
 export const getApplicationStats = async () => {
-  const token = localStorage.getItem("enrollai-user");
-
-  if (!token) {
-    throw new Error("Authentication token not found");
-  }
   try {
-    const response = await axios.get(
-      `${VITE_API_BASE_URL}/admin/application-stats`,
+    const response = await axiosInstance.get(
+      `/admin/application-stats`,
 
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
+      {}
     );
     return {
       success: true,
@@ -75,21 +49,11 @@ export const getApplicationStats = async () => {
 
 // Get All Admin Users   (FE: Admin Route)
 export const getAllAdmins = async (page = 1, size = 10) => {
-  const token = localStorage.getItem("enrollai-user");
-
-  if (!token) {
-    throw new Error("Authentication token not found");
-  }
   try {
-    const response = await axios.get(
-      `${VITE_API_BASE_URL}/admin/all`,
+    const response = await axiosInstance.get(
+      `/admin/all`,
 
       {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
         params: { page, size, order_by: "desc" },
       }
     );
@@ -105,21 +69,11 @@ export const getAllAdmins = async (page = 1, size = 10) => {
 
 // Get All Organizations Users   (FE: Admin Route)
 export const getAllOrganizations = async (page = 1, size = 10) => {
-  const token = localStorage.getItem("enrollai-user");
-
-  if (!token) {
-    throw new Error("Authentication token not found");
-  }
   try {
-    const response = await axios.get(
-      `${VITE_API_BASE_URL}/admin/credentialing-organizations`,
+    const response = await axiosInstance.get(
+      `/admin/credentialing-organizations`,
 
       {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
         params: { page, size, order_by: "desc" },
       }
     );
@@ -135,19 +89,8 @@ export const getAllOrganizations = async (page = 1, size = 10) => {
 
 // Get All Providers Users   (FE: Admin Route)
 export const getAllProviders = async (page = 1, size = 10) => {
-  const token = localStorage.getItem("enrollai-user");
-
-  if (!token) {
-    throw new Error("Authentication token not found");
-  }
-
   try {
-    const response = await axios.get(`${VITE_API_BASE_URL}/admin/providers`, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
+    const response = await axiosInstance.get(`/admin/providers`, {
       params: { page, size, order_by: "desc" },
     });
     return {
@@ -167,21 +110,11 @@ export const changeAccountStatus = async (
   type: string,
   status: string
 ) => {
-  const token = localStorage.getItem("enrollai-user");
-
-  if (!token) {
-    throw new Error("Authentication token not found");
-  }
   try {
-    const response = await axios.put(
-      `${VITE_API_BASE_URL}/admin/change-account-status`,
+    const response = await axiosInstance.put(
+      `/admin/change-account-status`,
       {},
       {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
         params: { id, type, status },
       }
     );
@@ -202,19 +135,10 @@ export const deleteProviderOrOrganization = async (
   id: string,
   type: string
 ) => {
-  const token = localStorage.getItem("enrollai-user");
-  if (!token) {
-    throw new Error("Authentication token not found");
-  }
   try {
-    const response = await axios.delete(
-      `${VITE_API_BASE_URL}/admin/delete-provider-or-organization`,
+    const response = await axiosInstance.delete(
+      `/admin/delete-provider-or-organization`,
       {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
         params: { id, type },
       }
     );

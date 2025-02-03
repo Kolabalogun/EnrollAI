@@ -1,26 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios from "axios";
+
+import axiosInstance from "..";
 import { handleError } from "../error";
 
-const { VITE_API_BASE_URL } = import.meta.env;
-
 export const adminRegister = async (formData: any) => {
-  const token = localStorage.getItem("enrollai-user");
-  if (!token) {
-    throw new Error("Authentication token not found");
-  }
   try {
-    const response = await axios.post(
-      `${VITE_API_BASE_URL}/admin/create`,
-      formData,
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axiosInstance.post(`/admin/create`, formData);
     return {
       success: true,
       data: response.data,
@@ -35,22 +20,8 @@ export const adminRegister = async (formData: any) => {
 };
 
 export const updateAdminProfile = async (formData: any) => {
-  const token = localStorage.getItem("enrollai-user");
-  if (!token) {
-    throw new Error("Authentication token not found");
-  }
   try {
-    const response = await axios.put(
-      `${VITE_API_BASE_URL}/admin/update/profile`,
-      formData,
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axiosInstance.put(`/admin/update/profile`, formData);
     return {
       success: true,
       data: response.data,
@@ -62,18 +33,8 @@ export const updateAdminProfile = async (formData: any) => {
 };
 
 export const deleteAdminAccount = async () => {
-  const token = localStorage.getItem("enrollai-user");
-  if (!token) {
-    throw new Error("Authentication token not found");
-  }
   try {
-    const response = await axios.delete(`${VITE_API_BASE_URL}/admin/delete`, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axiosInstance.delete(`/admin/delete`);
     return {
       success: true,
       data: response.data,

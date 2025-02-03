@@ -1,27 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios from "axios";
 import { handleError } from "./error";
-
-const { VITE_API_BASE_URL } = import.meta.env;
+import axiosInstance from ".";
 
 // Login Provider
 export const loginUser = async (formData: any) => {
   try {
-    const response = await axios.post(
-      `${VITE_API_BASE_URL}/auth/login`,
-      formData,
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await axiosInstance.post(`/auth/login`, formData);
     return {
       success: true,
       data: response.data,
-      token: response.data.token,
-      accountType: response.data.accountType,
       message: "You have successfully signed in.",
     };
   } catch (error: any) {
@@ -29,19 +16,28 @@ export const loginUser = async (formData: any) => {
   }
 };
 
+export const refreshToken = async (token: string) => {
+  try {
+    const response = await axiosInstance.post(`/auth/refresh-token`, { token });
+    return { success: true, data: response.data };
+  } catch (error: any) {
+    console.log("Refresh token error:", error);
+    return handleError(error);
+  }
+};
+
+export const logoutt = async () => {
+  try {
+    const response = await axiosInstance.post(`/auth/logout`);
+    return { success: true, data: response };
+  } catch (error: any) {
+    return handleError(error);
+  }
+};
 // Provider Registration
 export const registerProvider = async (formData: any) => {
   try {
-    const response = await axios.post(
-      `${VITE_API_BASE_URL}/auth/register`,
-      formData,
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await axiosInstance.post(`/auth/register`, formData);
     return {
       success: true,
       data: response.data,
@@ -54,15 +50,9 @@ export const registerProvider = async (formData: any) => {
 
 export const forgotPasswordApi = async (formData: any) => {
   try {
-    const response = await axios.post(
-      `${VITE_API_BASE_URL}/auth/forgot-password`,
-      formData,
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
+    const response = await axiosInstance.post(
+      `/auth/forgot-password`,
+      formData
     );
     return {
       success: true,
@@ -76,16 +66,7 @@ export const forgotPasswordApi = async (formData: any) => {
 
 export const resetPasswordApi = async (formData: any) => {
   try {
-    const response = await axios.post(
-      `${VITE_API_BASE_URL}/auth/reset-password`,
-      formData,
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await axiosInstance.post(`/auth/reset-password`, formData);
     return {
       success: true,
       data: response.data,
@@ -98,16 +79,7 @@ export const resetPasswordApi = async (formData: any) => {
 
 export const verifyOTP = async (formData: any) => {
   try {
-    const response = await axios.post(
-      `${VITE_API_BASE_URL}/auth/verify-otp`,
-      formData,
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await axiosInstance.post(`/auth/verify-otp`, formData);
     return {
       success: true,
       data: response.data,
@@ -120,15 +92,7 @@ export const verifyOTP = async (formData: any) => {
 
 export const resendOTP = async (email: string) => {
   try {
-    const response = await axios.get(
-      `${VITE_API_BASE_URL}/auth/resend-otp/${email}`,
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await axiosInstance.get(`/auth/resend-otp/${email}`);
     return {
       success: true,
       data: response.data,
@@ -144,23 +108,8 @@ export const resendOTP = async (email: string) => {
 //  Update Provider Profile
 
 export const updateProfile = async (formData: any) => {
-  const token = localStorage.getItem("enrollai-user");
-
-  if (!token) {
-    throw new Error("Authentication token not found");
-  }
   try {
-    const response = await axios.put(
-      `${VITE_API_BASE_URL}/auth/update-profile`,
-      formData,
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axiosInstance.put(`/auth/update-profile`, formData);
     return {
       success: true,
       data: response.data,
@@ -172,22 +121,8 @@ export const updateProfile = async (formData: any) => {
 };
 
 export const changePassword = async (formData: any) => {
-  const token = localStorage.getItem("enrollai-user");
-  if (!token) {
-    throw new Error("Authentication token not found");
-  }
   try {
-    const response = await axios.put(
-      `${VITE_API_BASE_URL}/auth/change-password`,
-      formData,
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axiosInstance.put(`/auth/change-password`, formData);
     return {
       success: true,
       data: response.data,
@@ -199,18 +134,8 @@ export const changePassword = async (formData: any) => {
 };
 
 export const deleteAccount = async () => {
-  const token = localStorage.getItem("enrollai-user");
-  if (!token) {
-    throw new Error("Authentication token not found");
-  }
   try {
-    const response = await axios.delete(`${VITE_API_BASE_URL}/auth/delete`, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axiosInstance.delete(`/auth/delete`);
     return {
       success: true,
       data: response.data,

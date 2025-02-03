@@ -57,7 +57,11 @@ const OrganizationLogin = () => {
 
         dispatch(setCredentials(data));
         dispatch(setAccountType("organization"));
-        localStorage.setItem("enrollai-org-user", res.token);
+        localStorage.setItem("enrollai-org-user", res.data.accessToken);
+        localStorage.setItem(
+          "enrollai-user-refresh-token",
+          res.data.refreshToken
+        );
         dispatch(setIsAuthenticated(true));
         showToast(
           toast,

@@ -1,27 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios from "axios";
-import { handleError } from "../error";
 
-const { VITE_API_BASE_URL } = import.meta.env;
+import axiosInstance from "..";
+import { handleError } from "../error";
 
 // Login Provider
 export const loginOrg = async (formData: any) => {
   try {
-    const response = await axios.post(
-      `${VITE_API_BASE_URL}/organizations/login`,
-      formData,
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await axiosInstance.post(`/organizations/login`, formData);
     return {
       success: true,
       data: response.data,
-      token: response.data.token,
-      accountType: response.data.accountType,
+
       message: "You have successfully signed in.",
     };
   } catch (error: any) {
@@ -32,15 +21,9 @@ export const loginOrg = async (formData: any) => {
 // Organization registration
 export const organizationRegisterProvider = async (formData: any) => {
   try {
-    const response = await axios.post(
-      `${VITE_API_BASE_URL}/organizations/register`,
-      formData,
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
+    const response = await axiosInstance.post(
+      `/organizations/register`,
+      formData
     );
     return {
       success: true,
@@ -54,15 +37,9 @@ export const organizationRegisterProvider = async (formData: any) => {
 
 export const verifyOrganizationsOTP = async (formData: any) => {
   try {
-    const response = await axios.post(
-      `${VITE_API_BASE_URL}/organizations/verify-otp`,
-      formData,
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
+    const response = await axiosInstance.post(
+      `/organizations/verify-otp`,
+      formData
     );
     return {
       success: true,
@@ -76,14 +53,8 @@ export const verifyOrganizationsOTP = async (formData: any) => {
 
 export const resendOrganizationOTP = async (email: string) => {
   try {
-    const response = await axios.get(
-      `${VITE_API_BASE_URL}/organizations/resend-otp/${email}`,
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
+    const response = await axiosInstance.get(
+      `/organizations/resend-otp/${email}`
     );
     return {
       success: true,
@@ -99,15 +70,9 @@ export const resendOrganizationOTP = async (email: string) => {
 
 export const forgotOrganizationPasswordApi = async (formData: any) => {
   try {
-    const response = await axios.post(
-      `${VITE_API_BASE_URL}/organizations/forgot-password`,
-      formData,
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
+    const response = await axiosInstance.post(
+      `/organizations/forgot-password`,
+      formData
     );
     return {
       success: true,
@@ -120,15 +85,9 @@ export const forgotOrganizationPasswordApi = async (formData: any) => {
 };
 export const resetOrganizationPasswordApi = async (formData: any) => {
   try {
-    const response = await axios.post(
-      `${VITE_API_BASE_URL}/organizations/reset-password`,
-      formData,
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
+    const response = await axiosInstance.post(
+      `/organizations/reset-password`,
+      formData
     );
     return {
       success: true,
@@ -143,23 +102,8 @@ export const resetOrganizationPasswordApi = async (formData: any) => {
 //  Update Org Profile
 
 export const updateProfileOrg = async (formData: any) => {
-  // Get Token
-  const token = localStorage.getItem("enrollai-org-user");
-  if (!token) {
-    throw new Error("Authentication token not found");
-  }
   try {
-    const response = await axios.put(
-      `${VITE_API_BASE_URL}/organizations/update`,
-      formData,
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axiosInstance.put(`/organizations/update`, formData);
     return {
       success: true,
       data: response.data,
@@ -171,21 +115,10 @@ export const updateProfileOrg = async (formData: any) => {
 };
 
 export const changePasswordOrg = async (formData: any) => {
-  const token = localStorage.getItem("enrollai-org-user");
-  if (!token) {
-    throw new Error("Authentication token not found");
-  }
   try {
-    const response = await axios.put(
-      `${VITE_API_BASE_URL}/organizations/change-password`,
-      formData,
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
+    const response = await axiosInstance.put(
+      `/organizations/change-password`,
+      formData
     );
     return {
       success: true,
@@ -198,21 +131,8 @@ export const changePasswordOrg = async (formData: any) => {
 };
 
 export const deleteOrgAccount = async () => {
-  const token = localStorage.getItem("enrollai-org-user");
-  if (!token) {
-    throw new Error("Authentication token not found");
-  }
   try {
-    const response = await axios.delete(
-      `${VITE_API_BASE_URL}/organizations/delete`,
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axiosInstance.delete(`/organizations/delete`);
     return {
       success: true,
       data: response.data,

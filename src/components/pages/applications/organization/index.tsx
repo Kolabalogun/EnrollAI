@@ -167,6 +167,7 @@ const OrganizationApplicationLists = ({
   };
 
   const handleChangeApplicationStatusF = async (data: any) => {
+    setLoading(true);
     try {
       const res = await toggleCreatedApplicationStatus(data._id);
 
