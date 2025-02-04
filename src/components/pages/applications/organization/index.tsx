@@ -261,7 +261,9 @@ const OrganizationApplicationLists = ({
       <ConfirmationModal
         onClose={statusOnClose}
         isOpen={statusIsOpen}
-        buttonText="Change"
+        buttonText={`${
+          selectedRow?.status ? "Disable" : "Activate"
+        }`}
         isLoading={loading}
         message={`Are you sure you want to ${
           selectedRow?.status ? "Disable" : "Activate"

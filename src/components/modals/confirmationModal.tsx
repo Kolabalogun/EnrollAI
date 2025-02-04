@@ -40,7 +40,7 @@ const ConfirmationModal = ({
           <Button
             disabled={isLoading}
             className={`${
-              buttonText === "Delete"
+              buttonText === "Delete" || buttonText === "Disable"
                 ? "bg-red-500 hover:text-red-500 "
                 : "bg-secondary hover:text-secondary "
             } text-white`}
