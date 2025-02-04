@@ -84,10 +84,13 @@ export const getApplicationStatBasedOnUserId = async (id: string) => {
   }
 };
 
-// Function to Create an Application By the Provider (FE: Provider)
 export const createProviderApplication = async (formData: FormData) => {
   try {
-    const response = await axiosInstance.post(`/application/apply`, formData);
+    const response = await axiosInstance.post(`/application/apply`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
 
     console.log(response, "createProviderApplication response");
 
@@ -100,6 +103,7 @@ export const createProviderApplication = async (formData: FormData) => {
     return handleError(error);
   }
 };
+
 // Function to Update an Application By the Provider (FE: Provider)
 export const updateProviderApplication = async (formData: any, id: string) => {
   try {
