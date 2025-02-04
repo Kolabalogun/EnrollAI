@@ -184,13 +184,20 @@ const ReportAndAnalytics = () => {
               </div>
 
               <p className="text-[#2b3674] font-bold plus-jakarta">
-                {(
-                  (Number(providerStatData?.pending) /
-                    (Number(providerStatData?.pending) +
-                      Number(providerStatData?.approved) +
-                      Number(providerStatData?.declined))) *
-                  100
-                ).toFixed(2) || 0}{" "}
+                {(providerStatData?.pending &&
+                providerStatData?.approved &&
+                providerStatData?.declined &&
+                Number(providerStatData?.pending) +
+                  Number(providerStatData?.approved) +
+                  Number(providerStatData?.declined) >
+                  0
+                  ? (Number(providerStatData?.pending) /
+                      (Number(providerStatData?.pending) +
+                        Number(providerStatData?.approved) +
+                        Number(providerStatData?.declined))) *
+                    100
+                  : 0
+                ).toFixed(2)}
                 %
               </p>
             </div>
@@ -203,13 +210,20 @@ const ReportAndAnalytics = () => {
               </div>
 
               <p className="text-[#00C49F] font-bold plus-jakarta ">
-                {(
-                  (Number(providerStatData?.approved) /
-                    (Number(providerStatData?.pending) +
-                      Number(providerStatData?.approved) +
-                      Number(providerStatData?.declined))) *
-                  100
-                ).toFixed(2) || 0}{" "}
+                {(providerStatData?.pending &&
+                providerStatData?.approved &&
+                providerStatData?.declined &&
+                Number(providerStatData?.pending) +
+                  Number(providerStatData?.approved) +
+                  Number(providerStatData?.declined) >
+                  0
+                  ? (Number(providerStatData?.approved) /
+                      (Number(providerStatData?.pending) +
+                        Number(providerStatData?.approved) +
+                        Number(providerStatData?.declined))) *
+                    100
+                  : 0
+                ).toFixed(2)}
                 %
               </p>
             </div>
@@ -222,13 +236,20 @@ const ReportAndAnalytics = () => {
               </div>
 
               <p className="text-[#FF8042] font-bold plus-jakarta ">
-                {(
-                  (Number(providerStatData?.declined) /
-                    (Number(providerStatData?.pending) +
-                      Number(providerStatData?.approved) +
-                      Number(providerStatData?.declined))) *
-                  100
-                ).toFixed(2) || 0}{" "}
+                {(providerStatData?.pending &&
+                providerStatData?.approved &&
+                providerStatData?.declined &&
+                Number(providerStatData?.pending) +
+                  Number(providerStatData?.approved) +
+                  Number(providerStatData?.declined) >
+                  0
+                  ? (Number(providerStatData?.declined) /
+                      (Number(providerStatData?.pending) +
+                        Number(providerStatData?.approved) +
+                        Number(providerStatData?.declined))) *
+                    100
+                  : 0
+                ).toFixed(2)}
                 %
               </p>
             </div>
