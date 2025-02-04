@@ -57,7 +57,19 @@ const StatBar = ({ applications }: { applications?: boolean }) => {
         status={"Pending"}
       />
       {applications && (
-        <StatCard title="Pending Applications" value={0} status={"Completed"} />
+        <StatCard
+          title={"Declined Applications"}
+          value={
+            (providerStatData?.totalApplications &&
+              providerStatData?.approvedApplications &&
+              providerStatData?.pendingApplications &&
+              providerStatData?.totalApplications -
+                (providerStatData?.pendingApplications +
+                  providerStatData?.approvedApplications)) ||
+            0
+          }
+          status={"Declined"}
+        />
       )}
     </div>
   );

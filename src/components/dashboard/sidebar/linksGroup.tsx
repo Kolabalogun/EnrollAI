@@ -50,7 +50,6 @@ export function LinksGroup({
   const logoutHandler = async () => {
     setIsLoading(true);
     try {
-      await logoutt();
       dispatch(logout());
       dispatch(resetForm());
       localStorage.removeItem("enrollai-user");
@@ -62,6 +61,7 @@ export function LinksGroup({
         "warning",
         "You've successfully logged out"
       );
+      await logoutt();
       if (accountType === "organization") {
         navigate(ORG_LOGIN_ROUTE);
       } else {
